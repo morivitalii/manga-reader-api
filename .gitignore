@@ -11,3 +11,4 @@
 !/storage/.keep
 /config/master.key
 .byebug_history
+/coverage
