@@ -9,6 +9,7 @@ gem "oj", "~> 3"
 gem "image_processing", "~> 1"
 gem "bcrypt", "~> 3"
 gem "rack-cors", "~> 1"
+gem "pundit", "~> 2"
 
 group :development, :test do
   gem "standard"
