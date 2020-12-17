@@ -100,6 +100,7 @@ GEM
     nio4r (2.5.4)
     nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
+    oj (3.10.16)
     parallel (1.20.1)
     parser (2.7.2.0)
       ast (~> 2.4.1)
@@ -204,18 +205,19 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bcrypt (~> 3.1.7)
+  bcrypt (~> 3)
   bootsnap (>= 1.4.4)
   byebug
-  factory_bot_rails (~> 6.1.0)
+  factory_bot_rails (~> 6)
   listen (~> 3.3)
+  oj (~> 3)
   pg (~> 1.1)
-  puma (~> 5.0)
+  puma (~> 5)
   rails (~> 6.1.0)
-  rspec-rails (~> 4.0.1)
+  rspec-rails (~> 4)
   simplecov
   spring
-  standard (~> 0.10.2)
+  standard (~> 0.10)
   tzinfo-data
 
 RUBY VERSION

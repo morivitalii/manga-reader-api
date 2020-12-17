@@ -4,10 +4,10 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.7.2'
 
 gem 'rails', '~> 6.1.0'
+gem 'puma', '~> 5'
 gem 'pg', '~> 1.1'
-gem 'puma', '~> 5.0'
-# Use Active Model has_secure_password
-gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3'
+gem "oj", "~> 3"
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -18,9 +18,9 @@ gem 'bootsnap', '>= 1.4.4', require: false
 # gem 'rack-cors'
 
 group :development, :test do
-  gem "standard", "~> 0.10.2"
-  gem "rspec-rails", "~> 4.0.1"
-  gem "factory_bot_rails", "~> 6.1.0"
+  gem "standard", "~> 0.10"
+  gem "rspec-rails", "~> 4"
+  gem "factory_bot_rails", "~> 6"
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
