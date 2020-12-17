@@ -10,9 +10,7 @@ gem "pg", "~> 1"
 gem "oj", "~> 3"
 gem "image_processing", "~> 1"
 gem "bcrypt", "~> 3"
-
-# Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem "rack-cors"
+gem "rack-cors", "~> 1"
 
 group :development, :test do
   gem "standard"
