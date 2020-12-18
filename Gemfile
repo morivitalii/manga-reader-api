@@ -6,6 +6,8 @@ gem "rails", "~> 6"
 gem "bootsnap", "~> 1", require: false
 gem "puma", "~> 5"
 gem "pg", "~> 1"
+gem "hiredis", "~> 0"
+gem "redis", "~> 4", require: ["redis", "redis/connection/hiredis"]
 gem "oj", "~> 3"
 gem "image_processing", "~> 1"
 gem "bcrypt", "~> 3"

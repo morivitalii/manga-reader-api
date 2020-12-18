@@ -83,6 +83,7 @@ GEM
     ffi (1.13.1)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    hiredis (0.6.3)
     i18n (1.8.5)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.1)
@@ -156,6 +157,7 @@ GEM
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    redis (4.2.5)
     regexp_parser (2.0.0)
     rexml (3.2.4)
     rspec-core (3.10.0)
@@ -229,6 +231,7 @@ DEPENDENCIES
   byebug
   dotenv-rails (~> 2)
   factory_bot_rails
+  hiredis (~> 0)
   image_processing (~> 1)
   json_matchers
   listen
@@ -238,6 +241,7 @@ DEPENDENCIES
   pundit (~> 2)
   rack-cors (~> 1)
   rails (~> 6)
+  redis (~> 4)
   rspec-rails
   shoulda-matchers
   simplecov
