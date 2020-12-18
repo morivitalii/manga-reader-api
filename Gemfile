@@ -27,6 +27,7 @@ end
 group :test do
   gem "simplecov", require: false
   gem "shoulda-matchers"
+  gem "json_matchers"
 end
 
 gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
