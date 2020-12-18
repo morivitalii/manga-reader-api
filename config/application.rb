@@ -24,5 +24,6 @@ module Webtoons
     config.load_defaults 6.1
     config.api_only = true
     config.active_record.schema_format = :sql
+    config.i18n.available_locales = [:en]
   end
 end
