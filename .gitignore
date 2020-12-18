@@ -11,3 +11,4 @@
 !/storage/.keep
 .byebug_history
 /coverage
+.env.*.local
