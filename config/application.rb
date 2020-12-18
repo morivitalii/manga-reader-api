@@ -25,5 +25,6 @@ module Webtoons
     config.api_only = true
     config.active_record.schema_format = :sql
     config.i18n.available_locales = [:en]
+    config.i18n.default_locale = :en
   end
 end
