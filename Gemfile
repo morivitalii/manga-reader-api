@@ -13,6 +13,7 @@ gem "image_processing", "~> 1"
 gem "bcrypt", "~> 3"
 gem "rack-cors", "~> 1"
 gem "pundit", "~> 2"
+gem "draper", "~> 4"
 
 group :development, :test do
   gem "standard"
