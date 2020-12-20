@@ -1,0 +1,3 @@
+class LocaleDecorator < ApplicationDecorator
+
+end

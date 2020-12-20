@@ -1,0 +1,29 @@
+{
+  "id": "file:/serializers/locale.json#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "ID",
+      "examples": [1]
+    },
+    "key": {
+      "type": "string",
+      "enum": ["en", "ru"],
+      "description": "Key",
+      "examples": ["en"]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Дата создания",
+      "examples": ["2020-12-31T00:00:00.000Z"]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Дата последнего обновления",
+      "examples": ["2020-12-31T00:00:00.000Z"]
+    }
+  }
+}
