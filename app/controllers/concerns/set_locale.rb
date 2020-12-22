@@ -2,13 +2,13 @@ module SetLocale
   extend ActiveSupport::Concern
 
   included do
-    before_action :set_locale
+    around_action :set_locale
   end
 
   private
 
-  def set_locale
-    # TODO right now it's only one available locale
-    I18n.locale = :en
+  def set_locale(&action)
+    # Right now english is only one of available locales to consumers
+    I18n.with_locale(:en, &action)
   end
 end
