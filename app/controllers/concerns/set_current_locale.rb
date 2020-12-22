@@ -8,6 +8,6 @@ module SetCurrentLocale
   private
 
   def set_current_locale
-    Current.locale = Locale.where(key: I18n.locale).take!
+    Current.locale = Current.locales.detect { |locale| locale.key == I18n.locale.to_s }
   end
 end
