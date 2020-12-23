@@ -1,21 +1,37 @@
 class ApplicationSerializer
-  def initialize(model = nil)
+  def initialize(model = nil, options = {})
     @model = model
+
+    options.assert_valid_keys(
+      :except
+    )
+
+    @except_attributes = options[:except]
   end
 
-  def self.serialize(object)
+  def self.serialize(object, options = {})
     if object.is_a?(Enumerable)
-      object.map { |object| new(object) }
+      return [] if object.blank?
+
+      object.map { |object| new(object, options) }
     else
-      new(object)
+      return nil if object.blank?
+
+      new(object, options)
     end
   end
 
-  def as_json(options = {})
+  def as_json(_options = {})
+    attributes = self.attributes
+
+    if except_attributes.present?
+      attributes = attributes.except(*except_attributes)
+    end
+
     attributes
   end
 
   private
 
-  attr_reader :model
+  attr_reader :model, :except_attributes
 end
