@@ -1,29 +1,19 @@
 {
   "id": "file:/serializers/locale.json#",
   "type": "object",
+  "title": "Locale",
   "properties": {
     "id": {
-      "type": "integer",
-      "description": "ID",
-      "examples": [1]
+      "$ref": "file:/serializers/helpers/attributes/id.json#"
     },
     "key": {
-      "type": "string",
-      "enum": ["en", "ru"],
-      "description": "Key",
-      "examples": ["en"]
+      "$ref": "file:/serializers/helpers/attributes/locale.json#"
     },
     "created_at": {
-      "type": "string",
-      "format": "date-time",
-      "description": "Дата создания",
-      "examples": ["2020-12-31T00:00:00.000Z"]
+      "$ref": "file:/serializers/helpers/attributes/created_at.json#"
     },
     "updated_at": {
-      "type": "string",
-      "format": "date-time",
-      "description": "Дата последнего обновления",
-      "examples": ["2020-12-31T00:00:00.000Z"]
+      "$ref": "file:/serializers/helpers/attributes/updated_at.json#"
     }
   }
 }

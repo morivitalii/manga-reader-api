@@ -1,0 +1,53 @@
+{
+  "id": "file:/serializers/helpers/translations/content_languages.json#",
+  "type": "object",
+  "description": "Content languages status",
+  "definitions": {
+    "content_language": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "file:/serializers/helpers/attributes/id.json#"
+        },
+        "title": {
+          "type": "string",
+          "description": "Title",
+          "examples": ["English"]
+        },
+        "locale": {
+          "$ref": "file:/serializers/helpers/attributes/locale.json#"
+        }
+      }
+    }
+  },
+  "properties": {
+    "available": {
+      "type": "array",
+      "description": "Content languages available for translation",
+      "items": {
+        "$ref": "#/definitions/content_language"
+      }
+    },
+    "completed": {
+      "type": "array",
+      "description": "Content languages available for translation",
+      "items": {
+        "$ref": "#/definitions/content_language"
+      }
+    },
+    "progress": {
+      "type": "array",
+      "description": "Content languages available for translation",
+      "items": {
+        "$ref": "#/definitions/content_language"
+      }
+    },
+    "absent": {
+      "type": "array",
+      "description": "Content languages available for translation",
+      "items": {
+        "$ref": "#/definitions/content_language"
+      }
+    }
+  }
+}
