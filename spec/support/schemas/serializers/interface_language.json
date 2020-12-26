@@ -1,7 +1,7 @@
 {
   "id": "file:/serializers/interface_language.json#",
   "type": "object",
-  "title": "Content language",
+  "title": "Interface language",
   "properties": {
     "id": {
       "$ref": "file:/serializers/helpers/attributes/id.json#"

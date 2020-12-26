@@ -196,6 +196,70 @@ CREATE TABLE public.schema_migrations (
 
 
 --
+-- Name: title_translations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.title_translations (
+    id bigint NOT NULL,
+    content_language_id bigint NOT NULL,
+    resource_id bigint NOT NULL,
+    title character varying DEFAULT ''::character varying NOT NULL,
+    edited_at timestamp(6) without time zone NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: title_translations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.title_translations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: title_translations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.title_translations_id_seq OWNED BY public.title_translations.id;
+
+
+--
+-- Name: titles; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.titles (
+    id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: titles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.titles_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: titles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.titles_id_seq OWNED BY public.titles.id;
+
+
+--
 -- Name: content_language_translations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -228,6 +292,20 @@ ALTER TABLE ONLY public.interface_languages ALTER COLUMN id SET DEFAULT nextval(
 --
 
 ALTER TABLE ONLY public.locales ALTER COLUMN id SET DEFAULT nextval('public.locales_id_seq'::regclass);
+
+
+--
+-- Name: title_translations id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.title_translations ALTER COLUMN id SET DEFAULT nextval('public.title_translations_id_seq'::regclass);
+
+
+--
+-- Name: titles id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.titles ALTER COLUMN id SET DEFAULT nextval('public.titles_id_seq'::regclass);
 
 
 --
@@ -284,6 +362,22 @@ ALTER TABLE ONLY public.locales
 
 ALTER TABLE ONLY public.schema_migrations
     ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
+
+
+--
+-- Name: title_translations title_translations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.title_translations
+    ADD CONSTRAINT title_translations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: titles titles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.titles
+    ADD CONSTRAINT titles_pkey PRIMARY KEY (id);
 
 
 --
@@ -350,6 +444,35 @@ CREATE UNIQUE INDEX index_locales_on_lower_key ON public.locales USING btree (lo
 
 
 --
+-- Name: index_title_translations_on_content_language_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_title_translations_on_content_language_id ON public.title_translations USING btree (content_language_id);
+
+
+--
+-- Name: index_title_translations_on_resource_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_title_translations_on_resource_id ON public.title_translations USING btree (resource_id);
+
+
+--
+-- Name: index_title_translations_uniqueness; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_title_translations_uniqueness ON public.title_translations USING btree (resource_id, content_language_id);
+
+
+--
+-- Name: title_translations fk_rails_0d3349eccd; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.title_translations
+    ADD CONSTRAINT fk_rails_0d3349eccd FOREIGN KEY (resource_id) REFERENCES public.titles(id);
+
+
+--
 -- Name: content_language_translations fk_rails_2768f33fbe; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -363,6 +486,14 @@ ALTER TABLE ONLY public.content_language_translations
 
 ALTER TABLE ONLY public.content_language_translations
     ADD CONSTRAINT fk_rails_38abb8969d FOREIGN KEY (resource_id) REFERENCES public.content_languages(id);
+
+
+--
+-- Name: title_translations fk_rails_3c716d17ad; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.title_translations
+    ADD CONSTRAINT fk_rails_3c716d17ad FOREIGN KEY (content_language_id) REFERENCES public.content_languages(id);
 
 
 --
@@ -408,6 +539,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201221114759'),
 ('20201221154503'),
 ('20201226002544'),
-('20201226002925');
+('20201226002925'),
+('20201226014809'),
+('20201226014814');
 
 
