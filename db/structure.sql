@@ -91,6 +91,37 @@ ALTER SEQUENCE public.content_languages_id_seq OWNED BY public.content_languages
 
 
 --
+-- Name: demographics; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.demographics (
+    id bigint NOT NULL,
+    tag_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: demographics_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.demographics_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: demographics_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.demographics_id_seq OWNED BY public.demographics.id;
+
+
+--
 -- Name: formats; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -401,6 +432,13 @@ ALTER TABLE ONLY public.content_languages ALTER COLUMN id SET DEFAULT nextval('p
 
 
 --
+-- Name: demographics id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.demographics ALTER COLUMN id SET DEFAULT nextval('public.demographics_id_seq'::regclass);
+
+
+--
 -- Name: formats id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -485,6 +523,14 @@ ALTER TABLE ONLY public.content_language_translations
 
 ALTER TABLE ONLY public.content_languages
     ADD CONSTRAINT content_languages_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: demographics demographics_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.demographics
+    ADD CONSTRAINT demographics_pkey PRIMARY KEY (id);
 
 
 --
@@ -593,6 +639,13 @@ CREATE UNIQUE INDEX index_content_language_translations_uniqueness ON public.con
 --
 
 CREATE UNIQUE INDEX index_content_languages_on_locale_id ON public.content_languages USING btree (locale_id);
+
+
+--
+-- Name: index_demographics_on_tag_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_demographics_on_tag_id ON public.demographics USING btree (tag_id);
 
 
 --
@@ -782,6 +835,14 @@ ALTER TABLE ONLY public.interface_languages
 
 
 --
+-- Name: demographics fk_rails_fedc0e7479; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.demographics
+    ADD CONSTRAINT fk_rails_fedc0e7479 FOREIGN KEY (tag_id) REFERENCES public.tags(id);
+
+
+--
 -- Name: genres fk_rails_ffa5e79962; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -806,6 +867,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201226022318'),
 ('20201226022326'),
 ('20201226025537'),
-('20201226041301');
+('20201226041301'),
+('20201226042855');
 
 

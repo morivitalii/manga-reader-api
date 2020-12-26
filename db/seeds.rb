@@ -132,3 +132,23 @@ ActiveRecord::Base.transaction do
     end
   end
 end
+
+# Demographics
+ActiveRecord::Base.transaction do
+  # Seed only with english content language
+  Current.set(content_languages: @all_content_languages, content_language: @english_content_language) do
+    I18n.with_locale(:en) do
+      # Seinen demographic
+      @seinen_tag = Tag.new(key: :seinen, title: "Seinen")
+      @seinen_tag.save
+
+      @seinen_demographic = Demographic.create!(tag: @seinen_tag)
+
+      # Josei demographic
+      @josei_tag = Tag.new(key: :josei, title: "Josei")
+      @josei_tag.save
+
+      @josei_demographic = Demographic.create!(tag: @josei_tag)
+    end
+  end
+end

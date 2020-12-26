@@ -1,0 +1,62 @@
+{
+  "id": "file:/serializers/demographic.json#",
+  "type": "object",
+  "title": "Demographic",
+  "properties": {
+    "id": {
+      "$ref": "file:/serializers/helpers/attributes/id.json#"
+    },
+    "tag_id": {
+      "type": "integer",
+      "description": "Tag ID",
+      "examples": [1]
+    },
+    "title": {
+      "type": "string",
+      "description": "Title",
+      "examples": ["Seinen"]
+    },
+    "locale": {
+      "$ref": "file:/serializers/helpers/attributes/locale.json#"
+    },
+    "created_at": {
+      "$ref": "file:/serializers/helpers/attributes/created_at.json#"
+    },
+    "updated_at": {
+      "$ref": "file:/serializers/helpers/attributes/updated_at.json#"
+    },
+    "translations": {
+      "type": "object",
+      "properties": {
+        "attributes_names": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["title"],
+            "description": "Attribute name",
+            "examples": ["title"]
+          }
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Title",
+                "examples": ["Seinen"]
+              },
+              "$extends": {
+                "$ref": "file:/serializers/helpers/translations/metadata_attributes.json#"
+              }
+            }
+          }
+        },
+        "content_languages": {
+          "$ref": "file:/serializers/helpers/translations/content_languages.json#"
+        }
+      }
+    }
+  }
+}
