@@ -91,6 +91,37 @@ ALTER SEQUENCE public.content_languages_id_seq OWNED BY public.content_languages
 
 
 --
+-- Name: formats; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.formats (
+    id bigint NOT NULL,
+    tag_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: formats_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.formats_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: formats_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.formats_id_seq OWNED BY public.formats.id;
+
+
+--
 -- Name: genres; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -370,6 +401,13 @@ ALTER TABLE ONLY public.content_languages ALTER COLUMN id SET DEFAULT nextval('p
 
 
 --
+-- Name: formats id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.formats ALTER COLUMN id SET DEFAULT nextval('public.formats_id_seq'::regclass);
+
+
+--
 -- Name: genres id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -447,6 +485,14 @@ ALTER TABLE ONLY public.content_language_translations
 
 ALTER TABLE ONLY public.content_languages
     ADD CONSTRAINT content_languages_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: formats formats_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.formats
+    ADD CONSTRAINT formats_pkey PRIMARY KEY (id);
 
 
 --
@@ -550,6 +596,13 @@ CREATE UNIQUE INDEX index_content_languages_on_locale_id ON public.content_langu
 
 
 --
+-- Name: index_formats_on_tag_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_formats_on_tag_id ON public.formats USING btree (tag_id);
+
+
+--
 -- Name: index_genres_on_tag_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -638,6 +691,14 @@ CREATE INDEX index_title_translations_on_resource_id ON public.title_translation
 --
 
 CREATE UNIQUE INDEX index_title_translations_uniqueness ON public.title_translations USING btree (resource_id, content_language_id);
+
+
+--
+-- Name: formats fk_rails_0400824e47; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.formats
+    ADD CONSTRAINT fk_rails_0400824e47 FOREIGN KEY (tag_id) REFERENCES public.tags(id);
 
 
 --
@@ -744,6 +805,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201226014814'),
 ('20201226022318'),
 ('20201226022326'),
-('20201226025537');
+('20201226025537'),
+('20201226041301');
 
 

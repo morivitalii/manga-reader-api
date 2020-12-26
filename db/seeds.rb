@@ -112,3 +112,23 @@ ActiveRecord::Base.transaction do
     end
   end
 end
+
+# Formats
+ActiveRecord::Base.transaction do
+  # Seed only with english content language
+  Current.set(content_languages: @all_content_languages, content_language: @english_content_language) do
+    I18n.with_locale(:en) do
+      # Doujinshi format
+      @doujinshi_tag = Tag.new(key: :doujinshi, title: "Doujinshi")
+      @doujinshi_tag.save
+
+      @doujinshi_format = Format.create!(tag: @doujinshi_tag)
+
+      # Yonkoma format
+      @yonkoma_tag = Tag.new(key: :yonkoma, title: "Yonkoma")
+      @yonkoma_tag.save
+
+      @yonkoma_format = Format.create!(tag: @yonkoma_tag)
+    end
+  end
+end
