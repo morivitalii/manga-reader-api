@@ -63,3 +63,29 @@ ActiveRecord::Base.transaction do
     end
   end
 end
+
+ActiveRecord::Base.transaction do
+  Current.set(content_languages: @all_content_languages, content_language: @english_content_language) do
+    I18n.with_locale(:en) do
+      # English interface language with english translation
+      @english_interface_language = InterfaceLanguage.new(locale: @english_locale, title: "English")
+      @english_interface_language.save!
+
+      # Russian interface language with english translation
+      @russian_interface_language = InterfaceLanguage.new(locale: @russian_locale, title: "Russian")
+      @russian_interface_language.save!
+    end
+  end
+
+  Current.set(content_languages: @all_content_languages, content_language: @russian_content_language) do
+    I18n.with_locale(:ru) do
+      # Russian translations for english interface language
+      @english_interface_language.assign_attributes(title: "Английский")
+      @english_interface_language.save!
+
+      # Russian translations for russian interface language
+      @russian_interface_language.assign_attributes(title: "Русский")
+      @russian_interface_language.save!
+    end
+  end
+end
