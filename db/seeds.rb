@@ -1,12 +1,14 @@
 # Locales
+ActiveRecord::Base.transaction do
+  # English locale
+  @english_locale = Locale.create!(key: "en")
 
-# English locale
-@english_locale = Locale.create!(key: "en")
+  # Russian locale
+  @russian_locale = Locale.create!(key: "ru")
+end
 
-# Russian locale
-@russian_locale = Locale.create!(key: "ru")
-
-# Because content language model refers to itself this operations must be done in one transaction
+# Content languages
+# Because content language model refers to itself this operations MUST be done in one transaction
 ActiveRecord::Base.transaction do
   # English content language
   @english_content_language = ContentLanguage.new(locale: @english_locale)
@@ -64,6 +66,7 @@ ActiveRecord::Base.transaction do
   end
 end
 
+# Interface languages
 ActiveRecord::Base.transaction do
   Current.set(content_languages: @all_content_languages, content_language: @english_content_language) do
     I18n.with_locale(:en) do
@@ -86,6 +89,26 @@ ActiveRecord::Base.transaction do
       # Russian translations for russian interface language
       @russian_interface_language.assign_attributes(title: "Русский")
       @russian_interface_language.save!
+    end
+  end
+end
+
+# Genres
+ActiveRecord::Base.transaction do
+  # Seed only with english content language
+  Current.set(content_languages: @all_content_languages, content_language: @english_content_language) do
+    I18n.with_locale(:en) do
+      # Adventure genre
+      @adventure_tag = Tag.new(key: :adventure, title: "Adventure")
+      @adventure_tag.save
+
+      @adventure_genre = Genre.create!(tag: @adventure_tag)
+
+      # Drama genre
+      @drama_tag = Tag.new(key: :drama, title: "Drama")
+      @drama_tag.save
+
+      @drama_genre = Genre.create!(tag: @drama_tag)
     end
   end
 end

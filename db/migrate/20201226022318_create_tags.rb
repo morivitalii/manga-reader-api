@@ -4,7 +4,7 @@ class CreateTags < ActiveRecord::Migration[6.1]
       t.string :key, null: false
       t.timestamps
 
-      t.index "lower(key)", unique: true
+      t.index :key, unique: true
     end
   end
 end
