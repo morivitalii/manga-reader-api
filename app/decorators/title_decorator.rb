@@ -1,0 +1,3 @@
+class TitleDecorator < ApplicationDecorator
+
+end
