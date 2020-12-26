@@ -9,7 +9,7 @@ RSpec.describe InterfaceLanguagesController do
       get "/interface_languages.json"
 
       expect(response).to have_http_status(200)
-      expect(response).to match_json_schema("controllers/content_languages_controller/index/200")
+      expect(response).to match_json_schema("controllers/interface_languages_controller/index/200")
     end
   end
 
@@ -21,7 +21,7 @@ RSpec.describe InterfaceLanguagesController do
       get "/interface_languages/#{english_interface_language.to_param}.json"
 
       expect(response).to have_http_status(200)
-      expect(response).to match_json_schema("controllers/content_languages_controller/show/200")
+      expect(response).to match_json_schema("controllers/interface_languages_controller/show/200")
     end
   end
 end

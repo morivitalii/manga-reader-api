@@ -91,6 +91,37 @@ ALTER SEQUENCE public.content_languages_id_seq OWNED BY public.content_languages
 
 
 --
+-- Name: genres; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.genres (
+    id bigint NOT NULL,
+    tag_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: genres_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.genres_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: genres_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.genres_id_seq OWNED BY public.genres.id;
+
+
+--
 -- Name: interface_language_translations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -339,6 +370,13 @@ ALTER TABLE ONLY public.content_languages ALTER COLUMN id SET DEFAULT nextval('p
 
 
 --
+-- Name: genres id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.genres ALTER COLUMN id SET DEFAULT nextval('public.genres_id_seq'::regclass);
+
+
+--
 -- Name: interface_language_translations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -409,6 +447,14 @@ ALTER TABLE ONLY public.content_language_translations
 
 ALTER TABLE ONLY public.content_languages
     ADD CONSTRAINT content_languages_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: genres genres_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.genres
+    ADD CONSTRAINT genres_pkey PRIMARY KEY (id);
 
 
 --
@@ -504,6 +550,13 @@ CREATE UNIQUE INDEX index_content_languages_on_locale_id ON public.content_langu
 
 
 --
+-- Name: index_genres_on_tag_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_genres_on_tag_id ON public.genres USING btree (tag_id);
+
+
+--
 -- Name: index_interface_language_translations_on_content_language_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -560,10 +613,10 @@ CREATE UNIQUE INDEX index_tag_translations_uniqueness ON public.tag_translations
 
 
 --
--- Name: index_tags_on_lower_key; Type: INDEX; Schema: public; Owner: -
+-- Name: index_tags_on_key; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_tags_on_lower_key ON public.tags USING btree (lower((key)::text));
+CREATE UNIQUE INDEX index_tags_on_key ON public.tags USING btree (key);
 
 
 --
@@ -668,6 +721,14 @@ ALTER TABLE ONLY public.interface_languages
 
 
 --
+-- Name: genres fk_rails_ffa5e79962; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.genres
+    ADD CONSTRAINT fk_rails_ffa5e79962 FOREIGN KEY (tag_id) REFERENCES public.tags(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -682,6 +743,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201226014809'),
 ('20201226014814'),
 ('20201226022318'),
-('20201226022326');
+('20201226022326'),
+('20201226025537');
 
 

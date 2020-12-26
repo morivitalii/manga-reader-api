@@ -4,5 +4,5 @@ class Tag < ApplicationRecord
   translates :title
 
   validates :title, presence: true
-  validates :key, presence: true, uniqueness: { case_sensitive: false }
+  validates :key, presence: true, uniqueness: true
 end

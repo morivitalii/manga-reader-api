@@ -1,11 +1,9 @@
 class ApplicationSerializer
   def initialize(model = nil, options = {})
-    @model = model
-
     options.assert_valid_keys(
       :except
     )
-
+    @model = model
     @except_attributes = options[:except]
   end
 
