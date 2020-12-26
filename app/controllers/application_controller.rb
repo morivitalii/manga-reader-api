@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::API
   include SetLocale
-  include SetCurrentLocalesLocale
-  include SetCurrentLocale
+  include SetCurrentContentLanguages
+  include SetCurrentContentLanguage
 end

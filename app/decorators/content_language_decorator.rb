@@ -1,0 +1,3 @@
+class ContentLanguageDecorator < ApplicationDecorator
+
+end

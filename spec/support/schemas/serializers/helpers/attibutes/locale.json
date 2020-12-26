@@ -1,0 +1,7 @@
+{
+  "id": "file:/serializers/helpers/attributes/locale.json#",
+  "type": "string",
+  "enum": ["en", "ru"],
+  "description": "Locale key",
+  "examples": ["en"]
+}
