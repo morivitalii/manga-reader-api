@@ -3,5 +3,6 @@ Rails.application.routes.draw do
     resources :content_languages, only: [:index, :show]
     resources :interface_languages, only: [:index, :show]
     resources :genres, only: [:index, :show]
+    resources :formats, only: [:index, :show]
   end
 end
