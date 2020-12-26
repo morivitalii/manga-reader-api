@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe ContentLanguage do
+RSpec.describe InterfaceLanguage do
   describe "validations" do
     subject { create(:interface_language) }
 
