@@ -1,0 +1,3 @@
+class InterfaceLanguageDecorator < ApplicationDecorator
+
+end
