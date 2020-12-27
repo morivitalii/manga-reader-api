@@ -1,4 +1,4 @@
-class InterfaceLanguagesController < ApplicationController
+class Api::InterfaceLanguagesController < ApplicationController
   before_action :set_interface_language, only: [:show]
   before_action :set_interface_language_associations, only: [:show]
 
@@ -10,15 +10,15 @@ class InterfaceLanguagesController < ApplicationController
       ]
     ).all
 
-    interface_languages = InterfaceLanguageDecorator.decorate_collection(interface_languages)
+    interface_languages = Api::InterfaceLanguageDecorator.decorate_collection(interface_languages)
 
-    render json: InterfaceLanguageSerializer.serialize(interface_languages), status: 200
+    render json: Api::InterfaceLanguageSerializer.serialize(interface_languages), status: 200
   end
 
   def show
-    interface_language = InterfaceLanguageDecorator.decorate(@interface_language)
+    interface_language = Api::InterfaceLanguageDecorator.decorate(@interface_language)
 
-    render json: InterfaceLanguageSerializer.serialize(interface_language), status: 200
+    render json: Api::InterfaceLanguageSerializer.serialize(interface_language), status: 200
   end
 
   private

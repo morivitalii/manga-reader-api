@@ -1,5 +1,5 @@
 # This module is intended to simplify model attributes translations
-module TranslationAttributes
+module Api::Concerns::TranslationAttributes
   extend ActiveSupport::Concern
 
   private

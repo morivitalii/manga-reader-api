@@ -4,16 +4,16 @@
   "title": "Locale",
   "properties": {
     "id": {
-      "$ref": "file:/serializers/helpers/attributes/id.json#"
+      "$ref": "file:/serializers/api/helpers/attributes/id.json#"
     },
     "key": {
-      "$ref": "file:/serializers/helpers/attributes/locale.json#"
+      "$ref": "file:/serializers/api/helpers/attributes/locale.json#"
     },
     "created_at": {
-      "$ref": "file:/serializers/helpers/attributes/created_at.json#"
+      "$ref": "file:/serializers/api/helpers/attributes/created_at.json#"
     },
     "updated_at": {
-      "$ref": "file:/serializers/helpers/attributes/updated_at.json#"
+      "$ref": "file:/serializers/api/helpers/attributes/updated_at.json#"
     }
   }
 }
