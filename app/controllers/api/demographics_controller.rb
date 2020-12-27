@@ -1,4 +1,4 @@
-class DemographicsController < Api::ApplicationController
+class Api::DemographicsController < Api::ApplicationController
   before_action :set_demographic, only: [:show]
   before_action :set_demographic_associations, only: [:show]
 
@@ -11,15 +11,15 @@ class DemographicsController < Api::ApplicationController
       ]
     ).all
 
-    demographics = DemographicDecorator.decorate_collection(demographics)
+    demographics = Api::DemographicDecorator.decorate_collection(demographics)
 
-    render json: DemographicSerializer.serialize(demographics), status: 200
+    render json: Api::DemographicSerializer.serialize(demographics), status: 200
   end
 
   def show
-    demographic = DemographicDecorator.decorate(@demographic)
+    demographic = Api::DemographicDecorator.decorate(@demographic)
 
-    render json: DemographicSerializer.serialize(demographic), status: 200
+    render json: Api::DemographicSerializer.serialize(demographic), status: 200
   end
 
   private

@@ -1,5 +1,5 @@
 {
-  "id": "file:/serializers/demographic.json#",
+  "id": "file:/serializers/api/demographic.json#",
   "type": "object",
   "title": "Demographic",
   "properties": {
