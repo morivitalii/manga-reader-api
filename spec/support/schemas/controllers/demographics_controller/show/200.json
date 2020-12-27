@@ -1,5 +1,0 @@
-{
-  "allOf": [
-    { "$ref": "file:/serializers/demographic.json#" }
-  ]
-}
