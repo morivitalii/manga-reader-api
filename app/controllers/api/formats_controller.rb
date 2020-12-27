@@ -1,4 +1,4 @@
-class FormatsController < Api::ApplicationController
+class Api::FormatsController < Api::ApplicationController
   before_action :set_format, only: [:show]
   before_action :set_format_associations, only: [:show]
 
@@ -11,15 +11,15 @@ class FormatsController < Api::ApplicationController
       ]
     ).all
 
-    formats = FormatDecorator.decorate_collection(formats)
+    formats = Api::FormatDecorator.decorate_collection(formats)
 
-    render json: FormatSerializer.serialize(formats), status: 200
+    render json: Api::FormatSerializer.serialize(formats), status: 200
   end
 
   def show
-    format = FormatDecorator.decorate(@format)
+    format = Api::FormatDecorator.decorate(@format)
 
-    render json: FormatSerializer.serialize(format), status: 200
+    render json: Api::FormatSerializer.serialize(format), status: 200
   end
 
   private

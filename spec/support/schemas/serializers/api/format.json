@@ -1,5 +1,5 @@
 {
-  "id": "file:/serializers/format.json#",
+  "id": "file:/serializers/api/format.json#",
   "type": "object",
   "title": "Format",
   "properties": {
