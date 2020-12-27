@@ -1,4 +1,4 @@
-class FormatsController < ApplicationController
+class FormatsController < Api::ApplicationController
   before_action :set_format, only: [:show]
   before_action :set_format_associations, only: [:show]
 

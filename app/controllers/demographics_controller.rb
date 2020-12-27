@@ -1,4 +1,4 @@
-class DemographicsController < ApplicationController
+class DemographicsController < Api::ApplicationController
   before_action :set_demographic, only: [:show]
   before_action :set_demographic_associations, only: [:show]
 

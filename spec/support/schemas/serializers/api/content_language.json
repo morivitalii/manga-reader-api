@@ -1,5 +1,5 @@
 {
-  "id": "file:/serializers/content_language.json#",
+  "id": "file:/serializers/api/content_language.json#",
   "type": "object",
   "title": "Content language",
   "properties": {

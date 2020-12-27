@@ -1,4 +1,4 @@
-class GenresController < ApplicationController
+class GenresController < Api::ApplicationController
   before_action :set_genre, only: [:show]
   before_action :set_genre_associations, only: [:show]
 

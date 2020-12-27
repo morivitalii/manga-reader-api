@@ -1,4 +1,4 @@
-class Api::InterfaceLanguagesController < ApplicationController
+class Api::InterfaceLanguagesController < Api::ApplicationController
   before_action :set_interface_language, only: [:show]
   before_action :set_interface_language_associations, only: [:show]
 
