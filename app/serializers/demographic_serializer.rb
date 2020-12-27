@@ -1,4 +1,4 @@
-class DemographicSerializer < ApplicationSerializer
+class DemographicSerializer < Api::ApplicationSerializer
   def attributes
     {
       id: model.id,

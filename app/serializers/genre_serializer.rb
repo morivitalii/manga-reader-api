@@ -1,4 +1,4 @@
-class GenreSerializer < ApplicationSerializer
+class GenreSerializer < Api::ApplicationSerializer
   def attributes
     {
       id: model.id,

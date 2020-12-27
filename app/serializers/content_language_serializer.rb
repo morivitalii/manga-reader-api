@@ -1,5 +1,5 @@
-class ContentLanguageSerializer < ApplicationSerializer
-  include TranslationAttributes
+class ContentLanguageSerializer < Api::ApplicationSerializer
+  include Api::Concerns::TranslationAttributes
 
   def attributes
     {

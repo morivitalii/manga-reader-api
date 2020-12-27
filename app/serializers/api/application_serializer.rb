@@ -1,4 +1,4 @@
-class ApplicationSerializer
+class Api::ApplicationSerializer
   def initialize(model = nil, options = {})
     options.assert_valid_keys(
       :except

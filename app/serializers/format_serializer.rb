@@ -1,4 +1,4 @@
-class FormatSerializer < ApplicationSerializer
+class FormatSerializer < Api::ApplicationSerializer
   def attributes
     {
       id: model.id,
