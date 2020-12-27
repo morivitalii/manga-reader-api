@@ -5,6 +5,9 @@ class Tag < ApplicationRecord
   has_one :format, dependent: :destroy
   has_one :demographic, dependent: :destroy
 
+  has_many :resource_tags, dependent: :restrict_with_error
+  has_many :titles, through: :resource_tags, source: :resource, source_type: "Title"
+
   translates :title
 
   validates :title, presence: true
