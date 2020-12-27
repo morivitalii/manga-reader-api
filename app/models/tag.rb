@@ -1,7 +1,8 @@
 class Tag < ApplicationRecord
   include Translation
 
-  has_one :demographic
+  has_one :format, dependent: :destroy
+  has_one :demographic, dependent: :destroy
 
   translates :title
 
