@@ -16,6 +16,6 @@ class DemographicSerializer < Api::ApplicationSerializer
     return nil unless model.association(:tag).loaded?
     return nil if model.tag.blank?
 
-    TagSerializer.serialize(model.tag)
+    Api::TagSerializer.serialize(model.tag)
   end
 end

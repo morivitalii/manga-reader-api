@@ -1,3 +1,3 @@
-class TitleDecorator < ApplicationDecorator
+class TitleDecorator < Api::ApplicationDecorator
 
 end

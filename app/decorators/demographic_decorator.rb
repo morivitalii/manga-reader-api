@@ -1,3 +1,3 @@
-class DemographicDecorator < ApplicationDecorator
-  decorates_association :tag, with: TagDecorator
+class DemographicDecorator < Api::ApplicationDecorator
+  decorates_association :tag, with: Api::TagDecorator
 end

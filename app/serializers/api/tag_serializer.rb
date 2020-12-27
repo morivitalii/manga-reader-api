@@ -1,4 +1,4 @@
-class TagSerializer < Api::ApplicationSerializer
+class Api::TagSerializer < Api::ApplicationSerializer
   include Api::Concerns::TranslationAttributes
 
   def attributes
