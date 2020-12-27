@@ -1,4 +1,4 @@
-class GenreSerializer < Api::ApplicationSerializer
+class Api::GenreSerializer < Api::ApplicationSerializer
   def attributes
     {
       id: model.id,
@@ -16,6 +16,6 @@ class GenreSerializer < Api::ApplicationSerializer
     return nil unless model.association(:tag).loaded?
     return nil if model.tag.blank?
 
-    TagSerializer.serialize(model.tag)
+    Api::TagSerializer.serialize(model.tag)
   end
 end

@@ -1,5 +1,5 @@
 {
-  "id": "file:/serializers/genre.json#",
+  "id": "file:/serializers/api/genre.json#",
   "type": "object",
   "title": "Genre",
   "properties": {

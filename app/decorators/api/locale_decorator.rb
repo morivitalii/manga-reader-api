@@ -1,3 +1,3 @@
-class Api::LocaleDecorator < ApplicationDecorator
+class Api::LocaleDecorator < Api::ApplicationDecorator
 
 end
