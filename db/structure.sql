@@ -280,6 +280,39 @@ ALTER SEQUENCE public.locales_id_seq OWNED BY public.locales.id;
 
 
 --
+-- Name: resource_tags; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.resource_tags (
+    id bigint NOT NULL,
+    tag_id bigint NOT NULL,
+    resource_type character varying NOT NULL,
+    resource_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: resource_tags_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.resource_tags_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: resource_tags_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.resource_tags_id_seq OWNED BY public.resource_tags.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -474,6 +507,13 @@ ALTER TABLE ONLY public.locales ALTER COLUMN id SET DEFAULT nextval('public.loca
 
 
 --
+-- Name: resource_tags id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_tags ALTER COLUMN id SET DEFAULT nextval('public.resource_tags_id_seq'::regclass);
+
+
+--
 -- Name: tag_translations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -571,6 +611,14 @@ ALTER TABLE ONLY public.interface_languages
 
 ALTER TABLE ONLY public.locales
     ADD CONSTRAINT locales_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: resource_tags resource_tags_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_tags
+    ADD CONSTRAINT resource_tags_pkey PRIMARY KEY (id);
 
 
 --
@@ -695,6 +743,27 @@ CREATE UNIQUE INDEX index_interface_languages_on_locale_id ON public.interface_l
 --
 
 CREATE UNIQUE INDEX index_locales_on_lower_key ON public.locales USING btree (lower((key)::text));
+
+
+--
+-- Name: index_resource_tags_on_resource; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resource_tags_on_resource ON public.resource_tags USING btree (resource_type, resource_id);
+
+
+--
+-- Name: index_resource_tags_on_tag_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resource_tags_on_tag_id ON public.resource_tags USING btree (tag_id);
+
+
+--
+-- Name: index_resource_tags_uniqueness; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_resource_tags_uniqueness ON public.resource_tags USING btree (tag_id, resource_type, resource_id);
 
 
 --
@@ -868,6 +937,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201226022326'),
 ('20201226025537'),
 ('20201226041301'),
-('20201226042855');
+('20201226042855'),
+('20201226050013');
 
 
