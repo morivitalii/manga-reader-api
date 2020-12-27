@@ -18,28 +18,28 @@ module Api::Concerns::TranslationAttributes
   end
 
   def translation_available_content_languages
-    ContentLanguageSerializer.serialize(
+    Api::ContentLanguageSerializer.serialize(
       model.translation_available_content_languages,
       except: [:translations, :created_at, :updated_at]
     )
   end
 
   def translation_completed_content_languages
-    ContentLanguageSerializer.serialize(
+    Api::ContentLanguageSerializer.serialize(
       model.translation_completed_content_languages,
       except: [:translations, :created_at, :updated_at]
     )
   end
 
   def translation_content_languages_in_progress
-    ContentLanguageSerializer.serialize(
+    Api::ContentLanguageSerializer.serialize(
       model.translation_content_languages_in_progress,
       except: [:translations, :created_at, :updated_at]
     )
   end
 
   def translation_absent_content_languages
-    ContentLanguageSerializer.serialize(
+    Api::ContentLanguageSerializer.serialize(
       model.translation_absent_content_languages,
       except: [:translations, :created_at, :updated_at]
     )

@@ -1,5 +1,0 @@
-{
-  "allOf": [
-    { "$ref": "file:/serializers/content_language.json#" }
-  ]
-}

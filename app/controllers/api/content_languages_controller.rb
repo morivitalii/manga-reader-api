@@ -1,4 +1,4 @@
-class ContentLanguagesController < ApplicationController
+class Api::ContentLanguagesController < Api::ApplicationController
   before_action :set_content_language, only: [:show]
   before_action :set_content_language_associations, only: [:show]
 
@@ -10,15 +10,15 @@ class ContentLanguagesController < ApplicationController
       ]
     ).all
 
-    content_languages = ContentLanguageDecorator.decorate_collection(content_languages)
+    content_languages = Api::ContentLanguageDecorator.decorate_collection(content_languages)
 
-    render json: ContentLanguageSerializer.serialize(content_languages), status: 200
+    render json: Api::ContentLanguageSerializer.serialize(content_languages), status: 200
   end
 
   def show
-    content_language = ContentLanguageDecorator.decorate(@content_language)
+    content_language = Api::ContentLanguageDecorator.decorate(@content_language)
 
-    render json: ContentLanguageSerializer.serialize(content_language), status: 200
+    render json: Api::ContentLanguageSerializer.serialize(content_language), status: 200
   end
 
   private
