@@ -5,6 +5,7 @@ class Title < ApplicationRecord
   has_many :tags, through: :resource_tags
   has_many :genres, through: :tags
   has_many :formats, through: :tags
+  has_many :demographics, through: :tags
 
   translates :title
 
