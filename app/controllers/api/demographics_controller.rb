@@ -3,13 +3,11 @@ class Api::DemographicsController < Api::ApplicationController
   before_action :set_demographic_associations, only: [:show]
 
   def index
-    demographics = Demographic.joins(tag: :translations).order("tag_translations.title ASC").includes(
-      tag: [
-        translations: [
-          content_language: :locale
-        ]
-      ]
-    ).all
+    demographics = Demographic.joins(tag: :translations).order("tag_translations.title ASC").all
+
+    ActiveRecord::Associations::Preloader.new.preload(
+      demographics, :tag, Tag.with_translations
+    )
 
     demographics = Api::DemographicDecorator.decorate_collection(demographics)
 

@@ -3,12 +3,7 @@ class Api::InterfaceLanguagesController < Api::ApplicationController
   before_action :set_interface_language_associations, only: [:show]
 
   def index
-    interface_languages = InterfaceLanguage.order(id: :asc).includes(
-      :locale,
-      translations: [
-        content_language: :locale
-      ]
-    ).all
+    interface_languages = InterfaceLanguage.with_translations.includes(:locale).order(id: :asc).all
 
     interface_languages = Api::InterfaceLanguageDecorator.decorate_collection(interface_languages)
 
@@ -24,18 +19,10 @@ class Api::InterfaceLanguagesController < Api::ApplicationController
   private
 
   def set_interface_language
-    @interface_language = InterfaceLanguage.find(params[:id])
+    @interface_language = InterfaceLanguage.with_translations.find(params[:id])
   end
 
   def set_interface_language_associations
-    ActiveRecord::Associations::Preloader.new.preload(
-      @interface_language,
-      [
-        :locale,
-        translations: [
-          content_language: :locale
-        ]
-      ]
-    )
+    ActiveRecord::Associations::Preloader.new.preload(@interface_language, :locale)
   end
 end

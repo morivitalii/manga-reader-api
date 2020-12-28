@@ -3,13 +3,11 @@ class Api::GenresController < Api::ApplicationController
   before_action :set_genre_associations, only: [:show]
 
   def index
-    genres = Genre.joins(tag: :translations).order("tag_translations.title ASC").includes(
-      tag: [
-        translations: [
-          content_language: :locale
-        ]
-      ]
-    ).all
+    genres = Genre.joins(tag: :translations).order("tag_translations.title ASC").all
+
+    ActiveRecord::Associations::Preloader.new.preload(
+      genres, :tag, Tag.with_translations
+    )
 
     genres = Api::GenreDecorator.decorate_collection(genres)
 
@@ -30,14 +28,7 @@ class Api::GenresController < Api::ApplicationController
 
   def set_genre_associations
     ActiveRecord::Associations::Preloader.new.preload(
-      @genre,
-      [
-        tag: [
-          translations: [
-            content_language: :locale
-          ]
-        ]
-      ]
+      @genre, :tag, Tag.with_translations
     )
   end
 end

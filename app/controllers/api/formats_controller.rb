@@ -3,13 +3,11 @@ class Api::FormatsController < Api::ApplicationController
   before_action :set_format_associations, only: [:show]
 
   def index
-    formats = Format.joins(tag: :translations).order("tag_translations.title ASC").includes(
-      tag: [
-        translations: [
-          content_language: :locale
-        ]
-      ]
-    ).all
+    formats = Format.joins(tag: :translations).order("tag_translations.title ASC").all
+
+    ActiveRecord::Associations::Preloader.new.preload(
+      formats, :tag, Tag.with_translations
+    )
 
     formats = Api::FormatDecorator.decorate_collection(formats)
 
