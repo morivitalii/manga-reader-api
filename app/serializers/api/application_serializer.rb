@@ -1,10 +1,9 @@
 class Api::ApplicationSerializer
   def initialize(model = nil, options = {})
-    options.assert_valid_keys(
-      :except
-    )
+    options.assert_valid_keys(:except)
+
     @model = model
-    @except_attributes = options[:except]
+    @options = options
   end
 
   def self.serialize(object, options = {})
@@ -22,8 +21,8 @@ class Api::ApplicationSerializer
   def as_json(_options = {})
     attributes = self.attributes
 
-    if except_attributes.present?
-      attributes = attributes.except(*except_attributes)
+    if options[:except].present?
+      attributes = attributes.except(*options[:except])
     end
 
     attributes
@@ -31,5 +30,5 @@ class Api::ApplicationSerializer
 
   private
 
-  attr_reader :model, :except_attributes
+  attr_reader :model, :options
 end
