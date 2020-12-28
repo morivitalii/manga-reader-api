@@ -10,14 +10,16 @@ class Api::DemographicsController < Api::ApplicationController
     )
 
     demographics = Api::DemographicDecorator.decorate_collection(demographics)
+    demographics = Api::DemographicSerializer.serialize(demographics)
 
-    render json: Api::DemographicSerializer.serialize(demographics), status: 200
+    render json: demographics, status: 200
   end
 
   def show
     demographic = Api::DemographicDecorator.decorate(@demographic)
+    demographic = Api::DemographicSerializer.serialize(demographic)
 
-    render json: Api::DemographicSerializer.serialize(demographic), status: 200
+    render json: demographic, status: 200
   end
 
   private
@@ -28,14 +30,7 @@ class Api::DemographicsController < Api::ApplicationController
 
   def set_demographic_associations
     ActiveRecord::Associations::Preloader.new.preload(
-      @demographic,
-      [
-        tag: [
-          translations: [
-            content_language: :locale
-          ]
-        ]
-      ]
+      @demographic, :tag, Tag.with_translations
     )
   end
 end
