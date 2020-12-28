@@ -10,14 +10,16 @@ class Api::FormatsController < Api::ApplicationController
     )
 
     formats = Api::FormatDecorator.decorate_collection(formats)
+    formats = Api::FormatSerializer.serialize(formats)
 
-    render json: Api::FormatSerializer.serialize(formats), status: 200
+    render json: formats, status: 200
   end
 
   def show
     format = Api::FormatDecorator.decorate(@format)
+    format = Api::FormatSerializer.serialize(format)
 
-    render json: Api::FormatSerializer.serialize(format), status: 200
+    render json: format, status: 200
   end
 
   private
@@ -28,14 +30,7 @@ class Api::FormatsController < Api::ApplicationController
 
   def set_format_associations
     ActiveRecord::Associations::Preloader.new.preload(
-      @format,
-      [
-        tag: [
-          translations: [
-            content_language: :locale
-          ]
-        ]
-      ]
+      @format, :tag, Tag.with_translations
     )
   end
 end
