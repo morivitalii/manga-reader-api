@@ -1,5 +1,5 @@
 class Api::TagSerializer < Api::ApplicationSerializer
-  include Api::Concerns::TranslationAttributes
+  include Api::TranslationSerializer
 
   def attributes
     {

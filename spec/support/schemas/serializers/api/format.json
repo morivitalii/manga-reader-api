@@ -48,13 +48,13 @@
                 "examples": ["4-koma"]
               },
               "$extends": {
-                "$ref": "file:/serializers/api/helpers/translations/metadata_attributes.json#"
+                "$ref": "file:/serializers/api/helpers/translation/metadata_attributes.json#"
               }
             }
           }
         },
         "content_languages": {
-          "$ref": "file:/serializers/api/helpers/translations/content_languages.json#"
+          "$ref": "file:/serializers/api/helpers/translation/content_languages.json#"
         }
       }
     }

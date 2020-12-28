@@ -1,5 +1,5 @@
 {
-  "id": "file:/serializers/api/helpers/translations/content_languages.json#",
+  "id": "file:/serializers/api/helpers/translation/content_languages.json#",
   "type": "object",
   "description": "Content languages status",
   "definitions": {

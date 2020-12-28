@@ -1,5 +1,5 @@
 {
-  "id": "file:/serializers/api/helpers/translations/metadata_attributes.json#",
+  "id": "file:/serializers/api/helpers/translation/metadata_attributes.json#",
   "type": "object",
   "description": "Translation metadata attributes",
   "properties": {

@@ -1,5 +1,5 @@
 # This module is intended to simplify model attributes translations
-module Api::Concerns::TranslationAttributes
+module Api::TranslationSerializer
   extend ActiveSupport::Concern
 
   private

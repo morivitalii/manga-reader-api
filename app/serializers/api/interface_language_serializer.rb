@@ -1,5 +1,5 @@
 class Api::InterfaceLanguageSerializer < Api::ApplicationSerializer
-  include Api::Concerns::TranslationAttributes
+  include Api::TranslationSerializer
 
   def attributes
     {
