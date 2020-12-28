@@ -10,14 +10,16 @@ class Api::GenresController < Api::ApplicationController
     )
 
     genres = Api::GenreDecorator.decorate_collection(genres)
+    genres = Api::GenreSerializer.serialize(genres)
 
-    render json: Api::GenreSerializer.serialize(genres), status: 200
+    render json: genres, status: 200
   end
 
   def show
     genre = Api::GenreDecorator.decorate(@genre)
+    genre = Api::GenreSerializer.serialize(genre)
 
-    render json: Api::GenreSerializer.serialize(genre), status: 200
+    render json: genre, status: 200
   end
 
   private
