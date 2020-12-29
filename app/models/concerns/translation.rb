@@ -2,7 +2,7 @@
 #
 # Example of migration for model translations table:
 #
-# create_table :content_language_translations do |t|
+# create_table :resource_translations do |t|
 #   # Reference to content languages table
 #   t.belongs_to :content_language, foreign_key: true
 #
@@ -11,8 +11,8 @@
 #
 #   # Translatable model attributes
 #   # Each column must be not null and has empty string as default value
-#   t.string :model_attribute_for_translation, null: false, default: ""
-#   t.text :other_model_attribute_for_translation, null: false, default: ""
+#   t.string :resource_attribute_for_translation, null: false, default: ""
+#   t.text :other_resource_attribute_for_translation, null: false, default: ""
 #
 #   # Store information about last edit time for translatable attributes
 #   # Must be not null and has precision of 6
@@ -21,7 +21,7 @@
 #   t.timestamps
 #
 #   # By creating this index we ensure that resource will have only one translation record for each content language
-#   t.index [:resource_id, :content_language_id], unique: true, name: "index_content_language_translations_uniqueness"
+#   t.index [:resource_id, :content_language_id], unique: true, name: "index_resource_translations_uniqueness"
 # end
 module Translation
   extend ActiveSupport::Concern

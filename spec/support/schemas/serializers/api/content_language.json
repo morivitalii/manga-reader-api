@@ -19,39 +19,6 @@
     },
     "updated_at": {
       "$ref": "file:/serializers/api/helpers/attributes/updated_at.json#"
-    },
-    "translations": {
-      "type": "object",
-      "properties": {
-        "attributes_names": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": ["title"],
-            "description": "Attribute name",
-            "examples": ["title"]
-          }
-        },
-        "attributes": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "title": {
-                "type": "string",
-                "description": "Title",
-                "examples": ["English"]
-              },
-              "$extends": {
-                "$ref": "file:/serializers/api/helpers/translation/metadata_attributes.json#"
-              }
-            }
-          }
-        },
-        "content_languages": {
-          "$ref": "file:/serializers/api/helpers/translation/content_languages.json#"
-        }
-      }
     }
   }
 }
