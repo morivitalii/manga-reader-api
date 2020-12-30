@@ -30,9 +30,14 @@ module Translation
     has_many :translations, autosave: true, class_name: "#{self.name}Translation", foreign_key: :resource_id, dependent: :destroy
     has_many :content_languages, through: :translations
 
+    # List of translations associations
+    def self.translations_associations
+      { translations: { content_language: :locale } }
+    end
+
     # Convenient method to include all associations related to translations
     def self.with_translations
-      includes(translations: { content_language: :locale })
+      includes(translations_associations)
     end
   end
 
