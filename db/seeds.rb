@@ -152,3 +152,17 @@ ActiveRecord::Base.transaction do
     end
   end
 end
+
+# Marks
+ActiveRecord::Base.transaction do
+  # Seed only with english content language
+  Current.set(content_languages: @all_content_languages, content_language: @english_content_language) do
+    I18n.with_locale(:en) do
+      # Explicit mark
+      @explicit_tag = Tag.new(key: :explicit, title: "Explicit")
+      @explicit_tag.save
+
+      @explicit_mark = Mark.create!(tag: @explicit_tag)
+    end
+  end
+end

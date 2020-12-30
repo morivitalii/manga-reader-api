@@ -280,6 +280,37 @@ ALTER SEQUENCE public.locales_id_seq OWNED BY public.locales.id;
 
 
 --
+-- Name: marks; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.marks (
+    id bigint NOT NULL,
+    tag_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: marks_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.marks_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: marks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.marks_id_seq OWNED BY public.marks.id;
+
+
+--
 -- Name: resource_tags; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -507,6 +538,13 @@ ALTER TABLE ONLY public.locales ALTER COLUMN id SET DEFAULT nextval('public.loca
 
 
 --
+-- Name: marks id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.marks ALTER COLUMN id SET DEFAULT nextval('public.marks_id_seq'::regclass);
+
+
+--
 -- Name: resource_tags id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -611,6 +649,14 @@ ALTER TABLE ONLY public.interface_languages
 
 ALTER TABLE ONLY public.locales
     ADD CONSTRAINT locales_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: marks marks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.marks
+    ADD CONSTRAINT marks_pkey PRIMARY KEY (id);
 
 
 --
@@ -743,6 +789,13 @@ CREATE UNIQUE INDEX index_interface_languages_on_locale_id ON public.interface_l
 --
 
 CREATE UNIQUE INDEX index_locales_on_lower_key ON public.locales USING btree (lower((key)::text));
+
+
+--
+-- Name: index_marks_on_tag_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_marks_on_tag_id ON public.marks USING btree (tag_id);
 
 
 --
@@ -888,6 +941,14 @@ ALTER TABLE ONLY public.content_languages
 
 
 --
+-- Name: marks fk_rails_ac66cf165f; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.marks
+    ADD CONSTRAINT fk_rails_ac66cf165f FOREIGN KEY (tag_id) REFERENCES public.tags(id);
+
+
+--
 -- Name: interface_language_translations fk_rails_ee7b55ca7d; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -938,6 +999,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201226025537'),
 ('20201226041301'),
 ('20201226042855'),
-('20201226050013');
+('20201226050013'),
+('20201230071033');
 
 
