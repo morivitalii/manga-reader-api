@@ -1,6 +1,4 @@
 class Api::ContentLanguageSerializer < Api::ApplicationSerializer
-  include Api::TranslationSerializer
-
   def attributes
     {
       id: model.id,
