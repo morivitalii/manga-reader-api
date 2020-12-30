@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :marks, only: [:index, :show]
     resources :genres, only: [:index, :show]
     resources :formats, only: [:index, :show]
     resources :demographics, only: [:index, :show]
