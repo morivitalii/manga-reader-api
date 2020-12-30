@@ -1,5 +1,5 @@
 {
-  "id": "file:/serializers/api/helpers/attributes/id.json#",
+  "id": "file:/helpers/serializers/api/attributes/id.json#",
   "type": "integer",
   "description": "ID",
   "examples": [1]

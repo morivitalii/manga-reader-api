@@ -1,5 +1,5 @@
 {
-  "id": "file:/serializers/api/helpers/attributes/created_at.json#",
+  "id": "file:/helpers/serializers/api/attributes/created_at.json#",
   "type": "string",
   "format": "date-time",
   "description": "Date of creation",

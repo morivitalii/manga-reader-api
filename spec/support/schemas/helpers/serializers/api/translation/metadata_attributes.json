@@ -1,5 +1,5 @@
 {
-  "id": "file:/serializers/api/helpers/translation/metadata_attributes.json#",
+  "id": "file:/helpers/serializers/api/translation/metadata_attributes.json#",
   "type": "object",
   "description": "Translation metadata attributes",
   "properties": {
@@ -9,7 +9,7 @@
       "examples": [1]
     },
     "locale": {
-      "$ref": "file:/serializers/api/helpers/attributes/locale.json#"
+      "$ref": "file:/helpers/serializers/api/attributes/locale.json#"
     },
     "created_at": {
       "description": "Date of translation creation",
