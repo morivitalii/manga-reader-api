@@ -1,15 +1,10 @@
 {
-  "id": "file:/serializers/api/genre.json#",
+  "id": "file:/serializers/api/tag.json#",
   "type": "object",
-  "title": "Genre",
+  "title": "Tag",
   "properties": {
     "id": {
       "$ref": "file:/helpers/serializers/api/attributes/id.json#"
-    },
-    "tag_id": {
-      "type": "integer",
-      "description": "Tag ID",
-      "examples": [1]
     },
     "title": {
       "type": "string",

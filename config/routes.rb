@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     resources :interface_languages, only: [:index, :show]
     resources :content_languages, only: [:index, :show]
 
-    resources :tags, only: [] do
+    resources :tags, only: [:index, :show] do
       scope module: :tags do
         resource :translations, only: [:show]
       end
