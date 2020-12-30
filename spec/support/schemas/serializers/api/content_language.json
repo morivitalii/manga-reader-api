@@ -4,7 +4,7 @@
   "title": "Content language",
   "properties": {
     "id": {
-      "$ref": "file:/serializers/api/helpers/attributes/id.json#"
+      "$ref": "file:/helpers/serializers/api/attributes/id.json#"
     },
     "title": {
       "type": "string",
@@ -12,13 +12,13 @@
       "examples": ["English"]
     },
     "locale": {
-      "$ref": "file:/serializers/api/helpers/attributes/locale.json#"
+      "$ref": "file:/helpers/serializers/api/attributes/locale.json#"
     },
     "created_at": {
-      "$ref": "file:/serializers/api/helpers/attributes/created_at.json#"
+      "$ref": "file:/helpers/serializers/api/attributes/created_at.json#"
     },
     "updated_at": {
-      "$ref": "file:/serializers/api/helpers/attributes/updated_at.json#"
+      "$ref": "file:/helpers/serializers/api/attributes/updated_at.json#"
     }
   }
 }
