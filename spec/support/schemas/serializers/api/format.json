@@ -16,9 +16,6 @@
       "description": "Title",
       "examples": ["4-koma"]
     },
-    "locale": {
-      "$ref": "file:/helpers/serializers/api/attributes/locale.json#"
-    },
     "created_at": {
       "$ref": "file:/helpers/serializers/api/attributes/created_at.json#"
     },
