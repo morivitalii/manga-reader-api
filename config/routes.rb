@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
     resources :marks, only: [:index, :show]
     resources :genres, only: [:index, :show]
+    resources :themes, only: [:index, :show]
     resources :formats, only: [:index, :show]
     resources :demographics, only: [:index, :show]
   end

@@ -418,6 +418,37 @@ ALTER SEQUENCE public.tags_id_seq OWNED BY public.tags.id;
 
 
 --
+-- Name: themes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.themes (
+    id bigint NOT NULL,
+    tag_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: themes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.themes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: themes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.themes_id_seq OWNED BY public.themes.id;
+
+
+--
 -- Name: title_translations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -566,6 +597,13 @@ ALTER TABLE ONLY public.tags ALTER COLUMN id SET DEFAULT nextval('public.tags_id
 
 
 --
+-- Name: themes id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.themes ALTER COLUMN id SET DEFAULT nextval('public.themes_id_seq'::regclass);
+
+
+--
 -- Name: title_translations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -689,6 +727,14 @@ ALTER TABLE ONLY public.tag_translations
 
 ALTER TABLE ONLY public.tags
     ADD CONSTRAINT tags_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: themes themes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.themes
+    ADD CONSTRAINT themes_pkey PRIMARY KEY (id);
 
 
 --
@@ -848,6 +894,13 @@ CREATE UNIQUE INDEX index_tags_on_key ON public.tags USING btree (key);
 
 
 --
+-- Name: index_themes_on_tag_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_themes_on_tag_id ON public.themes USING btree (tag_id);
+
+
+--
 -- Name: index_title_translations_on_content_language_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -874,6 +927,14 @@ CREATE UNIQUE INDEX index_title_translations_uniqueness ON public.title_translat
 
 ALTER TABLE ONLY public.formats
     ADD CONSTRAINT fk_rails_0400824e47 FOREIGN KEY (tag_id) REFERENCES public.tags(id);
+
+
+--
+-- Name: themes fk_rails_0495226a20; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.themes
+    ADD CONSTRAINT fk_rails_0495226a20 FOREIGN KEY (tag_id) REFERENCES public.tags(id);
 
 
 --
@@ -1000,6 +1061,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201226041301'),
 ('20201226042855'),
 ('20201226050013'),
-('20201230071033');
+('20201230071033'),
+('20201230071805');
 
 

@@ -166,3 +166,23 @@ ActiveRecord::Base.transaction do
     end
   end
 end
+
+# Themes
+ActiveRecord::Base.transaction do
+  # Seed only with english content language
+  Current.set(content_languages: @all_content_languages, content_language: @english_content_language) do
+    I18n.with_locale(:en) do
+      # Lolicon theme
+      @lolicon_tag = Tag.new(key: :lolicon, title: "Lolicon")
+      @lolicon_tag.save
+
+      @lolicon_theme = Theme.create!(tag: @lolicon_tag)
+
+      # Shotacon theme
+      @shotacon_tag = Tag.new(key: :shotacon, title: "Shotacon")
+      @shotacon_tag.save
+
+      @shotacon_theme = Theme.create!(tag: @shotacon_tag)
+    end
+  end
+end
