@@ -67,7 +67,7 @@ module Translation
           before_save :touch_edited_at
 
           define_method(:translation_attributes) do
-            self.attributes.transform_keys(&:to_sym).slice(*translation_attributes_names).merge(metadata_attributes)
+            self.attributes.deep_symbolize_keys.slice(*translation_attributes_names).merge(metadata_attributes)
           end
 
           define_method(:metadata_attributes) do
