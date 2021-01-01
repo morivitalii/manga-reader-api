@@ -894,6 +894,13 @@ CREATE INDEX index_tag_translations_on_resource_id ON public.tag_translations US
 
 
 --
+-- Name: index_tag_translations_on_title; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_tag_translations_on_title ON public.tag_translations USING btree (title);
+
+
+--
 -- Name: index_tag_translations_uniqueness; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1086,6 +1093,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201230071805'),
 ('20210101204321'),
 ('20210101204852'),
-('20210101205700');
+('20210101205700'),
+('20210101205909');
 
 
