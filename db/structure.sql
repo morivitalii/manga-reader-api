@@ -768,6 +768,13 @@ CREATE INDEX index_content_language_translations_on_resource_id ON public.conten
 
 
 --
+-- Name: index_content_language_translations_on_title; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_content_language_translations_on_title ON public.content_language_translations USING btree (title);
+
+
+--
 -- Name: index_content_language_translations_uniqueness; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1070,6 +1077,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201226050013'),
 ('20201230071033'),
 ('20201230071805'),
-('20210101204321');
+('20210101204321'),
+('20210101204852');
 
 
