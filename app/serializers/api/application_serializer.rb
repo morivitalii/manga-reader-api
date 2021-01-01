@@ -18,6 +18,10 @@ class Api::ApplicationSerializer
     end
   end
 
+  def self.serialize_associations(association, options = {})
+    serialize_association(association, options)
+  end
+
   def self.serialize_association(association, options = {})
     serializer_class = options.delete(:with)
 

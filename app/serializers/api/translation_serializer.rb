@@ -1,18 +1,18 @@
 # This class is intended to unify translatable model translations serialization
 class Api::TranslationSerializer < Api::ApplicationSerializer
-  serialize_association :translation_available_content_languages,
+  serialize_associations :translation_available_content_languages,
     with: Api::ContentLanguageSerializer,
     except: [:created_at, :updated_at]
 
-  serialize_association :translation_completed_content_languages,
+  serialize_associations :translation_completed_content_languages,
     with: Api::ContentLanguageSerializer,
     except: [:created_at, :updated_at]
 
-  serialize_association :translation_content_languages_in_progress,
+  serialize_associations :translation_content_languages_in_progress,
     with: Api::ContentLanguageSerializer,
     except: [:created_at, :updated_at]
 
-  serialize_association :translation_absent_content_languages,
+  serialize_associations :translation_absent_content_languages,
     with: Api::ContentLanguageSerializer,
     except: [:created_at, :updated_at]
 
