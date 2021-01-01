@@ -1,25 +1,25 @@
 class Api::TitleSerializer < Api::ApplicationSerializer
-  serialize_association :tags,
+  serialize_associations :tags,
     with: Api::TagSerializer,
     except: [:created_at, :updated_at]
 
-  serialize_association :genres,
+  serialize_associations :genres,
     with: Api::GenreSerializer,
     except: [:created_at, :updated_at]
 
-  serialize_association :formats,
+  serialize_associations :formats,
     with: Api::FormatSerializer,
     except: [:created_at, :updated_at]
 
-  serialize_association :demographics,
+  serialize_associations :demographics,
     with: Api::DemographicSerializer,
     except: [:created_at, :updated_at]
 
-  serialize_association :marks,
+  serialize_associations :marks,
     with: Api::MarkSerializer,
     except: [:created_at, :updated_at]
 
-  serialize_association :themes,
+  serialize_associations :themes,
     with: Api::ThemeSerializer,
     except: [:created_at, :updated_at]
 
