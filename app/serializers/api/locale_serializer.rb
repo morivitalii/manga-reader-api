@@ -1,4 +1,4 @@
-class LocaleSerializer < Api::ApplicationSerializer
+class Api::LocaleSerializer < Api::ApplicationSerializer
   def attributes
     {
       id: model.id,
