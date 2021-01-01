@@ -14,5 +14,6 @@ Rails.application.routes.draw do
     resources :themes, only: [:index, :show]
     resources :formats, only: [:index, :show]
     resources :demographics, only: [:index, :show]
+    resources :titles, only: [:index, :show]
   end
 end

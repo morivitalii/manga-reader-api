@@ -19,13 +19,10 @@ class Api::ApplicationSerializer
   end
 
   def self.serialize_association(association, options = {})
-    options.assert_valid_keys(:with, :options)
-
     serializer_class = options.delete(:with)
-    serializer_options = options.delete(:options)
 
     define_method(association) do
-      serialized_associations[association] ||= serializer_class.serialize(model.send(association), serializer_options)
+      serialized_associations[association] ||= serializer_class.serialize(model.send(association), options)
     end
   end
 

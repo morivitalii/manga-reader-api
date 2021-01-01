@@ -2,27 +2,19 @@
 class Api::TranslationSerializer < Api::ApplicationSerializer
   serialize_association :translation_available_content_languages,
     with: Api::ContentLanguageSerializer,
-    options: {
-      except: [:created_at, :updated_at]
-    }
+    except: [:created_at, :updated_at]
 
   serialize_association :translation_completed_content_languages,
     with: Api::ContentLanguageSerializer,
-    options: {
-      except: [:created_at, :updated_at]
-    }
+    except: [:created_at, :updated_at]
 
   serialize_association :translation_content_languages_in_progress,
     with: Api::ContentLanguageSerializer,
-    options: {
-      except: [:created_at, :updated_at]
-    }
+    except: [:created_at, :updated_at]
 
   serialize_association :translation_absent_content_languages,
     with: Api::ContentLanguageSerializer,
-    options: {
-      except: [:created_at, :updated_at]
-    }
+    except: [:created_at, :updated_at]
 
   def attributes
     {
@@ -37,6 +29,4 @@ class Api::TranslationSerializer < Api::ApplicationSerializer
       }
     }
   end
-
-  private
 end

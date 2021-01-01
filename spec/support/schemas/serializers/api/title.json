@@ -1,13 +1,15 @@
 {
-  "id": "file:/serializers/api/locale.json#",
+  "id": "file:/serializers/api/title.json#",
   "type": "object",
-  "title": "Locale",
+  "title": "Title",
   "properties": {
     "id": {
       "$ref": "file:/helpers/serializers/api/attributes/id.json#"
     },
-    "key": {
-      "$ref": "file:/helpers/serializers/api/attributes/locale.json#"
+    "title": {
+      "type": "string",
+      "description": "Title",
+      "examples": ["Lolicon"]
     },
     "created_at": {
       "$ref": "file:/helpers/serializers/api/attributes/created_at.json#"
