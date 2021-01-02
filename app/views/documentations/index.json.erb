@@ -101,6 +101,29 @@
           }
         }
       }
+    },
+    "/interface_languages/:id.json": {
+      "get": {
+        "tags": ["Interface languages"],
+        "summary": "Interface language",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("interface_languages_controller/show/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          }
+        }
+      }
     }
   }
 }
