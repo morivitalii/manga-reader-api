@@ -13,7 +13,8 @@
   ],
   "tags": [
     { "name": "Interface languages" },
-    { "name": "Content languages" }
+    { "name": "Content languages" },
+    { "name": "Demographics" }
   ],
   "components": {
     "responses": {
@@ -177,6 +178,29 @@
           }
         }
       }
-    }
+    },
+    "/demographics.json": {
+      "get": {
+        "tags": ["Demographics"],
+        "summary": "Demographics",
+        "description": "Sorted by title asc \n\n Not paginated",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("demographics_controller/index/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          }
+        }
+      }
+    },
   }
 }
