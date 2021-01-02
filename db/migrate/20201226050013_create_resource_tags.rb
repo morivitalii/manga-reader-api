@@ -1,7 +1,7 @@
 class CreateResourceTags < ActiveRecord::Migration[6.1]
   def change
     create_table :resource_tags do |t|
-      t.belongs_to :tag,null: false
+      t.belongs_to :tag, null: false
       t.belongs_to :resource, polymorphic: true, null: false
       t.timestamps
 

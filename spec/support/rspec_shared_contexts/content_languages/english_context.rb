@@ -1,6 +1,6 @@
 RSpec.shared_context "English content language context" do
   let!(:english_content_language) do
-    ContentLanguage.joins(:locale).where(locales: { key: :en }).take || create(:english_content_language)
+    ContentLanguage.joins(:locale).where(locales: {key: :en}).take || create(:english_content_language)
   end
 end
 

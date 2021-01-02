@@ -27,12 +27,12 @@ module Translation
   extend ActiveSupport::Concern
 
   included do
-    has_many :translations, autosave: true, class_name: "#{self.name}Translation", foreign_key: :resource_id, dependent: :destroy
+    has_many :translations, autosave: true, class_name: "#{name}Translation", foreign_key: :resource_id, dependent: :destroy
     has_many :content_languages, through: :translations
 
     # List of translations associations
     def self.translations_associations
-      { translations: { content_language: :locale } }
+      {translations: {content_language: :locale}}
     end
 
     # Convenient method to include all associations related to translations
@@ -44,12 +44,12 @@ module Translation
   class_methods do
     def translates(*attributes)
       # Translation model
-      translation_class_name = "#{self.name}Translation"
+      translation_class_name = "#{name}Translation"
 
       unless Object.const_defined?(translation_class_name)
-        resource_class_name = self.name
+        resource_class_name = name
 
-        translation_class = Class.new(ApplicationRecord) do
+        translation_class = Class.new(ApplicationRecord) {
           # This attributes shouldn't be changed
           attr_readonly :content_language_id, :resource_id
 
@@ -61,7 +61,7 @@ module Translation
 
           # Ensure that resource can have only one translation with given content language
           # Validation not needed if translatable model is new
-          validates :resource_id, uniqueness: { scope: [:content_language_id] }, if: -> { resource_id.present? }
+          validates :resource_id, uniqueness: {scope: [:content_language_id]}, if: -> { resource_id.present? }
 
           # Update edited_at if any attribute from translation attributes changed
           before_save :touch_edited_at
@@ -72,8 +72,8 @@ module Translation
 
           define_method(:metadata_attributes) do
             {
-              content_language_id: self.content_language.id,
-              locale: self.content_language.locale.key,
+              content_language_id: content_language.id,
+              locale: content_language.locale.key,
               created_at: created_at,
               updated_at: updated_at,
               edited_at: edited_at
@@ -82,7 +82,7 @@ module Translation
 
           # Attributes that available for translation
           define_method(:translation_attributes_names) do
-            @translation_attributes_names ||= self.attribute_names.map(&:to_sym) - metadata_attributes_names - service_attributes_names
+            @translation_attributes_names ||= attribute_names.map(&:to_sym) - metadata_attributes_names - service_attributes_names
           end
 
           # Attributes that contains metadata information about translation
@@ -104,9 +104,9 @@ module Translation
           end
 
           define_method(:translation_attributes_changed?) do
-            self.changes.any? { |attribute, (_was, _become)| attribute.to_sym.in?(translation_attributes_names) }
+            changes.any? { |attribute, (_was, _become)| attribute.to_sym.in?(translation_attributes_names) }
           end
-        end
+        }
 
         Object.const_set(translation_class_name, translation_class)
       end
@@ -141,7 +141,7 @@ module Translation
   end
 
   def translation_attributes
-    @translation_attributes ||= translation_available_content_languages.each_with_object([]) do |content_language, translation_attributes|
+    @translation_attributes ||= translation_available_content_languages.each_with_object([]) { |content_language, translation_attributes|
       i18n_locale = content_language.locale.key
 
       # It's necessary to get translation for each content language, even for those which translation is missing in database
@@ -149,7 +149,7 @@ module Translation
 
       # Get translation attributes and their values from translation model
       translation_attributes << translation.translation_attributes
-    end
+    }
   end
 
   # Content languages that available for translation
@@ -159,7 +159,7 @@ module Translation
 
   # Content languages that available for translation and completely translated
   def translation_completed_content_languages
-    @translation_completed_content_languages ||= translation_available_content_languages.select do |content_language|
+    @translation_completed_content_languages ||= translation_available_content_languages.select { |content_language|
       i18n_locale = content_language.locale.key
 
       # Find translation attributes for current i18n locale
@@ -170,12 +170,12 @@ module Translation
 
       # If locale has all attributes values preset then it's translation completed
       i18n_locale_translation_attributes_without_metadata.none? { |_attribute, value| value.blank? }
-    end
+    }
   end
 
   # Content languages that available for translation but not completed yet
   def translation_content_languages_in_progress
-    @translation_content_languages_in_progress ||= translation_available_content_languages.select do |content_language|
+    @translation_content_languages_in_progress ||= translation_available_content_languages.select { |content_language|
       i18n_locale = content_language.locale.key
 
       # Find translation attributes for current i18n locale
@@ -192,12 +192,12 @@ module Translation
 
       # If locale has both blank and present attributes values then it's translation in process
       present_values.present? && blank_values.present?
-    end
+    }
   end
 
   # Content languages that available for translation but not translated entirely
   def translation_absent_content_languages
-    @translation_absent_content_languages ||= translation_available_content_languages.select do |content_language|
+    @translation_absent_content_languages ||= translation_available_content_languages.select { |content_language|
       i18n_locale = content_language.locale.key
 
       # Find translation attributes for current i18n locale
@@ -208,7 +208,7 @@ module Translation
 
       # If locale has all attributes values blank then translations for it is absent
       i18n_locale_translation_attributes_without_metadata.all? { |_attribute, value| value.blank? }
-    end
+    }
   end
 
   private
@@ -218,7 +218,7 @@ module Translation
   end
 
   def find_translation(i18n_locale)
-    translation = self.translations.find { |translation| translation.content_language&.locale&.key == i18n_locale }
+    translation = translations.find { |translation| translation.content_language&.locale&.key == i18n_locale }
 
     if translation.present?
       translation.resource = self
@@ -229,7 +229,7 @@ module Translation
   end
 
   def build_translation(i18n_locale)
-    self.translations.build(resource: self, content_language: find_content_language(i18n_locale))
+    translations.build(resource: self, content_language: find_content_language(i18n_locale))
   end
 
   def find_content_language(i18n_locale)

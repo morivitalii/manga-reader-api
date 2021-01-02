@@ -13,7 +13,7 @@ class Api::TitlesController < Api::ApplicationController
         :demographics,
         :marks,
         :themes,
-        tags: Tag.translations_associations,
+        tags: Tag.translations_associations
       ]
     )
 
@@ -45,7 +45,7 @@ class Api::TitlesController < Api::ApplicationController
         :demographics,
         :marks,
         :themes,
-        tags: Tag.translations_associations,
+        tags: Tag.translations_associations
       ]
     )
   end
