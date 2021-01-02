@@ -2,6 +2,8 @@ class Api::MarksController < Api::ApplicationController
   before_action :set_mark, only: [:show]
   before_action :set_mark_associations, only: [:show]
 
+  before_action -> { authorize(Api::MarksPolicy) }, only: [:index]
+
   def index
     marks = Mark.joins(tag: :translations).order("tag_translations.title ASC").all
 
