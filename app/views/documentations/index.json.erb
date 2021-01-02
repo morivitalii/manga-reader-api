@@ -254,6 +254,32 @@
         }
       }
     },
+    "/genres/:id.json": {
+      "get": {
+        "tags": ["Genres"],
+        "summary": "Genre",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("genres_controller/show/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          }
+        }
+      }
+    },
     "/demographics.json": {
       "get": {
         "tags": ["Demographics"],
