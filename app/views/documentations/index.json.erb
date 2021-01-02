@@ -15,6 +15,7 @@
     { "name": "Interface languages" },
     { "name": "Content languages" },
     { "name": "Tags" },
+    { "name": "Genres" },
     { "name": "Demographics" },
     { "name": "Formats" }
   ],
@@ -226,6 +227,29 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          }
+        }
+      }
+    },
+    "/genres.json": {
+      "get": {
+        "tags": ["Genres"],
+        "summary": "Genres",
+        "description": "Sorted by title asc \n\n Not paginated",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("genres_controller/index/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
           }
         }
       }
