@@ -1,6 +1,7 @@
 {
   "id": "file:/helpers/serializers/api/attributes/id.json#",
   "type": "integer",
+  "format": "int64",
   "description": "ID",
   "examples": [1]
 }
