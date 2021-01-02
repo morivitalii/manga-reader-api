@@ -3,6 +3,7 @@ class Api::GenresController < Api::ApplicationController
   before_action :set_genre_associations, only: [:show]
 
   before_action -> { authorize(Api::GenresPolicy) }, only: [:index]
+  before_action -> { authorize(Api::GenresPolicy, @genre) }, only: [:show]
 
   def index
     genres = Genre.joins(tag: :translations).order("tag_translations.title ASC").all

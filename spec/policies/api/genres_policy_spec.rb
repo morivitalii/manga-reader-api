@@ -6,4 +6,10 @@ RSpec.describe Api::GenresPolicy do
   permissions :index? do
     it { is_expected.to permit }
   end
+
+  permissions :show? do
+    let(:genre) { create(:genre) }
+
+    it { is_expected.to permit(nil, genre) }
+  end
 end
