@@ -2,6 +2,8 @@ class Api::ContentLanguagesController < Api::ApplicationController
   before_action :set_content_language, only: [:show]
   before_action :set_content_language_associations, only: [:show]
 
+  before_action -> { authorize(Api::ContentLanguagesPolicy) }, only: [:index]
+
   def index
     content_languages = ContentLanguage.order(id: :asc).all
 
