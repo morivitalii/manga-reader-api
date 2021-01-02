@@ -30,7 +30,7 @@ class Api::TagsController < Api::ApplicationController
 
   def set_tag_associations
     ActiveRecord::Associations::Preloader.new.preload(
-    @tag, Tag.translations_associations
+      @tag, Tag.translations_associations
     )
   end
 end
