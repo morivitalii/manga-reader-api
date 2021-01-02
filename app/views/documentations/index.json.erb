@@ -19,7 +19,8 @@
     { "name": "Themes" },
     { "name": "Demographics" },
     { "name": "Formats" },
-    { "name": "Marks" }
+    { "name": "Marks" },
+    { "name": "Titles" }
   ],
   "components": {
     "responses": {
@@ -478,5 +479,28 @@
         }
       }
     },
+    "/titles.json": {
+      "get": {
+        "tags": ["Titles"],
+        "summary": "Titles",
+        "description": "Sorted by title asc \n\n Not paginated",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles_controller/index/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          }
+        }
+      }
+    }
   }
 }
