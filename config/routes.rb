@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :documentations, only: [:index]
+
   namespace :api, constraints: ->(request) { request.format == :json } do
     resources :interface_languages, only: [:index, :show]
     resources :content_languages, only: [:index, :show]

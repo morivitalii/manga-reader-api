@@ -15,6 +15,7 @@ gem "bcrypt", "~> 3"
 gem "rack-cors", "~> 1"
 gem "pundit", "~> 2"
 gem "draper", "~> 4"
+gem "hashie", "~> 4"
 
 group :development, :test do
   gem "standard"

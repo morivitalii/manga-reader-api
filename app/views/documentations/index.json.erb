@@ -1,0 +1,78 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "version": "1.0",
+    "title": "API",
+    "description": "API"
+  },
+  "servers": [
+    {
+      "url": "<%= ENV["API_DOCUMENTATION_DEVELOPMENT_HOST"] %>/api/worker/v1",
+      "description": "Development server"
+    }
+  ],
+  "components": {
+    "responses": {
+      "unauthorized": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "error"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Текст ошибки",
+                  "examples": ["Unauthorized"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "forbidden": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "error"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Текст ошибки",
+                  "examples": ["Forbidden"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "not_found": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "error"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Текст ошибки",
+                  "examples": ["Not Found"]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+
+  }
+}
