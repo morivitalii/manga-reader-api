@@ -9,7 +9,7 @@
     "title": {
       "type": "string",
       "description": "Title",
-      "examples": ["Lolicon"]
+      "examples": ["Made in Abyss"]
     },
     "created_at": {
       "$ref": "file:/helpers/serializers/api/attributes/created_at.json#"
