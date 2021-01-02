@@ -8,6 +8,6 @@ module SetCurrentInterfaceLanguage
   private
 
   def set_current_interface_language
-    Current.interface_language = InterfaceLanguage.joins(:locale).where(locales: { key: I18n.locale }).take
+    Current.interface_language = InterfaceLanguage.joins(:locale).where(locales: {key: I18n.locale}).take
   end
 end
