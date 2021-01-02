@@ -6,4 +6,10 @@ RSpec.describe Api::FormatsPolicy do
   permissions :index? do
     it { is_expected.to permit }
   end
+
+  permissions :show? do
+    let(:format) { create(:format) }
+
+    it { is_expected.to permit(nil, format) }
+  end
 end
