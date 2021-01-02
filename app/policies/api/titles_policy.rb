@@ -1,4 +1,4 @@
-class TitlesPolicy < ApplicationPolicy
+class Api::TitlesPolicy < Api::ApplicationPolicy
   def index?
     true
   end

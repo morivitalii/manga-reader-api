@@ -2,6 +2,8 @@ class Api::TagsController < Api::ApplicationController
   before_action :set_tag, only: [:show]
   before_action :set_tag_associations, only: [:show]
 
+  before_action -> { authorize(Api::TagsPolicy) }, only: [:index]
+
   def index
     tags = Tag.joins(:translations).order("tag_translations.title ASC").all
 
