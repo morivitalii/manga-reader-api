@@ -58,7 +58,7 @@
         }
       },
       "not_found": {
-        "description": "Resource is not found",
+        "description": "Not found",
         "content": {
           "application/json": {
             "schema": {
@@ -122,6 +122,9 @@
           },
           "403": {
             "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
           }
         }
       }
@@ -149,5 +152,31 @@
         }
       }
     },
+    "/content_languages/:id.json": {
+      "get": {
+        "tags": ["Content languages"],
+        "summary": "Content language",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("content_languages_controller/show/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          }
+        }
+      }
+    }
   }
 }
