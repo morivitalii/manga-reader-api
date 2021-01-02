@@ -2,6 +2,8 @@ class Api::FormatsController < Api::ApplicationController
   before_action :set_format, only: [:show]
   before_action :set_format_associations, only: [:show]
 
+  before_action -> { authorize(Api::FormatsPolicy) }, only: [:index]
+
   def index
     formats = Format.joins(tag: :translations).order("tag_translations.title ASC").all
 
