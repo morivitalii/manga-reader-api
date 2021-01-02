@@ -11,9 +11,13 @@
       "description": "Development server"
     }
   ],
+  "tags": {
+    "name": "Interface languages"
+  },
   "components": {
     "responses": {
       "unauthorized": {
+        "description": "Unauthorized access",
         "content": {
           "application/json": {
             "schema": {
@@ -24,7 +28,7 @@
               "properties": {
                 "error": {
                   "type": "string",
-                  "description": "Текст ошибки",
+                  "description": "Error message",
                   "examples": ["Unauthorized"]
                 }
               }
@@ -33,6 +37,7 @@
         }
       },
       "forbidden": {
+        "description": "Access forbidden",
         "content": {
           "application/json": {
             "schema": {
@@ -43,7 +48,7 @@
               "properties": {
                 "error": {
                   "type": "string",
-                  "description": "Текст ошибки",
+                  "description": "Error message",
                   "examples": ["Forbidden"]
                 }
               }
@@ -52,6 +57,7 @@
         }
       },
       "not_found": {
+        "description": "Resource is not found",
         "content": {
           "application/json": {
             "schema": {
@@ -62,7 +68,7 @@
               "properties": {
                 "error": {
                   "type": "string",
-                  "description": "Текст ошибки",
+                  "description": "Error message",
                   "examples": ["Not Found"]
                 }
               }
@@ -73,6 +79,28 @@
     }
   },
   "paths": {
-
+    "/interface_languages.json": {
+      "get": {
+        "tags": ["Interface languages"],
+        "summary": "Interface languages",
+        "description": "Sorted by id asc \n\n Not paginated",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("interface_languages_controller/index/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          }
+        }
+      }
+    }
   }
 }
