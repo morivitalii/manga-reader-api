@@ -6,8 +6,7 @@ class Api::TitlesController < Api::ApplicationController
     titles = Title.joins(:translations).order("title_translations.title ASC").all
 
     ActiveRecord::Associations::Preloader.new.preload(
-      titles,
-      [
+      titles, [
         Title.translations_associations,
         :genres,
         :formats,
@@ -39,8 +38,7 @@ class Api::TitlesController < Api::ApplicationController
 
   def set_title_associations
     ActiveRecord::Associations::Preloader.new.preload(
-      @title,
-      [
+      @title, [
         Title.translations_associations,
         :genres,
         :formats,

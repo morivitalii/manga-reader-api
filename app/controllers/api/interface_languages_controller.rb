@@ -3,26 +3,40 @@ class Api::InterfaceLanguagesController < Api::ApplicationController
   before_action :set_interface_language_associations, only: [:show]
 
   def index
-    interface_languages = InterfaceLanguage.with_translations.includes(:locale).order(id: :asc).all
+    interface_languages = InterfaceLanguage.order(id: :asc).all
+
+    ActiveRecord::Associations::Preloader.new.preload(
+      interface_languages, [
+        ContentLanguage.translations_associations,
+        :locale
+      ]
+    )
 
     interface_languages = Api::InterfaceLanguageDecorator.decorate_collection(interface_languages)
+    interface_languages = Api::InterfaceLanguageSerializer.serialize(interface_languages)
 
-    render json: Api::InterfaceLanguageSerializer.serialize(interface_languages), status: 200
+    render json: interface_languages, status: 200
   end
 
   def show
     interface_language = Api::InterfaceLanguageDecorator.decorate(@interface_language)
+    interface_language = Api::InterfaceLanguageSerializer.serialize(interface_language)
 
-    render json: Api::InterfaceLanguageSerializer.serialize(interface_language), status: 200
+    render json: interface_language, status: 200
   end
 
   private
 
   def set_interface_language
-    @interface_language = InterfaceLanguage.with_translations.find(params[:id])
+    @interface_language = InterfaceLanguage.find(params[:id])
   end
 
   def set_interface_language_associations
-    ActiveRecord::Associations::Preloader.new.preload(@interface_language, :locale)
+    ActiveRecord::Associations::Preloader.new.preload(
+      @interface_language, [
+        ContentLanguage.translations_associations,
+        :locale
+      ]
+    )
   end
 end
