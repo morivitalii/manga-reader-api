@@ -15,7 +15,8 @@
     { "name": "Interface languages" },
     { "name": "Content languages" },
     { "name": "Tags" },
-    { "name": "Demographics" }
+    { "name": "Demographics" },
+    { "name": "Formats" }
   ],
   "components": {
     "responses": {
@@ -277,6 +278,29 @@
           }
         }
       }
-    }
+    },
+    "/formats.json": {
+      "get": {
+        "tags": ["Formats"],
+        "summary": "Formats",
+        "description": "Sorted by title asc \n\n Not paginated",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("formats_controller/index/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          }
+        }
+      }
+    },
   }
 }
