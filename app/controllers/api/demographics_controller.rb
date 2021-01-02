@@ -2,6 +2,8 @@ class Api::DemographicsController < Api::ApplicationController
   before_action :set_demographic, only: [:show]
   before_action :set_demographic_associations, only: [:show]
 
+  before_action -> { authorize(Api::DemographicsPolicy) }, only: [:index]
+
   def index
     demographics = Demographic.joins(tag: :translations).order("tag_translations.title ASC").all
 
