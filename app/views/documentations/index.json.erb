@@ -234,6 +234,32 @@
         }
       }
     },
+    "/tags/:id/translations.json": {
+      "get": {
+        "tags": ["Tags"],
+        "summary": "Tag translations",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("tags/translations_controller/show/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          }
+        }
+      }
+    },
     "/genres.json": {
       "get": {
         "tags": ["Genres"],
@@ -527,6 +553,6 @@
           }
         }
       }
-    },
+    }
   }
 }
