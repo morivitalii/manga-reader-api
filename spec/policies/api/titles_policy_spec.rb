@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe TitlesPolicy do
+RSpec.describe Api::TitlesPolicy do
   subject { described_class }
 
   permissions :index? do
