@@ -31,6 +31,10 @@ class DocumentationsController < ApplicationController
     references = schema_hash.deep_locate ->(key, _value, _object) { key == "$ref" }
 
     references.each do |reference|
+      pp reference["$ref"]
+      pp reference["$ref"].start_with?("#")
+      next if reference["$ref"].start_with?("#")
+
       reference["$ref"].sub!("file:/", "").sub!("#", "")
       reference_file_path = Rails.root.join(SCHEMAS_PATH, reference["$ref"])
       reference_file_content = File.read(reference_file_path)

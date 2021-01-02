@@ -1,0 +1,18 @@
+{
+  "id": "file:/helpers/serializers/api/translation/content_language.json#",
+  "type": "object",
+  "description": "Content language",
+  "properties": {
+    "id": {
+      "$ref": "file:/helpers/serializers/api/attributes/id.json#"
+    },
+    "title": {
+      "type": "string",
+      "description": "Title",
+      "examples": ["English"]
+    },
+    "locale": {
+      "$ref": "file:/helpers/serializers/api/attributes/locale.json#"
+    }
+  }
+}
