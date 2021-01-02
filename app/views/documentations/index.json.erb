@@ -17,7 +17,8 @@
     { "name": "Tags" },
     { "name": "Genres" },
     { "name": "Demographics" },
-    { "name": "Formats" }
+    { "name": "Formats" },
+    { "name": "Marks" }
   ],
   "components": {
     "responses": {
@@ -374,6 +375,29 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          }
+        }
+      }
+    },
+    "/marks.json": {
+      "get": {
+        "tags": ["Marks"],
+        "summary": "Marks",
+        "description": "Sorted by title asc \n\n Not paginated",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("marks_controller/index/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
           }
         }
       }
