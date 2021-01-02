@@ -8,7 +8,6 @@
     },
     "tag_id": {
       "type": "integer",
-      "format": "int64",
       "description": "Tag ID",
       "examples": [1]
     },
