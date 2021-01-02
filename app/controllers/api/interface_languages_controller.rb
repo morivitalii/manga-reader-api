@@ -2,6 +2,9 @@ class Api::InterfaceLanguagesController < Api::ApplicationController
   before_action :set_interface_language, only: [:show]
   before_action :set_interface_language_associations, only: [:show]
 
+  before_action -> { authorize(Api::InterfaceLanguagesPolicy) }, only: [:index]
+  before_action -> { authorize(Api::InterfaceLanguagesPolicy, @interface_language) }, only: [:show]
+
   def index
     interface_languages = InterfaceLanguage.order(id: :asc).all
 
