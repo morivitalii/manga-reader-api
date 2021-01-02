@@ -3,6 +3,7 @@ class Api::TitlesController < Api::ApplicationController
   before_action :set_title_associations, only: [:show]
 
   before_action -> { authorize(TitlesPolicy) }, only: [:index]
+  before_action -> { authorize(TitlesPolicy, @title) }, only: [:show]
 
   def index
     titles = Title.joins(:translations).order("title_translations.title ASC").all
