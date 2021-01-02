@@ -16,6 +16,7 @@
     { "name": "Content languages" },
     { "name": "Tags" },
     { "name": "Genres" },
+    { "name": "Themes" },
     { "name": "Demographics" },
     { "name": "Formats" },
     { "name": "Marks" }
@@ -277,6 +278,29 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          }
+        }
+      }
+    },
+    "/themes.json": {
+      "get": {
+        "tags": ["Themes"],
+        "summary": "Themes",
+        "description": "Sorted by title asc \n\n Not paginated",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("themes_controller/index/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
           }
         }
       }
