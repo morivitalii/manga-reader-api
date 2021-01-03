@@ -1,0 +1,21 @@
+{
+  "id": "file:/serializers/api/group.json#",
+  "type": "object",
+  "title": "Group",
+  "properties": {
+    "id": {
+      "$ref": "file:/helpers/serializers/api/attributes/id.json#"
+    },
+    "username": {
+      "type": "string",
+      "description": "Title",
+      "examples": ["Developers"]
+    },
+    "created_at": {
+      "$ref": "file:/helpers/serializers/api/attributes/created_at.json#"
+    },
+    "updated_at": {
+      "$ref": "file:/helpers/serializers/api/attributes/updated_at.json#"
+    }
+  }
+}
