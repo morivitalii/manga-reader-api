@@ -11,8 +11,6 @@ RSpec.describe Api::GenresController do
 
       expect(response).to have_http_status(200)
       expect(response).to match_json_schema("controllers/api/genres_controller/index/200")
-
-      # Ensure that genres sorted by tag title ASC
       expect(response).to have_objects_collection(first_genre, second_genre, third_genre)
     end
   end

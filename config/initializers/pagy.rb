@@ -15,10 +15,10 @@ Pagy::VARS[:cycle] = false
 # See http://ddnexus.github.io/pagy/extras/headers
 require "pagy/extras/headers"
 Pagy::VARS[:headers] = {
-  page: 'Pagination-Page-Number',
-  items: 'Pagination-Page-Items-Count',
-  count: 'Pagination-Items-Count',
-  pages: 'Pagination-Pages-Count'
+  pages: "X-Pagination-Pages-Count",
+  page: "X-Pagination-Page-Number",
+  items: "X-Pagination-Page-Items-Count",
+  count: "X-Pagination-Total-Items-Count",
 }
 
 # Support extra: Extra support for features like: incremental, infinite, auto-scroll pagination

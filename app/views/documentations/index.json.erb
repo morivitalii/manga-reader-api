@@ -23,6 +23,60 @@
     { "name": "Titles" }
   ],
   "components": {
+    "headers": {
+      "X-Pagination-Pages-Count": {
+        "description": "Pages count",
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "X-Pagination-Page-Number": {
+        "description": "Page number",
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "X-Pagination-Page-Items-Count": {
+        "description": "Items count on current page",
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 50
+        }
+      },
+      "X-Pagination-Total-Items-Count": {
+        "description": "Total items count",
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "parameters": {
+      "page": {
+        "in": "query",
+        "name": "page",
+        "required": false,
+        "description": "Page number",
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "limit": {
+        "in": "query",
+        "name": "limit",
+        "required": false,
+        "description": "The number of items to return",
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 50
+        }
+      }
+    },
     "responses": {
       "unauthorized": {
         "description": "Unauthorized access",
@@ -84,31 +138,6 @@
           }
         }
       }
-    },
-    "parameters": {
-      "pagination": {
-        "page": {
-          "in": "query",
-          "name": "page",
-          "required": false,
-          "description": "Page number",
-          "schema": {
-            "type": "integer",
-            "minimum": 1
-          }
-        },
-        "limit": {
-          "in": "query",
-          "name": "limit",
-          "required": false,
-          "description": "The number of items to return",
-          "schema": {
-            "type": "integer",
-            "minimum": 1,
-            "maximum": 50
-          }
-        }
-      }
     }
   },
   "paths": {
@@ -116,7 +145,7 @@
       "get": {
         "tags": ["Interface languages"],
         "summary": "Interface languages",
-        "description": "Sorted by id asc \n\n Not paginated",
+        "description": "Sorted by id ASC",
         "responses": {
           "200": {
             "description": "Success",
@@ -165,7 +194,7 @@
       "get": {
         "tags": ["Content languages"],
         "summary": "Content languages",
-        "description": "Sorted by id asc \n\n Not paginated",
+        "description": "Sorted by id ASC",
         "responses": {
           "200": {
             "description": "Success",
@@ -214,7 +243,7 @@
       "get": {
         "tags": ["Tags"],
         "summary": "Tags",
-        "description": "Sorted by title asc \n\n Not paginated",
+        "description": "Sorted by title ASC",
         "responses": {
           "200": {
             "description": "Success",
@@ -289,7 +318,7 @@
       "get": {
         "tags": ["Genres"],
         "summary": "Genres",
-        "description": "Sorted by title asc \n\n Not paginated",
+        "description": "Sorted by title ASC",
         "responses": {
           "200": {
             "description": "Success",
@@ -338,7 +367,7 @@
       "get": {
         "tags": ["Themes"],
         "summary": "Themes",
-        "description": "Sorted by title asc \n\n Not paginated",
+        "description": "Sorted by title ASC",
         "responses": {
           "200": {
             "description": "Success",
@@ -387,7 +416,7 @@
       "get": {
         "tags": ["Demographics"],
         "summary": "Demographics",
-        "description": "Sorted by title asc \n\n Not paginated",
+        "description": "Sorted by title ASC",
         "responses": {
           "200": {
             "description": "Success",
@@ -436,7 +465,7 @@
       "get": {
         "tags": ["Formats"],
         "summary": "Formats",
-        "description": "Sorted by title asc \n\n Not paginated",
+        "description": "Sorted by title ASC",
         "responses": {
           "200": {
             "description": "Success",
@@ -485,7 +514,7 @@
       "get": {
         "tags": ["Marks"],
         "summary": "Marks",
-        "description": "Sorted by title asc \n\n Not paginated",
+        "description": "Sorted by title ASC",
         "responses": {
           "200": {
             "description": "Success",
@@ -534,10 +563,22 @@
       "get": {
         "tags": ["Titles"],
         "summary": "Titles",
-        "description": "Sorted by title asc \n\n Not paginated",
+        "description": "Sorted by title ASC",
+        "parameters": [
+          { "$ref": "#/components/parameters/page" },
+          { "$ref": "#/components/parameters/limit" }
+        ],
         "responses": {
           "200": {
             "description": "Success",
+            "headers": {
+              "X-Pagination-Page-Number": {
+                "$ref": "#/components/headers/X-Pagination-Page-Number"
+              },
+              "X-Pagination-Page-Items-Count": {
+                "$ref": "#/components/headers/X-Pagination-Page-Items-Count"
+              }
+            },
             "content": {
               "application/json": {
                 "schema": <%= schema("titles_controller/index/200") %>

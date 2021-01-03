@@ -11,8 +11,6 @@ RSpec.describe Api::ThemesController do
 
       expect(response).to have_http_status(200)
       expect(response).to match_json_schema("controllers/api/themes_controller/index/200")
-
-      # Ensure that themes sorted by tag title ASC
       expect(response).to have_objects_collection(first_theme, second_theme, third_theme)
     end
   end

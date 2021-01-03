@@ -11,8 +11,6 @@ RSpec.describe Api::TagsController do
 
       expect(response).to have_http_status(200)
       expect(response).to match_json_schema("controllers/api/tags_controller/index/200")
-
-      # Ensure that tags sorted by title ASC
       expect(response).to have_objects_collection(first_tag, second_tag, third_tag)
     end
   end

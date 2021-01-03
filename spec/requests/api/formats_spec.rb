@@ -11,8 +11,6 @@ RSpec.describe Api::FormatsController do
 
       expect(response).to have_http_status(200)
       expect(response).to match_json_schema("controllers/api/formats_controller/index/200")
-
-      # Ensure that formats sorted by tag title ASC
       expect(response).to have_objects_collection(first_format, second_format, third_format)
     end
   end

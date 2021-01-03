@@ -11,8 +11,6 @@ RSpec.describe Api::DemographicsController do
 
       expect(response).to have_http_status(200)
       expect(response).to match_json_schema("controllers/api/demographics_controller/index/200")
-
-      # Ensure that demographics sorted by tag title ASC
       expect(response).to have_objects_collection(first_demographic, second_demographic, third_demographic)
     end
   end
