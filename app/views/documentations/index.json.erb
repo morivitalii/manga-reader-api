@@ -55,6 +55,24 @@
       }
     },
     "parameters": {
+      "id": {
+        "in": "query",
+        "name": "id",
+        "required": true,
+        "description": "ID",
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "tag_id": {
+        "in": "query",
+        "name": "tag_id",
+        "required": true,
+        "description": "Tag ID",
+        "schema": {
+          "type": "integer"
+        }
+      },
       "page": {
         "in": "query",
         "name": "page",
@@ -164,11 +182,14 @@
         }
       }
     },
-    "/interface_languages/:id.json": {
+    "/interface_languages/{id}.json": {
       "get": {
         "tags": ["Interface languages"],
         "summary": "Interface language",
         "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" }
+        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -213,11 +234,14 @@
         }
       }
     },
-    "/content_languages/:id.json": {
+    "/content_languages/{id}.json": {
       "get": {
         "tags": ["Content languages"],
         "summary": "Content language",
         "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" }
+        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -262,11 +286,14 @@
         }
       }
     },
-    "/tags/:id.json": {
+    "/tags/{id}.json": {
       "get": {
         "tags": ["Tags"],
         "summary": "Tag",
         "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" }
+        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -288,11 +315,14 @@
         }
       }
     },
-    "/tags/:id/translations.json": {
+    "/tags/{tag_id}/translations.json": {
       "get": {
         "tags": ["Tags"],
         "summary": "Tag translations",
         "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/tag_id" }
+        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -337,11 +367,14 @@
         }
       }
     },
-    "/genres/:id.json": {
+    "/genres/{id}.json": {
       "get": {
         "tags": ["Genres"],
         "summary": "Genre",
         "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" }
+        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -386,11 +419,14 @@
         }
       }
     },
-    "/themes/:id.json": {
+    "/themes/{id}.json": {
       "get": {
         "tags": ["Themes"],
         "summary": "Theme",
         "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" }
+        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -435,11 +471,14 @@
         }
       }
     },
-    "/demographics/:id.json": {
+    "/demographics/{id}.json": {
       "get": {
         "tags": ["Demographics"],
         "summary": "Demographic",
         "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" }
+        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -484,11 +523,14 @@
         }
       }
     },
-    "/formats/:id.json": {
+    "/formats/{id}.json": {
       "get": {
         "tags": ["Formats"],
         "summary": "Format",
         "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" }
+        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -533,11 +575,14 @@
         }
       }
     },
-    "/marks/:id.json": {
+    "/marks/{id}.json": {
       "get": {
         "tags": ["Marks"],
         "summary": "Mark",
         "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" }
+        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -594,11 +639,14 @@
         }
       }
     },
-    "/titles/:id.json": {
+    "/titles/{id}.json": {
       "get": {
         "tags": ["Titles"],
         "summary": "Title",
         "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" }
+        ],
         "responses": {
           "200": {
             "description": "Success",
