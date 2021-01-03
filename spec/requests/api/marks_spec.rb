@@ -11,8 +11,6 @@ RSpec.describe Api::MarksController do
 
       expect(response).to have_http_status(200)
       expect(response).to match_json_schema("controllers/api/marks_controller/index/200")
-
-      # Ensure that marks sorted by tag title ASC
       expect(response).to have_objects_collection(first_mark, second_mark, third_mark)
     end
   end
