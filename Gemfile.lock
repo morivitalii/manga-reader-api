@@ -124,6 +124,7 @@ GEM
     nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
     oj (3.10.16)
+    pagy (3.10.0)
     parallel (1.20.1)
     parser (2.7.2.0)
       ast (~> 2.4.1)
@@ -254,6 +255,7 @@ DEPENDENCIES
   json_matchers
   listen
   oj (~> 3)
+  pagy (~> 3)
   pg (~> 1)
   puma (~> 5)
   pundit (~> 2)
