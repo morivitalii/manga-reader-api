@@ -84,6 +84,31 @@
           }
         }
       }
+    },
+    "parameters": {
+      "pagination": {
+        "page": {
+          "in": "query",
+          "name": "page",
+          "required": false,
+          "description": "Page number",
+          "schema": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "limit": {
+          "in": "query",
+          "name": "limit",
+          "required": false,
+          "description": "The number of items to return",
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          }
+        }
+      }
     }
   },
   "paths": {

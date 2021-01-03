@@ -16,6 +16,7 @@ gem "rack-cors", "~> 1"
 gem "pundit", "~> 2"
 gem "draper", "~> 4"
 gem "hashie", "~> 4"
+gem "pagy", "~> 3"
 
 group :development, :test do
   gem "standard"
