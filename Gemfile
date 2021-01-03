@@ -1,7 +1,6 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem "dotenv-rails", "~> 2"
 gem "rails", "~> 6"
 gem "rails-i18n", "~> 6"
 gem "bootsnap", "~> 1", require: false
@@ -19,9 +18,10 @@ gem "hashie", "~> 4"
 gem "pagy", "~> 3"
 
 group :development, :test do
-  gem "standard"
+  gem "dotenv-rails", "~> 2"
   gem "rspec-rails"
   gem "factory_bot_rails"
+  gem "standard"
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
 end
 
