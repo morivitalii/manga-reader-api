@@ -513,6 +513,39 @@ ALTER SEQUENCE public.titles_id_seq OWNED BY public.titles.id;
 
 
 --
+-- Name: users; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.users (
+    id bigint NOT NULL,
+    username character varying NOT NULL,
+    email character varying NOT NULL,
+    password_digest character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
+
+
+--
 -- Name: content_language_translations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -615,6 +648,13 @@ ALTER TABLE ONLY public.title_translations ALTER COLUMN id SET DEFAULT nextval('
 --
 
 ALTER TABLE ONLY public.titles ALTER COLUMN id SET DEFAULT nextval('public.titles_id_seq'::regclass);
+
+
+--
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
 
 
 --
@@ -751,6 +791,14 @@ ALTER TABLE ONLY public.title_translations
 
 ALTER TABLE ONLY public.titles
     ADD CONSTRAINT titles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
 
 
 --
@@ -950,6 +998,20 @@ CREATE UNIQUE INDEX index_title_translations_uniqueness ON public.title_translat
 
 
 --
+-- Name: index_users_on_lower_email; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_users_on_lower_email ON public.users USING btree (lower((email)::text));
+
+
+--
+-- Name: index_users_on_lower_username; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_users_on_lower_username ON public.users USING btree (lower((username)::text));
+
+
+--
 -- Name: formats fk_rails_0400824e47; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1094,6 +1156,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210101204321'),
 ('20210101204852'),
 ('20210101205700'),
-('20210101205909');
+('20210101205909'),
+('20210103101139');
 
 
