@@ -1,7 +1,7 @@
 class GroupUser < ApplicationRecord
   include Translation
 
-  # Locale association should not be changed. Just because
+  # This attributes should not be changed. Just because
   attr_readonly :group_id, :user_id
 
   belongs_to :group
