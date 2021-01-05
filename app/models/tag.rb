@@ -1,6 +1,9 @@
 class Tag < ApplicationRecord
   include Translation
 
+  # This attributes should not be changed. Just because
+  attr_readonly :key
+
   has_one :genre, dependent: :destroy
   has_one :format, dependent: :destroy
   has_one :demographic, dependent: :destroy
