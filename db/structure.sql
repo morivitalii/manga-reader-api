@@ -184,6 +184,38 @@ ALTER SEQUENCE public.genres_id_seq OWNED BY public.genres.id;
 
 
 --
+-- Name: group_users; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.group_users (
+    id bigint NOT NULL,
+    group_id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: group_users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.group_users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: group_users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.group_users_id_seq OWNED BY public.group_users.id;
+
+
+--
 -- Name: groups; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -612,6 +644,13 @@ ALTER TABLE ONLY public.genres ALTER COLUMN id SET DEFAULT nextval('public.genre
 
 
 --
+-- Name: group_users id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.group_users ALTER COLUMN id SET DEFAULT nextval('public.group_users_id_seq'::regclass);
+
+
+--
 -- Name: groups id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -741,6 +780,14 @@ ALTER TABLE ONLY public.formats
 
 ALTER TABLE ONLY public.genres
     ADD CONSTRAINT genres_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: group_users group_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.group_users
+    ADD CONSTRAINT group_users_pkey PRIMARY KEY (id);
 
 
 --
@@ -901,6 +948,27 @@ CREATE UNIQUE INDEX index_formats_on_tag_id ON public.formats USING btree (tag_i
 --
 
 CREATE UNIQUE INDEX index_genres_on_tag_id ON public.genres USING btree (tag_id);
+
+
+--
+-- Name: index_group_users_on_group_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_group_users_on_group_id ON public.group_users USING btree (group_id);
+
+
+--
+-- Name: index_group_users_on_group_id_and_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_group_users_on_group_id_and_user_id ON public.group_users USING btree (group_id, user_id);
+
+
+--
+-- Name: index_group_users_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_group_users_on_user_id ON public.group_users USING btree (user_id);
 
 
 --
@@ -1082,6 +1150,14 @@ ALTER TABLE ONLY public.title_translations
 
 
 --
+-- Name: group_users fk_rails_1486913327; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.group_users
+    ADD CONSTRAINT fk_rails_1486913327 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: tag_translations fk_rails_1635fa7614; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1135,6 +1211,14 @@ ALTER TABLE ONLY public.tag_translations
 
 ALTER TABLE ONLY public.content_languages
     ADD CONSTRAINT fk_rails_83d548600f FOREIGN KEY (locale_id) REFERENCES public.locales(id);
+
+
+--
+-- Name: group_users fk_rails_a9d5f48449; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.group_users
+    ADD CONSTRAINT fk_rails_a9d5f48449 FOREIGN KEY (group_id) REFERENCES public.groups(id);
 
 
 --
@@ -1204,6 +1288,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210101205700'),
 ('20210101205909'),
 ('20210103101139'),
-('20210103102854');
+('20210103102854'),
+('20210104071533');
 
 

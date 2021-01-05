@@ -1,0 +1,22 @@
+{
+  "id": "file:/serializers/api/group_user.json#",
+  "type": "object",
+  "title": "Group user",
+  "properties": {
+    "id": {
+      "$ref": "file:/helpers/serializers/api/attributes/id.json#"
+    },
+    "group": {
+      "$ref": "file:/serializers/api/group.json#"
+    },
+    "user": {
+      "$ref": "file:/serializers/api/group.json#"
+    },
+    "created_at": {
+      "$ref": "file:/helpers/serializers/api/attributes/created_at.json#"
+    },
+    "updated_at": {
+      "$ref": "file:/helpers/serializers/api/attributes/updated_at.json#"
+    }
+  }
+}
