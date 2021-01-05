@@ -1,6 +1,9 @@
 class User < ApplicationRecord
   has_secure_password
 
+  # This attributes should not be changed. Just because
+  attr_readonly :username
+
   has_many :group_user, dependent: :restrict_with_error
   has_many :groups, through: :group_user
 
