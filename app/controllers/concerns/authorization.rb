@@ -25,8 +25,15 @@ module Authorization
       super(scope, policy_scope_class: "#{policy_class}::Scope".constantize)
     end
 
+    def permitted_attributes(policy_class, action)
+      method_name = "permitted_attributes_for_#{action}"
+      attributes = policy_class.new(pundit_user).public_send(method_name)
+
+      params.permit(attributes)
+    end
+
     def pundit_user
-      nil
+      current_user
     end
   end
 end
