@@ -6,4 +6,10 @@ RSpec.describe Api::UsersPolicy do
   permissions :index? do
     it { is_expected.to permit }
   end
+
+  permissions :show? do
+    let(:user) { create(:user) }
+
+    it { is_expected.to permit(nil, user) }
+  end
 end

@@ -24,4 +24,15 @@ RSpec.describe Api::UsersController do
       expect(response).to have_objects_collection(first_user, second_user, third_user)
     end
   end
+
+  describe ".show" do
+    it "returns valid response" do
+      user = create(:user)
+
+      get "/api/users/#{user.to_param}.json"
+
+      expect(response).to have_http_status(200)
+      expect(response).to match_json_schema("controllers/api/users_controller/show/200")
+    end
+  end
 end

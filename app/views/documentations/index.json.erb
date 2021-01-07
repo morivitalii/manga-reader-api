@@ -20,7 +20,8 @@
     { "name": "Demographics" },
     { "name": "Formats" },
     { "name": "Marks" },
-    { "name": "Titles" }
+    { "name": "Titles" },
+    { "name": "Users" }
   ],
   "components": {
     "headers": {
@@ -653,6 +654,70 @@
             "content": {
               "application/json": {
                 "schema": <%= schema("titles_controller/show/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          }
+        }
+      }
+    },
+    "/users.json": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Users",
+        "description": "Sorted by username ASC",
+        "parameters": [
+          { "$ref": "#/components/parameters/page" },
+          { "$ref": "#/components/parameters/limit" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Pagination-Page-Number": {
+                "$ref": "#/components/headers/X-Pagination-Page-Number"
+              },
+              "X-Pagination-Page-Items-Count": {
+                "$ref": "#/components/headers/X-Pagination-Page-Items-Count"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": <%= schema("users_controller/index/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          }
+        }
+      }
+    },
+    "/users/{id}.json": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "User",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("users_controller/show/200") %>
               }
             }
           },
