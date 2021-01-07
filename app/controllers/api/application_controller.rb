@@ -4,6 +4,8 @@ class Api::ApplicationController < ActionController::API
   include SetCurrentContentLanguage
   include SetCurrentInterfaceLanguage
 
+  include Authentication
+
   include Pundit
   include Authorization
 end
