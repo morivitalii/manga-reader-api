@@ -9,7 +9,7 @@
     "username": {
       "type": "string",
       "description": "Username",
-      "examples": ["dev1vitaly"]
+      "examples": ["riko"]
     },
     "created_at": {
       "$ref": "file:/helpers/serializers/api/attributes/created_at.json#"
