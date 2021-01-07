@@ -234,6 +234,8 @@ GEM
     tzinfo (2.0.3)
       concurrent-ruby (~> 1.0)
     unicode-display_width (1.7.0)
+    warden (1.2.9)
+      rack (>= 2.0.9)
     websocket-driver (0.7.3)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -269,6 +271,7 @@ DEPENDENCIES
   spring
   standard
   tzinfo-data
+  warden (~> 1)
 
 BUNDLED WITH
    2.1.4

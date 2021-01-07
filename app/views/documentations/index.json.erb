@@ -7,11 +7,11 @@
   },
   "servers": [
     {
-      "url": "<%= ENV["API_DOCUMENTATION_HOST"] %>/api",
-      "description": "Development server"
+      "url": "<%= ENV["API_DOCUMENTATION_HOST"] %>/api"
     }
   ],
   "tags": [
+    { "name": "Authentication" },
     { "name": "Interface languages" },
     { "name": "Content languages" },
     { "name": "Tags" },
@@ -160,6 +160,60 @@
     }
   },
   "paths": {
+    "/sign_up.json": {
+      "get": {
+        "tags": ["Authentication"],
+        "summary": "Sign up",
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "description": "Username",
+                    "examples": ["riko"]
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "Email",
+                    "examples": ["riko@example.com"]
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Password",
+                    "examples": ["password"]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("sign_up_controller/create/200") %>
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("sign_up_controller/create/422") %>
+              }
+            }
+          }
+        }
+      }
+    },
     "/interface_languages.json": {
       "get": {
         "tags": ["Interface languages"],
