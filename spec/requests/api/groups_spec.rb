@@ -24,4 +24,15 @@ RSpec.describe Api::GroupsController do
       expect(response).to have_objects_collection(first_group, second_group, third_group)
     end
   end
+
+  describe ".show" do
+    it "returns valid response" do
+      group = create(:group)
+
+      get "/api/groups/#{group.to_param}.json"
+
+      expect(response).to have_http_status(200)
+      expect(response).to match_json_schema("controllers/api/groups_controller/show/200")
+    end
+  end
 end
