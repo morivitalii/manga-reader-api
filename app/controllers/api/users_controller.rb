@@ -10,10 +10,10 @@ class Api::UsersController < Api::ApplicationController
     users = User.order(username: :asc).all
     pagination, users = paginate_countless(users)
 
+    set_pagination_headers(pagination)
+
     users = Api::UserDecorator.decorate(users)
     users = Api::UserSerializer.serialize(users)
-
-    set_pagination_headers(pagination)
 
     render json: users, status: 200
   end

@@ -21,7 +21,8 @@
     { "name": "Formats" },
     { "name": "Marks" },
     { "name": "Titles" },
-    { "name": "Users" }
+    { "name": "Users" },
+    { "name": "Groups" }
   ],
   "components": {
     "headers": {
@@ -43,6 +44,7 @@
         "description": "Items count on current page",
         "schema": {
           "type": "integer",
+          "default": 50,
           "minimum": 1,
           "maximum": 50
         }
@@ -91,6 +93,7 @@
         "description": "The number of items to return",
         "schema": {
           "type": "integer",
+          "default": 50,
           "minimum": 1,
           "maximum": 50
         }
@@ -838,6 +841,41 @@
           }
         }
       }
-    }
+    },
+    "/groups.json": {
+      "get": {
+        "tags": ["Groups"],
+        "summary": "Groups",
+        "description": "Sorted by title ASC",
+        "parameters": [
+          { "$ref": "#/components/parameters/page" },
+          { "$ref": "#/components/parameters/limit" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Pagination-Page-Number": {
+                "$ref": "#/components/headers/X-Pagination-Page-Number"
+              },
+              "X-Pagination-Page-Items-Count": {
+                "$ref": "#/components/headers/X-Pagination-Page-Items-Count"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": <%= schema("groups_controller/index/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          }
+        }
+      }
+    },
   }
 }

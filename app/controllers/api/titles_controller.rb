@@ -11,6 +11,8 @@ class Api::TitlesController < Api::ApplicationController
     titles = Title.joins(:translations).order("title_translations.title ASC").all
     pagination, titles = paginate_countless(titles)
 
+    set_pagination_headers(pagination)
+
     ActiveRecord::Associations::Preloader.new.preload(
       titles, [
         Title.translations_associations,
@@ -25,8 +27,6 @@ class Api::TitlesController < Api::ApplicationController
 
     titles = Api::TitleDecorator.decorate(titles)
     titles = Api::TitleSerializer.serialize(titles)
-
-    set_pagination_headers(pagination)
 
     render json: titles, status: 200
   end
