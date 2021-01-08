@@ -7,6 +7,9 @@ module Authorization
     # Catch endpoints without authorization on development phase
     after_action :verify_authorized
 
+    # Catch database queries without authorization on development phase
+    after_action :verify_policy_scoped
+
     rescue_from Pundit::NotAuthorizedError, with: :authorization_error
 
     def authorization_error
