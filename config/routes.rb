@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   namespace :api, constraints: ->(request) { request.format == :json } do
     resource :sign_up, only: [:create], controller: :sign_up
+    resource :sign_in, only: [:create], controller: :sign_in
 
     resources :interface_languages, only: [:index, :show]
     resources :content_languages, only: [:index, :show]

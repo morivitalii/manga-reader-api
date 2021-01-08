@@ -7,9 +7,12 @@ class Api::SignUpController < Api::ApplicationController
     if service.call
       request.env["warden"].set_user(service.user)
 
-      render json: Api::UserSerializer.new(service.user)
+      user = Api::UserDecorator.decorate(service.user)
+      user = Api::UserSerializer.serialize(user)
+
+      render json: user, status: 200
     else
-      render json: service.errors, status: :unprocessable_entity
+      render json: service.errors, status: 422
     end
   end
 

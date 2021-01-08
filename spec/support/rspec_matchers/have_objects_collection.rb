@@ -11,10 +11,10 @@ RSpec::Matchers.define :have_objects_collection do |*models|
   diffable
 
   failure_message do |_|
-    "expected that #{@actual} would be equal to #{@expected}"
+    "expected that \"#{@actual}\" would be equal to \"#{@expected}\""
   end
 
   failure_message_when_negated do |_|
-    "expected that #{@actual} would not be equal to #{@expected}"
+    "expected that \"#{@actual}\" would not be equal to \"#{@expected}\""
   end
 end
