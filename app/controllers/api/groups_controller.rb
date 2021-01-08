@@ -1,7 +1,10 @@
 class Api::GroupsController < Api::ApplicationController
   include Pagination
 
+  before_action :set_group, only: [:show]
+
   before_action -> { authorize(Api::GroupsPolicy) }, only: [:index]
+  before_action -> { authorize(Api::GroupsPolicy, @group) }, only: [:show]
 
   def index
     groups = Group.order("title ASC").all
@@ -13,5 +16,18 @@ class Api::GroupsController < Api::ApplicationController
     groups = Api::GroupSerializer.serialize(groups)
 
     render json: groups, status: 200
+  end
+
+  def show
+    group = Api::GroupDecorator.decorate(@group)
+    group = Api::GroupSerializer.serialize(group)
+
+    render json: group, status: 200
+  end
+
+  private
+
+  def set_group
+    @group = Group.find(params[:id])
   end
 end
