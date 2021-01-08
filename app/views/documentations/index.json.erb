@@ -214,6 +214,58 @@
         }
       }
     },
+    "/sign_in.json": {
+      "get": {
+        "tags": ["Authentication"],
+        "summary": "Sign in",
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "description": "Username",
+                    "examples": ["riko"]
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Password",
+                    "examples": ["password"]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("sign_in_controller/create/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("sign_in_controller/create/422") %>
+              }
+            }
+          }
+        }
+      }
+    },
     "/interface_languages.json": {
       "get": {
         "tags": ["Interface languages"],
