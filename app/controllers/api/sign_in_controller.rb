@@ -1,4 +1,6 @@
 class Api::SignInController < Api::ApplicationController
+  skip_after_action :verify_policy_scoped, only: [:create, :unauthenticated]
+
   before_action -> { authorize(Api::SignInPolicy) }, only: [:create, :unauthenticated]
 
   def create
