@@ -7,6 +7,7 @@ class Api::DemographicsController < Api::ApplicationController
 
   def index
     demographics = Demographic.joins(tag: :translations).order("tag_translations.title ASC").all
+    demographics = policy_scope(Api::DemographicsPolicy, demographics)
 
     ActiveRecord::Associations::Preloader.new.preload(
       demographics, :tag, Tag.with_translations
@@ -28,7 +29,7 @@ class Api::DemographicsController < Api::ApplicationController
   private
 
   def set_demographic
-    @demographic = Demographic.find(params[:id])
+    @demographic = policy_scope(Api::DemographicsPolicy, Demographic).find(params[:id])
   end
 
   def set_demographic_associations
