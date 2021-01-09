@@ -7,6 +7,7 @@ class Api::GenresController < Api::ApplicationController
 
   def index
     genres = Genre.joins(tag: :translations).order("tag_translations.title ASC").all
+    genres = policy_scope(Api::GenresPolicy, genres)
 
     ActiveRecord::Associations::Preloader.new.preload(
       genres, :tag, Tag.with_translations
@@ -28,7 +29,7 @@ class Api::GenresController < Api::ApplicationController
   private
 
   def set_genre
-    @genre = Genre.find(params[:id])
+    @genre = policy_scope(Api::GenresPolicy, Genre).find(params[:id])
   end
 
   def set_genre_associations
