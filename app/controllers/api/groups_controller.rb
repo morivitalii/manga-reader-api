@@ -8,6 +8,7 @@ class Api::GroupsController < Api::ApplicationController
 
   def index
     groups = Group.order("title ASC").all
+    groups = policy_scope(Api::GroupsPolicy, groups)
     pagination, groups = paginate_countless(groups)
 
     set_pagination_headers(pagination)
@@ -28,6 +29,6 @@ class Api::GroupsController < Api::ApplicationController
   private
 
   def set_group
-    @group = Group.find(params[:id])
+    @group = policy_scope(Api::GroupsPolicy, Group).find(params[:id])
   end
 end
