@@ -7,6 +7,7 @@ class Api::TagsController < Api::ApplicationController
 
   def index
     tags = Tag.joins(:translations).order("tag_translations.title ASC").all
+    tags = policy_scope(Api::TagsPolicy, tags)
 
     ActiveRecord::Associations::Preloader.new.preload(
       tags, Tag.translations_associations
@@ -28,7 +29,7 @@ class Api::TagsController < Api::ApplicationController
   private
 
   def set_tag
-    @tag = Tag.find(params[:id])
+    @tag = policy_scope(Api::TagsPolicy, Tag).find(params[:id])
   end
 
   def set_tag_associations
