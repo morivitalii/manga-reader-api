@@ -252,9 +252,6 @@
               }
             }
           },
-          "401": {
-            "$ref": "#/components/responses/unauthorized"
-          },
           "403": {
             "$ref": "#/components/responses/forbidden"
           },
@@ -265,6 +262,21 @@
                 "schema": <%= schema("sign_in_controller/create/422") %>
               }
             }
+          }
+        }
+      }
+    },
+    "/sign_out.json": {
+      "get": {
+        "tags": ["Authentication"],
+        "summary": "Sign out",
+        "description": "",
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
           }
         }
       }
