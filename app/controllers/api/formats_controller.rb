@@ -7,6 +7,7 @@ class Api::FormatsController < Api::ApplicationController
 
   def index
     formats = Format.joins(tag: :translations).order("tag_translations.title ASC").all
+    formats = policy_scope(Api::FormatsPolicy, formats)
 
     ActiveRecord::Associations::Preloader.new.preload(
       formats, :tag, Tag.with_translations
@@ -28,7 +29,7 @@ class Api::FormatsController < Api::ApplicationController
   private
 
   def set_format
-    @format = Format.find(params[:id])
+    @format = policy_scope(Api::FormatsPolicy, Format).find(params[:id])
   end
 
   def set_format_associations
