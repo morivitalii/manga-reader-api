@@ -14,7 +14,7 @@ class Api::Tags::TranslationsController < Api::ApplicationController
   private
 
   def set_tag
-    @tag = Tag.find(params[:tag_id])
+    @tag = policy_scope(Api::Tags::TranslationsPolicy, Tag).find(params[:tag_id])
   end
 
   def set_tag_associations
