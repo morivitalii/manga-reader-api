@@ -9,6 +9,7 @@ class Api::TitlesController < Api::ApplicationController
 
   def index
     titles = Title.joins(:translations).order("title_translations.title ASC").all
+    titles = policy_scope(Api::TitlesPolicy, titles)
     pagination, titles = paginate_countless(titles)
 
     set_pagination_headers(pagination)
@@ -41,7 +42,7 @@ class Api::TitlesController < Api::ApplicationController
   private
 
   def set_title
-    @title = Title.find(params[:id])
+    @title = policy_scope(Api::TitlesPolicy, Title).find(params[:id])
   end
 
   def set_title_associations
