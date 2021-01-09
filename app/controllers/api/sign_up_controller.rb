@@ -1,4 +1,6 @@
 class Api::SignUpController < Api::ApplicationController
+  skip_after_action :verify_policy_scoped, only: [:create]
+
   before_action -> { authorize(Api::SignUpPolicy) }, only: [:create]
 
   def create
