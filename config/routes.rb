@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     resources :demographics, only: [:index, :show]
     resources :titles, only: [:index, :show]
     resources :users, only: [:index, :show]
+    resources :artists, only: [:index, :show]
     resources :groups, only: [:index, :show]
   end
 end

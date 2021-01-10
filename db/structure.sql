@@ -26,6 +26,71 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: artist_translations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.artist_translations (
+    id bigint NOT NULL,
+    content_language_id bigint NOT NULL,
+    resource_id bigint NOT NULL,
+    name character varying DEFAULT ''::character varying NOT NULL,
+    edited_at timestamp(6) without time zone NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: artist_translations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.artist_translations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: artist_translations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.artist_translations_id_seq OWNED BY public.artist_translations.id;
+
+
+--
+-- Name: artists; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.artists (
+    id bigint NOT NULL,
+    user_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: artists_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.artists_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: artists_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.artists_id_seq OWNED BY public.artists.id;
+
+
+--
 -- Name: content_language_translations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -609,6 +674,20 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: artist_translations id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.artist_translations ALTER COLUMN id SET DEFAULT nextval('public.artist_translations_id_seq'::regclass);
+
+
+--
+-- Name: artists id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.artists ALTER COLUMN id SET DEFAULT nextval('public.artists_id_seq'::regclass);
+
+
+--
 -- Name: content_language_translations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -740,6 +819,22 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: artist_translations artist_translations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.artist_translations
+    ADD CONSTRAINT artist_translations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: artists artists_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.artists
+    ADD CONSTRAINT artists_pkey PRIMARY KEY (id);
 
 
 --
@@ -892,6 +987,41 @@ ALTER TABLE ONLY public.titles
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_artist_translations_on_content_language_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_artist_translations_on_content_language_id ON public.artist_translations USING btree (content_language_id);
+
+
+--
+-- Name: index_artist_translations_on_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_artist_translations_on_name ON public.artist_translations USING btree (name);
+
+
+--
+-- Name: index_artist_translations_on_resource_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_artist_translations_on_resource_id ON public.artist_translations USING btree (resource_id);
+
+
+--
+-- Name: index_artist_translations_uniqueness; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_artist_translations_uniqueness ON public.artist_translations USING btree (resource_id, content_language_id);
+
+
+--
+-- Name: index_artists_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_artists_on_user_id ON public.artists USING btree (user_id);
 
 
 --
@@ -1206,6 +1336,14 @@ ALTER TABLE ONLY public.tag_translations
 
 
 --
+-- Name: artists fk_rails_6bcbebdd23; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.artists
+    ADD CONSTRAINT fk_rails_6bcbebdd23 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: content_languages fk_rails_83d548600f; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1227,6 +1365,22 @@ ALTER TABLE ONLY public.group_users
 
 ALTER TABLE ONLY public.marks
     ADD CONSTRAINT fk_rails_ac66cf165f FOREIGN KEY (tag_id) REFERENCES public.tags(id);
+
+
+--
+-- Name: artist_translations fk_rails_e6907ab812; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.artist_translations
+    ADD CONSTRAINT fk_rails_e6907ab812 FOREIGN KEY (content_language_id) REFERENCES public.content_languages(id);
+
+
+--
+-- Name: artist_translations fk_rails_ea87634ab3; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.artist_translations
+    ADD CONSTRAINT fk_rails_ea87634ab3 FOREIGN KEY (resource_id) REFERENCES public.artists(id);
 
 
 --
@@ -1289,6 +1443,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210101205909'),
 ('20210103101139'),
 ('20210103102854'),
-('20210104071533');
+('20210104071533'),
+('20210109173047'),
+('20210109173359');
 
 
