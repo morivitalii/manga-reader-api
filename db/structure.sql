@@ -439,6 +439,39 @@ ALTER SEQUENCE public.marks_id_seq OWNED BY public.marks.id;
 
 
 --
+-- Name: resource_artists; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.resource_artists (
+    id bigint NOT NULL,
+    artist_id bigint NOT NULL,
+    resource_type character varying NOT NULL,
+    resource_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: resource_artists_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.resource_artists_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: resource_artists_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.resource_artists_id_seq OWNED BY public.resource_artists.id;
+
+
+--
 -- Name: resource_tags; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -765,6 +798,13 @@ ALTER TABLE ONLY public.marks ALTER COLUMN id SET DEFAULT nextval('public.marks_
 
 
 --
+-- Name: resource_artists id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_artists ALTER COLUMN id SET DEFAULT nextval('public.resource_artists_id_seq'::regclass);
+
+
+--
 -- Name: resource_tags id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -923,6 +963,14 @@ ALTER TABLE ONLY public.locales
 
 ALTER TABLE ONLY public.marks
     ADD CONSTRAINT marks_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: resource_artists resource_artists_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_artists
+    ADD CONSTRAINT resource_artists_pkey PRIMARY KEY (id);
 
 
 --
@@ -1151,6 +1199,20 @@ CREATE UNIQUE INDEX index_marks_on_tag_id ON public.marks USING btree (tag_id);
 
 
 --
+-- Name: index_resource_artists_on_artist_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resource_artists_on_artist_id ON public.resource_artists USING btree (artist_id);
+
+
+--
+-- Name: index_resource_artists_on_resource; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resource_artists_on_resource ON public.resource_artists USING btree (resource_type, resource_id);
+
+
+--
 -- Name: index_resource_tags_on_resource; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1293,6 +1355,14 @@ ALTER TABLE ONLY public.group_users
 
 ALTER TABLE ONLY public.tag_translations
     ADD CONSTRAINT fk_rails_1635fa7614 FOREIGN KEY (content_language_id) REFERENCES public.content_languages(id);
+
+
+--
+-- Name: resource_artists fk_rails_25cea7c2c7; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_artists
+    ADD CONSTRAINT fk_rails_25cea7c2c7 FOREIGN KEY (artist_id) REFERENCES public.artists(id);
 
 
 --
@@ -1445,6 +1515,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210103102854'),
 ('20210104071533'),
 ('20210109173047'),
-('20210109173359');
+('20210109173359'),
+('20210110213257');
 
 
