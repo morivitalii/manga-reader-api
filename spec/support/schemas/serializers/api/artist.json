@@ -1,0 +1,24 @@
+{
+  "id": "file:/serializers/api/artist.json#",
+  "type": "object",
+  "title": "Artist",
+  "properties": {
+    "id": {
+      "$ref": "file:/helpers/serializers/api/attributes/id.json#"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name",
+      "examples": ["Akihito Tsukushi"]
+    },
+    "user": {
+      "$ref": "file:/serializers/api/user.json#"
+    },
+    "created_at": {
+      "$ref": "file:/helpers/serializers/api/attributes/created_at.json#"
+    },
+    "updated_at": {
+      "$ref": "file:/helpers/serializers/api/attributes/updated_at.json#"
+    }
+  }
+}

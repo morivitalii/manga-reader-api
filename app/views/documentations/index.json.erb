@@ -22,6 +22,7 @@
     { "name": "Marks" },
     { "name": "Titles" },
     { "name": "Users" },
+    { "name": "Artists" },
     { "name": "Groups" }
   ],
   "components": {
@@ -839,6 +840,70 @@
             "content": {
               "application/json": {
                 "schema": <%= schema("users_controller/show/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          }
+        }
+      }
+    },
+    "/artists.json": {
+      "get": {
+        "tags": ["Artists"],
+        "summary": "Artists",
+        "description": "Sorted by title ASC",
+        "parameters": [
+          { "$ref": "#/components/parameters/page" },
+          { "$ref": "#/components/parameters/limit" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Pagination-Page-Number": {
+                "$ref": "#/components/headers/X-Pagination-Page-Number"
+              },
+              "X-Pagination-Page-Items-Count": {
+                "$ref": "#/components/headers/X-Pagination-Page-Items-Count"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": <%= schema("artists_controller/index/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          }
+        }
+      }
+    },
+    "/artists/{id}.json": {
+      "get": {
+        "tags": ["Artists"],
+        "summary": "Artist",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("artists_controller/show/200") %>
               }
             }
           },
