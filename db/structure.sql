@@ -448,7 +448,8 @@ CREATE TABLE public.resource_artists (
     resource_type character varying NOT NULL,
     resource_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    artist_type character varying NOT NULL
 );
 
 
@@ -707,6 +708,37 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: writers; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.writers (
+    id bigint NOT NULL,
+    artist_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: writers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.writers_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: writers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.writers_id_seq OWNED BY public.writers.id;
+
+
+--
 -- Name: artist_translations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -851,6 +883,13 @@ ALTER TABLE ONLY public.titles ALTER COLUMN id SET DEFAULT nextval('public.title
 --
 
 ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Name: writers id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.writers ALTER COLUMN id SET DEFAULT nextval('public.writers_id_seq'::regclass);
 
 
 --
@@ -1038,6 +1077,14 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: writers writers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.writers
+    ADD CONSTRAINT writers_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: index_artist_translations_on_content_language_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1213,6 +1260,13 @@ CREATE INDEX index_resource_artists_on_resource ON public.resource_artists USING
 
 
 --
+-- Name: index_resource_artists_uniqueness; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_resource_artists_uniqueness ON public.resource_artists USING btree (artist_id, artist_type, resource_type, resource_id);
+
+
+--
 -- Name: index_resource_tags_on_resource; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1318,6 +1372,13 @@ CREATE UNIQUE INDEX index_users_on_lower_username ON public.users USING btree (l
 
 
 --
+-- Name: index_writers_on_artist_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_writers_on_artist_id ON public.writers USING btree (artist_id);
+
+
+--
 -- Name: formats fk_rails_0400824e47; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1371,6 +1432,14 @@ ALTER TABLE ONLY public.resource_artists
 
 ALTER TABLE ONLY public.content_language_translations
     ADD CONSTRAINT fk_rails_2768f33fbe FOREIGN KEY (content_language_id) REFERENCES public.content_languages(id);
+
+
+--
+-- Name: writers fk_rails_2942212f78; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.writers
+    ADD CONSTRAINT fk_rails_2942212f78 FOREIGN KEY (artist_id) REFERENCES public.artists(id);
 
 
 --
@@ -1516,6 +1585,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210104071533'),
 ('20210109173047'),
 ('20210109173359'),
-('20210110213257');
+('20210110213257'),
+('20210110215953'),
+('20210111023707'),
+('20210111023920');
 
 

@@ -3,6 +3,7 @@ class Title < ApplicationRecord
 
   has_many :resource_artists, as: :resource, dependent: :destroy
   has_many :artists, through: :resource_artists
+  has_many :writers, -> { where(resource_artists: { artist_type: ResourceArtist::WRITER }) }, through: :artists
 
   has_many :resource_tags, as: :resource, dependent: :destroy
   has_many :tags, through: :resource_tags
