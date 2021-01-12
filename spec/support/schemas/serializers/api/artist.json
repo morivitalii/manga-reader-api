@@ -6,13 +6,22 @@
     "id": {
       "$ref": "file:/helpers/serializers/api/attributes/id.json#"
     },
+    "user_id": {
+      "description": "User ID",
+      "oneOf": [
+        {
+          "type": "integer",
+          "examples": [1]
+        },
+        {
+          "type": null
+        }
+      ]
+    },
     "name": {
       "type": "string",
       "description": "Name",
       "examples": ["Akihito Tsukushi"]
-    },
-    "user": {
-      "$ref": "file:/serializers/api/user.json#"
     },
     "created_at": {
       "$ref": "file:/helpers/serializers/api/attributes/created_at.json#"

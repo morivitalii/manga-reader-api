@@ -1,20 +1,32 @@
 {
-  "id": "file:/serializers/api/format.json#",
+  "id": "file:/serializers/api/writer.json#",
   "type": "object",
-  "title": "Format",
+  "title": "Writer",
   "properties": {
     "id": {
       "$ref": "file:/helpers/serializers/api/attributes/id.json#"
     },
-    "tag_id": {
+    "user_id": {
+      "description": "User ID",
+      "oneOf": [
+        {
+          "type": "integer",
+          "examples": [1]
+        },
+        {
+          "type": null
+        }
+      ]
+    },
+    "artist_id": {
       "type": "integer",
-      "description": "Tag ID",
+      "description": "Artist ID",
       "examples": [1]
     },
-    "title": {
+    "name": {
       "type": "string",
-      "description": "Title",
-      "examples": ["Doujinshi"]
+      "description": "Name",
+      "examples": ["Akihito Tsukushi"]
     },
     "created_at": {
       "$ref": "file:/helpers/serializers/api/attributes/created_at.json#"

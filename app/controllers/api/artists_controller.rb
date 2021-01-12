@@ -16,8 +16,7 @@ class Api::ArtistsController < Api::ApplicationController
 
     ActiveRecord::Associations::Preloader.new.preload(
       artists, [
-        Artist.translations_associations,
-        :user
+        Artist.translations_associations
       ]
     )
 
@@ -43,8 +42,7 @@ class Api::ArtistsController < Api::ApplicationController
   def set_artist_associations
     ActiveRecord::Associations::Preloader.new.preload(
       @artist, [
-        Artist.translations_associations,
-        :user
+        Artist.translations_associations
       ]
     )
   end

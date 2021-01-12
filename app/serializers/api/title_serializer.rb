@@ -1,27 +1,12 @@
 class Api::TitleSerializer < Api::ApplicationSerializer
-  serialize_associations :tags,
-    with: Api::TagSerializer,
-    except: [:created_at, :updated_at]
-
-  serialize_associations :genres,
-    with: Api::GenreSerializer,
-    except: [:created_at, :updated_at]
-
-  serialize_associations :formats,
-    with: Api::FormatSerializer,
-    except: [:created_at, :updated_at]
-
-  serialize_associations :demographics,
-    with: Api::DemographicSerializer,
-    except: [:created_at, :updated_at]
-
-  serialize_associations :marks,
-    with: Api::MarkSerializer,
-    except: [:created_at, :updated_at]
-
-  serialize_associations :themes,
-    with: Api::ThemeSerializer,
-    except: [:created_at, :updated_at]
+  serialize_associations :artists, with: Api::ArtistSerializer
+  serialize_associations :writers, with: Api::WriterSerializer
+  serialize_associations :tags, with: Api::TagSerializer
+  serialize_associations :genres, with: Api::GenreSerializer
+  serialize_associations :formats, with: Api::FormatSerializer
+  serialize_associations :demographics, with: Api::DemographicSerializer
+  serialize_associations :marks, with: Api::MarkSerializer
+  serialize_associations :themes, with: Api::ThemeSerializer
 
   def attributes
     {
@@ -29,6 +14,8 @@ class Api::TitleSerializer < Api::ApplicationSerializer
       title: model.title,
       created_at: model.created_at,
       updated_at: model.updated_at,
+      artists: artists,
+      writers: writers,
       tags: tags,
       genres: genres,
       formats: formats,
