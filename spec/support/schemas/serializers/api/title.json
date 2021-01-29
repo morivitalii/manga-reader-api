@@ -23,12 +23,6 @@
         "$ref": "file:/serializers/api/writer.json#"
       }
     },
-    "tags": {
-      "type": "array",
-      "items": {
-        "$ref": "file:/serializers/api/tag.json#"
-      }
-    },
     "genres": {
       "type": "array",
       "items": {

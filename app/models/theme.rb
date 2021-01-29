@@ -4,7 +4,8 @@ class Theme < ApplicationRecord
 
   belongs_to :tag
 
-  has_many :titles, through: :tag
+  has_many :resource_themes
+  has_many :titles, through: :resource_themes, source: :resource, source_type: "Title"
 
   validates :tag, uniqueness: true
 end
