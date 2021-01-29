@@ -473,12 +473,12 @@ ALTER SEQUENCE public.resource_artists_id_seq OWNED BY public.resource_artists.i
 
 
 --
--- Name: resource_tags; Type: TABLE; Schema: public; Owner: -
+-- Name: resource_demographics; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.resource_tags (
+CREATE TABLE public.resource_demographics (
     id bigint NOT NULL,
-    tag_id bigint NOT NULL,
+    demographic_id bigint NOT NULL,
     resource_type character varying NOT NULL,
     resource_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
@@ -487,10 +487,10 @@ CREATE TABLE public.resource_tags (
 
 
 --
--- Name: resource_tags_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: resource_demographics_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.resource_tags_id_seq
+CREATE SEQUENCE public.resource_demographics_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -499,10 +499,142 @@ CREATE SEQUENCE public.resource_tags_id_seq
 
 
 --
--- Name: resource_tags_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: resource_demographics_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.resource_tags_id_seq OWNED BY public.resource_tags.id;
+ALTER SEQUENCE public.resource_demographics_id_seq OWNED BY public.resource_demographics.id;
+
+
+--
+-- Name: resource_formats; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.resource_formats (
+    id bigint NOT NULL,
+    format_id bigint NOT NULL,
+    resource_type character varying NOT NULL,
+    resource_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: resource_formats_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.resource_formats_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: resource_formats_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.resource_formats_id_seq OWNED BY public.resource_formats.id;
+
+
+--
+-- Name: resource_genres; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.resource_genres (
+    id bigint NOT NULL,
+    genre_id bigint NOT NULL,
+    resource_type character varying NOT NULL,
+    resource_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: resource_genres_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.resource_genres_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: resource_genres_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.resource_genres_id_seq OWNED BY public.resource_genres.id;
+
+
+--
+-- Name: resource_marks; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.resource_marks (
+    id bigint NOT NULL,
+    mark_id bigint NOT NULL,
+    resource_type character varying NOT NULL,
+    resource_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: resource_marks_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.resource_marks_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: resource_marks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.resource_marks_id_seq OWNED BY public.resource_marks.id;
+
+
+--
+-- Name: resource_themes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.resource_themes (
+    id bigint NOT NULL,
+    theme_id bigint NOT NULL,
+    resource_type character varying NOT NULL,
+    resource_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: resource_themes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.resource_themes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: resource_themes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.resource_themes_id_seq OWNED BY public.resource_themes.id;
 
 
 --
@@ -837,10 +969,38 @@ ALTER TABLE ONLY public.resource_artists ALTER COLUMN id SET DEFAULT nextval('pu
 
 
 --
--- Name: resource_tags id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: resource_demographics id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.resource_tags ALTER COLUMN id SET DEFAULT nextval('public.resource_tags_id_seq'::regclass);
+ALTER TABLE ONLY public.resource_demographics ALTER COLUMN id SET DEFAULT nextval('public.resource_demographics_id_seq'::regclass);
+
+
+--
+-- Name: resource_formats id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_formats ALTER COLUMN id SET DEFAULT nextval('public.resource_formats_id_seq'::regclass);
+
+
+--
+-- Name: resource_genres id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_genres ALTER COLUMN id SET DEFAULT nextval('public.resource_genres_id_seq'::regclass);
+
+
+--
+-- Name: resource_marks id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_marks ALTER COLUMN id SET DEFAULT nextval('public.resource_marks_id_seq'::regclass);
+
+
+--
+-- Name: resource_themes id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_themes ALTER COLUMN id SET DEFAULT nextval('public.resource_themes_id_seq'::regclass);
 
 
 --
@@ -1013,11 +1173,43 @@ ALTER TABLE ONLY public.resource_artists
 
 
 --
--- Name: resource_tags resource_tags_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: resource_demographics resource_demographics_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.resource_tags
-    ADD CONSTRAINT resource_tags_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.resource_demographics
+    ADD CONSTRAINT resource_demographics_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: resource_formats resource_formats_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_formats
+    ADD CONSTRAINT resource_formats_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: resource_genres resource_genres_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_genres
+    ADD CONSTRAINT resource_genres_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: resource_marks resource_marks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_marks
+    ADD CONSTRAINT resource_marks_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: resource_themes resource_themes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_themes
+    ADD CONSTRAINT resource_themes_pkey PRIMARY KEY (id);
 
 
 --
@@ -1267,24 +1459,108 @@ CREATE UNIQUE INDEX index_resource_artists_uniqueness ON public.resource_artists
 
 
 --
--- Name: index_resource_tags_on_resource; Type: INDEX; Schema: public; Owner: -
+-- Name: index_resource_demographics_on_demographic_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_resource_tags_on_resource ON public.resource_tags USING btree (resource_type, resource_id);
-
-
---
--- Name: index_resource_tags_on_tag_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_resource_tags_on_tag_id ON public.resource_tags USING btree (tag_id);
+CREATE INDEX index_resource_demographics_on_demographic_id ON public.resource_demographics USING btree (demographic_id);
 
 
 --
--- Name: index_resource_tags_uniqueness; Type: INDEX; Schema: public; Owner: -
+-- Name: index_resource_demographics_on_resource; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_resource_tags_uniqueness ON public.resource_tags USING btree (tag_id, resource_type, resource_id);
+CREATE INDEX index_resource_demographics_on_resource ON public.resource_demographics USING btree (resource_type, resource_id);
+
+
+--
+-- Name: index_resource_demographics_uniqueness; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_resource_demographics_uniqueness ON public.resource_demographics USING btree (demographic_id, resource_type, resource_id);
+
+
+--
+-- Name: index_resource_formats_on_format_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resource_formats_on_format_id ON public.resource_formats USING btree (format_id);
+
+
+--
+-- Name: index_resource_formats_on_resource; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resource_formats_on_resource ON public.resource_formats USING btree (resource_type, resource_id);
+
+
+--
+-- Name: index_resource_formats_uniqueness; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_resource_formats_uniqueness ON public.resource_formats USING btree (format_id, resource_type, resource_id);
+
+
+--
+-- Name: index_resource_genres_on_genre_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resource_genres_on_genre_id ON public.resource_genres USING btree (genre_id);
+
+
+--
+-- Name: index_resource_genres_on_resource; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resource_genres_on_resource ON public.resource_genres USING btree (resource_type, resource_id);
+
+
+--
+-- Name: index_resource_genres_uniqueness; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_resource_genres_uniqueness ON public.resource_genres USING btree (genre_id, resource_type, resource_id);
+
+
+--
+-- Name: index_resource_marks_on_mark_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resource_marks_on_mark_id ON public.resource_marks USING btree (mark_id);
+
+
+--
+-- Name: index_resource_marks_on_resource; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resource_marks_on_resource ON public.resource_marks USING btree (resource_type, resource_id);
+
+
+--
+-- Name: index_resource_marks_uniqueness; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_resource_marks_uniqueness ON public.resource_marks USING btree (mark_id, resource_type, resource_id);
+
+
+--
+-- Name: index_resource_themes_on_resource; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resource_themes_on_resource ON public.resource_themes USING btree (resource_type, resource_id);
+
+
+--
+-- Name: index_resource_themes_on_theme_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resource_themes_on_theme_id ON public.resource_themes USING btree (theme_id);
+
+
+--
+-- Name: index_resource_themes_uniqueness; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_resource_themes_uniqueness ON public.resource_themes USING btree (theme_id, resource_type, resource_id);
 
 
 --
@@ -1588,6 +1864,12 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210110213257'),
 ('20210110215953'),
 ('20210111023707'),
-('20210111023920');
+('20210111023920'),
+('20210129194750'),
+('20210129194913'),
+('20210129194918'),
+('20210129194925'),
+('20210129194930'),
+('20210129194936');
 
 

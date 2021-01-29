@@ -5,13 +5,20 @@ class Title < ApplicationRecord
   has_many :artists, through: :resource_artists
   has_many :writers, -> { where(resource_artists: { artist_type: ResourceArtist::WRITER }) }, through: :artists
 
-  has_many :resource_tags, as: :resource, dependent: :destroy
-  has_many :tags, through: :resource_tags
-  has_many :genres, through: :tags
-  has_many :formats, through: :tags
-  has_many :demographics, through: :tags
-  has_many :marks, through: :tags
-  has_many :themes, through: :tags
+  has_many :resource_genres, as: :resource, dependent: :destroy
+  has_many :genres, through: :resource_genres
+
+  has_many :resource_formats, as: :resource, dependent: :destroy
+  has_many :formats, through: :resource_formats
+
+  has_many :resource_demographics, as: :resource, dependent: :destroy
+  has_many :demographics, through: :resource_demographics
+
+  has_many :resource_marks, as: :resource, dependent: :destroy
+  has_many :marks, through: :resource_marks
+
+  has_many :resource_themes, as: :resource, dependent: :destroy
+  has_many :themes, through: :resource_themes
 
   translates :title
 

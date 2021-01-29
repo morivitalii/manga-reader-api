@@ -18,13 +18,12 @@ class Api::TitlesController < Api::ApplicationController
       titles, [
         Title.translations_associations,
         :writers,
-        :genres,
-        :formats,
-        :demographics,
-        :marks,
-        :themes,
-        artists: Artist.translations_associations,
-        tags: Tag.translations_associations
+        genres: { tag: Tag.translations_associations },
+        formats: { tag: Tag.translations_associations },
+        demographics: { tag: Tag.translations_associations },
+        marks: { tag: Tag.translations_associations },
+        themes: { tag: Tag.translations_associations },
+        artists: Artist.translations_associations
       ]
     )
 
@@ -52,13 +51,12 @@ class Api::TitlesController < Api::ApplicationController
       @title, [
         Title.translations_associations,
         :writers,
-        :genres,
-        :formats,
-        :demographics,
-        :marks,
-        :themes,
-        artists: Artist.translations_associations,
-        tags: Tag.translations_associations
+        genres: { tag: Tag.translations_associations },
+        formats: { tag: Tag.translations_associations },
+        demographics: { tag: Tag.translations_associations },
+        marks: { tag: Tag.translations_associations },
+        themes: { tag: Tag.translations_associations },
+        artists: Artist.translations_associations
       ]
     )
   end
