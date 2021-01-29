@@ -1,5 +1,5 @@
 class Api::TitleDecorator < Api::ApplicationDecorator
-  decorates_association :tags, with: Api::TagDecorator
+  decorates_association :writers, with: Api::WriterDecorator
   decorates_association :genres, with: Api::GenreDecorator
   decorates_association :formats, with: Api::FormatDecorator
   decorates_association :demographics, with: Api::DemographicDecorator

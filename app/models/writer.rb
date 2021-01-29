@@ -4,7 +4,8 @@ class Writer < ApplicationRecord
 
   belongs_to :artist
 
-  has_many :titles, -> { where(resource_artists: { artist_type: ResourceArtist::WRITER }) }, through: :artist
+  has_many :resource_writers
+  has_many :titles, through: :resource_writers, source: :resource, source_type: "Title"
 
   validates :artist, uniqueness: true
 end

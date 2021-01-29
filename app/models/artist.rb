@@ -8,9 +8,6 @@ class Artist < ApplicationRecord
 
   has_one :writer, dependent: :destroy
 
-  has_many :resource_artists, dependent: :restrict_with_error
-  has_many :titles, through: :resource_artists, source: :resource, source_type: "Title"
-
   translates :name
 
   validates :name, presence: true, length: { maximum: 64 }
