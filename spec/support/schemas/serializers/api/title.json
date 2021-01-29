@@ -11,16 +11,16 @@
       "description": "Title",
       "examples": ["Made in Abyss"]
     },
-    "artists": {
-      "type": "array",
-      "items": {
-        "$ref": "file:/serializers/api/artist.json#"
-      }
-    },
     "writers": {
       "type": "array",
       "items": {
         "$ref": "file:/serializers/api/writer.json#"
+      }
+    },
+    "painters": {
+      "type": "array",
+      "items": {
+        "$ref": "file:/serializers/api/painter.json#"
       }
     },
     "genres": {

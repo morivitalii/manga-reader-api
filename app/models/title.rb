@@ -4,6 +4,9 @@ class Title < ApplicationRecord
   has_many :resource_writers, as: :resource, dependent: :destroy
   has_many :writers, through: :resource_writers
 
+  has_many :resource_painters, as: :resource, dependent: :destroy
+  has_many :painters, through: :resource_painters
+
   has_many :resource_genres, as: :resource, dependent: :destroy
   has_many :genres, through: :resource_genres
 

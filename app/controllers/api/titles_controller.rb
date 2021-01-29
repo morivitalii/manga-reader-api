@@ -18,6 +18,7 @@ class Api::TitlesController < Api::ApplicationController
       titles, [
         Title.translations_associations,
         writers: { artist: Artist.translations_associations },
+        painters: { artist: Artist.translations_associations },
         genres: { tag: Tag.translations_associations },
         formats: { tag: Tag.translations_associations },
         demographics: { tag: Tag.translations_associations },
@@ -50,6 +51,7 @@ class Api::TitlesController < Api::ApplicationController
       @title, [
         Title.translations_associations,
         writers: { artist: Artist.translations_associations },
+        painters: { artist: Artist.translations_associations },
         genres: { tag: Tag.translations_associations },
         formats: { tag: Tag.translations_associations },
         demographics: { tag: Tag.translations_associations },
