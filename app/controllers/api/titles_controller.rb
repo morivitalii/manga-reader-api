@@ -17,13 +17,12 @@ class Api::TitlesController < Api::ApplicationController
     ActiveRecord::Associations::Preloader.new.preload(
       titles, [
         Title.translations_associations,
-        :writers,
+        writers: { artist: Artist.translations_associations },
         genres: { tag: Tag.translations_associations },
         formats: { tag: Tag.translations_associations },
         demographics: { tag: Tag.translations_associations },
         marks: { tag: Tag.translations_associations },
-        themes: { tag: Tag.translations_associations },
-        artists: Artist.translations_associations
+        themes: { tag: Tag.translations_associations }
       ]
     )
 
@@ -50,13 +49,12 @@ class Api::TitlesController < Api::ApplicationController
     ActiveRecord::Associations::Preloader.new.preload(
       @title, [
         Title.translations_associations,
-        :writers,
+        writers: { artist: Artist.translations_associations },
         genres: { tag: Tag.translations_associations },
         formats: { tag: Tag.translations_associations },
         demographics: { tag: Tag.translations_associations },
         marks: { tag: Tag.translations_associations },
-        themes: { tag: Tag.translations_associations },
-        artists: Artist.translations_associations
+        themes: { tag: Tag.translations_associations }
       ]
     )
   end

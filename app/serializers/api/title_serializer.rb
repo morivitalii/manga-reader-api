@@ -1,5 +1,4 @@
 class Api::TitleSerializer < Api::ApplicationSerializer
-  serialize_associations :artists, with: Api::ArtistSerializer
   serialize_associations :writers, with: Api::WriterSerializer
   serialize_associations :genres, with: Api::GenreSerializer
   serialize_associations :formats, with: Api::FormatSerializer
@@ -13,7 +12,6 @@ class Api::TitleSerializer < Api::ApplicationSerializer
       title: model.title,
       created_at: model.created_at,
       updated_at: model.updated_at,
-      artists: artists,
       writers: writers,
       genres: genres,
       formats: formats,
