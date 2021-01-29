@@ -1,7 +1,7 @@
 {
-  "id": "file:/serializers/api/writer.json#",
+  "id": "file:/serializers/api/painter.json#",
   "type": "object",
-  "title": "Writer",
+  "title": "Painter",
   "properties": {
     "id": {
       "$ref": "file:/helpers/serializers/api/attributes/id.json#"

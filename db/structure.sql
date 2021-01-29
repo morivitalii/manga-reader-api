@@ -439,6 +439,37 @@ ALTER SEQUENCE public.marks_id_seq OWNED BY public.marks.id;
 
 
 --
+-- Name: painters; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.painters (
+    id bigint NOT NULL,
+    artist_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: painters_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.painters_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: painters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.painters_id_seq OWNED BY public.painters.id;
+
+
+--
 -- Name: resource_demographics; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -568,6 +599,39 @@ CREATE SEQUENCE public.resource_marks_id_seq
 --
 
 ALTER SEQUENCE public.resource_marks_id_seq OWNED BY public.resource_marks.id;
+
+
+--
+-- Name: resource_painters; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.resource_painters (
+    id bigint NOT NULL,
+    painter_id bigint NOT NULL,
+    resource_type character varying NOT NULL,
+    resource_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: resource_painters_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.resource_painters_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: resource_painters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.resource_painters_id_seq OWNED BY public.resource_painters.id;
 
 
 --
@@ -961,6 +1025,13 @@ ALTER TABLE ONLY public.marks ALTER COLUMN id SET DEFAULT nextval('public.marks_
 
 
 --
+-- Name: painters id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.painters ALTER COLUMN id SET DEFAULT nextval('public.painters_id_seq'::regclass);
+
+
+--
 -- Name: resource_demographics id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -986,6 +1057,13 @@ ALTER TABLE ONLY public.resource_genres ALTER COLUMN id SET DEFAULT nextval('pub
 --
 
 ALTER TABLE ONLY public.resource_marks ALTER COLUMN id SET DEFAULT nextval('public.resource_marks_id_seq'::regclass);
+
+
+--
+-- Name: resource_painters id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_painters ALTER COLUMN id SET DEFAULT nextval('public.resource_painters_id_seq'::regclass);
 
 
 --
@@ -1164,6 +1242,14 @@ ALTER TABLE ONLY public.marks
 
 
 --
+-- Name: painters painters_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.painters
+    ADD CONSTRAINT painters_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: resource_demographics resource_demographics_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1193,6 +1279,14 @@ ALTER TABLE ONLY public.resource_genres
 
 ALTER TABLE ONLY public.resource_marks
     ADD CONSTRAINT resource_marks_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: resource_painters resource_painters_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_painters
+    ADD CONSTRAINT resource_painters_pkey PRIMARY KEY (id);
 
 
 --
@@ -1437,6 +1531,13 @@ CREATE UNIQUE INDEX index_marks_on_tag_id ON public.marks USING btree (tag_id);
 
 
 --
+-- Name: index_painters_on_artist_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_painters_on_artist_id ON public.painters USING btree (artist_id);
+
+
+--
 -- Name: index_resource_demographics_on_demographic_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1518,6 +1619,27 @@ CREATE INDEX index_resource_marks_on_resource ON public.resource_marks USING btr
 --
 
 CREATE UNIQUE INDEX index_resource_marks_uniqueness ON public.resource_marks USING btree (mark_id, resource_type, resource_id);
+
+
+--
+-- Name: index_resource_painters_on_painter_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resource_painters_on_painter_id ON public.resource_painters USING btree (painter_id);
+
+
+--
+-- Name: index_resource_painters_on_resource; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resource_painters_on_resource ON public.resource_painters USING btree (resource_type, resource_id);
+
+
+--
+-- Name: index_resource_painters_uniqueness; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_resource_painters_uniqueness ON public.resource_painters USING btree (painter_id, resource_type, resource_id);
 
 
 --
@@ -1726,6 +1848,14 @@ ALTER TABLE ONLY public.title_translations
 
 
 --
+-- Name: painters fk_rails_45262d9d58; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.painters
+    ADD CONSTRAINT fk_rails_45262d9d58 FOREIGN KEY (artist_id) REFERENCES public.artists(id);
+
+
+--
 -- Name: interface_language_translations fk_rails_4a3cd8d21f; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1863,6 +1993,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210129194930'),
 ('20210129194936'),
 ('20210129204155'),
-('20210129213225');
+('20210129213225'),
+('20210129214833'),
+('20210129214838');
 
 
