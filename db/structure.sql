@@ -218,6 +218,37 @@ ALTER SEQUENCE public.demographics_id_seq OWNED BY public.demographics.id;
 
 
 --
+-- Name: editors; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.editors (
+    id bigint NOT NULL,
+    artist_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: editors_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.editors_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: editors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.editors_id_seq OWNED BY public.editors.id;
+
+
+--
 -- Name: formats; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -564,6 +595,39 @@ CREATE SEQUENCE public.resource_demographics_id_seq
 --
 
 ALTER SEQUENCE public.resource_demographics_id_seq OWNED BY public.resource_demographics.id;
+
+
+--
+-- Name: resource_editors; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.resource_editors (
+    id bigint NOT NULL,
+    editor_id bigint NOT NULL,
+    resource_type character varying NOT NULL,
+    resource_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: resource_editors_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.resource_editors_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: resource_editors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.resource_editors_id_seq OWNED BY public.resource_editors.id;
 
 
 --
@@ -1040,6 +1104,13 @@ ALTER TABLE ONLY public.demographics ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
+-- Name: editors id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.editors ALTER COLUMN id SET DEFAULT nextval('public.editors_id_seq'::regclass);
+
+
+--
 -- Name: formats id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1114,6 +1185,13 @@ ALTER TABLE ONLY public.resource_cleaners ALTER COLUMN id SET DEFAULT nextval('p
 --
 
 ALTER TABLE ONLY public.resource_demographics ALTER COLUMN id SET DEFAULT nextval('public.resource_demographics_id_seq'::regclass);
+
+
+--
+-- Name: resource_editors id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_editors ALTER COLUMN id SET DEFAULT nextval('public.resource_editors_id_seq'::regclass);
 
 
 --
@@ -1264,6 +1342,14 @@ ALTER TABLE ONLY public.demographics
 
 
 --
+-- Name: editors editors_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.editors
+    ADD CONSTRAINT editors_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: formats formats_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1349,6 +1435,14 @@ ALTER TABLE ONLY public.resource_cleaners
 
 ALTER TABLE ONLY public.resource_demographics
     ADD CONSTRAINT resource_demographics_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: resource_editors resource_editors_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_editors
+    ADD CONSTRAINT resource_editors_pkey PRIMARY KEY (id);
 
 
 --
@@ -1548,6 +1642,13 @@ CREATE UNIQUE INDEX index_demographics_on_tag_id ON public.demographics USING bt
 
 
 --
+-- Name: index_editors_on_artist_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_editors_on_artist_id ON public.editors USING btree (artist_id);
+
+
+--
 -- Name: index_formats_on_tag_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1678,6 +1779,27 @@ CREATE INDEX index_resource_demographics_on_resource ON public.resource_demograp
 --
 
 CREATE UNIQUE INDEX index_resource_demographics_uniqueness ON public.resource_demographics USING btree (demographic_id, resource_type, resource_id);
+
+
+--
+-- Name: index_resource_editors_on_editor_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resource_editors_on_editor_id ON public.resource_editors USING btree (editor_id);
+
+
+--
+-- Name: index_resource_editors_on_resource; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resource_editors_on_resource ON public.resource_editors USING btree (resource_type, resource_id);
+
+
+--
+-- Name: index_resource_editors_uniqueness; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_resource_editors_uniqueness ON public.resource_editors USING btree (editor_id, resource_type, resource_id);
 
 
 --
@@ -2074,11 +2196,27 @@ ALTER TABLE ONLY public.resource_demographics
 
 
 --
+-- Name: editors fk_rails_b0f81755d1; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.editors
+    ADD CONSTRAINT fk_rails_b0f81755d1 FOREIGN KEY (artist_id) REFERENCES public.artists(id);
+
+
+--
 -- Name: resource_genres fk_rails_cb4e5b0be0; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.resource_genres
     ADD CONSTRAINT fk_rails_cb4e5b0be0 FOREIGN KEY (genre_id) REFERENCES public.genres(id);
+
+
+--
+-- Name: resource_editors fk_rails_d6d5990eff; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_editors
+    ADD CONSTRAINT fk_rails_d6d5990eff FOREIGN KEY (editor_id) REFERENCES public.editors(id);
 
 
 --
@@ -2198,6 +2336,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210131175109'),
 ('20210131175324'),
 ('20210131175634'),
-('20210131175833');
+('20210131175833'),
+('20210131181018'),
+('20210131181023');
 
 
