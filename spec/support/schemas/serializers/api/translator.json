@@ -1,0 +1,38 @@
+{
+  "id": "file:/serializers/api/translator.json#",
+  "type": "object",
+  "title": "Translator",
+  "properties": {
+    "id": {
+      "$ref": "file:/helpers/serializers/api/attributes/id.json#"
+    },
+    "user_id": {
+      "description": "User ID",
+      "oneOf": [
+        {
+          "type": "integer",
+          "examples": [1]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "artist_id": {
+      "type": "integer",
+      "description": "Artist ID",
+      "examples": [1]
+    },
+    "name": {
+      "type": "string",
+      "description": "Name",
+      "examples": ["Akihito Tsukushi"]
+    },
+    "created_at": {
+      "$ref": "file:/helpers/serializers/api/attributes/created_at.json#"
+    },
+    "updated_at": {
+      "$ref": "file:/helpers/serializers/api/attributes/updated_at.json#"
+    }
+  }
+}
