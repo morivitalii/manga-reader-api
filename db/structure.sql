@@ -829,6 +829,39 @@ ALTER SEQUENCE public.resource_translators_id_seq OWNED BY public.resource_trans
 
 
 --
+-- Name: resource_typers; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.resource_typers (
+    id bigint NOT NULL,
+    typer_id bigint NOT NULL,
+    resource_type character varying NOT NULL,
+    resource_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: resource_typers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.resource_typers_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: resource_typers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.resource_typers_id_seq OWNED BY public.resource_typers.id;
+
+
+--
 -- Name: resource_writers; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1059,6 +1092,37 @@ CREATE SEQUENCE public.translators_id_seq
 --
 
 ALTER SEQUENCE public.translators_id_seq OWNED BY public.translators.id;
+
+
+--
+-- Name: typers; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.typers (
+    id bigint NOT NULL,
+    artist_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: typers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.typers_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: typers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.typers_id_seq OWNED BY public.typers.id;
 
 
 --
@@ -1301,6 +1365,13 @@ ALTER TABLE ONLY public.resource_translators ALTER COLUMN id SET DEFAULT nextval
 
 
 --
+-- Name: resource_typers id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_typers ALTER COLUMN id SET DEFAULT nextval('public.resource_typers_id_seq'::regclass);
+
+
+--
 -- Name: resource_writers id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1347,6 +1418,13 @@ ALTER TABLE ONLY public.titles ALTER COLUMN id SET DEFAULT nextval('public.title
 --
 
 ALTER TABLE ONLY public.translators ALTER COLUMN id SET DEFAULT nextval('public.translators_id_seq'::regclass);
+
+
+--
+-- Name: typers id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.typers ALTER COLUMN id SET DEFAULT nextval('public.typers_id_seq'::regclass);
 
 
 --
@@ -1572,6 +1650,14 @@ ALTER TABLE ONLY public.resource_translators
 
 
 --
+-- Name: resource_typers resource_typers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_typers
+    ADD CONSTRAINT resource_typers_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: resource_writers resource_writers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1633,6 +1719,14 @@ ALTER TABLE ONLY public.titles
 
 ALTER TABLE ONLY public.translators
     ADD CONSTRAINT translators_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: typers typers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.typers
+    ADD CONSTRAINT typers_pkey PRIMARY KEY (id);
 
 
 --
@@ -2023,6 +2117,27 @@ CREATE UNIQUE INDEX index_resource_translators_uniqueness ON public.resource_tra
 
 
 --
+-- Name: index_resource_typers_on_resource; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resource_typers_on_resource ON public.resource_typers USING btree (resource_type, resource_id);
+
+
+--
+-- Name: index_resource_typers_on_typer_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resource_typers_on_typer_id ON public.resource_typers USING btree (typer_id);
+
+
+--
+-- Name: index_resource_typers_uniqueness; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_resource_typers_uniqueness ON public.resource_typers USING btree (typer_id, resource_type, resource_id);
+
+
+--
 -- Name: index_resource_writers_on_resource; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2121,6 +2236,13 @@ CREATE UNIQUE INDEX index_translators_on_artist_id ON public.translators USING b
 
 
 --
+-- Name: index_typers_on_artist_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_typers_on_artist_id ON public.typers USING btree (artist_id);
+
+
+--
 -- Name: index_users_on_lower_email; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2155,6 +2277,14 @@ ALTER TABLE ONLY public.formats
 
 ALTER TABLE ONLY public.themes
     ADD CONSTRAINT fk_rails_0495226a20 FOREIGN KEY (tag_id) REFERENCES public.tags(id);
+
+
+--
+-- Name: typers fk_rails_0517c27e66; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.typers
+    ADD CONSTRAINT fk_rails_0517c27e66 FOREIGN KEY (artist_id) REFERENCES public.artists(id);
 
 
 --
@@ -2382,6 +2512,14 @@ ALTER TABLE ONLY public.resource_translators
 
 
 --
+-- Name: resource_typers fk_rails_edaede7625; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_typers
+    ADD CONSTRAINT fk_rails_edaede7625 FOREIGN KEY (typer_id) REFERENCES public.typers(id);
+
+
+--
 -- Name: interface_language_translations fk_rails_ee7b55ca7d; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2478,6 +2616,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210131181018'),
 ('20210131181023'),
 ('20210131181328'),
-('20210131181339');
+('20210131181339'),
+('20210131183049'),
+('20210131183056');
 
 
