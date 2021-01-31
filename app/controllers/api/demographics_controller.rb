@@ -6,8 +6,7 @@ class Api::DemographicsController < Api::ApplicationController
   before_action -> { authorize(Api::DemographicsPolicy, @demographic) }, only: [:show]
 
   def index
-    demographics = Demographic.joins(tag: :translations).order("tag_translations.title ASC").all
-    demographics = policy_scope(Api::DemographicsPolicy, demographics)
+    demographics = demographics_scope.joins(tag: :translations).order("tag_translations.title ASC").all
 
     ActiveRecord::Associations::Preloader.new.preload(
       demographics, :tag, Tag.with_translations
@@ -29,7 +28,11 @@ class Api::DemographicsController < Api::ApplicationController
   private
 
   def set_demographic
-    @demographic = policy_scope(Api::DemographicsPolicy, Demographic).find(params[:id])
+    @demographic = demographics_scope.find(params[:id])
+  end
+
+  def demographics_scope
+    policy_scope(Api::DemographicsPolicy, Demographic)
   end
 
   def set_demographic_associations
