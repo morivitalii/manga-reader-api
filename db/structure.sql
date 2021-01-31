@@ -1994,6 +1994,14 @@ ALTER TABLE ONLY public.interface_language_translations
 
 
 --
+-- Name: resource_painters fk_rails_583e3f2803; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_painters
+    ADD CONSTRAINT fk_rails_583e3f2803 FOREIGN KEY (painter_id) REFERENCES public.painters(id);
+
+
+--
 -- Name: resource_cleaners fk_rails_5a79e6e698; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2171,6 +2179,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210131173630'),
 ('20210131174300'),
 ('20210131174819'),
-('20210131175109');
+('20210131175109'),
+('20210131175324');
 
 
