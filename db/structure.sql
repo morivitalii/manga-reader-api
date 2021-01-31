@@ -91,6 +91,37 @@ ALTER SEQUENCE public.artists_id_seq OWNED BY public.artists.id;
 
 
 --
+-- Name: cleaners; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.cleaners (
+    id bigint NOT NULL,
+    artist_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: cleaners_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.cleaners_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: cleaners_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.cleaners_id_seq OWNED BY public.cleaners.id;
+
+
+--
 -- Name: content_language_translations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -467,6 +498,39 @@ CREATE SEQUENCE public.painters_id_seq
 --
 
 ALTER SEQUENCE public.painters_id_seq OWNED BY public.painters.id;
+
+
+--
+-- Name: resource_cleaners; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.resource_cleaners (
+    id bigint NOT NULL,
+    cleaner_id bigint NOT NULL,
+    resource_type character varying NOT NULL,
+    resource_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: resource_cleaners_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.resource_cleaners_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: resource_cleaners_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.resource_cleaners_id_seq OWNED BY public.resource_cleaners.id;
 
 
 --
@@ -948,6 +1012,13 @@ ALTER TABLE ONLY public.artists ALTER COLUMN id SET DEFAULT nextval('public.arti
 
 
 --
+-- Name: cleaners id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.cleaners ALTER COLUMN id SET DEFAULT nextval('public.cleaners_id_seq'::regclass);
+
+
+--
 -- Name: content_language_translations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1029,6 +1100,13 @@ ALTER TABLE ONLY public.marks ALTER COLUMN id SET DEFAULT nextval('public.marks_
 --
 
 ALTER TABLE ONLY public.painters ALTER COLUMN id SET DEFAULT nextval('public.painters_id_seq'::regclass);
+
+
+--
+-- Name: resource_cleaners id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_cleaners ALTER COLUMN id SET DEFAULT nextval('public.resource_cleaners_id_seq'::regclass);
 
 
 --
@@ -1154,6 +1232,14 @@ ALTER TABLE ONLY public.artists
 
 
 --
+-- Name: cleaners cleaners_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.cleaners
+    ADD CONSTRAINT cleaners_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: content_language_translations content_language_translations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1247,6 +1333,14 @@ ALTER TABLE ONLY public.marks
 
 ALTER TABLE ONLY public.painters
     ADD CONSTRAINT painters_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: resource_cleaners resource_cleaners_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_cleaners
+    ADD CONSTRAINT resource_cleaners_pkey PRIMARY KEY (id);
 
 
 --
@@ -1405,6 +1499,13 @@ CREATE UNIQUE INDEX index_artists_on_user_id ON public.artists USING btree (user
 
 
 --
+-- Name: index_cleaners_on_artist_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_cleaners_on_artist_id ON public.cleaners USING btree (artist_id);
+
+
+--
 -- Name: index_content_language_translations_on_content_language_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1535,6 +1636,27 @@ CREATE UNIQUE INDEX index_marks_on_tag_id ON public.marks USING btree (tag_id);
 --
 
 CREATE UNIQUE INDEX index_painters_on_artist_id ON public.painters USING btree (artist_id);
+
+
+--
+-- Name: index_resource_cleaners_on_cleaner_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resource_cleaners_on_cleaner_id ON public.resource_cleaners USING btree (cleaner_id);
+
+
+--
+-- Name: index_resource_cleaners_on_resource; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resource_cleaners_on_resource ON public.resource_cleaners USING btree (resource_type, resource_id);
+
+
+--
+-- Name: index_resource_cleaners_uniqueness; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_resource_cleaners_uniqueness ON public.resource_cleaners USING btree (cleaner_id, resource_type, resource_id);
 
 
 --
@@ -1832,6 +1954,14 @@ ALTER TABLE ONLY public.writers
 
 
 --
+-- Name: cleaners fk_rails_353656a73a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.cleaners
+    ADD CONSTRAINT fk_rails_353656a73a FOREIGN KEY (artist_id) REFERENCES public.artists(id);
+
+
+--
 -- Name: content_language_translations fk_rails_38abb8969d; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1861,6 +1991,14 @@ ALTER TABLE ONLY public.painters
 
 ALTER TABLE ONLY public.interface_language_translations
     ADD CONSTRAINT fk_rails_4a3cd8d21f FOREIGN KEY (resource_id) REFERENCES public.interface_languages(id);
+
+
+--
+-- Name: resource_cleaners fk_rails_5a79e6e698; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_cleaners
+    ADD CONSTRAINT fk_rails_5a79e6e698 FOREIGN KEY (cleaner_id) REFERENCES public.cleaners(id);
 
 
 --
@@ -1995,6 +2133,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210129204155'),
 ('20210129213225'),
 ('20210129214833'),
-('20210129214838');
+('20210129214838'),
+('20210131163919'),
+('20210131163923');
 
 
