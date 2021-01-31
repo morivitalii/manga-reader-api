@@ -6,8 +6,7 @@ class Api::InterfaceLanguagesController < Api::ApplicationController
   before_action -> { authorize(Api::InterfaceLanguagesPolicy, @interface_language) }, only: [:show]
 
   def index
-    interface_languages = InterfaceLanguage.order(id: :asc).all
-    interface_languages = policy_scope(Api::InterfaceLanguagesPolicy, interface_languages)
+    interface_languages = interface_languages_scope.order(id: :asc).all
 
     ActiveRecord::Associations::Preloader.new.preload(
       interface_languages, [
@@ -32,7 +31,11 @@ class Api::InterfaceLanguagesController < Api::ApplicationController
   private
 
   def set_interface_language
-    @interface_language = policy_scope(Api::InterfaceLanguagesPolicy, InterfaceLanguage).find(params[:id])
+    @interface_language = interface_languages_scope.find(params[:id])
+  end
+
+  def interface_languages_scope
+    policy_scope(Api::InterfaceLanguagesPolicy, InterfaceLanguage)
   end
 
   def set_interface_language_associations
