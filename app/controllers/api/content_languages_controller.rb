@@ -6,8 +6,7 @@ class Api::ContentLanguagesController < Api::ApplicationController
   before_action -> { authorize(Api::ContentLanguagesPolicy, @content_language) }, only: [:show]
 
   def index
-    content_languages = ContentLanguage.order(id: :asc).all
-    content_languages = policy_scope(Api::ContentLanguagesPolicy, content_languages)
+    content_languages = content_languages_scope.order(id: :asc).all
 
     ActiveRecord::Associations::Preloader.new.preload(
       content_languages, [
@@ -32,7 +31,11 @@ class Api::ContentLanguagesController < Api::ApplicationController
   private
 
   def set_content_language
-    @content_language = policy_scope(Api::ContentLanguagesPolicy, ContentLanguage).find(params[:id])
+    @content_language = content_languages_scope.find(params[:id])
+  end
+
+  def content_languages_scope
+    policy_scope(Api::ContentLanguagesPolicy, ContentLanguage)
   end
 
   def set_content_language_associations
