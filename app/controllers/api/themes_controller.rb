@@ -7,7 +7,6 @@ class Api::ThemesController < Api::ApplicationController
 
   def index
     themes = themes_scope.joins(tag: :translations).order("tag_translations.title ASC").all
-    themes = policy_scope(Api::ThemesPolicy, themes)
 
     ActiveRecord::Associations::Preloader.new.preload(
       themes, :tag, Tag.with_translations

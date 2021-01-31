@@ -8,8 +8,7 @@ class Api::TitlesController < Api::ApplicationController
   before_action -> { authorize(Api::TitlesPolicy, @title) }, only: [:show]
 
   def index
-    titles = Title.joins(:translations).order("title_translations.title ASC").all
-    titles = policy_scope(Api::TitlesPolicy, titles)
+    titles = titles_scope.joins(:translations).order("title_translations.title ASC").all
     pagination, titles = paginate_countless(titles)
 
     set_pagination_headers(pagination)
@@ -43,7 +42,11 @@ class Api::TitlesController < Api::ApplicationController
   private
 
   def set_title
-    @title = policy_scope(Api::TitlesPolicy, Title).find(params[:id])
+    @title = titles_scope.find(params[:id])
+  end
+
+  def titles_scope
+    policy_scope(Api::TitlesPolicy, Title)
   end
 
   def set_title_associations
