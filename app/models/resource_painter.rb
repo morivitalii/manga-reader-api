@@ -6,4 +6,5 @@ class ResourcePainter < ApplicationRecord
   belongs_to :resource, polymorphic: true
 
   validates :painter, presence: true, uniqueness: {scope: [:resource_type, :resource_id]}
+  validates :resource, association_type: { in: ["Title"] }
 end
