@@ -6,8 +6,7 @@ class Api::MarksController < Api::ApplicationController
   before_action -> { authorize(Api::MarksPolicy, @mark) }, only: [:show]
 
   def index
-    marks = Mark.joins(tag: :translations).order("tag_translations.title ASC").all
-    marks = policy_scope(Api::MarksPolicy, marks)
+    marks = marks_scope.joins(tag: :translations).order("tag_translations.title ASC").all
 
     ActiveRecord::Associations::Preloader.new.preload(
       marks, :tag, Tag.with_translations
@@ -29,7 +28,11 @@ class Api::MarksController < Api::ApplicationController
   private
 
   def set_mark
-    @mark = policy_scope(Api::MarksPolicy, Mark).find(params[:id])
+    @mark = marks_scope.find(params[:id])
+  end
+
+  def marks_scope
+    policy_scope(Api::MarksPolicy, Mark)
   end
 
   def set_mark_associations
