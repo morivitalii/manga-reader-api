@@ -1159,6 +1159,38 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: volumes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.volumes (
+    id bigint NOT NULL,
+    title_id bigint NOT NULL,
+    number integer NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: volumes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.volumes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: volumes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.volumes_id_seq OWNED BY public.volumes.id;
+
+
+--
 -- Name: writers; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1432,6 +1464,13 @@ ALTER TABLE ONLY public.typers ALTER COLUMN id SET DEFAULT nextval('public.typer
 --
 
 ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Name: volumes id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.volumes ALTER COLUMN id SET DEFAULT nextval('public.volumes_id_seq'::regclass);
 
 
 --
@@ -1735,6 +1774,14 @@ ALTER TABLE ONLY public.typers
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: volumes volumes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.volumes
+    ADD CONSTRAINT volumes_pkey PRIMARY KEY (id);
 
 
 --
@@ -2257,6 +2304,20 @@ CREATE UNIQUE INDEX index_users_on_lower_username ON public.users USING btree (l
 
 
 --
+-- Name: index_volumes_on_title_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_volumes_on_title_id ON public.volumes USING btree (title_id);
+
+
+--
+-- Name: index_volumes_on_title_id_and_number; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_volumes_on_title_id_and_number ON public.volumes USING btree (title_id, number);
+
+
+--
 -- Name: index_writers_on_artist_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2496,6 +2557,14 @@ ALTER TABLE ONLY public.artist_translations
 
 
 --
+-- Name: volumes fk_rails_e944354970; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.volumes
+    ADD CONSTRAINT fk_rails_e944354970 FOREIGN KEY (title_id) REFERENCES public.titles(id);
+
+
+--
 -- Name: artist_translations fk_rails_ea87634ab3; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2618,6 +2687,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210131181328'),
 ('20210131181339'),
 ('20210131183049'),
-('20210131183056');
+('20210131183056'),
+('20210131215607');
 
 
