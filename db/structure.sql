@@ -2026,6 +2026,14 @@ ALTER TABLE ONLY public.content_languages
 
 
 --
+-- Name: resource_formats fk_rails_8ab4963b64; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_formats
+    ADD CONSTRAINT fk_rails_8ab4963b64 FOREIGN KEY (format_id) REFERENCES public.formats(id);
+
+
+--
 -- Name: group_users fk_rails_a9d5f48449; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2144,6 +2152,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210129214838'),
 ('20210131163919'),
 ('20210131163923'),
-('20210131173630');
+('20210131173630'),
+('20210131174300');
 
 
