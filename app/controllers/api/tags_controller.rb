@@ -6,8 +6,7 @@ class Api::TagsController < Api::ApplicationController
   before_action -> { authorize(Api::TagsPolicy, @tag) }, only: [:show]
 
   def index
-    tags = Tag.joins(:translations).order("tag_translations.title ASC").all
-    tags = policy_scope(Api::TagsPolicy, tags)
+    tags = tag_scope.joins(:translations).order("tag_translations.title ASC").all
 
     ActiveRecord::Associations::Preloader.new.preload(
       tags, Tag.translations_associations
@@ -29,7 +28,11 @@ class Api::TagsController < Api::ApplicationController
   private
 
   def set_tag
-    @tag = policy_scope(Api::TagsPolicy, Tag).find(params[:id])
+    @tag = tag_scope.find(params[:id])
+  end
+
+  def tag_scope
+    policy_scope(Api::TagsPolicy, Tag)
   end
 
   def set_tag_associations
