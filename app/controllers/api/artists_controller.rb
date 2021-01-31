@@ -8,8 +8,7 @@ class Api::ArtistsController < Api::ApplicationController
   before_action -> { authorize(Api::ArtistsPolicy, @artist) }, only: [:show]
 
   def index
-    artists = Artist.joins(:translations).order("artist_translations.name ASC").all
-    artists = policy_scope(Api::ArtistsPolicy, artists)
+    artists = artists_policy.joins(:translations).order("artist_translations.name ASC").all
     pagination, artists = paginate_countless(artists)
 
     set_pagination_headers(pagination)
@@ -36,7 +35,11 @@ class Api::ArtistsController < Api::ApplicationController
   private
 
   def set_artist
-    @artist = policy_scope(Api::ArtistsPolicy, Artist).find(params[:id])
+    @artist = artists_policy.find(params[:id])
+  end
+
+  def artists_policy
+    policy_scope(Api::ArtistsPolicy, Artist)
   end
 
   def set_artist_associations
