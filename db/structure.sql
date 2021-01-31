@@ -1962,6 +1962,14 @@ ALTER TABLE ONLY public.cleaners
 
 
 --
+-- Name: resource_themes fk_rails_378cf60425; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_themes
+    ADD CONSTRAINT fk_rails_378cf60425 FOREIGN KEY (theme_id) REFERENCES public.themes(id);
+
+
+--
 -- Name: content_language_translations fk_rails_38abb8969d; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2180,6 +2188,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210131174300'),
 ('20210131174819'),
 ('20210131175109'),
-('20210131175324');
+('20210131175324'),
+('20210131175634');
 
 
