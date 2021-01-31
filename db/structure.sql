@@ -2058,6 +2058,14 @@ ALTER TABLE ONLY public.resource_demographics
 
 
 --
+-- Name: resource_genres fk_rails_cb4e5b0be0; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_genres
+    ADD CONSTRAINT fk_rails_cb4e5b0be0 FOREIGN KEY (genre_id) REFERENCES public.genres(id);
+
+
+--
 -- Name: artist_translations fk_rails_e6907ab812; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2153,6 +2161,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210131163919'),
 ('20210131163923'),
 ('20210131173630'),
-('20210131174300');
+('20210131174300'),
+('20210131174819');
 
 
