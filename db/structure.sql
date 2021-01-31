@@ -2042,6 +2042,14 @@ ALTER TABLE ONLY public.marks
 
 
 --
+-- Name: resource_demographics fk_rails_ae8f6868ae; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_demographics
+    ADD CONSTRAINT fk_rails_ae8f6868ae FOREIGN KEY (demographic_id) REFERENCES public.demographics(id);
+
+
+--
 -- Name: artist_translations fk_rails_e6907ab812; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2135,6 +2143,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210129214833'),
 ('20210129214838'),
 ('20210131163919'),
-('20210131163923');
+('20210131163923'),
+('20210131173630');
 
 
