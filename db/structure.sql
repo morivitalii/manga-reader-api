@@ -2122,6 +2122,14 @@ ALTER TABLE ONLY public.interface_languages
 
 
 --
+-- Name: resource_writers fk_rails_fba6c65c95; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_writers
+    ADD CONSTRAINT fk_rails_fba6c65c95 FOREIGN KEY (writer_id) REFERENCES public.writers(id);
+
+
+--
 -- Name: demographics fk_rails_fedc0e7479; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2189,6 +2197,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210131174819'),
 ('20210131175109'),
 ('20210131175324'),
-('20210131175634');
+('20210131175634'),
+('20210131175833');
 
 
