@@ -6,6 +6,7 @@ class Api::TitleSerializer < Api::ApplicationSerializer
   serialize_associations :demographics, with: Api::DemographicSerializer
   serialize_associations :marks, with: Api::MarkSerializer
   serialize_associations :themes, with: Api::ThemeSerializer
+  serialize_associations :volumes, with: Api::VolumeSerializer
 
   def attributes
     {
