@@ -7,8 +7,7 @@ class Api::UsersController < Api::ApplicationController
   before_action -> { authorize(Api::UsersPolicy, @user) }, only: [:show]
 
   def index
-    users = User.order(username: :asc)
-    users = policy_scope(Api::UsersPolicy, users)
+    users = user_scope.order(username: :asc)
     pagination, users = paginate_countless(users)
 
     set_pagination_headers(pagination)
@@ -29,6 +28,10 @@ class Api::UsersController < Api::ApplicationController
   private
 
   def set_user
-    @user = policy_scope(Api::UsersPolicy, User).find(params[:id])
+    @user = user_scope.find(params[:id])
+  end
+
+  def user_scope
+    policy_scope(Api::UsersPolicy, User)
   end
 end
