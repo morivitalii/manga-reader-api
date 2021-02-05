@@ -23,6 +23,7 @@
     { "name": "Titles" },
     { "name": "Users" },
     { "name": "Artists" },
+    { "name": "Translators" },
     { "name": "Groups" }
   ],
   "components": {
@@ -904,6 +905,70 @@
             "content": {
               "application/json": {
                 "schema": <%= schema("artists_controller/show/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          }
+        }
+      }
+    },
+    "/translators.json": {
+      "get": {
+        "tags": ["Translators"],
+        "summary": "Translators",
+        "description": "Sorted by title ASC",
+        "parameters": [
+          { "$ref": "#/components/parameters/page" },
+          { "$ref": "#/components/parameters/limit" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Pagination-Page-Number": {
+                "$ref": "#/components/headers/X-Pagination-Page-Number"
+              },
+              "X-Pagination-Page-Items-Count": {
+                "$ref": "#/components/headers/X-Pagination-Page-Items-Count"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": <%= schema("translators_controller/index/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          }
+        }
+      }
+    },
+    "/translators/{id}.json": {
+      "get": {
+        "tags": ["Translators"],
+        "summary": "Translator",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("translators_controller/show/200") %>
               }
             }
           },
