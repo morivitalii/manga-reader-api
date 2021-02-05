@@ -7,6 +7,11 @@ class Artist < ApplicationRecord
   belongs_to :user, optional: true
 
   has_one :writer, dependent: :destroy
+  has_one :painter, dependent: :destroy
+  has_one :cleaner, dependent: :destroy
+  has_one :translator, dependent: :destroy
+  has_one :editor, dependent: :destroy
+  has_one :typer, dependent: :destroy
 
   translates :name
 
