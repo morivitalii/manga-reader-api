@@ -1,0 +1,36 @@
+{
+  "id": "file:/serializers/api/chapter.json#",
+  "type": "object",
+  "title": "Chapter",
+  "properties": {
+    "id": {
+      "$ref": "file:/helpers/serializers/api/attributes/id.json#"
+    },
+    "title_id": {
+      "description": "Title ID",
+      "type": "integer",
+      "examples": [1]
+    },
+    "volume_id": {
+      "description": "Volume ID",
+      "type": "integer",
+      "examples": [1]
+    },
+    "group_id": {
+      "description": "Group ID",
+      "type": "integer",
+      "examples": [1]
+    },
+    "number": {
+      "type": "integer",
+      "description": "Number",
+      "examples": [1]
+    },
+    "created_at": {
+      "$ref": "file:/helpers/serializers/api/attributes/created_at.json#"
+    },
+    "updated_at": {
+      "$ref": "file:/helpers/serializers/api/attributes/updated_at.json#"
+    }
+  }
+}
