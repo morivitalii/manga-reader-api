@@ -91,6 +91,40 @@ ALTER SEQUENCE public.artists_id_seq OWNED BY public.artists.id;
 
 
 --
+-- Name: chapters; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.chapters (
+    id bigint NOT NULL,
+    title_id bigint NOT NULL,
+    volume_id bigint,
+    group_id bigint NOT NULL,
+    number integer NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: chapters_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.chapters_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: chapters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.chapters_id_seq OWNED BY public.chapters.id;
+
+
+--
 -- Name: cleaners; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1236,6 +1270,13 @@ ALTER TABLE ONLY public.artists ALTER COLUMN id SET DEFAULT nextval('public.arti
 
 
 --
+-- Name: chapters id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapters ALTER COLUMN id SET DEFAULT nextval('public.chapters_id_seq'::regclass);
+
+
+--
 -- Name: cleaners id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1502,6 +1543,14 @@ ALTER TABLE ONLY public.artist_translations
 
 ALTER TABLE ONLY public.artists
     ADD CONSTRAINT artists_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: chapters chapters_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapters
+    ADD CONSTRAINT chapters_pkey PRIMARY KEY (id);
 
 
 --
@@ -1825,6 +1874,34 @@ CREATE UNIQUE INDEX index_artist_translations_uniqueness ON public.artist_transl
 --
 
 CREATE UNIQUE INDEX index_artists_on_user_id ON public.artists USING btree (user_id);
+
+
+--
+-- Name: index_chapters_on_group_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapters_on_group_id ON public.chapters USING btree (group_id);
+
+
+--
+-- Name: index_chapters_on_title_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapters_on_title_id ON public.chapters USING btree (title_id);
+
+
+--
+-- Name: index_chapters_on_title_id_and_group_id_and_number; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_chapters_on_title_id_and_group_id_and_number ON public.chapters USING btree (title_id, group_id, number);
+
+
+--
+-- Name: index_chapters_on_volume_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapters_on_volume_id ON public.chapters USING btree (volume_id);
 
 
 --
@@ -2493,6 +2570,14 @@ ALTER TABLE ONLY public.resource_formats
 
 
 --
+-- Name: chapters fk_rails_9eb9ab7f62; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapters
+    ADD CONSTRAINT fk_rails_9eb9ab7f62 FOREIGN KEY (volume_id) REFERENCES public.volumes(id);
+
+
+--
 -- Name: group_users fk_rails_a9d5f48449; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2517,6 +2602,14 @@ ALTER TABLE ONLY public.resource_demographics
 
 
 --
+-- Name: chapters fk_rails_afb14bec2e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapters
+    ADD CONSTRAINT fk_rails_afb14bec2e FOREIGN KEY (title_id) REFERENCES public.titles(id);
+
+
+--
 -- Name: editors fk_rails_b0f81755d1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2530,6 +2623,14 @@ ALTER TABLE ONLY public.editors
 
 ALTER TABLE ONLY public.resource_genres
     ADD CONSTRAINT fk_rails_cb4e5b0be0 FOREIGN KEY (genre_id) REFERENCES public.genres(id);
+
+
+--
+-- Name: chapters fk_rails_cf8e4fa171; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapters
+    ADD CONSTRAINT fk_rails_cf8e4fa171 FOREIGN KEY (group_id) REFERENCES public.groups(id);
 
 
 --
@@ -2688,6 +2789,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210131181339'),
 ('20210131183049'),
 ('20210131183056'),
-('20210131215607');
+('20210131215607'),
+('20210204191122');
 
 

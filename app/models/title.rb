@@ -22,6 +22,9 @@ class Title < ApplicationRecord
   has_many :resource_themes, as: :resource, dependent: :destroy
   has_many :themes, through: :resource_themes
 
+  has_many :volumes, dependent: :destroy
+  has_many :chapters, dependent: :destroy
+
   translates :title
 
   validates :title, presence: true
