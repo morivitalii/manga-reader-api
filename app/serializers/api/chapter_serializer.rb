@@ -1,4 +1,6 @@
 class Api::ChapterSerializer < Api::ApplicationSerializer
+  serialize_associations :pages, with: Api::PageSerializer
+
   def attributes
     {
       id: model.id,

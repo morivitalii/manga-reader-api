@@ -4,7 +4,8 @@ class Typer < ApplicationRecord
 
   belongs_to :artist
 
-  has_many :resource_typers
+  has_many :resource_typers, dependent: :restrict_with_error
+  has_many :pages, dependent: :restrict_with_error
 
   validates :artist, uniqueness: true
 end

@@ -1,0 +1,46 @@
+{
+  "id": "file:/serializers/api/page.json#",
+  "type": "object",
+  "title": "Page",
+  "properties": {
+    "id": {
+      "$ref": "file:/helpers/serializers/api/attributes/id.json#"
+    },
+    "chapter_id": {
+      "description": "Chapter ID",
+      "type": "integer",
+      "examples": [1]
+    },
+    "cleaner_id": {
+      "description": "Cleaner ID",
+      "type": "integer",
+      "examples": [1]
+    },
+    "translator_id": {
+      "description": "Translator ID",
+      "type": "integer",
+      "examples": [1]
+    },
+    "editor_id": {
+      "description": "Editor ID",
+      "type": "integer",
+      "examples": [1]
+    },
+    "typer_id": {
+      "description": "Typer ID",
+      "type": "integer",
+      "examples": [1]
+    },
+    "number": {
+      "type": "integer",
+      "description": "Number",
+      "examples": [1]
+    },
+    "created_at": {
+      "$ref": "file:/helpers/serializers/api/attributes/created_at.json#"
+    },
+    "updated_at": {
+      "$ref": "file:/helpers/serializers/api/attributes/updated_at.json#"
+    }
+  }
+}
