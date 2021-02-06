@@ -6,5 +6,6 @@ RSpec.describe Locale do
 
     it { is_expected.to validate_presence_of(:key) }
     it { is_expected.to validate_uniqueness_of(:key).case_insensitive }
+    it { is_expected.to validate_length_of(:title).is_equal_to(2) }
   end
 end

@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :locale do
-    sequence(:key) { |i| "key #{i}" }
+    sequence(:key, 1) { |i| "k#{i}" }
 
     trait :russian do
       key { "ru" }
