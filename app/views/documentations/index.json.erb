@@ -23,6 +23,7 @@
     { "name": "Titles" },
     { "name": "Users" },
     { "name": "Artists" },
+    { "name": "Painters" },
     { "name": "Translators" },
     { "name": "Groups" }
   ],
@@ -920,11 +921,75 @@
         }
       }
     },
+    "/painters.json": {
+      "get": {
+        "tags": ["painters"],
+        "summary": "painters",
+        "description": "Sorted by id ASC",
+        "parameters": [
+          { "$ref": "#/components/parameters/page" },
+          { "$ref": "#/components/parameters/limit" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Pagination-Page-Number": {
+                "$ref": "#/components/headers/X-Pagination-Page-Number"
+              },
+              "X-Pagination-Page-Items-Count": {
+                "$ref": "#/components/headers/X-Pagination-Page-Items-Count"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": <%= schema("painters_controller/index/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          }
+        }
+      }
+    },
+    "/painters/{id}.json": {
+      "get": {
+        "tags": ["painters"],
+        "summary": "painter",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("painters_controller/show/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          }
+        }
+      }
+    },
     "/translators.json": {
       "get": {
         "tags": ["Translators"],
         "summary": "Translators",
-        "description": "Sorted by title ASC",
+        "description": "Sorted by id ASC",
         "parameters": [
           { "$ref": "#/components/parameters/page" },
           { "$ref": "#/components/parameters/limit" }
