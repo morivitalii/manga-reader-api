@@ -5,7 +5,7 @@ class Editor < ApplicationRecord
   belongs_to :artist
 
   has_many :resource_editors, dependent: :restrict_with_error
-  has_many :pages, through: :resource_editors, source: :resource, source_type: "Title"
+  has_many :pages, through: :resource_editors, source: :resource, source_type: "Page"
 
   validates :artist, uniqueness: true
 end
