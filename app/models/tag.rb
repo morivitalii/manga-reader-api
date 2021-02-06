@@ -12,6 +12,6 @@ class Tag < ApplicationRecord
 
   translates :title
 
-  validates :title, presence: true
+  validates :title, presence: true, length: { minimum: 1, maximum: 25 }
   validates :key, presence: true, uniqueness: true
 end
