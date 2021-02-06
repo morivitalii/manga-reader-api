@@ -2054,6 +2054,13 @@ CREATE INDEX index_group_users_on_user_id ON public.group_users USING btree (use
 
 
 --
+-- Name: index_groups_on_title; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_groups_on_title ON public.groups USING btree (title);
+
+
+--
 -- Name: index_interface_language_translations_on_content_language_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2947,6 +2954,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210204191122'),
 ('20210205200336'),
 ('20210206144736'),
-('20210206144902');
+('20210206144902'),
+('20210206151543');
 
 
