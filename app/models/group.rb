@@ -5,5 +5,5 @@ class Group < ApplicationRecord
   has_many :volumes, through: :chapters
   has_many :titles, through: :volumes
 
-  validates :title, presence: true
+  validates :title, presence: true, length: { minimum: 1, maximum: 50 }
 end
