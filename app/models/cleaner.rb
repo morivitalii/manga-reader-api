@@ -5,7 +5,7 @@ class Cleaner < ApplicationRecord
   belongs_to :artist
 
   has_many :resource_cleaners, dependent: :restrict_with_error
-  has_many :pages, through: :resource_cleaners, source: :resource, source_type: "Title"
+  has_many :pages, through: :resource_cleaners, source: :resource, source_type: "Page"
 
   validates :artist, uniqueness: true
 end
