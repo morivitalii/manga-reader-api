@@ -14,9 +14,9 @@ class Api::WritersController < Api::ApplicationController
     set_pagination_headers(pagination)
 
     ActiveRecord::Associations::Preloader.new.preload(
-      writers, [
-      artist: Artist.translations_associations
-    ]
+        writers, [
+        artist: Artist.translations_associations
+      ]
     )
 
     writers = Api::WriterDecorator.decorate(writers)
@@ -44,9 +44,9 @@ class Api::WritersController < Api::ApplicationController
 
   def set_writer_associations
     ActiveRecord::Associations::Preloader.new.preload(
-      @writer, [
-      artist: Artist.translations_associations
-    ]
+        @writer, [
+        artist: Artist.translations_associations
+      ]
     )
   end
 end
