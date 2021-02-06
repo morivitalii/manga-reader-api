@@ -27,5 +27,5 @@ class Title < ApplicationRecord
 
   translates :title
 
-  validates :title, presence: true
+  validates :title, presence: true, length: { minimum: 1, maximum: 125 }
 end
