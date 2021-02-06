@@ -2096,6 +2096,13 @@ CREATE UNIQUE INDEX index_interface_languages_on_locale_id ON public.interface_l
 
 
 --
+-- Name: index_locales_on_key; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_locales_on_key ON public.locales USING btree (key);
+
+
+--
 -- Name: index_locales_on_lower_key; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2955,6 +2962,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210205200336'),
 ('20210206144736'),
 ('20210206144902'),
-('20210206151543');
+('20210206151543'),
+('20210206155355');
 
 
