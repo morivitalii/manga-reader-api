@@ -25,6 +25,7 @@
     { "name": "Artists" },
     { "name": "Writers" },
     { "name": "Painters" },
+    { "name": "Cleaners" },
     { "name": "Translators" },
     { "name": "Groups" }
   ],
@@ -1035,6 +1036,70 @@
             "content": {
               "application/json": {
                 "schema": <%= schema("painters_controller/show/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          }
+        }
+      }
+    },
+    "/cleaners.json": {
+      "get": {
+        "tags": ["Cleaners"],
+        "summary": "Cleaners",
+        "description": "Sorted by id ASC",
+        "parameters": [
+          { "$ref": "#/components/parameters/page" },
+          { "$ref": "#/components/parameters/limit" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Pagination-Page-Number": {
+                "$ref": "#/components/headers/X-Pagination-Page-Number"
+              },
+              "X-Pagination-Page-Items-Count": {
+                "$ref": "#/components/headers/X-Pagination-Page-Items-Count"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": <%= schema("cleaners_controller/index/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          }
+        }
+      }
+    },
+    "/cleaners/{id}.json": {
+      "get": {
+        "tags": ["Cleaners"],
+        "summary": "Cleaner",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("cleaners_controller/show/200") %>
               }
             }
           },
