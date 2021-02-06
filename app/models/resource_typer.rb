@@ -6,5 +6,5 @@ class ResourceTyper < ApplicationRecord
   belongs_to :resource, polymorphic: true
 
   validates :typer, presence: true, uniqueness: {scope: [:resource_type, :resource_id]}
-  # validates :resource, association_type: { in: [] }
+  validates :resource, association_type: { in: ["Page"] }
 end
