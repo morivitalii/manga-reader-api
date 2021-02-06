@@ -27,6 +27,7 @@
     { "name": "Painters" },
     { "name": "Cleaners" },
     { "name": "Translators" },
+    { "name": "Editors" },
     { "name": "Typers" },
     { "name": "Groups" }
   ],
@@ -1165,6 +1166,70 @@
             "content": {
               "application/json": {
                 "schema": <%= schema("translators_controller/show/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          }
+        }
+      }
+    },
+    "/editors.json": {
+      "get": {
+        "tags": ["Editors"],
+        "summary": "Editors",
+        "description": "Sorted by id ASC",
+        "parameters": [
+          { "$ref": "#/components/parameters/page" },
+          { "$ref": "#/components/parameters/limit" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Pagination-Page-Number": {
+                "$ref": "#/components/headers/X-Pagination-Page-Number"
+              },
+              "X-Pagination-Page-Items-Count": {
+                "$ref": "#/components/headers/X-Pagination-Page-Items-Count"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": <%= schema("editors_controller/index/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          }
+        }
+      }
+    },
+    "/editors/{id}.json": {
+      "get": {
+        "tags": ["Editors"],
+        "summary": "Editor",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("editors_controller/show/200") %>
               }
             }
           },
