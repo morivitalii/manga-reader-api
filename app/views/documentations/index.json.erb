@@ -23,6 +23,7 @@
     { "name": "Titles" },
     { "name": "Users" },
     { "name": "Artists" },
+    { "name": "Writers" },
     { "name": "Painters" },
     { "name": "Translators" },
     { "name": "Groups" }
@@ -921,10 +922,74 @@
         }
       }
     },
+    "/writers.json": {
+      "get": {
+        "tags": ["Writers"],
+        "summary": "Writers",
+        "description": "Sorted by id ASC",
+        "parameters": [
+          { "$ref": "#/components/parameters/page" },
+          { "$ref": "#/components/parameters/limit" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Pagination-Page-Number": {
+                "$ref": "#/components/headers/X-Pagination-Page-Number"
+              },
+              "X-Pagination-Page-Items-Count": {
+                "$ref": "#/components/headers/X-Pagination-Page-Items-Count"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": <%= schema("writers_controller/index/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          }
+        }
+      }
+    },
+    "/writers/{id}.json": {
+      "get": {
+        "tags": ["Writers"],
+        "summary": "Writer",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("writers_controller/show/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          }
+        }
+      }
+    },
     "/painters.json": {
       "get": {
-        "tags": ["painters"],
-        "summary": "painters",
+        "tags": ["Painters"],
+        "summary": "Painters",
         "description": "Sorted by id ASC",
         "parameters": [
           { "$ref": "#/components/parameters/page" },
@@ -958,8 +1023,8 @@
     },
     "/painters/{id}.json": {
       "get": {
-        "tags": ["painters"],
-        "summary": "painter",
+        "tags": ["Painters"],
+        "summary": "Painter",
         "description": "",
         "parameters": [
           { "$ref": "#/components/parameters/id" }
