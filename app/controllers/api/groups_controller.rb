@@ -7,7 +7,7 @@ class Api::GroupsController < Api::ApplicationController
   before_action -> { authorize(Api::GroupsPolicy, @group) }, only: [:show]
 
   def index
-    groups = group_scope.order("title ASC").all
+    groups = group_scope.order("groups.title ASC").all
     pagination, groups = paginate_countless(groups)
 
     set_pagination_headers(pagination)
