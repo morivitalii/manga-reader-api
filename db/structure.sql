@@ -2481,6 +2481,13 @@ CREATE UNIQUE INDEX index_users_on_lower_username ON public.users USING btree (l
 
 
 --
+-- Name: index_volumes_on_number; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_volumes_on_number ON public.volumes USING btree (number);
+
+
+--
 -- Name: index_volumes_on_title_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2931,6 +2938,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210131183056'),
 ('20210131215607'),
 ('20210204191122'),
-('20210205200336');
+('20210205200336'),
+('20210206144736');
 
 
