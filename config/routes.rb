@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     resources :artists, only: [:index, :show]
     resources :writers, only: [:index, :show]
     resources :painters, only: [:index, :show]
+    resources :cleaners, only: [:index, :show]
     resources :translators, only: [:index, :show]
     resources :typers, only: [:index, :show]
     resources :groups, only: [:index, :show]
