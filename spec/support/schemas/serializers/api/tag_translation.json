@@ -7,7 +7,7 @@
       "type": "array",
       "items": {
         "type": "string",
-        "enum": ["title"],
+        "enum": ["title", "description"],
         "description": "Attribute name",
         "examples": ["title"]
       }
@@ -21,6 +21,11 @@
             "type": "string",
             "description": "Title",
             "examples": ["Seinen"]
+          },
+          "description": {
+            "type": "string",
+            "description": "Description",
+            "examples": ["Description"]
           },
           "$extends": {
             "$ref": "file:/helpers/serializers/api/translation/metadata_attributes.json#"

@@ -99,13 +99,13 @@ ActiveRecord::Base.transaction do
   Current.set(content_languages: @all_content_languages, content_language: @english_content_language) do
     I18n.with_locale(:en) do
       # Adventure genre
-      @adventure_tag = Tag.new(key: :adventure, title: "Adventure")
+      @adventure_tag = Tag.new(key: :adventure, title: "Adventure", description: "")
       @adventure_tag.save
 
       @adventure_genre = Genre.create!(tag: @adventure_tag)
 
       # Drama genre
-      @drama_tag = Tag.new(key: :drama, title: "Drama")
+      @drama_tag = Tag.new(key: :drama, title: "Drama", description: "")
       @drama_tag.save
 
       @drama_genre = Genre.create!(tag: @drama_tag)
@@ -119,13 +119,13 @@ ActiveRecord::Base.transaction do
   Current.set(content_languages: @all_content_languages, content_language: @english_content_language) do
     I18n.with_locale(:en) do
       # Doujinshi format
-      @doujinshi_tag = Tag.new(key: :doujinshi, title: "Doujinshi")
+      @doujinshi_tag = Tag.new(key: :doujinshi, title: "Doujinshi", description: "")
       @doujinshi_tag.save
 
       @doujinshi_format = Format.create!(tag: @doujinshi_tag)
 
       # Yonkoma format
-      @yonkoma_tag = Tag.new(key: :yonkoma, title: "Yonkoma")
+      @yonkoma_tag = Tag.new(key: :yonkoma, title: "Yonkoma", description: "")
       @yonkoma_tag.save
 
       @yonkoma_format = Format.create!(tag: @yonkoma_tag)
@@ -139,13 +139,13 @@ ActiveRecord::Base.transaction do
   Current.set(content_languages: @all_content_languages, content_language: @english_content_language) do
     I18n.with_locale(:en) do
       # Seinen demographic
-      @seinen_tag = Tag.new(key: :seinen, title: "Seinen")
+      @seinen_tag = Tag.new(key: :seinen, title: "Seinen", description: "")
       @seinen_tag.save
 
       @seinen_demographic = Demographic.create!(tag: @seinen_tag)
 
       # Josei demographic
-      @josei_tag = Tag.new(key: :josei, title: "Josei")
+      @josei_tag = Tag.new(key: :josei, title: "Josei", description: "")
       @josei_tag.save
 
       @josei_demographic = Demographic.create!(tag: @josei_tag)
@@ -159,7 +159,7 @@ ActiveRecord::Base.transaction do
   Current.set(content_languages: @all_content_languages, content_language: @english_content_language) do
     I18n.with_locale(:en) do
       # Explicit mark
-      @explicit_tag = Tag.new(key: :explicit, title: "Explicit")
+      @explicit_tag = Tag.new(key: :explicit, title: "Explicit", description: "")
       @explicit_tag.save
 
       @explicit_mark = Mark.create!(tag: @explicit_tag)
@@ -173,13 +173,13 @@ ActiveRecord::Base.transaction do
   Current.set(content_languages: @all_content_languages, content_language: @english_content_language) do
     I18n.with_locale(:en) do
       # Lolicon theme
-      @lolicon_tag = Tag.new(key: :lolicon, title: "Lolicon")
+      @lolicon_tag = Tag.new(key: :lolicon, title: "Lolicon", description: "")
       @lolicon_tag.save
 
       @lolicon_theme = Theme.create!(tag: @lolicon_tag)
 
       # Shotacon theme
-      @shotacon_tag = Tag.new(key: :shotacon, title: "Shotacon")
+      @shotacon_tag = Tag.new(key: :shotacon, title: "Shotacon", description: "")
       @shotacon_tag.save
 
       @shotacon_theme = Theme.create!(tag: @shotacon_tag)

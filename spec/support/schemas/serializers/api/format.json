@@ -16,6 +16,11 @@
       "description": "Title",
       "examples": ["Doujinshi"]
     },
+    "description": {
+      "type": "string",
+      "description": "Description",
+      "examples": ["Description"]
+    },
     "created_at": {
       "$ref": "file:/helpers/serializers/api/attributes/created_at.json#"
     },

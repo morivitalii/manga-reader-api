@@ -984,7 +984,8 @@ CREATE TABLE public.tag_translations (
     title character varying DEFAULT ''::character varying NOT NULL,
     edited_at timestamp(6) without time zone NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    description text DEFAULT ''::text NOT NULL
 );
 
 
@@ -2963,6 +2964,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210206144736'),
 ('20210206144902'),
 ('20210206151543'),
-('20210206155355');
+('20210206155355'),
+('20210206161425');
 
 
