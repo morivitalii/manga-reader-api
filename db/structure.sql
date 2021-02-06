@@ -1935,6 +1935,13 @@ CREATE INDEX index_chapters_on_group_id ON public.chapters USING btree (group_id
 
 
 --
+-- Name: index_chapters_on_number; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapters_on_number ON public.chapters USING btree (number);
+
+
+--
 -- Name: index_chapters_on_title_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2939,6 +2946,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210131215607'),
 ('20210204191122'),
 ('20210205200336'),
-('20210206144736');
+('20210206144736'),
+('20210206144902');
 
 
