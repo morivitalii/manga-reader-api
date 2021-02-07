@@ -11,6 +11,11 @@
       "description": "Title",
       "examples": ["Made in Abyss"]
     },
+    "description": {
+      "type": "string",
+      "description": "Description",
+      "examples": ["Description"]
+    },
     "writers": {
       "type": "array",
       "items": {
