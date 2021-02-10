@@ -22,6 +22,7 @@
     { "name": "Marks" },
     { "name": "Titles" },
     { "name": "Title volumes" },
+    { "name": "Title chapters" },
     { "name": "Users" },
     { "name": "Artists" },
     { "name": "Writers" },
@@ -848,6 +849,62 @@
             "content": {
               "application/json": {
                 "schema": <%= schema("titles/volumes_controller/show/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          }
+        }
+      }
+    },
+    "/titles/{title_id}/chapters.json": {
+      "get": {
+        "tags": ["Title chapters"],
+        "summary": "Title chapters",
+        "description": "Sorted by number ASC",
+        "parameters": [
+          { "$ref": "#/components/parameters/title_id" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/chapters_controller/index/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          }
+        }
+      }
+    },
+    "/titles/{title_id}/chapters/{id}.json": {
+      "get": {
+        "tags": ["Title chapters"],
+        "summary": "Title chapter",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/title_id" },
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/chapters_controller/show/200") %>
               }
             }
           },

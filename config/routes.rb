@@ -33,6 +33,7 @@ Rails.application.routes.draw do
     resources :titles, only: [:index, :show] do
       scope module: :titles do
         resources :volumes, only: [:index, :show]
+        resources :chapters, only: [:index, :show]
       end
     end
   end
