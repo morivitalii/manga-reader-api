@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :locale do
-    sequence(:key, 1) { |i| "k#{i}" }
+    sequence(:key, 1) { |i| Faker::String.unique.random(length: 2) }
 
     trait :russian do
       key { "ru" }
