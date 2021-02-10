@@ -20,7 +20,6 @@ Rails.application.routes.draw do
     resources :themes, only: [:index, :show]
     resources :formats, only: [:index, :show]
     resources :demographics, only: [:index, :show]
-    resources :titles, only: [:index, :show]
     resources :users, only: [:index, :show]
     resources :artists, only: [:index, :show]
     resources :writers, only: [:index, :show]
@@ -30,5 +29,11 @@ Rails.application.routes.draw do
     resources :editors, only: [:index, :show]
     resources :typers, only: [:index, :show]
     resources :groups, only: [:index, :show]
+
+    resources :titles, only: [:index, :show] do
+      scope module: :titles do
+        resources :volumes, only: [:index, :show]
+      end
+    end
   end
 end
