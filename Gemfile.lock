@@ -90,6 +90,8 @@ GEM
     factory_bot_rails (6.1.0)
       factory_bot (~> 6.1.0)
       railties (>= 5.0.0)
+    faker (2.16.0)
+      i18n (>= 1.6, < 2)
     ffi (1.13.1)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
@@ -251,6 +253,7 @@ DEPENDENCIES
   dotenv-rails (~> 2)
   draper (~> 4)
   factory_bot_rails
+  faker
   hashie (~> 4)
   hiredis (~> 0)
   image_processing (~> 1)
