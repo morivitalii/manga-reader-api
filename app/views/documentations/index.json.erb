@@ -21,6 +21,7 @@
     { "name": "Formats" },
     { "name": "Marks" },
     { "name": "Titles" },
+    { "name": "Title volumes" },
     { "name": "Users" },
     { "name": "Artists" },
     { "name": "Writers" },
@@ -79,6 +80,15 @@
         "name": "tag_id",
         "required": true,
         "description": "Tag ID",
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "title_id": {
+        "in": "path",
+        "name": "title_id",
+        "required": true,
+        "description": "Title ID",
         "schema": {
           "type": "integer"
         }
@@ -782,6 +792,62 @@
             "content": {
               "application/json": {
                 "schema": <%= schema("titles_controller/show/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          }
+        }
+      }
+    },
+    "/titles/{title_id}/volumes.json": {
+      "get": {
+        "tags": ["Title volumes"],
+        "summary": "Title volumes",
+        "description": "Sorted by number ASC",
+        "parameters": [
+          { "$ref": "#/components/parameters/title_id" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/volumes_controller/index/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          }
+        }
+      }
+    },
+    "/titles/{title_id}/volumes/{id}.json": {
+      "get": {
+        "tags": ["Title volumes"],
+        "summary": "Title volume",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/title_id" },
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/volumes_controller/show/200") %>
               }
             }
           },
