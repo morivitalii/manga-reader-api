@@ -23,6 +23,7 @@
     { "name": "Titles" },
     { "name": "Title volumes" },
     { "name": "Title chapters" },
+    { "name": "Chapter pages" },
     { "name": "Users" },
     { "name": "Artists" },
     { "name": "Writers" },
@@ -90,6 +91,15 @@
         "name": "title_id",
         "required": true,
         "description": "Title ID",
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "chapter_id": {
+        "in": "path",
+        "name": "chapter_id",
+        "required": true,
+        "description": "Chapter ID",
         "schema": {
           "type": "integer"
         }
@@ -830,6 +840,9 @@
           },
           "403": {
             "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
           }
         }
       }
@@ -886,6 +899,9 @@
           },
           "403": {
             "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
           }
         }
       }
@@ -905,6 +921,67 @@
             "content": {
               "application/json": {
                 "schema": <%= schema("titles/chapters_controller/show/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          }
+        }
+      }
+    },
+    "/titles/{title_id}/chapters/{chapter_id}/pages.json": {
+      "get": {
+        "tags": ["Chapter pages"],
+        "summary": "Chapter pages",
+        "description": "Sorted by number ASC",
+        "parameters": [
+          { "$ref": "#/components/parameters/title_id" },
+          { "$ref": "#/components/parameters/chapter_id" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/chapters/pages_controller/index/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          }
+        }
+      }
+    },
+    "/titles/{title_id}/chapters/{chapter_id}/pages/{id}.json": {
+      "get": {
+        "tags": ["Chapter pages"],
+        "summary": "Chapter page",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/title_id" },
+          { "$ref": "#/components/parameters/chapter_id" },
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/chapters/pages_controller/show/200") %>
               }
             }
           },
