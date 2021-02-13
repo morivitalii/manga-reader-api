@@ -12,29 +12,110 @@
       "examples": [1]
     },
     "cleaner_id": {
-      "description": "Cleaner ID",
-      "type": "integer",
-      "examples": [1]
+      "oneOf": [
+        {
+          "description": "Cleaner ID",
+          "type": "integer",
+          "examples": [1]
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "translator_id": {
-      "description": "Translator ID",
-      "type": "integer",
-      "examples": [1]
+      "oneOf": [
+        {
+          "description": "Translator ID",
+          "type": "integer",
+          "examples": [1]
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "editor_id": {
-      "description": "Editor ID",
-      "type": "integer",
-      "examples": [1]
+      "oneOf": [
+        {
+          "description": "Editor ID",
+          "type": "integer",
+          "examples": [1]
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "typer_id": {
-      "description": "Typer ID",
-      "type": "integer",
-      "examples": [1]
+      "oneOf": [
+        {
+          "description": "Typer ID",
+          "type": "integer",
+          "examples": [1]
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "number": {
       "type": "integer",
       "description": "Number",
       "examples": [1]
+    },
+    "file": {
+      "type": "object",
+      "description": "File",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "Link",
+          "examples": ["http://example.com/eyJ...8c8/page.jpg"]
+        },
+        "filename": {
+          "type": "string",
+          "description": "Filename",
+          "examples": ["page.jpg"]
+        },
+        "content_type": {
+          "type": "string",
+          "description": "Content type",
+          "examples": ["image/jpeg"]
+        },
+        "width": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "description": "Width",
+              "examples": [1600]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "height": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "description": "Height",
+              "examples": [2261]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "byte_size": {
+          "type": "integer",
+          "description": "Size in bytes",
+          "examples": [1167999]
+        },
+        "created_at": {
+          "$ref": "file:/helpers/serializers/api/attributes/created_at.json#"
+        }
+      }
     },
     "created_at": {
       "$ref": "file:/helpers/serializers/api/attributes/created_at.json#"
