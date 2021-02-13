@@ -3,7 +3,7 @@ class Chapter < ApplicationRecord
   attr_readonly :title_id, :volume_id, :group_id, :number
 
   belongs_to :title
-  belongs_to :volume
+  belongs_to :volume, optional: true
   belongs_to :group
 
   has_many :pages, dependent: :destroy

@@ -5,6 +5,7 @@ FactoryBot.define do
     association :translator
     association :editor
     association :typer
+    file { Rack::Test::UploadedFile.new("spec/fixtures/page.jpg") }
     sequence(:number, 1) { |i| i }
   end
 end

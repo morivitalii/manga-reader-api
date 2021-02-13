@@ -35,8 +35,6 @@ RSpec.describe Api::Titles::CoversController do
 
       get "/api/titles/#{title.to_param}/covers/#{cover.to_param}.json"
 
-      pp response.body
-
       expect(response).to have_http_status(200)
       expect(response).to match_json_schema("controllers/api/titles/covers_controller/show/200")
     end

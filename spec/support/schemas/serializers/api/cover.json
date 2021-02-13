@@ -31,14 +31,28 @@
           "examples": ["image/jpeg"]
         },
         "width": {
-          "type": "integer",
-          "description": "Width",
-          "examples": [1600]
+          "oneOf": [
+            {
+              "type": "integer",
+              "description": "Width",
+              "examples": [1600]
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "height": {
-          "type": "integer",
-          "description": "Height",
-          "examples": [2261]
+          "oneOf": [
+            {
+              "type": "integer",
+              "description": "Height",
+              "examples": [2261]
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "byte_size": {
           "type": "integer",

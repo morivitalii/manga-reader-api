@@ -671,10 +671,10 @@ ALTER SEQUENCE public.marks_id_seq OWNED BY public.marks.id;
 CREATE TABLE public.pages (
     id bigint NOT NULL,
     chapter_id bigint NOT NULL,
-    cleaner_id bigint NOT NULL,
-    translator_id bigint NOT NULL,
-    editor_id bigint NOT NULL,
-    typer_id bigint NOT NULL,
+    cleaner_id bigint,
+    translator_id bigint,
+    editor_id bigint,
+    typer_id bigint,
     number integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
@@ -3314,6 +3314,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210212212358'),
 ('20210213095200'),
 ('20210213103335'),
-('20210213103640');
+('20210213103640'),
+('20210213152754'),
+('20210213152804'),
+('20210213152813'),
+('20210213152823');
 
 
