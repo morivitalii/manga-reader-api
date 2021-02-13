@@ -6,4 +6,6 @@ class Cover < ApplicationRecord
 
   has_many :resource_covers, dependent: :destroy
   has_one :title, dependent: :nullify
+
+  has_one_attached :file, service: :public, strict_loading: true
 end

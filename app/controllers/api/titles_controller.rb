@@ -16,7 +16,7 @@ class Api::TitlesController < Api::ApplicationController
     ActiveRecord::Associations::Preloader.new.preload(
       titles, [
         Title.translations_associations,
-        :cover,
+        cover: { file_attachment: :blob },
         writers: { artist: Artist.translations_associations },
         painters: { artist: Artist.translations_associations },
         genres: { tag: Tag.translations_associations },
@@ -54,7 +54,7 @@ class Api::TitlesController < Api::ApplicationController
     ActiveRecord::Associations::Preloader.new.preload(
       @title, [
         Title.translations_associations,
-        :cover,
+        cover: { file_attachment: :blob },
         writers: { artist: Artist.translations_associations },
         painters: { artist: Artist.translations_associations },
         genres: { tag: Tag.translations_associations },
