@@ -1,4 +1,5 @@
 class Api::TitleSerializer < Api::ApplicationSerializer
+  serialize_association :cover, with: Api::CoverSerializer
   serialize_associations :writers, with: Api::WriterSerializer
   serialize_associations :painters, with: Api::PainterSerializer
   serialize_associations :genres, with: Api::GenreSerializer
@@ -16,6 +17,7 @@ class Api::TitleSerializer < Api::ApplicationSerializer
       description: model.description,
       created_at: model.created_at,
       updated_at: model.updated_at,
+      cover: cover,
       writers: writers,
       painters: painters,
       genres: genres,
