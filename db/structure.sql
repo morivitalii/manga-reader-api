@@ -320,6 +320,37 @@ ALTER SEQUENCE public.content_languages_id_seq OWNED BY public.content_languages
 
 
 --
+-- Name: covers; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.covers (
+    id bigint NOT NULL,
+    content_language_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: covers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.covers_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: covers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.covers_id_seq OWNED BY public.covers.id;
+
+
+--
 -- Name: demographics; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -731,6 +762,39 @@ CREATE SEQUENCE public.resource_cleaners_id_seq
 --
 
 ALTER SEQUENCE public.resource_cleaners_id_seq OWNED BY public.resource_cleaners.id;
+
+
+--
+-- Name: resource_covers; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.resource_covers (
+    id bigint NOT NULL,
+    cover_id bigint NOT NULL,
+    resource_type character varying NOT NULL,
+    resource_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: resource_covers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.resource_covers_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: resource_covers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.resource_covers_id_seq OWNED BY public.resource_covers.id;
 
 
 --
@@ -1456,6 +1520,13 @@ ALTER TABLE ONLY public.content_languages ALTER COLUMN id SET DEFAULT nextval('p
 
 
 --
+-- Name: covers id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.covers ALTER COLUMN id SET DEFAULT nextval('public.covers_id_seq'::regclass);
+
+
+--
 -- Name: demographics id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1544,6 +1615,13 @@ ALTER TABLE ONLY public.painters ALTER COLUMN id SET DEFAULT nextval('public.pai
 --
 
 ALTER TABLE ONLY public.resource_cleaners ALTER COLUMN id SET DEFAULT nextval('public.resource_cleaners_id_seq'::regclass);
+
+
+--
+-- Name: resource_covers id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_covers ALTER COLUMN id SET DEFAULT nextval('public.resource_covers_id_seq'::regclass);
 
 
 --
@@ -1767,6 +1845,14 @@ ALTER TABLE ONLY public.content_languages
 
 
 --
+-- Name: covers covers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.covers
+    ADD CONSTRAINT covers_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: demographics demographics_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1868,6 +1954,14 @@ ALTER TABLE ONLY public.painters
 
 ALTER TABLE ONLY public.resource_cleaners
     ADD CONSTRAINT resource_cleaners_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: resource_covers resource_covers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_covers
+    ADD CONSTRAINT resource_covers_pkey PRIMARY KEY (id);
 
 
 --
@@ -2179,6 +2273,13 @@ CREATE UNIQUE INDEX index_content_languages_on_locale_id ON public.content_langu
 
 
 --
+-- Name: index_covers_on_content_language_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_covers_on_content_language_id ON public.covers USING btree (content_language_id);
+
+
+--
 -- Name: index_demographics_on_tag_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2365,6 +2466,27 @@ CREATE INDEX index_resource_cleaners_on_resource ON public.resource_cleaners USI
 --
 
 CREATE UNIQUE INDEX index_resource_cleaners_uniqueness ON public.resource_cleaners USING btree (cleaner_id, resource_type, resource_id);
+
+
+--
+-- Name: index_resource_covers_on_cover_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resource_covers_on_cover_id ON public.resource_covers USING btree (cover_id);
+
+
+--
+-- Name: index_resource_covers_on_resource; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resource_covers_on_resource ON public.resource_covers USING btree (resource_type, resource_id);
+
+
+--
+-- Name: index_resource_covers_uniqueness; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_resource_covers_uniqueness ON public.resource_covers USING btree (cover_id, resource_type, resource_id);
 
 
 --
@@ -2872,6 +2994,14 @@ ALTER TABLE ONLY public.artists
 
 
 --
+-- Name: resource_covers fk_rails_70a6e0a865; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_covers
+    ADD CONSTRAINT fk_rails_70a6e0a865 FOREIGN KEY (cover_id) REFERENCES public.covers(id);
+
+
+--
 -- Name: translators fk_rails_760b33c1d3; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2909,6 +3039,14 @@ ALTER TABLE ONLY public.active_storage_variant_records
 
 ALTER TABLE ONLY public.chapters
     ADD CONSTRAINT fk_rails_9eb9ab7f62 FOREIGN KEY (volume_id) REFERENCES public.volumes(id);
+
+
+--
+-- Name: covers fk_rails_a9a6d11886; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.covers
+    ADD CONSTRAINT fk_rails_a9a6d11886 FOREIGN KEY (content_language_id) REFERENCES public.content_languages(id);
 
 
 --
@@ -3156,6 +3294,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210206155355'),
 ('20210206161425'),
 ('20210207135558'),
-('20210207142405');
+('20210207142405'),
+('20210212212358'),
+('20210213095200');
 
 
