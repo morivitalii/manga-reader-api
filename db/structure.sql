@@ -1275,7 +1275,8 @@ ALTER SEQUENCE public.title_translations_id_seq OWNED BY public.title_translatio
 CREATE TABLE public.titles (
     id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    cover_id bigint
 );
 
 
@@ -2770,6 +2771,13 @@ CREATE UNIQUE INDEX index_title_translations_uniqueness ON public.title_translat
 
 
 --
+-- Name: index_titles_on_cover_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_titles_on_cover_id ON public.titles USING btree (cover_id);
+
+
+--
 -- Name: index_translators_on_artist_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2887,6 +2895,14 @@ ALTER TABLE ONLY public.tag_translations
 
 ALTER TABLE ONLY public.content_language_translations
     ADD CONSTRAINT fk_rails_2768f33fbe FOREIGN KEY (content_language_id) REFERENCES public.content_languages(id);
+
+
+--
+-- Name: titles fk_rails_2939f8e83a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.titles
+    ADD CONSTRAINT fk_rails_2939f8e83a FOREIGN KEY (cover_id) REFERENCES public.covers(id);
 
 
 --
@@ -3296,6 +3312,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210207135558'),
 ('20210207142405'),
 ('20210212212358'),
-('20210213095200');
+('20210213095200'),
+('20210213103335'),
+('20210213103640');
 
 

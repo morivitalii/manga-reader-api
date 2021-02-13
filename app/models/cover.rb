@@ -5,4 +5,5 @@ class Cover < ApplicationRecord
   belongs_to :content_language
 
   has_many :resource_covers, dependent: :destroy
+  has_one :title, dependent: :nullify
 end

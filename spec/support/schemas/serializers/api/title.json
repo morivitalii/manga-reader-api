@@ -16,6 +16,16 @@
       "description": "Description",
       "examples": ["Description"]
     },
+    "cover": {
+      "oneOf": [
+        {
+          "$ref": "file:/serializers/api/cover.json#"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "writers": {
       "type": "array",
       "items": {

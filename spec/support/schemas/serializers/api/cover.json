@@ -1,0 +1,21 @@
+{
+  "id": "file:/serializers/api/cover.json#",
+  "type": "object",
+  "title": "Cover",
+  "properties": {
+    "id": {
+      "$ref": "file:/helpers/serializers/api/attributes/id.json#"
+    },
+    "content_language_id": {
+      "type": "integer",
+      "description": "Content language ID",
+      "examples": [1]
+    },
+    "created_at": {
+      "$ref": "file:/helpers/serializers/api/attributes/created_at.json#"
+    },
+    "updated_at": {
+      "$ref": "file:/helpers/serializers/api/attributes/updated_at.json#"
+    }
+  }
+}

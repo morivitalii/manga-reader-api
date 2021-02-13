@@ -25,8 +25,14 @@ class Title < ApplicationRecord
   has_many :volumes, dependent: :destroy
   has_many :chapters, dependent: :destroy
 
+  belongs_to :cover, optional: true
+
+  has_many :resource_covers, as: :resource, dependent: :destroy
+  has_many :covers, through: :resource_covers
+
   translates :title, :description
 
+  validates :cover, allow_blank: true, uniqueness: true, inclusion: { in: -> (record) { record.covers } }, if: -> (record) { record.cover.present? }
   validates :title, presence: true, length: { minimum: 1, maximum: 125 }
   validates :description, allow_blank: true, length: { minimum: 1, maximum: 5_000 }
 end
