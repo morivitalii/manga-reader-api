@@ -21,6 +21,7 @@
     { "name": "Formats" },
     { "name": "Marks" },
     { "name": "Titles" },
+    { "name": "Title covers" },
     { "name": "Title volumes" },
     { "name": "Title chapters" },
     { "name": "Chapter pages" },
@@ -803,6 +804,75 @@
             "content": {
               "application/json": {
                 "schema": <%= schema("titles_controller/show/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          }
+        }
+      }
+    },
+    "/titles/{title_id}/covers.json": {
+      "get": {
+        "tags": ["Title covers"],
+        "summary": "Title covers",
+        "description": "Sorted by id ASC",
+        "parameters": [
+          { "$ref": "#/components/parameters/title_id" },
+          { "$ref": "#/components/parameters/page" },
+          { "$ref": "#/components/parameters/limit" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Pagination-Page-Number": {
+                "$ref": "#/components/headers/X-Pagination-Page-Number"
+              },
+              "X-Pagination-Page-Items-Count": {
+                "$ref": "#/components/headers/X-Pagination-Page-Items-Count"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/covers_controller/index/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          }
+        }
+      }
+    },
+    "/titles/{title_id}/covers/{id}.json": {
+      "get": {
+        "tags": ["Title covers"],
+        "summary": "Title cover",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/title_id" },
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/covers_controller/show/200") %>
               }
             }
           },
