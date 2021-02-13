@@ -17,6 +17,7 @@ gem "pundit", "~> 2"
 gem "draper", "~> 4"
 gem "hashie", "~> 4"
 gem "pagy", "~> 3"
+gem "active_storage_validations"
 
 group :development, :test do
   gem "dotenv-rails", "~> 2"
