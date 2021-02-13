@@ -6,6 +6,8 @@ class ContentLanguage < ApplicationRecord
 
   belongs_to :locale
 
+  has_many :covers, dependent: :restrict_with_error
+
   translates :title
 
   validates :locale, uniqueness: true
