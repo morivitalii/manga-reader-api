@@ -14,6 +14,37 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: access_rights; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.access_rights (
+    id bigint NOT NULL,
+    key character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: access_rights_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.access_rights_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: access_rights_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.access_rights_id_seq OWNED BY public.access_rights.id;
+
+
+--
 -- Name: active_storage_attachments; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1362,6 +1393,38 @@ ALTER SEQUENCE public.typers_id_seq OWNED BY public.typers.id;
 
 
 --
+-- Name: user_access_rights; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.user_access_rights (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    access_right_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: user_access_rights_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.user_access_rights_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: user_access_rights_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.user_access_rights_id_seq OWNED BY public.user_access_rights.id;
+
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1455,6 +1518,13 @@ CREATE SEQUENCE public.writers_id_seq
 --
 
 ALTER SEQUENCE public.writers_id_seq OWNED BY public.writers.id;
+
+
+--
+-- Name: access_rights id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.access_rights ALTER COLUMN id SET DEFAULT nextval('public.access_rights_id_seq'::regclass);
 
 
 --
@@ -1745,6 +1815,13 @@ ALTER TABLE ONLY public.typers ALTER COLUMN id SET DEFAULT nextval('public.typer
 
 
 --
+-- Name: user_access_rights id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_access_rights ALTER COLUMN id SET DEFAULT nextval('public.user_access_rights_id_seq'::regclass);
+
+
+--
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1763,6 +1840,14 @@ ALTER TABLE ONLY public.volumes ALTER COLUMN id SET DEFAULT nextval('public.volu
 --
 
 ALTER TABLE ONLY public.writers ALTER COLUMN id SET DEFAULT nextval('public.writers_id_seq'::regclass);
+
+
+--
+-- Name: access_rights access_rights_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.access_rights
+    ADD CONSTRAINT access_rights_pkey PRIMARY KEY (id);
 
 
 --
@@ -2110,6 +2195,14 @@ ALTER TABLE ONLY public.typers
 
 
 --
+-- Name: user_access_rights user_access_rights_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_access_rights
+    ADD CONSTRAINT user_access_rights_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2131,6 +2224,13 @@ ALTER TABLE ONLY public.volumes
 
 ALTER TABLE ONLY public.writers
     ADD CONSTRAINT writers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_access_rights_on_lower_key; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_access_rights_on_lower_key ON public.access_rights USING btree (lower((key)::text));
 
 
 --
@@ -2792,6 +2892,27 @@ CREATE UNIQUE INDEX index_typers_on_artist_id ON public.typers USING btree (arti
 
 
 --
+-- Name: index_user_access_rights_on_access_right_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_user_access_rights_on_access_right_id ON public.user_access_rights USING btree (access_right_id);
+
+
+--
+-- Name: index_user_access_rights_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_user_access_rights_on_user_id ON public.user_access_rights USING btree (user_id);
+
+
+--
+-- Name: index_user_access_rights_on_user_id_and_access_right_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_user_access_rights_on_user_id_and_access_right_id ON public.user_access_rights USING btree (user_id, access_right_id);
+
+
+--
 -- Name: index_users_on_lower_email; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2938,6 +3059,14 @@ ALTER TABLE ONLY public.content_language_translations
 
 
 --
+-- Name: user_access_rights fk_rails_39bc6d0bb4; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_access_rights
+    ADD CONSTRAINT fk_rails_39bc6d0bb4 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: pages fk_rails_3b4ae1edb8; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3007,6 +3136,14 @@ ALTER TABLE ONLY public.tag_translations
 
 ALTER TABLE ONLY public.artists
     ADD CONSTRAINT fk_rails_6bcbebdd23 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: user_access_rights fk_rails_6bf3700622; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_access_rights
+    ADD CONSTRAINT fk_rails_6bf3700622 FOREIGN KEY (access_right_id) REFERENCES public.access_rights(id);
 
 
 --
@@ -3318,6 +3455,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210213152754'),
 ('20210213152804'),
 ('20210213152813'),
-('20210213152823');
+('20210213152823'),
+('20210214043326'),
+('20210214044613');
 
 
