@@ -21,6 +21,7 @@
     { "name": "Formats" },
     { "name": "Marks" },
     { "name": "Titles" },
+    { "name": "Title cover" },
     { "name": "Title covers" },
     { "name": "Title volumes" },
     { "name": "Title chapters" },
@@ -815,6 +816,88 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          }
+        }
+      }
+    },
+    "/titles/{title_id}/cover.json": {
+      "put": {
+        "tags": ["Title cover"],
+        "summary": "Update title cover",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/title_id" }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cover_id": {
+                    "type": "integer",
+                    "description": "Cover ID",
+                    "examples": [1]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/cover_controller/update/200") %>
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/cover_controller/update/422") %>
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Title cover"],
+        "summary": "Delete title cover",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/title_id" },
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "responses": {
+          "204": {
+            "content": {
+              "schema": {
+                "type": "integer"
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/cover_controller/destroy/422") %>
+              }
+            }
           }
         }
       }
