@@ -32,7 +32,7 @@ Rails.application.routes.draw do
 
     resources :titles, only: [:index, :show] do
       scope module: :titles do
-        resource :cover, only: [:update], controller: :cover
+        resource :cover, only: [:update, :destroy], controller: :cover
         resources :covers, only: [:index, :show, :create, :destroy]
         resources :volumes, only: [:index, :show]
 

@@ -3,6 +3,10 @@ class Api::Titles::CoverPolicy < Api::ApplicationPolicy
     user?
   end
 
+  def destroy?
+    user?
+  end
+
   def permitted_attributes_for_update
     [:cover_id]
   end
