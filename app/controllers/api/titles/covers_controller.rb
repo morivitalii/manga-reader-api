@@ -26,7 +26,6 @@ class Api::Titles::CoversController < Api::ApplicationController
     render json: cover, status: 200
   end
 
-
   def create
     service = Api::Titles::CreateCover.new(create_params)
 
