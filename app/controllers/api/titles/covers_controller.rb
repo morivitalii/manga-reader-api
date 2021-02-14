@@ -1,10 +1,10 @@
 class Api::Titles::CoversController < Api::ApplicationController
   include Pagination
 
-  before_action :set_title, only: [:index, :show]
+  before_action :set_title, only: [:index, :show, :create]
   before_action :set_cover, only: [:show]
 
-  before_action -> { authorize(Api::Titles::CoversPolicy) }, only: [:index]
+  before_action -> { authorize(Api::Titles::CoversPolicy) }, only: [:index, :create]
   before_action -> { authorize(Api::Titles::CoversPolicy, @cover) }, only: [:show]
 
   def index
@@ -26,6 +26,20 @@ class Api::Titles::CoversController < Api::ApplicationController
     render json: cover, status: 200
   end
 
+
+  def create
+    service = Api::Titles::CreateCover.new(create_params)
+
+    if service.call
+      cover = Api::CoverDecorator.decorate(service.cover)
+      cover = Api::CoverSerializer.serialize(cover)
+
+      render json: cover, status: 200
+    else
+      render json: service.errors, status: 422
+    end
+  end
+
   private
 
   def set_title
@@ -42,5 +56,9 @@ class Api::Titles::CoversController < Api::ApplicationController
 
   def covers_scope
     policy_scope(Api::Titles::CoversPolicy, @title.covers)
+  end
+
+  def create_params
+    permitted_attributes(Api::Titles::CoversPolicy, :create).merge(title: @title)
   end
 end

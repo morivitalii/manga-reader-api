@@ -13,6 +13,10 @@ RSpec.describe Api::Titles::CoversPolicy do
 
       it { is_expected.to permit(current_user, cover) }
     end
+
+    permissions :create? do
+      it { is_expected.to_not permit(current_user) }
+    end
   end
 
   context "as signed in user", context: :as_signed_in_user do
@@ -24,6 +28,10 @@ RSpec.describe Api::Titles::CoversPolicy do
       let(:cover) { create(:cover) }
 
       it { is_expected.to permit(current_user, cover) }
+    end
+
+    permissions :create? do
+      it { is_expected.to permit(current_user) }
     end
   end
 end

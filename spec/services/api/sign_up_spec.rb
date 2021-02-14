@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Api::SignUp do
   describe ".call" do
-    it "creates user" do
+    it "does what it should" do
       service = described_class.new(
         username: "riko",
         email: "riko@example.com",
