@@ -56,4 +56,15 @@ RSpec.describe Api::Titles::CoversController do
       expect(response).to match_json_schema("controllers/api/titles/covers_controller/create/200")
     end
   end
+
+  describe ".destroy", context: :as_signed_in_user do
+    it "returns valid response" do
+      title = create(:title)
+      cover = create(:resource_cover, resource: title).cover
+
+      delete "/api/titles/#{title.to_param}/covers/#{cover.id}.json"
+
+      expect(response).to have_http_status(204)
+    end
+  end
 end

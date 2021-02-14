@@ -861,6 +861,9 @@
         "tags": ["Title covers"],
         "summary": "Create title cover",
         "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/title_id" }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -931,6 +934,41 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Title covers"],
+        "summary": "Delete title cover",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/title_id" },
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "responses": {
+          "204": {
+            "content": {
+              "schema": {
+                "type": "integer"
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/covers_controller/destroy/422") %>
+              }
+            }
           }
         }
       }

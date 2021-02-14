@@ -11,6 +11,10 @@ class Api::Titles::CoversPolicy < Api::ApplicationPolicy
     user?
   end
 
+  def destroy?
+    user?
+  end
+
   def permitted_attributes_for_create
     [:content_language_id, :file]
   end
