@@ -856,6 +856,53 @@
             "$ref": "#/components/responses/not_found"
           }
         }
+      },
+      "post": {
+        "tags": ["Title covers"],
+        "summary": "Create title cover",
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "content_language_id": {
+                    "type": "integer",
+                    "description": "Content language ID",
+                    "examples": [1]
+                  },
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "File"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/covers_controller/create/200") %>
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/covers_controller/create/422") %>
+              }
+            }
+          }
+        }
       }
     },
     "/titles/{title_id}/covers/{id}.json": {
