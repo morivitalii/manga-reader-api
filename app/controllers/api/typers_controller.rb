@@ -14,7 +14,7 @@ class Api::TypersController < Api::ApplicationController
     set_pagination_headers(pagination)
 
     ActiveRecord::Associations::Preloader.new.preload(
-        typers, [
+      typers, [
         artist: Artist.translations_associations
       ]
     )
@@ -44,7 +44,7 @@ class Api::TypersController < Api::ApplicationController
 
   def set_typer_associations
     ActiveRecord::Associations::Preloader.new.preload(
-        @typer, [
+      @typer, [
         artist: Artist.translations_associations
       ]
     )

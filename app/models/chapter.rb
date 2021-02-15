@@ -5,8 +5,15 @@ class Chapter < ApplicationRecord
   belongs_to :title
   belongs_to :volume, optional: true
   belongs_to :group
+  belongs_to :cover, optional: true, class_name: "Page"
 
   has_many :pages, dependent: :destroy
+
+  validates :cover,
+    allow_blank: true,
+    uniqueness: true,
+    inclusion: { in: -> (record) { record.pages } },
+    if: -> (record) { record.cover.present? }
 
   validates :number,
     numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100_000 },
