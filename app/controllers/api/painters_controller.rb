@@ -14,7 +14,7 @@ class Api::PaintersController < Api::ApplicationController
     set_pagination_headers(pagination)
 
     ActiveRecord::Associations::Preloader.new.preload(
-        painters, [
+      painters, [
         artist: Artist.translations_associations
       ]
     )
@@ -44,7 +44,7 @@ class Api::PaintersController < Api::ApplicationController
 
   def set_painter_associations
     ActiveRecord::Associations::Preloader.new.preload(
-        @painter, [
+      @painter, [
         artist: Artist.translations_associations
       ]
     )

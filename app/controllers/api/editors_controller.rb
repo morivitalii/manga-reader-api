@@ -14,7 +14,7 @@ class Api::EditorsController < Api::ApplicationController
     set_pagination_headers(pagination)
 
     ActiveRecord::Associations::Preloader.new.preload(
-        editors, [
+      editors, [
         artist: Artist.translations_associations
       ]
     )
@@ -44,7 +44,7 @@ class Api::EditorsController < Api::ApplicationController
 
   def set_editor_associations
     ActiveRecord::Associations::Preloader.new.preload(
-        @editor, [
+      @editor, [
         artist: Artist.translations_associations
       ]
     )

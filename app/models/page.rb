@@ -8,6 +8,8 @@ class Page < ApplicationRecord
   belongs_to :editor, optional: true
   belongs_to :typer, optional: true
 
+  has_one :chapter_where_cover, class_name: "Chapter", foreign_key: :cover_id, dependent: :nullify
+
   has_one_attached :file, service: :private
 
   validates :number,

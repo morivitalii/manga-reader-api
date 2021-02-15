@@ -1,6 +1,7 @@
 class Api::Titles::ChaptersController < Api::ApplicationController
   before_action :set_title, only: [:index, :show]
   before_action :set_chapter, only: [:show]
+  before_action :set_chapter_associations, only: [:show]
 
   before_action -> { authorize(Api::Titles::ChaptersPolicy) }, only: [:index]
   before_action -> { authorize(Api::Titles::ChaptersPolicy, @chapter) }, only: [:show]
@@ -29,6 +30,14 @@ class Api::Titles::ChaptersController < Api::ApplicationController
 
   def set_chapter
     @chapter = chapters_scope.find(params[:id])
+  end
+
+  def set_chapter_associations
+    ActiveRecord::Associations::Preloader.new.preload(
+      @chapter, [
+        cover: { file_attachment: :blob }
+      ]
+    )
   end
 
   def titles_scope
