@@ -25,6 +25,7 @@
     { "name": "Title covers" },
     { "name": "Title volumes" },
     { "name": "Title chapters" },
+    { "name": "Chapter cover" },
     { "name": "Chapter pages" },
     { "name": "Users" },
     { "name": "Artists" },
@@ -856,6 +857,9 @@
           "403": {
             "$ref": "#/components/responses/forbidden"
           },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
           "422": {
             "description": "Unprocessable entity",
             "content": {
@@ -871,8 +875,7 @@
         "summary": "Delete title cover",
         "description": "",
         "parameters": [
-          { "$ref": "#/components/parameters/title_id" },
-          { "$ref": "#/components/parameters/id" }
+          { "$ref": "#/components/parameters/title_id" }
         ],
         "responses": {
           "204": {
@@ -1170,6 +1173,92 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          }
+        }
+      }
+    },
+    "/titles/{title_id}/chapters/{chapter_id}/cover.json": {
+      "put": {
+        "tags": ["Chapter cover"],
+        "summary": "Update chapter cover",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/title_id" },
+          { "$ref": "#/components/parameters/chapter_id" }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cover_id": {
+                    "type": "integer",
+                    "description": "Page ID",
+                    "examples": [1]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/chapters/cover_controller/update/200") %>
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/chapters/cover_controller/update/422") %>
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Chapter cover"],
+        "summary": "Delete chapter cover",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/title_id" },
+          { "$ref": "#/components/parameters/chapter_id" }
+        ],
+        "responses": {
+          "204": {
+            "content": {
+              "schema": {
+                "type": "integer"
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/chapters/cover_controller/destroy/422") %>
+              }
+            }
           }
         }
       }
