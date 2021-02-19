@@ -33,6 +33,12 @@
       "description": "Number",
       "examples": [1]
     },
+    "publication_status": {
+      "type": "string",
+      "enum": ["draft", "review", "published"],
+      "description": "Publication status",
+      "examples": ["draft"]
+    },
     "created_at": {
       "$ref": "file:/helpers/serializers/api/attributes/created_at.json#"
     },

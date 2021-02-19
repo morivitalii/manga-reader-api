@@ -232,7 +232,8 @@ CREATE TABLE public.chapters (
     number integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    cover_id bigint
+    cover_id bigint,
+    publication_status integer NOT NULL
 );
 
 
@@ -3477,6 +3478,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210214044613'),
 ('20210214191951'),
 ('20210219203238'),
-('20210219204157');
+('20210219204157'),
+('20210219204944'),
+('20210219205348');
 
 
