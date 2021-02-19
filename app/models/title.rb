@@ -32,6 +32,8 @@ class Title < ApplicationRecord
 
   translates :title, :description
 
+  enum publication_status: { ongoing: 1, completed: 2, cancelled: 3 }
+
   validates :cover, allow_blank: true, uniqueness: true, inclusion: { in: -> (record) { record.covers } }, if: -> (record) { record.cover.present? }
   validates :title, presence: true, length: { minimum: 1, maximum: 125 }
   validates :description, allow_blank: true, length: { minimum: 1, maximum: 5_000 }

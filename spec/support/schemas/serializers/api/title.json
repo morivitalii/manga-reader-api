@@ -16,6 +16,12 @@
       "description": "Description",
       "examples": ["Description"]
     },
+    "publication_status": {
+      "type": "string",
+      "enum": ["ongoing", "completed", "cancelled"],
+      "description": "Publication status",
+      "examples": ["ongoing"]
+    },
     "cover": {
       "oneOf": [
         {
