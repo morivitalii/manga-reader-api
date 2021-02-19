@@ -2,12 +2,19 @@ class Api::Titles::Chapters::PagesController < Api::ApplicationController
   before_action :set_title, only: [:index, :show]
   before_action :set_chapter, only: [:index, :show]
   before_action :set_page, only: [:show]
+  before_action :set_page_associations, only: [:show]
 
   before_action -> { authorize(Api::Titles::Chapters::PagesPolicy) }, only: [:index]
   before_action -> { authorize(Api::Titles::Chapters::PagesPolicy, @page) }, only: [:show]
 
   def index
     pages = pages_scope.order("pages.number ASC").all
+
+    ActiveRecord::Associations::Preloader.new.preload(
+      pages, [
+        file_attachment: :blob
+      ]
+    )
 
     pages = Api::PageDecorator.decorate(pages)
     pages = Api::PageSerializer.serialize(pages)
@@ -46,5 +53,13 @@ class Api::Titles::Chapters::PagesController < Api::ApplicationController
 
   def pages_scope
     policy_scope(Api::Titles::Chapters::PagesPolicy, @chapter.pages)
+  end
+
+  def set_page_associations
+    ActiveRecord::Associations::Preloader.new.preload(
+    @page, [
+        file_attachment: :blob
+      ]
+    )
   end
 end
