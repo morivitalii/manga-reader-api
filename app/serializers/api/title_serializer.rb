@@ -15,6 +15,7 @@ class Api::TitleSerializer < Api::ApplicationSerializer
       id: model.id,
       title: model.title,
       description: model.description,
+      publication_status: model.publication_status,
       created_at: model.created_at,
       updated_at: model.updated_at,
       cover: cover,

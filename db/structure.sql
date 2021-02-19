@@ -1308,7 +1308,8 @@ CREATE TABLE public.titles (
     id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    cover_id bigint
+    cover_id bigint,
+    publication_status integer NOT NULL
 );
 
 
@@ -3474,6 +3475,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210213152823'),
 ('20210214043326'),
 ('20210214044613'),
-('20210214191951');
+('20210214191951'),
+('20210219203238'),
+('20210219204157');
 
 
