@@ -9,6 +9,8 @@ class Chapter < ApplicationRecord
 
   has_many :pages, dependent: :destroy
 
+  enum publication_status: { draft: 1, review: 2, published: 3 }
+
   validates :cover,
     allow_blank: true,
     uniqueness: true,

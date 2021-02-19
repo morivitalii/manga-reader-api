@@ -8,6 +8,7 @@ class Api::ChapterSerializer < Api::ApplicationSerializer
       volume_id: model.volume_id,
       group_id: model.group_id,
       number: model.number,
+      publication_status: model.publication_status,
       created_at: model.created_at,
       updated_at: model.updated_at
     }
