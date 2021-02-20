@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :groups, through: :group_user
   has_many :user_access_rights, dependent: :destroy
   has_many :access_rights, through: :user_access_rights
+  has_many :views, dependent: :destroy
 
   validates :username, presence: true,
     format: {with: /\A[a-z0-9_-]{2,16}\z/i},

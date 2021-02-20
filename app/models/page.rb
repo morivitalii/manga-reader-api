@@ -9,6 +9,7 @@ class Page < ApplicationRecord
   belongs_to :typer, optional: true
 
   has_one :chapter_where_cover, class_name: "Chapter", foreign_key: :cover_id, dependent: :nullify
+  has_many :views, as: :resource, dependent: :destroy
 
   has_one_attached :file, service: :private
 
