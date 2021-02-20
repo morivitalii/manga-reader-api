@@ -1,6 +1,8 @@
 class Title < ApplicationRecord
   include Translation
 
+  belongs_to :cover, optional: true
+
   has_many :resource_writers, as: :resource, dependent: :destroy
   has_many :writers, through: :resource_writers
 
@@ -25,10 +27,10 @@ class Title < ApplicationRecord
   has_many :volumes, dependent: :destroy
   has_many :chapters, dependent: :destroy
 
-  belongs_to :cover, optional: true
-
   has_many :resource_covers, as: :resource, dependent: :destroy
   has_many :covers, through: :resource_covers
+
+  has_many :views, as: :resource, dependent: :destroy
 
   translates :title, :description
 

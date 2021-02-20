@@ -1461,6 +1461,38 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: views; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.views (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    resource_type character varying NOT NULL,
+    resource_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: views_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.views_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: views_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.views_id_seq OWNED BY public.views.id;
+
+
+--
 -- Name: volumes; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1829,6 +1861,13 @@ ALTER TABLE ONLY public.user_access_rights ALTER COLUMN id SET DEFAULT nextval('
 --
 
 ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Name: views id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.views ALTER COLUMN id SET DEFAULT nextval('public.views_id_seq'::regclass);
 
 
 --
@@ -2211,6 +2250,14 @@ ALTER TABLE ONLY public.user_access_rights
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: views views_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.views
+    ADD CONSTRAINT views_pkey PRIMARY KEY (id);
 
 
 --
@@ -2937,6 +2984,34 @@ CREATE UNIQUE INDEX index_users_on_lower_username ON public.users USING btree (l
 
 
 --
+-- Name: index_views_on_created_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_views_on_created_at ON public.views USING btree (created_at);
+
+
+--
+-- Name: index_views_on_resource; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_views_on_resource ON public.views USING btree (resource_type, resource_id);
+
+
+--
+-- Name: index_views_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_views_on_user_id ON public.views USING btree (user_id);
+
+
+--
+-- Name: index_views_uniqueness; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_views_uniqueness ON public.views USING btree (user_id, resource_type, resource_id);
+
+
+--
 -- Name: index_volumes_on_number; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3146,6 +3221,14 @@ ALTER TABLE ONLY public.resource_cleaners
 
 ALTER TABLE ONLY public.tag_translations
     ADD CONSTRAINT fk_rails_60cffa4907 FOREIGN KEY (resource_id) REFERENCES public.tags(id);
+
+
+--
+-- Name: views fk_rails_6a13b72c28; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.views
+    ADD CONSTRAINT fk_rails_6a13b72c28 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -3480,6 +3563,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210219203238'),
 ('20210219204157'),
 ('20210219204944'),
-('20210219205348');
+('20210219205348'),
+('20210219210215');
 
 

@@ -8,6 +8,7 @@ class Chapter < ApplicationRecord
   belongs_to :cover, optional: true, class_name: "Page"
 
   has_many :pages, dependent: :destroy
+  has_many :views, as: :resource, dependent: :destroy
 
   enum publication_status: { draft: 1, review: 2, published: 3 }
 
