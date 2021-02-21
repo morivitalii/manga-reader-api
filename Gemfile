@@ -5,6 +5,7 @@ gem "rails", "~> 6"
 gem "rails-i18n", "~> 6"
 gem "bootsnap", "~> 1", require: false
 gem "puma", "~> 5"
+gem "sidekiq", "~> 6"
 gem "pg", "~> 1"
 gem "hiredis", "~> 0"
 gem "redis", "~> 4", require: ["redis", "redis/connection/hiredis"]
