@@ -28,6 +28,7 @@
     { "name": "Title views" },
     { "name": "Chapter cover" },
     { "name": "Chapter pages" },
+    { "name": "Chapter views" },
     { "name": "Users" },
     { "name": "Artists" },
     { "name": "Writers" },
@@ -1340,6 +1341,26 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          }
+        }
+      }
+    },
+    "/titles/{title_id}/chapters/{chapter_id}/views.json": {
+      "post": {
+        "tags": ["Chapter views"],
+        "summary": "Create chapter view",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/title_id" },
+          { "$ref": "#/components/parameters/chapter_id" }
+        ],
+        "responses": {
+          "204": {
+            "content": {
+              "schema": {
+                "type": "integer"
+              }
+            }
           }
         }
       }
