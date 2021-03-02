@@ -1,0 +1,16 @@
+{
+  "id": "file:/serializers/api/view.json#",
+  "type": "object",
+  "title": "View",
+  "properties": {
+    "id": {
+      "$ref": "file:/helpers/serializers/api/attributes/id.json#"
+    },
+    "created_at": {
+      "$ref": "file:/helpers/serializers/api/attributes/created_at.json#"
+    },
+    "updated_at": {
+      "$ref": "file:/helpers/serializers/api/attributes/updated_at.json#"
+    }
+  }
+}

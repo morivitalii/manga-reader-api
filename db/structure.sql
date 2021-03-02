@@ -295,7 +295,7 @@ CREATE TABLE public.content_language_translations (
     id bigint NOT NULL,
     content_language_id bigint,
     resource_id bigint NOT NULL,
-    title character varying DEFAULT ''::character varying NOT NULL,
+    title character varying DEFAULT ''::character varying,
     edited_at timestamp(6) without time zone NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
@@ -578,7 +578,7 @@ CREATE TABLE public.interface_language_translations (
     id bigint NOT NULL,
     content_language_id bigint NOT NULL,
     resource_id bigint NOT NULL,
-    title character varying DEFAULT ''::character varying NOT NULL,
+    title character varying DEFAULT ''::character varying,
     edited_at timestamp(6) without time zone NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
@@ -1469,7 +1469,8 @@ CREATE TABLE public.views (
     user_id bigint NOT NULL,
     resource_type character varying NOT NULL,
     resource_id bigint NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -2998,6 +2999,13 @@ CREATE INDEX index_views_on_resource ON public.views USING btree (resource_type,
 
 
 --
+-- Name: index_views_on_updated_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_views_on_updated_at ON public.views USING btree (updated_at);
+
+
+--
 -- Name: index_views_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3564,6 +3572,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210219204157'),
 ('20210219204944'),
 ('20210219205348'),
-('20210219210215');
+('20210219210215'),
+('20210221182110'),
+('20210228133416'),
+('20210228133424');
 
 

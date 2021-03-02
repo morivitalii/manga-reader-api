@@ -9,5 +9,4 @@ class InterfaceLanguage < ApplicationRecord
   translates :title
 
   validates :locale, uniqueness: true
-  validates :title, presence: true, length: { minimum: 1, maximum: 25 }
 end
