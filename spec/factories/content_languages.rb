@@ -2,8 +2,6 @@ FactoryBot.define do
   factory :content_language do
     association :locale
 
-    title { "Title" }
-
     # Because content language model refers to itself this additional operations must be done
     to_create do |evaluation|
       evaluation.save(validate: false)

@@ -25,6 +25,7 @@
     { "name": "Title covers" },
     { "name": "Title volumes" },
     { "name": "Title chapters" },
+    { "name": "Title views" },
     { "name": "Chapter cover" },
     { "name": "Chapter pages" },
     { "name": "Users" },
@@ -1173,6 +1174,25 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          }
+        }
+      }
+    },
+    "/titles/{title_id}/views.json": {
+      "post": {
+        "tags": ["Title views"],
+        "summary": "Create title view",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/title_id" }
+        ],
+        "responses": {
+          "204": {
+            "content": {
+              "schema": {
+                "type": "integer"
+              }
+            }
           }
         }
       }
