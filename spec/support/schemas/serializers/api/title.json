@@ -22,6 +22,11 @@
       "description": "Publication status",
       "examples": ["ongoing"]
     },
+    "views_count": {
+      "type": "integer",
+      "description": "Views count",
+      "examples": [1]
+    },
     "cover": {
       "oneOf": [
         {

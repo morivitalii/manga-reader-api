@@ -64,6 +64,11 @@
       "description": "Number",
       "examples": [1]
     },
+    "views_count": {
+      "type": "integer",
+      "description": "Views count",
+      "examples": [1]
+    },
     "file": {
       "type": "object",
       "description": "File",
