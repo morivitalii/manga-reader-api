@@ -40,8 +40,13 @@ Rails.application.routes.draw do
         resources :chapters, only: [:index, :show] do
           scope module: :chapters do
             resource :cover, only: [:update, :destroy], controller: :cover
-            resources :pages, only: [:index, :show]
             resources :views, only: [:create]
+
+            resources :pages, only: [:index, :show] do
+              scope module: :pages do
+                resources :views, only: [:create]
+              end
+            end
           end
         end
       end

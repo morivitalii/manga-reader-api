@@ -27,8 +27,9 @@
     { "name": "Title chapters" },
     { "name": "Title views" },
     { "name": "Chapter cover" },
-    { "name": "Chapter pages" },
     { "name": "Chapter views" },
+    { "name": "Chapter pages" },
+    { "name": "Page views" },
     { "name": "Users" },
     { "name": "Artists" },
     { "name": "Writers" },
@@ -1283,6 +1284,26 @@
           }
         }
       }
+    }
+    "/titles/{title_id}/chapters/{chapter_id}/views.json": {
+      "post": {
+        "tags": ["Chapter views"],
+        "summary": "Create chapter view",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/title_id" },
+          { "$ref": "#/components/parameters/chapter_id" }
+        ],
+        "responses": {
+          "204": {
+            "content": {
+              "schema": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
     },
     "/titles/{title_id}/chapters/{chapter_id}/pages.json": {
       "get": {
@@ -1345,14 +1366,15 @@
         }
       }
     },
-    "/titles/{title_id}/chapters/{chapter_id}/views.json": {
+    "/titles/{title_id}/chapters/{chapter_id}/pages/{page_id}/views.json": {
       "post": {
-        "tags": ["Chapter views"],
-        "summary": "Create chapter view",
+        "tags": ["Page views"],
+        "summary": "Create page view",
         "description": "",
         "parameters": [
           { "$ref": "#/components/parameters/title_id" },
-          { "$ref": "#/components/parameters/chapter_id" }
+          { "$ref": "#/components/parameters/chapter_id" },
+          { "$ref": "#/components/parameters/page_id" }
         ],
         "responses": {
           "204": {
