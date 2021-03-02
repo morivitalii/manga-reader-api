@@ -233,7 +233,8 @@ CREATE TABLE public.chapters (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     cover_id bigint,
-    publication_status integer NOT NULL
+    publication_status integer NOT NULL,
+    views_count bigint DEFAULT 0 NOT NULL
 );
 
 
@@ -710,7 +711,8 @@ CREATE TABLE public.pages (
     typer_id bigint,
     number integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    views_count bigint DEFAULT 0 NOT NULL
 );
 
 
@@ -1310,7 +1312,8 @@ CREATE TABLE public.titles (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     cover_id bigint,
-    publication_status integer NOT NULL
+    publication_status integer NOT NULL,
+    views_count bigint DEFAULT 0 NOT NULL
 );
 
 
@@ -3575,6 +3578,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210219210215'),
 ('20210221182110'),
 ('20210228133416'),
-('20210228133424');
+('20210228133424'),
+('20210302181621'),
+('20210302181910'),
+('20210302181915');
 
 

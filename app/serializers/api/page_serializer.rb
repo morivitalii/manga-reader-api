@@ -8,6 +8,7 @@ class Api::PageSerializer < Api::ApplicationSerializer
       editor_id: model.editor_id,
       typer_id: model.typer_id,
       number: model.number,
+      views_count: model.views_count,
       file: {
         url: model.file.url,
         filename: model.file.filename,
