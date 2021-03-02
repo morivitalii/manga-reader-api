@@ -110,6 +110,15 @@
           "type": "integer"
         }
       },
+      "page_id": {
+        "in": "path",
+        "name": "page_id",
+        "required": true,
+        "description": "Page ID",
+        "schema": {
+          "type": "integer"
+        }
+      },
       "page": {
         "in": "query",
         "name": "page",
@@ -1284,7 +1293,7 @@
           }
         }
       }
-    }
+    },
     "/titles/{title_id}/chapters/{chapter_id}/views.json": {
       "post": {
         "tags": ["Chapter views"],
