@@ -32,6 +32,16 @@
       "description": "Bookmarks count",
       "examples": [1]
     },
+    "original_content_language": {
+      "oneOf": [
+        {
+          "$ref": "file:/serializers/api/content_language.json#"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "cover": {
       "oneOf": [
         {
