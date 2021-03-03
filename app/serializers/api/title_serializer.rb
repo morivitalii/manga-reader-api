@@ -1,4 +1,5 @@
 class Api::TitleSerializer < Api::ApplicationSerializer
+  serialize_association :original_content_language, with: Api::ContentLanguageSerializer
   serialize_association :cover, with: Api::CoverSerializer
   serialize_associations :writers, with: Api::WriterSerializer
   serialize_associations :painters, with: Api::PainterSerializer
@@ -20,6 +21,7 @@ class Api::TitleSerializer < Api::ApplicationSerializer
       bookmarks_count: model.bookmarks_count,
       created_at: model.created_at,
       updated_at: model.updated_at,
+      original_content_language: original_content_language,
       cover: cover,
       writers: writers,
       painters: painters,

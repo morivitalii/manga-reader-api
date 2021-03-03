@@ -1349,7 +1349,8 @@ CREATE TABLE public.titles (
     cover_id bigint,
     publication_status integer NOT NULL,
     views_count bigint DEFAULT 0 NOT NULL,
-    bookmarks_count bigint DEFAULT 0 NOT NULL
+    bookmarks_count bigint DEFAULT 0 NOT NULL,
+    original_content_language_id bigint
 );
 
 
@@ -3025,6 +3026,13 @@ CREATE UNIQUE INDEX index_titles_on_cover_id ON public.titles USING btree (cover
 
 
 --
+-- Name: index_titles_on_original_content_language_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_titles_on_original_content_language_id ON public.titles USING btree (original_content_language_id);
+
+
+--
 -- Name: index_translators_on_artist_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3465,6 +3473,14 @@ ALTER TABLE ONLY public.active_storage_attachments
 
 
 --
+-- Name: titles fk_rails_c69f99c5a5; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.titles
+    ADD CONSTRAINT fk_rails_c69f99c5a5 FOREIGN KEY (original_content_language_id) REFERENCES public.content_languages(id);
+
+
+--
 -- Name: resource_genres fk_rails_cb4e5b0be0; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3679,6 +3695,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210302191146'),
 ('20210302191301'),
 ('20210302191307'),
-('20210302191312');
+('20210302191312'),
+('20210303115840');
 
 
