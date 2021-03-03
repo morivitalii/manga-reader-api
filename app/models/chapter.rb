@@ -9,6 +9,7 @@ class Chapter < ApplicationRecord
 
   has_many :pages, dependent: :destroy
   has_many :views, as: :resource, dependent: :destroy
+  has_many :bookmarks, as: :resource, dependent: :destroy
 
   enum publication_status: { draft: 1, review: 2, published: 3 }
 

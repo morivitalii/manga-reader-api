@@ -1,4 +1,4 @@
-class Api::Titles::Chapters::Pages::CreateViewWorker
+class Api::Titles::CreateBookmarkWorker
   include Sidekiq::Worker
 
   sidekiq_options(
@@ -10,6 +10,6 @@ class Api::Titles::Chapters::Pages::CreateViewWorker
     page = Page.find(page_id)
     user = User.find(user_id)
 
-    Api::Titles::Chapters::Pages::CreateView.new(page: page, user: user).call
+    Api::Titles::CreateBookmark.new(page: page, user: user).call
   end
 end

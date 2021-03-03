@@ -31,6 +31,7 @@ class Title < ApplicationRecord
   has_many :covers, through: :resource_covers
 
   has_many :views, as: :resource, dependent: :destroy
+  has_many :bookmarks, as: :resource, dependent: :destroy
 
   translates :title, :description
 

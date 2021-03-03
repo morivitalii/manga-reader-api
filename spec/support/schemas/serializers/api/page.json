@@ -69,6 +69,11 @@
       "description": "Views count",
       "examples": [1]
     },
+    "bookmarks_count": {
+      "type": "integer",
+      "description": "Bookmarks count",
+      "examples": [1]
+    },
     "file": {
       "type": "object",
       "description": "File",

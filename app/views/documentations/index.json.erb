@@ -26,10 +26,13 @@
     { "name": "Title volumes" },
     { "name": "Title chapters" },
     { "name": "Title views" },
+    { "name": "Title bookmarks" },
     { "name": "Chapter cover" },
     { "name": "Chapter views" },
+    { "name": "Chapter bookmarks" },
     { "name": "Chapter pages" },
     { "name": "Page views" },
+    { "name": "Page bookmarks" },
     { "name": "Users" },
     { "name": "Artists" },
     { "name": "Writers" },
@@ -1208,6 +1211,54 @@
         }
       }
     },
+    "/titles/{title_id}/bookmarks.json": {
+      "post": {
+        "tags": ["Title bookmarks"],
+        "summary": "Create title bookmark",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/title_id" }
+        ],
+        "responses": {
+          "204": {
+            "content": {
+              "schema": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/titles/{title_id}/bookmarks/{id}.json": {
+      "delete": {
+        "tags": ["Title bookmarks"],
+        "summary": "Delete title bookmark",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/title_id" },
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "responses": {
+          "204": {
+            "content": {
+              "schema": {
+                "type": "integer"
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          }
+        }
+      }
+    },
     "/titles/{title_id}/chapters/{chapter_id}/cover.json": {
       "put": {
         "tags": ["Chapter cover"],
@@ -1314,6 +1365,56 @@
         }
       }
     },
+    "/titles/{title_id}/chapters/{chapter_id}/bookmarks.json": {
+      "post": {
+        "tags": ["Chapter bookmarks"],
+        "summary": "Create chapter bookmark",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/title_id" },
+          { "$ref": "#/components/parameters/chapter_id" }
+        ],
+        "responses": {
+          "204": {
+            "content": {
+              "schema": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/titles/{title_id}/chapters/{chapter_id}/bookmarks/{id}.json": {
+      "delete": {
+        "tags": ["Chapter bookmarks"],
+        "summary": "Delete chapter bookmark",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/title_id" },
+          { "$ref": "#/components/parameters/chapter_id" },
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "responses": {
+          "204": {
+            "content": {
+              "schema": {
+                "type": "integer"
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          }
+        }
+      }
+    },
     "/titles/{title_id}/chapters/{chapter_id}/pages.json": {
       "get": {
         "tags": ["Chapter pages"],
@@ -1392,6 +1493,58 @@
                 "type": "integer"
               }
             }
+          }
+        }
+      }
+    },
+    "/titles/{title_id}/chapters/{chapter_id}/pages/{page_id}/bookmarks.json": {
+      "post": {
+        "tags": ["Page bookmarks"],
+        "summary": "Create page bookmark",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/title_id" },
+          { "$ref": "#/components/parameters/chapter_id" },
+          { "$ref": "#/components/parameters/page_id" }
+        ],
+        "responses": {
+          "204": {
+            "content": {
+              "schema": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/titles/{title_id}/chapters/{chapter_id}/pages/{page_id}/bookmarks/{id}.json": {
+      "delete": {
+        "tags": ["Page bookmarks"],
+        "summary": "Delete page bookmark",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/title_id" },
+          { "$ref": "#/components/parameters/chapter_id" },
+          { "$ref": "#/components/parameters/page_id" },
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "responses": {
+          "204": {
+            "content": {
+              "schema": {
+                "type": "integer"
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
           }
         }
       }

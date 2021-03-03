@@ -9,6 +9,7 @@ class Api::PageSerializer < Api::ApplicationSerializer
       typer_id: model.typer_id,
       number: model.number,
       views_count: model.views_count,
+      bookmarks_count: model.bookmarks_count,
       file: {
         url: model.file.url,
         filename: model.file.filename,
