@@ -2,7 +2,7 @@ class Api::Titles::Chapters::CreateViewWorker
   include Sidekiq::Worker
 
   sidekiq_options(
-    queue: :views,
+    queue: :default,
     retry: false
   )
 

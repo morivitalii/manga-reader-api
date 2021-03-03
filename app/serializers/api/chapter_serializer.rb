@@ -10,6 +10,7 @@ class Api::ChapterSerializer < Api::ApplicationSerializer
       number: model.number,
       publication_status: model.publication_status,
       views_count: model.views_count,
+      bookmarks_count: model.bookmarks_count,
       created_at: model.created_at,
       updated_at: model.updated_at
     }

@@ -221,6 +221,39 @@ ALTER SEQUENCE public.artists_id_seq OWNED BY public.artists.id;
 
 
 --
+-- Name: bookmarks; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.bookmarks (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    resource_type character varying NOT NULL,
+    resource_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: bookmarks_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.bookmarks_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: bookmarks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.bookmarks_id_seq OWNED BY public.bookmarks.id;
+
+
+--
 -- Name: chapters; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -234,7 +267,8 @@ CREATE TABLE public.chapters (
     updated_at timestamp(6) without time zone NOT NULL,
     cover_id bigint,
     publication_status integer NOT NULL,
-    views_count bigint DEFAULT 0 NOT NULL
+    views_count bigint DEFAULT 0 NOT NULL,
+    bookmarks_count bigint DEFAULT 0 NOT NULL
 );
 
 
@@ -712,7 +746,8 @@ CREATE TABLE public.pages (
     number integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    views_count bigint DEFAULT 0 NOT NULL
+    views_count bigint DEFAULT 0 NOT NULL,
+    bookmarks_count bigint DEFAULT 0 NOT NULL
 );
 
 
@@ -1313,7 +1348,8 @@ CREATE TABLE public.titles (
     updated_at timestamp(6) without time zone NOT NULL,
     cover_id bigint,
     publication_status integer NOT NULL,
-    views_count bigint DEFAULT 0 NOT NULL
+    views_count bigint DEFAULT 0 NOT NULL,
+    bookmarks_count bigint DEFAULT 0 NOT NULL
 );
 
 
@@ -1599,6 +1635,13 @@ ALTER TABLE ONLY public.artist_translations ALTER COLUMN id SET DEFAULT nextval(
 --
 
 ALTER TABLE ONLY public.artists ALTER COLUMN id SET DEFAULT nextval('public.artists_id_seq'::regclass);
+
+
+--
+-- Name: bookmarks id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bookmarks ALTER COLUMN id SET DEFAULT nextval('public.bookmarks_id_seq'::regclass);
 
 
 --
@@ -1942,6 +1985,14 @@ ALTER TABLE ONLY public.artist_translations
 
 ALTER TABLE ONLY public.artists
     ADD CONSTRAINT artists_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: bookmarks bookmarks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bookmarks
+    ADD CONSTRAINT bookmarks_pkey PRIMARY KEY (id);
 
 
 --
@@ -2348,6 +2399,41 @@ CREATE UNIQUE INDEX index_artist_translations_uniqueness ON public.artist_transl
 --
 
 CREATE UNIQUE INDEX index_artists_on_user_id ON public.artists USING btree (user_id);
+
+
+--
+-- Name: index_bookmarks_on_created_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_bookmarks_on_created_at ON public.bookmarks USING btree (created_at);
+
+
+--
+-- Name: index_bookmarks_on_resource; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_bookmarks_on_resource ON public.bookmarks USING btree (resource_type, resource_id);
+
+
+--
+-- Name: index_bookmarks_on_updated_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_bookmarks_on_updated_at ON public.bookmarks USING btree (updated_at);
+
+
+--
+-- Name: index_bookmarks_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_bookmarks_on_user_id ON public.bookmarks USING btree (user_id);
+
+
+--
+-- Name: index_bookmarks_uniqueness; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_bookmarks_uniqueness ON public.bookmarks USING btree (user_id, resource_type, resource_id);
 
 
 --
@@ -3363,6 +3449,14 @@ ALTER TABLE ONLY public.pages
 
 
 --
+-- Name: bookmarks fk_rails_c1ff6fa4ac; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bookmarks
+    ADD CONSTRAINT fk_rails_c1ff6fa4ac FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: active_storage_attachments fk_rails_c3b3935057; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3581,6 +3675,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210228133424'),
 ('20210302181621'),
 ('20210302181910'),
-('20210302181915');
+('20210302181915'),
+('20210302191146'),
+('20210302191301'),
+('20210302191307'),
+('20210302191312');
 
 
