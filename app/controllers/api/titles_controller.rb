@@ -31,6 +31,16 @@ class Api::TitlesController < Api::ApplicationController
       ]
     )
 
+    if Current.user.present?
+      ActiveRecord::Associations::Preloader.new.preload(
+        titles, [
+          :favorite,
+          :bookmark,
+          :view
+        ]
+      )
+    end
+
     titles = Api::TitleDecorator.decorate(titles)
     titles = Api::TitleSerializer.serialize(titles)
 
@@ -72,5 +82,15 @@ class Api::TitlesController < Api::ApplicationController
         themes: { tag: Tag.translations_associations }
       ]
     )
+
+    if Current.user.present?
+      ActiveRecord::Associations::Preloader.new.preload(
+        @title, [
+          :favorite,
+          :bookmark,
+          :view
+        ]
+      )
+    end
   end
 end

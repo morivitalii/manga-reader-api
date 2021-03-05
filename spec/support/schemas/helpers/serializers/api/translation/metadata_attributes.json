@@ -9,7 +9,10 @@
       "examples": [1]
     },
     "locale": {
-      "$ref": "file:/helpers/serializers/api/attributes/locale.json#"
+      "type": "string",
+      "enum": ["en", "ru"],
+      "description": "Locale key",
+      "examples": ["en"]
     },
     "created_at": {
       "description": "Date of translation creation",

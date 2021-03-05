@@ -5,7 +5,9 @@ class Api::SignInController < Api::ApplicationController
 
   def create
     if request.env["warden"].authenticate!(:password)
-      user = Api::UserDecorator.decorate(current_user)
+      Current.user = request.env["warden"].user
+
+      user = Api::UserDecorator.decorate(Current.user)
       user = Api::UserSerializer.serialize(user)
 
       render json: user, status: 200

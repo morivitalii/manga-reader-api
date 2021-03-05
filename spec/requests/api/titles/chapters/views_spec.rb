@@ -8,7 +8,8 @@ RSpec.describe Api::Titles::Chapters::ViewsController do
 
       post "/api/titles/#{title.to_param}/chapters/#{chapter.to_param}/views.json"
 
-      expect(response).to have_http_status(204)
+      expect(response).to have_http_status(200)
+      expect(response).to match_json_schema("controllers/api/titles/chapters/views_controller/create/200")
     end
   end
 end

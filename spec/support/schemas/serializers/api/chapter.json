@@ -4,7 +4,9 @@
   "title": "Chapter",
   "properties": {
     "id": {
-      "$ref": "file:/helpers/serializers/api/attributes/id.json#"
+      "type": "integer",
+      "description": "ID",
+      "examples": [1]
     },
     "title_id": {
       "description": "Title ID",
@@ -49,11 +51,37 @@
       "description": "Bookmarks count",
       "examples": [1]
     },
+    "bookmark": {
+      "oneOf": [
+        {
+          "$ref": "file:/serializers/api/bookmark.json#"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "view": {
+      "oneOf": [
+        {
+          "$ref": "file:/serializers/api/view.json#"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "created_at": {
-      "$ref": "file:/helpers/serializers/api/attributes/created_at.json#"
+      "type": "string",
+      "format": "date-time",
+      "description": "Date of creation",
+      "examples": ["2020-12-13T00:00:00.000Z"]
     },
     "updated_at": {
-      "$ref": "file:/helpers/serializers/api/attributes/updated_at.json#"
+      "type": "string",
+      "format": "date-time",
+      "description": "Date of last update",
+      "examples": ["2020-12-13T00:00:00.000Z"]
     }
   }
 }

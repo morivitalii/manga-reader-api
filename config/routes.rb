@@ -21,14 +21,25 @@ Rails.application.routes.draw do
     resources :formats, only: [:index, :show]
     resources :demographics, only: [:index, :show]
     resources :users, only: [:index, :show]
-    resources :artists, only: [:index, :show]
+
+    resources :artists, only: [:index, :show] do
+      scope module: :artists do
+        resources :favorites, only: [:create, :destroy]
+      end
+    end
+
     resources :writers, only: [:index, :show]
     resources :painters, only: [:index, :show]
     resources :cleaners, only: [:index, :show]
     resources :translators, only: [:index, :show]
     resources :editors, only: [:index, :show]
     resources :typers, only: [:index, :show]
-    resources :groups, only: [:index, :show]
+
+    resources :groups, only: [:index, :show] do
+      scope module: :groups do
+        resources :favorites, only: [:create, :destroy]
+      end
+    end
 
     resources :titles, only: [:index, :show] do
       scope module: :titles do
@@ -37,6 +48,7 @@ Rails.application.routes.draw do
         resources :volumes, only: [:index, :show]
         resources :views, only: [:create]
         resources :bookmarks, only: [:create, :destroy]
+        resources :favorites, only: [:create, :destroy]
 
         resources :chapters, only: [:index, :show] do
           scope module: :chapters do

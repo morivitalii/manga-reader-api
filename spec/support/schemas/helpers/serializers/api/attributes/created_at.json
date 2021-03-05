@@ -1,7 +1,0 @@
-{
-  "id": "file:/helpers/serializers/api/attributes/created_at.json#",
-  "type": "string",
-  "format": "date-time",
-  "description": "Date of creation",
-  "examples": ["2020-12-31T00:00:00.000Z"]
-}

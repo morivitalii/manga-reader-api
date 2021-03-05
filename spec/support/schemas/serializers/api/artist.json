@@ -4,7 +4,9 @@
   "title": "Artist",
   "properties": {
     "id": {
-      "$ref": "file:/helpers/serializers/api/attributes/id.json#"
+      "type": "integer",
+      "description": "ID",
+      "examples": [1]
     },
     "user_id": {
       "description": "User ID",
@@ -23,11 +25,32 @@
       "description": "Name",
       "examples": ["Akihito Tsukushi"]
     },
+    "favorites_count": {
+      "type": "integer",
+      "description": "Favorites count",
+      "examples": [1]
+    },
+    "favorite": {
+      "oneOf": [
+        {
+          "$ref": "file:/serializers/api/favorite.json#"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "created_at": {
-      "$ref": "file:/helpers/serializers/api/attributes/created_at.json#"
+      "type": "string",
+      "format": "date-time",
+      "description": "Date of creation",
+      "examples": ["2020-12-13T00:00:00.000Z"]
     },
     "updated_at": {
-      "$ref": "file:/helpers/serializers/api/attributes/updated_at.json#"
+      "type": "string",
+      "format": "date-time",
+      "description": "Date of last update",
+      "examples": ["2020-12-13T00:00:00.000Z"]
     }
   }
 }

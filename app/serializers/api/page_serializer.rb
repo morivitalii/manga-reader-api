@@ -1,4 +1,7 @@
 class Api::PageSerializer < Api::ApplicationSerializer
+  serialize_associations :bookmark, with: Api::BookmarkSerializer
+  serialize_associations :view, with: Api::ViewSerializer
+
   def attributes
     {
       id: model.id,
@@ -19,6 +22,8 @@ class Api::PageSerializer < Api::ApplicationSerializer
         byte_size: model.file.byte_size,
         created_at: model.file.created_at
       },
+      bookmark: bookmark,
+      view: view,
       created_at: model.created_at,
       updated_at: model.updated_at
     }

@@ -5,9 +5,16 @@ class Api::Titles::Chapters::Pages::ViewsController < Api::ApplicationController
   before_action -> { authorize(Api::Titles::Chapters::Pages::ViewsPolicy) }, only: [:create]
 
   def create
-    Api::Titles::Chapters::Pages::CreateViewWorker.perform_async(@page.id, current_user.id)
+    service = Api::Titles::Chapters::Pages::CreateView.new(page: @page, user: Current.user)
 
-    head 204
+    if service.call
+      view = Api::ViewDecorator.decorate(service.view)
+      view = Api::ViewSerializer.serialize(view)
+
+      render json: view, status: 200
+    else
+      head 422
+    end
   end
 
   private

@@ -7,15 +7,26 @@ class Api::Titles::Chapters::Pages::BookmarksController < Api::ApplicationContro
   before_action -> { authorize(Api::Titles::Chapters::Pages::BookmarksPolicy, @bookmark) }, only: [:destroy]
 
   def create
-    Api::Titles::Chapters::Pages::CreateBookmarkWorker.perform_async(@page.id, current_user.id)
+    service =  Api::Titles::Chapters::Pages::CreateBookmark.new(page: @page, user: Current.user)
 
-    head 204
+    if service.call
+      bookmark = Api::BookmarkDecorator.decorate(service.bookmark)
+      bookmark = Api::BookmarkSerializer.serialize(bookmark)
+
+      render json: bookmark, status: 200
+    else
+      head 422
+    end
   end
 
   def destroy
-    Api::Titles::Chapters::Pages::DeleteBookmarkWorker.perform_async(@bookmark.id)
+    service = Api::Titles::Chapters::Pages::DeleteBookmark.new(bookmark: @bookmark)
 
-    head 204
+    if service.call
+      head 204
+    else
+      head 422
+    end
   end
 
   private

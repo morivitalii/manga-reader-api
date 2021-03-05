@@ -2,16 +2,17 @@ class Api::Titles::Chapters::CreateBookmark
   include ActiveModel::Model
 
   attr_accessor :chapter, :user
+  attr_reader :bookmark
 
   def call
     ActiveRecord::Base.transaction do
-      bookmark = Bookmark.lock.where(user: user, resource: chapter).take
+      @bookmark = Bookmark.lock.where(user: user, resource: chapter).take
 
-      if bookmark.present?
-        bookmark.destroy!
+      if @bookmark.present?
+        @bookmark.destroy!
       end
 
-      Bookmark.create(
+      @bookmark = Bookmark.create!(
         user: user,
         resource: chapter
       )

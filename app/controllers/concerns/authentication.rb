@@ -2,10 +2,12 @@ module Authentication
   extend ActiveSupport::Concern
 
   included do
-    private
+    before_action :set_current_user
+  end
 
-    def current_user
-      request.env["warden"].user
-    end
+  private
+
+  def set_current_user
+    Current.user = request.env["warden"].user
   end
 end

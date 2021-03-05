@@ -1,7 +1,0 @@
-{
-  "id": "file:/helpers/serializers/api/attributes/updated_at.json#",
-  "type": "string",
-  "format": "date-time",
-  "description": "Date of last update",
-  "examples": ["2020-12-31T00:00:00.000Z"]
-}

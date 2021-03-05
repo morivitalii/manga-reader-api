@@ -27,6 +27,7 @@
     { "name": "Title chapters" },
     { "name": "Title views" },
     { "name": "Title bookmarks" },
+    { "name": "Title favorites" },
     { "name": "Chapter cover" },
     { "name": "Chapter views" },
     { "name": "Chapter bookmarks" },
@@ -35,13 +36,15 @@
     { "name": "Page bookmarks" },
     { "name": "Users" },
     { "name": "Artists" },
+    { "name": "Artist favorites" },
     { "name": "Writers" },
     { "name": "Painters" },
     { "name": "Cleaners" },
     { "name": "Translators" },
     { "name": "Editors" },
     { "name": "Typers" },
-    { "name": "Groups" }
+    { "name": "Groups" },
+    { "name": "Group favorites" }
   ],
   "components": {
     "headers": {
@@ -122,6 +125,24 @@
           "type": "integer"
         }
       },
+      "artist_id": {
+        "in": "path",
+        "name": "artist_id",
+        "required": true,
+        "description": "Artist ID",
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "group_id": {
+        "in": "path",
+        "name": "group_id",
+        "required": true,
+        "description": "Group ID",
+        "schema": {
+          "type": "integer"
+        }
+      },
       "page": {
         "in": "query",
         "name": "page",
@@ -146,6 +167,14 @@
       }
     },
     "responses": {
+      "no_content": {
+        "description": "No content",
+        "content": {
+          "schema": {
+            "type": "integer"
+          }
+        }
+      },
       "unauthorized": {
         "description": "Unauthorized access",
         "content": {
@@ -205,6 +234,22 @@
             }
           }
         }
+      },
+      "unprocessable_entity": {
+        "description": "Unprocessable entity",
+        "content": {
+          "schema": {
+            "type": "integer"
+          }
+        }
+      },
+      "internal_server_error": {
+        "description": "Internal Server Error",
+        "content": {
+          "schema": {
+            "type": "integer"
+          }
+        }
       }
     }
   },
@@ -259,6 +304,9 @@
                 "schema": <%= schema("sign_up_controller/create/422") %>
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -308,6 +356,9 @@
                 "schema": <%= schema("sign_in_controller/create/422") %>
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -319,10 +370,13 @@
         "description": "",
         "responses": {
           "204": {
-            "description": "Success"
+            "$ref": "#/components/responses/no_content"
           },
           "401": {
             "$ref": "#/components/responses/unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -346,6 +400,9 @@
           },
           "403": {
             "$ref": "#/components/responses/forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -375,6 +432,9 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -398,6 +458,9 @@
           },
           "403": {
             "$ref": "#/components/responses/forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -427,6 +490,9 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -450,6 +516,9 @@
           },
           "403": {
             "$ref": "#/components/responses/forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -479,6 +548,9 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -508,6 +580,9 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -531,6 +606,9 @@
           },
           "403": {
             "$ref": "#/components/responses/forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -560,6 +638,9 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -583,6 +664,9 @@
           },
           "403": {
             "$ref": "#/components/responses/forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -612,6 +696,9 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -635,6 +722,9 @@
           },
           "403": {
             "$ref": "#/components/responses/forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -664,6 +754,9 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -687,6 +780,9 @@
           },
           "403": {
             "$ref": "#/components/responses/forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -716,6 +812,9 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -739,6 +838,9 @@
           },
           "403": {
             "$ref": "#/components/responses/forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -768,6 +870,9 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -803,6 +908,9 @@
           },
           "403": {
             "$ref": "#/components/responses/forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -832,6 +940,9 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -882,6 +993,9 @@
                 "schema": <%= schema("titles/cover_controller/update/422") %>
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       },
@@ -894,11 +1008,7 @@
         ],
         "responses": {
           "204": {
-            "content": {
-              "schema": {
-                "type": "integer"
-              }
-            }
+            "$ref": "#/components/responses/no_content"
           },
           "401": {
             "$ref": "#/components/responses/unauthorized"
@@ -916,6 +1026,9 @@
                 "schema": <%= schema("titles/cover_controller/destroy/422") %>
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -955,6 +1068,9 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       },
@@ -998,6 +1114,9 @@
           "403": {
             "$ref": "#/components/responses/forbidden"
           },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
           "422": {
             "description": "Unprocessable entity",
             "content": {
@@ -1005,6 +1124,9 @@
                 "schema": <%= schema("titles/covers_controller/create/422") %>
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -1035,6 +1157,9 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       },
@@ -1048,11 +1173,7 @@
         ],
         "responses": {
           "204": {
-            "content": {
-              "schema": {
-                "type": "integer"
-              }
-            }
+            "$ref": "#/components/responses/no_content"
           },
           "401": {
             "$ref": "#/components/responses/unauthorized"
@@ -1070,6 +1191,9 @@
                 "schema": <%= schema("titles/covers_controller/destroy/422") %>
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -1099,6 +1223,9 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -1129,6 +1256,9 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -1158,6 +1288,9 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -1188,6 +1321,9 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -1201,12 +1337,28 @@
           { "$ref": "#/components/parameters/title_id" }
         ],
         "responses": {
-          "204": {
+          "200": {
+            "description": "Success",
             "content": {
-              "schema": {
-                "type": "integer"
+              "application/json": {
+                "schema": <%= schema("titles/views_controller/create/200") %>
               }
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "$ref": "#/components/responses/unprocessable_entity"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -1220,12 +1372,28 @@
           { "$ref": "#/components/parameters/title_id" }
         ],
         "responses": {
-          "204": {
+          "200": {
+            "description": "Success",
             "content": {
-              "schema": {
-                "type": "integer"
+              "application/json": {
+                "schema": <%= schema("titles/bookmarks_controller/create/200") %>
               }
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "$ref": "#/components/responses/unprocessable_entity"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -1241,9 +1409,40 @@
         ],
         "responses": {
           "204": {
+            "$ref": "#/components/responses/no_content"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "$ref": "#/components/responses/unprocessable_entity"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
+      }
+    },
+    "/titles/{title_id}/favorites.json": {
+      "post": {
+        "tags": ["Title favorites"],
+        "summary": "Create title favorite",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/title_id" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
             "content": {
-              "schema": {
-                "type": "integer"
+              "application/json": {
+                "schema": <%= schema("titles/favorites_controller/create/200") %>
               }
             }
           },
@@ -1255,6 +1454,43 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "$ref": "#/components/responses/unprocessable_entity"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
+      }
+    },
+    "/titles/{title_id}/favorites/{id}.json": {
+      "delete": {
+        "tags": ["Title favorites"],
+        "summary": "Delete title favorite",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/title_id" },
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/no_content"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "$ref": "#/components/responses/unprocessable_entity"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -1306,6 +1542,9 @@
                 "schema": <%= schema("titles/chapters/cover_controller/update/422") %>
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       },
@@ -1319,11 +1558,7 @@
         ],
         "responses": {
           "204": {
-            "content": {
-              "schema": {
-                "type": "integer"
-              }
-            }
+            "$ref": "#/components/responses/no_content"
           },
           "401": {
             "$ref": "#/components/responses/unauthorized"
@@ -1341,6 +1576,9 @@
                 "schema": <%= schema("titles/chapters/cover_controller/destroy/422") %>
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -1355,12 +1593,28 @@
           { "$ref": "#/components/parameters/chapter_id" }
         ],
         "responses": {
-          "204": {
+          "200": {
+            "description": "Success",
             "content": {
-              "schema": {
-                "type": "integer"
+              "application/json": {
+                "schema": <%= schema("titles/chapters/views_controller/create/200") %>
               }
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "$ref": "#/components/responses/unprocessable_entity"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -1375,12 +1629,28 @@
           { "$ref": "#/components/parameters/chapter_id" }
         ],
         "responses": {
-          "204": {
+          "200": {
+            "description": "Success",
             "content": {
-              "schema": {
-                "type": "integer"
+              "application/json": {
+                "schema": <%= schema("titles/chapters/bookmarks_controller/create/200") %>
               }
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "$ref": "#/components/responses/unprocessable_entity"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -1397,11 +1667,7 @@
         ],
         "responses": {
           "204": {
-            "content": {
-              "schema": {
-                "type": "integer"
-              }
-            }
+            "$ref": "#/components/responses/no_content"
           },
           "401": {
             "$ref": "#/components/responses/unauthorized"
@@ -1411,6 +1677,12 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "$ref": "#/components/responses/unprocessable_entity"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -1441,6 +1713,9 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -1472,6 +1747,9 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -1487,12 +1765,28 @@
           { "$ref": "#/components/parameters/page_id" }
         ],
         "responses": {
-          "204": {
+          "200": {
+            "description": "Success",
             "content": {
-              "schema": {
-                "type": "integer"
+              "application/json": {
+                "schema": <%= schema("titles/chapters/pages/views_controller/create/200") %>
               }
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "$ref": "#/components/responses/unprocessable_entity"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -1508,12 +1802,28 @@
           { "$ref": "#/components/parameters/page_id" }
         ],
         "responses": {
-          "204": {
+          "200": {
+            "description": "Success",
             "content": {
-              "schema": {
-                "type": "integer"
+              "application/json": {
+                "schema": <%= schema("titles/chapters/pages/bookmarks_controller/create/200") %>
               }
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "$ref": "#/components/responses/unprocessable_entity"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -1531,11 +1841,7 @@
         ],
         "responses": {
           "204": {
-            "content": {
-              "schema": {
-                "type": "integer"
-              }
-            }
+            "$ref": "#/components/responses/no_content"
           },
           "401": {
             "$ref": "#/components/responses/unauthorized"
@@ -1545,6 +1851,12 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "$ref": "#/components/responses/unprocessable_entity"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -1580,6 +1892,9 @@
           },
           "403": {
             "$ref": "#/components/responses/forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -1609,6 +1924,9 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -1644,6 +1962,9 @@
           },
           "403": {
             "$ref": "#/components/responses/forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -1673,6 +1994,75 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
+      }
+    },
+    "/artists/{artist_id}/favorites.json": {
+      "post": {
+        "tags": ["Artist favorites"],
+        "summary": "Create artist favorite",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/artist_id" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("artists/favorites_controller/create/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "$ref": "#/components/responses/unprocessable_entity"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
+      }
+    },
+    "/artists/{artist_id}/favorites/{id}.json": {
+      "delete": {
+        "tags": ["Artist favorites"],
+        "summary": "Delete artist favorite",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/artist_id" },
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/no_content"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "$ref": "#/components/responses/unprocessable_entity"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -1708,6 +2098,9 @@
           },
           "403": {
             "$ref": "#/components/responses/forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -1737,6 +2130,9 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -1772,6 +2168,9 @@
           },
           "403": {
             "$ref": "#/components/responses/forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -1801,6 +2200,9 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -1836,6 +2238,9 @@
           },
           "403": {
             "$ref": "#/components/responses/forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -1865,6 +2270,9 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -1900,6 +2308,9 @@
           },
           "403": {
             "$ref": "#/components/responses/forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -1929,6 +2340,9 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -1964,6 +2378,9 @@
           },
           "403": {
             "$ref": "#/components/responses/forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -1993,6 +2410,9 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -2028,6 +2448,9 @@
           },
           "403": {
             "$ref": "#/components/responses/forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -2057,6 +2480,9 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -2092,6 +2518,9 @@
           },
           "403": {
             "$ref": "#/components/responses/forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }
@@ -2121,6 +2550,75 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
+      }
+    },
+    "/groups/{group_id}/favorites.json": {
+      "post": {
+        "tags": ["Group favorites"],
+        "summary": "Create group favorite",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/group_id" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("groups/favorites_controller/create/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "$ref": "#/components/responses/unprocessable_entity"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
+      }
+    },
+    "/groups/{group_id}/favorites/{id}.json": {
+      "delete": {
+        "tags": ["Group favorites"],
+        "summary": "Delete group favorite",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/group_id" },
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/no_content"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "$ref": "#/components/responses/unprocessable_entity"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
           }
         }
       }

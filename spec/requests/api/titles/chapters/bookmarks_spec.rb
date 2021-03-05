@@ -8,7 +8,8 @@ RSpec.describe Api::Titles::Chapters::BookmarksController do
 
       post "/api/titles/#{title.to_param}/chapters/#{chapter.to_param}/bookmarks.json"
 
-      expect(response).to have_http_status(204)
+      expect(response).to have_http_status(200)
+      expect(response).to match_json_schema("controllers/api/titles/chapters/bookmarks_controller/create/200")
     end
   end
 

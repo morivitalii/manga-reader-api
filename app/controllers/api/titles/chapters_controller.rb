@@ -9,6 +9,15 @@ class Api::Titles::ChaptersController < Api::ApplicationController
   def index
     chapters = chapters_scope.order("chapters.number ASC").all
 
+    if Current.user.present?
+      ActiveRecord::Associations::Preloader.new.preload(
+        chapters, [
+          :bookmark,
+          :view
+        ]
+      )
+    end
+
     chapters = Api::ChapterDecorator.decorate(chapters)
     chapters = Api::ChapterSerializer.serialize(chapters)
 
@@ -38,6 +47,15 @@ class Api::Titles::ChaptersController < Api::ApplicationController
         cover: { file_attachment: :blob }
       ]
     )
+
+    if Current.user.present?
+      ActiveRecord::Associations::Preloader.new.preload(
+        @chapter, [
+          :bookmark,
+          :view
+        ]
+      )
+    end
   end
 
   def titles_scope

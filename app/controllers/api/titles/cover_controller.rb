@@ -20,7 +20,7 @@ class Api::Titles::CoverController < Api::ApplicationController
     service = Api::Titles::DeleteTitleCover.new(title: @title)
 
     if service.call
-      head(204)
+      head 204
     else
       render json: service.errors, status: 422
     end

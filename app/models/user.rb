@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_many :access_rights, through: :user_access_rights
   has_many :views, dependent: :destroy
   has_many :bookmarks, dependent: :destroy
+  has_many :favorites, dependent: :destroy
 
   validates :username, presence: true,
     format: {with: /\A[a-z0-9_-]{2,16}\z/i},
