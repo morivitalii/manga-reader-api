@@ -1515,7 +1515,8 @@ CREATE TABLE public.users (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     favorites_count bigint DEFAULT 0 NOT NULL,
-    bookmarks_count bigint DEFAULT 0 NOT NULL
+    bookmarks_count bigint DEFAULT 0 NOT NULL,
+    views_count bigint DEFAULT 0 NOT NULL
 );
 
 
@@ -3798,6 +3799,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210303195024'),
 ('20210303195041'),
 ('20210303195048'),
-('20210305215630');
+('20210305215630'),
+('20210305220246');
 
 
