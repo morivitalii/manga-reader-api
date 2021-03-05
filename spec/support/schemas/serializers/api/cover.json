@@ -4,7 +4,9 @@
   "title": "Cover",
   "properties": {
     "id": {
-      "$ref": "file:/helpers/serializers/api/attributes/id.json#"
+      "type": "integer",
+      "description": "ID",
+      "examples": [1]
     },
     "content_language_id": {
       "type": "integer",
@@ -60,15 +62,24 @@
           "examples": [1167999]
         },
         "created_at": {
-          "$ref": "file:/helpers/serializers/api/attributes/created_at.json#"
+          "type": "string",
+          "format": "date-time",
+          "description": "Date of creation",
+          "examples": ["2020-12-13T00:00:00.000Z"]
         }
       }
     },
     "created_at": {
-      "$ref": "file:/helpers/serializers/api/attributes/created_at.json#"
+      "type": "string",
+      "format": "date-time",
+      "description": "Date of creation",
+      "examples": ["2020-12-13T00:00:00.000Z"]
     },
     "updated_at": {
-      "$ref": "file:/helpers/serializers/api/attributes/updated_at.json#"
+      "type": "string",
+      "format": "date-time",
+      "description": "Date of last update",
+      "examples": ["2020-12-13T00:00:00.000Z"]
     }
   }
 }

@@ -19,6 +19,14 @@ class Api::ArtistsController < Api::ApplicationController
       ]
     )
 
+    if Current.user.present?
+      ActiveRecord::Associations::Preloader.new.preload(
+        artists, [
+          :favorite
+        ]
+      )
+    end
+
     artists = Api::ArtistDecorator.decorate(artists)
     artists = Api::ArtistSerializer.serialize(artists)
 
@@ -48,5 +56,13 @@ class Api::ArtistsController < Api::ApplicationController
         Artist.translations_associations
       ]
     )
+
+    if Current.user.present?
+      ActiveRecord::Associations::Preloader.new.preload(
+        @artist, [
+          :favorite
+        ]
+      )
+    end
   end
 end

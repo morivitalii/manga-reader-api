@@ -10,6 +10,9 @@ class Api::TitleSerializer < Api::ApplicationSerializer
   serialize_associations :themes, with: Api::ThemeSerializer
   serialize_associations :volumes, with: Api::VolumeSerializer
   serialize_associations :chapters, with: Api::ChapterSerializer
+  serialize_associations :favorite, with: Api::FavoriteSerializer
+  serialize_associations :bookmark, with: Api::BookmarkSerializer
+  serialize_associations :view, with: Api::ViewSerializer
 
   def attributes
     {
@@ -19,6 +22,7 @@ class Api::TitleSerializer < Api::ApplicationSerializer
       publication_status: model.publication_status,
       views_count: model.views_count,
       bookmarks_count: model.bookmarks_count,
+      favorites_count: model.favorites_count,
       created_at: model.created_at,
       updated_at: model.updated_at,
       original_content_language: original_content_language,
@@ -29,7 +33,10 @@ class Api::TitleSerializer < Api::ApplicationSerializer
       formats: formats,
       demographics: demographics,
       marks: marks,
-      themes: themes
+      themes: themes,
+      favorite: favorite,
+      bookmark: bookmark,
+      view: view,
     }
   end
 end

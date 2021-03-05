@@ -1,5 +1,7 @@
 class Api::ChapterSerializer < Api::ApplicationSerializer
   serialize_associations :pages, with: Api::PageSerializer
+  serialize_associations :bookmark, with: Api::BookmarkSerializer
+  serialize_associations :view, with: Api::ViewSerializer
 
   def attributes
     {
@@ -11,6 +13,8 @@ class Api::ChapterSerializer < Api::ApplicationSerializer
       publication_status: model.publication_status,
       views_count: model.views_count,
       bookmarks_count: model.bookmarks_count,
+      bookmark: bookmark,
+      view: view,
       created_at: model.created_at,
       updated_at: model.updated_at
     }

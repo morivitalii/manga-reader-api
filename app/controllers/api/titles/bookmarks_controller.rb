@@ -5,15 +5,26 @@ class Api::Titles::BookmarksController < Api::ApplicationController
   before_action -> { authorize(Api::Titles::BookmarksPolicy, @bookmark) }, only: [:destroy]
 
   def create
-    Api::Titles::CreateBookmarkWorker.perform_async(@title.id, current_user.id)
+    service = Api::Titles::CreateBookmark.new(title: @title, user: Current.user)
 
-    head 204
+    if service.call
+      bookmark = Api::BookmarkDecorator.decorate(service.bookmark)
+      bookmark = Api::BookmarkSerializer.serialize(bookmark)
+
+      render json: bookmark, status: 200
+    else
+      head 422
+    end
   end
 
   def destroy
-    Api::Titles::DeleteBookmarkWorker.perform_async(@bookmark.id)
+    service = Api::Titles::DeleteBookmark.new(bookmark: @bookmark)
 
-    head 204
+    if service.call
+      head 204
+    else
+      head 422
+    end
   end
 
   private
@@ -31,6 +42,6 @@ class Api::Titles::BookmarksController < Api::ApplicationController
   end
 
   def bookmarks_scope
-    policy_scope(Api::Titles::Chapters::BookmarksPolicy, @title.bookmarks)
+    policy_scope(Api::Titles::BookmarksPolicy, @title.bookmarks)
   end
 end

@@ -197,7 +197,8 @@ CREATE TABLE public.artists (
     id bigint NOT NULL,
     user_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    favorites_count bigint DEFAULT 0 NOT NULL
 );
 
 
@@ -481,6 +482,39 @@ ALTER SEQUENCE public.editors_id_seq OWNED BY public.editors.id;
 
 
 --
+-- Name: favorites; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.favorites (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    resource_type character varying NOT NULL,
+    resource_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: favorites_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.favorites_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: favorites_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.favorites_id_seq OWNED BY public.favorites.id;
+
+
+--
 -- Name: formats; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -582,7 +616,8 @@ CREATE TABLE public.groups (
     id bigint NOT NULL,
     title character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    favorites_count bigint DEFAULT 0 NOT NULL
 );
 
 
@@ -1350,7 +1385,8 @@ CREATE TABLE public.titles (
     publication_status integer NOT NULL,
     views_count bigint DEFAULT 0 NOT NULL,
     bookmarks_count bigint DEFAULT 0 NOT NULL,
-    original_content_language_id bigint
+    original_content_language_id bigint,
+    favorites_count bigint DEFAULT 0 NOT NULL
 );
 
 
@@ -1477,7 +1513,8 @@ CREATE TABLE public.users (
     email character varying NOT NULL,
     password_digest character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    favorites_count bigint DEFAULT 0 NOT NULL
 );
 
 
@@ -1692,6 +1729,13 @@ ALTER TABLE ONLY public.demographics ALTER COLUMN id SET DEFAULT nextval('public
 --
 
 ALTER TABLE ONLY public.editors ALTER COLUMN id SET DEFAULT nextval('public.editors_id_seq'::regclass);
+
+
+--
+-- Name: favorites id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.favorites ALTER COLUMN id SET DEFAULT nextval('public.favorites_id_seq'::regclass);
 
 
 --
@@ -2050,6 +2094,14 @@ ALTER TABLE ONLY public.demographics
 
 ALTER TABLE ONLY public.editors
     ADD CONSTRAINT editors_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: favorites favorites_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.favorites
+    ADD CONSTRAINT favorites_pkey PRIMARY KEY (id);
 
 
 --
@@ -2540,6 +2592,41 @@ CREATE UNIQUE INDEX index_demographics_on_tag_id ON public.demographics USING bt
 --
 
 CREATE UNIQUE INDEX index_editors_on_artist_id ON public.editors USING btree (artist_id);
+
+
+--
+-- Name: index_favorites_on_created_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_favorites_on_created_at ON public.favorites USING btree (created_at);
+
+
+--
+-- Name: index_favorites_on_resource; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_favorites_on_resource ON public.favorites USING btree (resource_type, resource_id);
+
+
+--
+-- Name: index_favorites_on_updated_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_favorites_on_updated_at ON public.favorites USING btree (updated_at);
+
+
+--
+-- Name: index_favorites_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_favorites_on_user_id ON public.favorites USING btree (user_id);
+
+
+--
+-- Name: index_favorites_uniqueness; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_favorites_uniqueness ON public.favorites USING btree (user_id, resource_type, resource_id);
 
 
 --
@@ -3497,6 +3584,14 @@ ALTER TABLE ONLY public.chapters
 
 
 --
+-- Name: favorites fk_rails_d15744e438; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.favorites
+    ADD CONSTRAINT fk_rails_d15744e438 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: resource_editors fk_rails_d6d5990eff; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3696,6 +3791,11 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210302191301'),
 ('20210302191307'),
 ('20210302191312'),
-('20210303115840');
+('20210303115840'),
+('20210303194822'),
+('20210303195017'),
+('20210303195024'),
+('20210303195041'),
+('20210303195048');
 
 

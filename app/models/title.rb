@@ -31,8 +31,18 @@ class Title < ApplicationRecord
   has_many :resource_covers, as: :resource, dependent: :destroy
   has_many :covers, through: :resource_covers
 
-  has_many :views, as: :resource, dependent: :destroy
+  has_many :favorites, as: :resource, dependent: :destroy
   has_many :bookmarks, as: :resource, dependent: :destroy
+  has_many :views, as: :resource, dependent: :destroy
+
+  # Defined to preload signed in user favorite
+  has_one :favorite, -> { where(user: Current.user) }, as: :resource
+
+  # Defined to preload signed in user bookmark
+  has_one :bookmark, -> { where(user: Current.user) }, as: :resource
+
+  # Defined to preload signed in user view
+  has_one :view, -> { where(user: Current.user) }, as: :resource
 
   translates :title, :description
 

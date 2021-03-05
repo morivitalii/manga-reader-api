@@ -1,0 +1,24 @@
+{
+  "id": "file:/serializers/api/bookmark.json#",
+  "type": "object",
+  "title": "Bookmark",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "ID",
+      "examples": [1]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date of creation",
+      "examples": ["2020-12-13T00:00:00.000Z"]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date of last update",
+      "examples": ["2020-12-13T00:00:00.000Z"]
+    }
+  }
+}

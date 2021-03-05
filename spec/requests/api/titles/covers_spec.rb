@@ -62,7 +62,7 @@ RSpec.describe Api::Titles::CoversController do
       title = create(:title)
       cover = create(:resource_cover, resource: title).cover
 
-      delete "/api/titles/#{title.to_param}/covers/#{cover.id}.json"
+      delete "/api/titles/#{title.to_param}/covers/#{cover.to_param}.json"
 
       expect(response).to have_http_status(204)
     end
