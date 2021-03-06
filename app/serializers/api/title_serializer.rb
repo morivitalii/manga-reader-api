@@ -19,6 +19,7 @@ class Api::TitleSerializer < Api::ApplicationSerializer
       id: model.id,
       title: model.title,
       description: model.description,
+      status: model.status,
       publication_status: model.publication_status,
       views_count: model.views_count,
       bookmarks_count: model.bookmarks_count,

@@ -18,6 +18,16 @@
       "description": "Favorites count",
       "examples": [1]
     },
+    "bookmarks_count": {
+      "type": "integer",
+      "description": "Bookmarks count",
+      "examples": [1]
+    },
+    "views_count": {
+      "type": "integer",
+      "description": "Views count",
+      "examples": [1]
+    },
     "created_at": {
       "type": "string",
       "format": "date-time",

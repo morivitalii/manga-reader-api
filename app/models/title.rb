@@ -46,6 +46,7 @@ class Title < ApplicationRecord
 
   translates :title, :description
 
+  enum status: { draft: 1, review: 2, published: 3 }
   enum publication_status: { ongoing: 1, completed: 2, cancelled: 3 }
 
   validates :cover, allow_blank: true,
@@ -55,5 +56,6 @@ class Title < ApplicationRecord
 
   validates :title, presence: true, length: { minimum: 1, maximum: 125 }
   validates :description, allow_blank: true, length: { minimum: 1, maximum: 5_000 }
+  validates :status, presence: true
   validates :publication_status, presence: true
 end

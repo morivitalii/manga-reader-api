@@ -4,8 +4,10 @@ class Api::TitlesController < Api::ApplicationController
   before_action :set_title, only: [:show]
   before_action :set_title_associations, only: [:show]
 
-  before_action -> { authorize(Api::TitlesPolicy) }, only: [:index]
+  before_action -> { authorize(Api::TitlesPolicy) }, only: [:index, :create]
   before_action -> { authorize(Api::TitlesPolicy, @title) }, only: [:show]
+
+  skip_after_action :verify_policy_scoped, only: [:create]
 
   def index
     titles = titles_scope.joins(:translations).order("title_translations.title ASC").all
@@ -54,10 +56,27 @@ class Api::TitlesController < Api::ApplicationController
     render json: title, status: 200
   end
 
+  def create
+    service = Api::CreateTitle.new(create_params)
+
+    if service.call
+      title = Api::TitleDecorator.decorate(service.title_object)
+      title = Api::TitleSerializer.serialize(title)
+
+      render json: title, status: 200
+    else
+      render json: service.errors, status: 422
+    end
+  end
+
   private
 
   def set_title
     @title = titles_scope.find(params[:id])
+  end
+
+  def create_params
+    permitted_attributes(Api::TitlesPolicy, :create)
   end
 
   def titles_scope

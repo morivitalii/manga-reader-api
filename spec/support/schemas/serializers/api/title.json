@@ -18,6 +18,12 @@
       "description": "Description",
       "examples": ["Description"]
     },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "review", "published"],
+      "description": "Status",
+      "examples": ["draft"]
+    },
     "publication_status": {
       "type": "string",
       "enum": ["ongoing", "completed", "cancelled"],

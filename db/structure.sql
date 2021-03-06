@@ -1386,7 +1386,8 @@ CREATE TABLE public.titles (
     views_count bigint DEFAULT 0 NOT NULL,
     bookmarks_count bigint DEFAULT 0 NOT NULL,
     original_content_language_id bigint,
-    favorites_count bigint DEFAULT 0 NOT NULL
+    favorites_count bigint DEFAULT 0 NOT NULL,
+    status integer
 );
 
 
@@ -3800,6 +3801,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210303195041'),
 ('20210303195048'),
 ('20210305215630'),
-('20210305220246');
+('20210305220246'),
+('20210305222349');
 
 
