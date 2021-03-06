@@ -913,6 +913,126 @@
             "$ref": "#/components/responses/internal_server_error"
           }
         }
+      },
+      "post": {
+        "tags": ["Titles"],
+        "summary": "Create title",
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "Title",
+                    "examples": ["Made in Abyss"]
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Description",
+                    "examples": ["Awesome manga"]
+                  },
+                  "publication_status": {
+                    "type": "string",
+                    "description": "Publication status",
+                    "enum": ["ongoing", "completed", "cancelled"],
+                    "examples": ["ongoing"]
+                  },
+                  "original_content_language_id": {
+                    "type": "integer",
+                    "description": "Original content language",
+                    "examples": [1]
+                  },
+                  "writer_ids": {
+                    "type": "array",
+                    "description": "Writers",
+                    "items": {
+                      "type": "integer",
+                      "examples": [1]
+                    }
+                  },
+                  "painter_ids": {
+                    "type": "array",
+                    "description": "Painters",
+                    "items": {
+                      "type": "integer",
+                      "examples": [1]
+                    }
+                  },
+                  "genre_ids": {
+                    "type": "array",
+                    "description": "Genres",
+                    "items": {
+                      "type": "integer",
+                      "examples": [1]
+                    }
+                  },
+                  "format_ids": {
+                    "type": "array",
+                    "description": "Formats",
+                    "items": {
+                      "type": "integer",
+                      "examples": [1]
+                    }
+                  },
+                  "demographic_ids": {
+                    "type": "array",
+                    "description": "Demographics",
+                    "items": {
+                      "type": "integer",
+                      "examples": [1]
+                    }
+                  },
+                  "mark_ids": {
+                    "type": "array",
+                    "description": "Marks",
+                    "items": {
+                      "type": "integer",
+                      "examples": [1]
+                    }
+                  },
+                  "theme_ids": {
+                    "type": "array",
+                    "description": "Themes",
+                    "items": {
+                      "type": "integer",
+                      "examples": [1]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles_controller/create/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles_controller/create/422") %>
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
       }
     },
     "/titles/{id}.json": {

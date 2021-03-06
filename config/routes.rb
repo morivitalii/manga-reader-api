@@ -41,7 +41,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :titles, only: [:index, :show] do
+    resources :titles, only: [:index, :show, :create] do
       scope module: :titles do
         resource :cover, only: [:update, :destroy], controller: :cover
         resources :covers, only: [:index, :show, :create, :destroy]
