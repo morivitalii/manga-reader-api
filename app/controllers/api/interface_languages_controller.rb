@@ -1,29 +1,46 @@
 class Api::InterfaceLanguagesController < Api::ApplicationController
   before_action :set_interface_language, only: [:show]
-  before_action :set_interface_language_associations, only: [:show]
 
   before_action -> { authorize(Api::InterfaceLanguagesPolicy) }, only: [:index]
   before_action -> { authorize(Api::InterfaceLanguagesPolicy, @interface_language) }, only: [:show]
 
   def index
-    interface_languages = interface_languages_scope.order(id: :asc).all
+    query = interface_languages_scope.order(id: :asc)
+    cache_key = cache_key(query)
 
-    ActiveRecord::Associations::Preloader.new.preload(
-      interface_languages, [
-        ContentLanguage.translations_associations,
-        :locale
-      ]
-    )
+    interface_languages = Rails.cache.fetch(cache_key) do
+      interface_languages = query.all
 
-    interface_languages = Api::InterfaceLanguageDecorator.decorate_collection(interface_languages)
-    interface_languages = Api::InterfaceLanguageSerializer.serialize(interface_languages)
+      ActiveRecord::Associations::Preloader.new.preload(
+        interface_languages, [
+          InterfaceLanguage.translations_associations,
+          :locale
+        ]
+      )
+
+      interface_languages = Api::InterfaceLanguageDecorator.decorate_collection(interface_languages)
+
+      Api::InterfaceLanguageSerializer.serialize(interface_languages).to_json
+    end
 
     render json: interface_languages, status: 200
   end
 
   def show
-    interface_language = Api::InterfaceLanguageDecorator.decorate(@interface_language)
-    interface_language = Api::InterfaceLanguageSerializer.serialize(interface_language)
+    cache_key = cache_key(@interface_language)
+
+    interface_language = Rails.cache.fetch(cache_key) do
+      ActiveRecord::Associations::Preloader.new.preload(
+        @interface_language, [
+          InterfaceLanguage.translations_associations,
+          :locale
+        ]
+      )
+
+      interface_language = Api::InterfaceLanguageDecorator.decorate(@interface_language)
+
+      Api::InterfaceLanguageSerializer.serialize(interface_language).to_json
+    end
 
     render json: interface_language, status: 200
   end
@@ -36,14 +53,5 @@ class Api::InterfaceLanguagesController < Api::ApplicationController
 
   def interface_languages_scope
     policy_scope(Api::InterfaceLanguagesPolicy, InterfaceLanguage)
-  end
-
-  def set_interface_language_associations
-    ActiveRecord::Associations::Preloader.new.preload(
-      @interface_language, [
-        ContentLanguage.translations_associations,
-        :locale
-      ]
-    )
   end
 end
