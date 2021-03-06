@@ -42,7 +42,6 @@ class Api::ContentLanguagesController < Api::ApplicationController
       Api::ContentLanguageSerializer.serialize(content_language).to_json
     end
 
-
     render json: content_language, status: 200
   end
 
