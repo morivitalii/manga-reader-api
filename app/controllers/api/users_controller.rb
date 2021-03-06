@@ -19,8 +19,13 @@ class Api::UsersController < Api::ApplicationController
   end
 
   def show
-    user = Api::UserDecorator.decorate(@user)
-    user = Api::UserSerializer.serialize(user)
+    cache_key = cache_key(@user)
+
+    user = Rails.cache.fetch(cache_key) do
+      user = Api::UserDecorator.decorate(@user)
+
+      Api::UserSerializer.serialize(user).to_json
+    end
 
     render json: user, status: 200
   end
