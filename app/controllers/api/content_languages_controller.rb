@@ -1,29 +1,47 @@
 class Api::ContentLanguagesController < Api::ApplicationController
   before_action :set_content_language, only: [:show]
-  before_action :set_content_language_associations, only: [:show]
 
   before_action -> { authorize(Api::ContentLanguagesPolicy) }, only: [:index]
   before_action -> { authorize(Api::ContentLanguagesPolicy, @content_language) }, only: [:show]
 
   def index
-    content_languages = content_languages_scope.order(id: :asc).all
+    query = content_languages_scope.order(id: :asc)
+    cache_key = cache_key(query)
 
-    ActiveRecord::Associations::Preloader.new.preload(
-      content_languages, [
-        ContentLanguage.translations_associations,
-        :locale
-      ]
-    )
+    content_languages = Rails.cache.fetch(cache_key) do
+      content_languages = query.all
 
-    content_languages = Api::ContentLanguageDecorator.decorate_collection(content_languages)
-    content_languages = Api::ContentLanguageSerializer.serialize(content_languages)
+      ActiveRecord::Associations::Preloader.new.preload(
+        content_languages, [
+          ContentLanguage.translations_associations,
+          :locale
+        ]
+      )
+
+      content_languages = Api::ContentLanguageDecorator.decorate_collection(content_languages)
+
+      Api::ContentLanguageSerializer.serialize(content_languages).to_json
+    end
 
     render json: content_languages, status: 200
   end
 
   def show
-    content_language = Api::ContentLanguageDecorator.decorate(@content_language)
-    content_language = Api::ContentLanguageSerializer.serialize(content_language)
+    cache_key = cache_key(@content_language)
+
+    content_language = Rails.cache.fetch(cache_key) do
+      ActiveRecord::Associations::Preloader.new.preload(
+        @content_language, [
+        ContentLanguage.translations_associations,
+          :locale
+        ]
+      )
+
+      content_language = Api::ContentLanguageDecorator.decorate(@content_language)
+
+      Api::ContentLanguageSerializer.serialize(content_language).to_json
+    end
+
 
     render json: content_language, status: 200
   end
@@ -36,14 +54,5 @@ class Api::ContentLanguagesController < Api::ApplicationController
 
   def content_languages_scope
     policy_scope(Api::ContentLanguagesPolicy, ContentLanguage)
-  end
-
-  def set_content_language_associations
-    ActiveRecord::Associations::Preloader.new.preload(
-      @content_language, [
-        ContentLanguage.translations_associations,
-        :locale
-      ]
-    )
   end
 end
