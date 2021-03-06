@@ -1,26 +1,39 @@
 class Api::ThemesController < Api::ApplicationController
   before_action :set_theme, only: [:show]
-  before_action :set_theme_associations, only: [:show]
 
   before_action -> { authorize(Api::ThemesPolicy) }, only: [:index]
   before_action -> { authorize(Api::ThemesPolicy, @theme) }, only: [:show]
 
   def index
-    themes = themes_scope.joins(tag: :translations).order("tag_translations.title ASC").all
+    query = themes_scope.joins(tag: :translations).order("tag_translations.title ASC")
+    cache_key = cache_key(query)
 
-    ActiveRecord::Associations::Preloader.new.preload(
-      themes, :tag, Tag.with_translations
-    )
+    themes = Rails.cache.fetch(cache_key) do
+      themes = query.all
 
-    themes = Api::ThemeDecorator.decorate_collection(themes)
-    themes = Api::ThemeSerializer.serialize(themes)
+      ActiveRecord::Associations::Preloader.new.preload(
+        themes, :tag, Tag.with_translations
+      )
+
+      themes = Api::ThemeDecorator.decorate_collection(themes)
+      Api::ThemeSerializer.serialize(themes).to_json
+    end
 
     render json: themes, status: 200
   end
 
   def show
-    theme = Api::ThemeDecorator.decorate(@theme)
-    theme = Api::ThemeSerializer.serialize(theme)
+    cache_key = cache_key(@theme)
+
+    theme = Rails.cache.fetch(cache_key) do
+      ActiveRecord::Associations::Preloader.new.preload(
+        @theme, :tag, Tag.with_translations
+      )
+
+      theme = Api::ThemeDecorator.decorate(@theme)
+
+      Api::ThemeSerializer.serialize(theme).to_json
+    end
 
     render json: theme, status: 200
   end
@@ -33,11 +46,5 @@ class Api::ThemesController < Api::ApplicationController
 
   def themes_scope
     policy_scope(Api::ThemesPolicy, Theme)
-  end
-
-  def set_theme_associations
-    ActiveRecord::Associations::Preloader.new.preload(
-      @theme, :tag, Tag.with_translations
-    )
   end
 end
