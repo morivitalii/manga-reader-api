@@ -1067,6 +1067,37 @@
         }
       }
     },
+    "/titles/{title_id}/to_review.json": {
+      "put": {
+        "tags": [
+          "Titles"
+        ],
+        "summary": "Send title to review",
+        "description": "",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/title_id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/no_content"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "$ref": "#/components/responses/unprocessable_entity"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
+      }
+    },
     "/titles/{title_id}/cover.json": {
       "put": {
         "tags": ["Title cover"],
