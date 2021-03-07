@@ -26,8 +26,19 @@ class Api::WritersController < Api::ApplicationController
   end
 
   def show
-    writer = Api::WriterDecorator.decorate(@writer)
-    writer = Api::WriterSerializer.serialize(writer)
+    cache_key = cache_key(@writer)
+
+    writer = Rails.cache.fetch(cache_key) do
+      ActiveRecord::Associations::Preloader.new.preload(
+        @writer, [
+          artist: Artist.translations_associations
+        ]
+      )
+
+      writer = Api::WriterDecorator.decorate(@writer)
+
+      Api::WriterSerializer.serialize(writer).to_json
+    end
 
     render json: writer, status: 200
   end
