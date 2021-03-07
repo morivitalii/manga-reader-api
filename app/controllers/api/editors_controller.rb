@@ -2,7 +2,6 @@ class Api::EditorsController < Api::ApplicationController
   include Pagination
 
   before_action :set_editor, only: [:show]
-  before_action :set_editor_associations, only: [:show]
 
   before_action -> { authorize(Api::EditorsPolicy) }, only: [:index]
   before_action -> { authorize(Api::EditorsPolicy, @editor) }, only: [:show]
@@ -26,8 +25,19 @@ class Api::EditorsController < Api::ApplicationController
   end
 
   def show
-    editor = Api::EditorDecorator.decorate(@editor)
-    editor = Api::EditorSerializer.serialize(editor)
+    cache_key = cache_key(@editor)
+
+    editor = Rails.cache.fetch(cache_key) do
+      ActiveRecord::Associations::Preloader.new.preload(
+        @editor, [
+        artist: Artist.translations_associations
+      ]
+      )
+
+      editor = Api::EditorDecorator.decorate(@editor)
+
+      Api::EditorSerializer.serialize(editor).to_json
+    end
 
     render json: editor, status: 200
   end
@@ -40,13 +50,5 @@ class Api::EditorsController < Api::ApplicationController
 
   def editor_scope
     policy_scope(Api::EditorsPolicy, Editor)
-  end
-
-  def set_editor_associations
-    ActiveRecord::Associations::Preloader.new.preload(
-      @editor, [
-        artist: Artist.translations_associations
-      ]
-    )
   end
 end
