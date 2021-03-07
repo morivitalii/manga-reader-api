@@ -2,7 +2,6 @@ class Api::TypersController < Api::ApplicationController
   include Pagination
 
   before_action :set_typer, only: [:show]
-  before_action :set_typer_associations, only: [:show]
 
   before_action -> { authorize(Api::TypersPolicy) }, only: [:index]
   before_action -> { authorize(Api::TypersPolicy, @typer) }, only: [:show]
@@ -26,8 +25,19 @@ class Api::TypersController < Api::ApplicationController
   end
 
   def show
-    typer = Api::TyperDecorator.decorate(@typer)
-    typer = Api::TyperSerializer.serialize(typer)
+    cache_key = cache_key(@typer)
+
+    typer = Rails.cache.fetch(cache_key) do
+      ActiveRecord::Associations::Preloader.new.preload(
+        @typer, [
+          artist: Artist.translations_associations
+        ]
+      )
+
+      typer = Api::TyperDecorator.decorate(@typer)
+
+      Api::TyperSerializer.serialize(typer).to_json
+    end
 
     render json: typer, status: 200
   end
@@ -40,13 +50,5 @@ class Api::TypersController < Api::ApplicationController
 
   def typer_scope
     policy_scope(Api::TypersPolicy, Typer)
-  end
-
-  def set_typer_associations
-    ActiveRecord::Associations::Preloader.new.preload(
-      @typer, [
-        artist: Artist.translations_associations
-      ]
-    )
   end
 end
