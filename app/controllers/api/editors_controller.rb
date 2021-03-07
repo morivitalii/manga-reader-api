@@ -30,8 +30,8 @@ class Api::EditorsController < Api::ApplicationController
     editor = Rails.cache.fetch(cache_key) do
       ActiveRecord::Associations::Preloader.new.preload(
         @editor, [
-        artist: Artist.translations_associations
-      ]
+          artist: Artist.translations_associations
+        ]
       )
 
       editor = Api::EditorDecorator.decorate(@editor)

@@ -2,7 +2,6 @@ class Api::PaintersController < Api::ApplicationController
   include Pagination
 
   before_action :set_painter, only: [:show]
-  before_action :set_painter_associations, only: [:show]
 
   before_action -> { authorize(Api::PaintersPolicy) }, only: [:index]
   before_action -> { authorize(Api::PaintersPolicy, @painter) }, only: [:show]
@@ -26,8 +25,19 @@ class Api::PaintersController < Api::ApplicationController
   end
 
   def show
-    painter = Api::PainterDecorator.decorate(@painter)
-    painter = Api::PainterSerializer.serialize(painter)
+    cache_key = cache_key(@painter)
+
+    painter = Rails.cache.fetch(cache_key) do
+      ActiveRecord::Associations::Preloader.new.preload(
+        @painter, [
+          artist: Artist.translations_associations
+        ]
+      )
+
+      painter = Api::PainterDecorator.decorate(@painter)
+
+      Api::PainterSerializer.serialize(painter).to_json
+    end
 
     render json: painter, status: 200
   end
@@ -40,13 +50,5 @@ class Api::PaintersController < Api::ApplicationController
 
   def painter_scope
     policy_scope(Api::PaintersPolicy, Painter)
-  end
-
-  def set_painter_associations
-    ActiveRecord::Associations::Preloader.new.preload(
-      @painter, [
-        artist: Artist.translations_associations
-      ]
-    )
   end
 end
