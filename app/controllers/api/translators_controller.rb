@@ -2,7 +2,6 @@ class Api::TranslatorsController < Api::ApplicationController
   include Pagination
 
   before_action :set_translator, only: [:show]
-  before_action :set_translator_associations, only: [:show]
 
   before_action -> { authorize(Api::TranslatorsPolicy) }, only: [:index]
   before_action -> { authorize(Api::TranslatorsPolicy, @translator) }, only: [:show]
@@ -26,8 +25,19 @@ class Api::TranslatorsController < Api::ApplicationController
   end
 
   def show
-    translator = Api::TranslatorDecorator.decorate(@translator)
-    translator = Api::TranslatorSerializer.serialize(translator)
+    cache_key = cache_key(@translator)
+
+    translator = Rails.cache.fetch(cache_key) do
+      ActiveRecord::Associations::Preloader.new.preload(
+        @translator, [
+          artist: Artist.translations_associations
+        ]
+      )
+
+      translator = Api::TranslatorDecorator.decorate(@translator)
+
+      Api::TranslatorSerializer.serialize(translator).to_json
+    end
 
     render json: translator, status: 200
   end
@@ -40,13 +50,5 @@ class Api::TranslatorsController < Api::ApplicationController
 
   def translator_scope
     policy_scope(Api::TranslatorsPolicy, Translator)
-  end
-
-  def set_translator_associations
-    ActiveRecord::Associations::Preloader.new.preload(
-      @translator, [
-        artist: Artist.translations_associations
-      ]
-    )
   end
 end
