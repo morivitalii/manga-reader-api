@@ -11,6 +11,7 @@ class Api::ChapterSerializer < Api::ApplicationSerializer
       group_id: model.group_id,
       number: model.number,
       publication_status: model.publication_status,
+      pages_count: model.pages_count,
       views_count: model.views_count,
       bookmarks_count: model.bookmarks_count,
       bookmark: bookmark,
