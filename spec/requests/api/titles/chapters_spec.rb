@@ -35,6 +35,7 @@ RSpec.describe Api::Titles::ChaptersController do
       title = create(:title)
       volume = create(:volume, title: title)
       group = create(:group)
+      _group_user = create(:group_user, group: group, user: current_user)
 
       params = {
         volume_id: volume.id,
