@@ -25,20 +25,42 @@
         }
       ]
     },
+    "cover_id": {
+      "oneOf": [
+        {
+          "description": "Cover ID",
+          "type": "integer",
+          "examples": [1]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "user_id": {
+      "description": "User ID",
+      "type": "integer",
+      "examples": [1]
+    },
     "group_id": {
       "description": "Group ID",
       "type": "integer",
       "examples": [1]
+    },
+    "name": {
+      "type": "string",
+      "description": "Title",
+      "examples": ["Title"]
     },
     "number": {
       "type": "integer",
       "description": "Number",
       "examples": [1]
     },
-    "publication_status": {
+    "status": {
       "type": "string",
       "enum": ["draft", "review", "published"],
-      "description": "Publication status",
+      "description": "Status",
       "examples": ["draft"]
     },
     "pages_count": {
@@ -56,10 +78,52 @@
       "description": "Bookmarks count",
       "examples": [1]
     },
-    "bookmark": {
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date of creation",
+      "examples": ["2020-12-13T00:00:00.000Z"]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date of last update",
+      "examples": ["2020-12-13T00:00:00.000Z"]
+    },
+    "cover": {
       "oneOf": [
         {
-          "$ref": "file:/serializers/api/bookmark.json#"
+          "$ref": "file:/serializers/api/page.json#"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "volume": {
+      "oneOf": [
+        {
+          "$ref": "file:/serializers/api/volume.json#"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "user": {
+      "oneOf": [
+        {
+          "$ref": "file:/serializers/api/user.json#"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "group": {
+      "oneOf": [
+        {
+          "$ref": "file:/serializers/api/group.json#"
         },
         {
           "type": "null"
@@ -76,17 +140,15 @@
         }
       ]
     },
-    "created_at": {
-      "type": "string",
-      "format": "date-time",
-      "description": "Date of creation",
-      "examples": ["2020-12-13T00:00:00.000Z"]
-    },
-    "updated_at": {
-      "type": "string",
-      "format": "date-time",
-      "description": "Date of last update",
-      "examples": ["2020-12-13T00:00:00.000Z"]
+    "bookmark": {
+      "oneOf": [
+        {
+          "$ref": "file:/serializers/api/bookmark.json#"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   }
 }

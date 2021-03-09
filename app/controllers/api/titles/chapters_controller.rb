@@ -1,13 +1,22 @@
 class Api::Titles::ChaptersController < Api::ApplicationController
-  before_action :set_title, only: [:index, :show]
+  before_action :set_title, only: [:index, :show, :create]
   before_action :set_chapter, only: [:show]
   before_action :set_chapter_associations, only: [:show]
 
-  before_action -> { authorize(Api::Titles::ChaptersPolicy) }, only: [:index]
+  before_action -> { authorize(Api::Titles::ChaptersPolicy) }, only: [:index, :create]
   before_action -> { authorize(Api::Titles::ChaptersPolicy, @chapter) }, only: [:show]
 
   def index
     chapters = chapters_scope.order("chapters.number ASC").all
+
+    ActiveRecord::Associations::Preloader.new.preload(
+      chapters, [
+        :volume,
+        :group,
+        :user,
+        cover: { file_attachment: :blob }
+      ]
+    )
 
     if Current.user.present?
       ActiveRecord::Associations::Preloader.new.preload(
@@ -31,6 +40,19 @@ class Api::Titles::ChaptersController < Api::ApplicationController
     render json: chapter, status: 200
   end
 
+  def create
+    service = Api::Titles::CreateChapter.new(create_params)
+
+    if service.call
+      title = Api::ChapterDecorator.decorate(service.chapter)
+      title = Api::ChapterSerializer.serialize(title)
+
+      render json: title, status: 200
+    else
+      render json: service.errors, status: 422
+    end
+  end
+
   private
 
   def set_title
@@ -41,9 +63,16 @@ class Api::Titles::ChaptersController < Api::ApplicationController
     @chapter = chapters_scope.find(params[:id])
   end
 
+  def create_params
+    permitted_attributes(Api::Titles::ChaptersPolicy, :create).merge(title: @title, user: Current.user)
+  end
+
   def set_chapter_associations
     ActiveRecord::Associations::Preloader.new.preload(
       @chapter, [
+        :volume,
+        :group,
+        :user,
         cover: { file_attachment: :blob }
       ]
     )

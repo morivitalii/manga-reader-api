@@ -4,6 +4,7 @@ class Chapter < ApplicationRecord
 
   belongs_to :title
   belongs_to :volume, optional: true
+  belongs_to :user
   belongs_to :group
   belongs_to :cover, optional: true, class_name: "Page"
 
@@ -17,7 +18,7 @@ class Chapter < ApplicationRecord
   # Defined to preload signed in user view
   has_one :view, -> { where(user: Current.user) }, as: :resource
 
-  enum publication_status: { draft: 1, review: 2, published: 3 }
+  enum status: { draft: 1, review: 2, published: 3 }
 
   validates :cover,
     allow_blank: true,
@@ -25,9 +26,22 @@ class Chapter < ApplicationRecord
     inclusion: { in: -> (record) { record.pages } },
     if: -> (record) { record.cover.present? }
 
+  validates :name, allow_blank: true, length: { minimum: 1, maximum: 125 }
+
   validates :number,
     numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100_000 },
     uniqueness: { scope: [:title_id, :group_id] }
 
-  validates :publication_status, presence: true
+  validates :status, presence: true
+  validate :validate_volume_belongs_to_title
+
+  private
+
+  def validate_volume_belongs_to_title
+    return if volume.blank?
+
+    if title_id != volume.title_id
+      errors.add(:volume_id, :invalid)
+    end
+  end
 end

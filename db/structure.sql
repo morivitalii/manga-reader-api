@@ -267,10 +267,12 @@ CREATE TABLE public.chapters (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     cover_id bigint,
-    publication_status integer NOT NULL,
+    status integer NOT NULL,
     views_count bigint DEFAULT 0 NOT NULL,
     bookmarks_count bigint DEFAULT 0 NOT NULL,
-    pages_count bigint DEFAULT 0 NOT NULL
+    pages_count bigint DEFAULT 0 NOT NULL,
+    user_id bigint NOT NULL,
+    name character varying DEFAULT ''::character varying NOT NULL
 );
 
 
@@ -2529,6 +2531,13 @@ CREATE UNIQUE INDEX index_chapters_on_title_id_and_group_id_and_number ON public
 
 
 --
+-- Name: index_chapters_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapters_on_user_id ON public.chapters USING btree (user_id);
+
+
+--
 -- Name: index_chapters_on_volume_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3572,6 +3581,14 @@ ALTER TABLE ONLY public.titles
 
 
 --
+-- Name: chapters fk_rails_ca7ffbce5f; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapters
+    ADD CONSTRAINT fk_rails_ca7ffbce5f FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: resource_genres fk_rails_cb4e5b0be0; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3804,6 +3821,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210305215630'),
 ('20210305220246'),
 ('20210305222349'),
-('20210309040402');
+('20210309040402'),
+('20210309132530'),
+('20210309141322'),
+('20210309142454');
 
 

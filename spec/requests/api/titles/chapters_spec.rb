@@ -29,4 +29,24 @@ RSpec.describe Api::Titles::ChaptersController do
       expect(response).to match_json_schema("controllers/api/titles/chapters_controller/show/200")
     end
   end
+
+  describe ".create", context: :as_signed_in_user do
+    it "returns valid response" do
+      title = create(:title)
+      volume = create(:volume, title: title)
+      group = create(:group)
+
+      params = {
+        volume_id: volume.id,
+        group_id: group.id,
+        number: 1,
+        name: "Title"
+      }
+
+      post "/api/titles/#{title.to_param}/chapters.json", params: params
+
+      expect(response).to have_http_status(200)
+      expect(response).to match_json_schema("controllers/api/titles/chapters_controller/create/200")
+    end
+  end
 end
