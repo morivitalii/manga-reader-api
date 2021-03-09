@@ -1090,7 +1090,48 @@
             "$ref": "#/components/responses/not_found"
           },
           "422": {
-            "$ref": "#/components/responses/unprocessable_entity"
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/to_review_controller/update/422") %>
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
+      }
+    },
+    "/titles/{title_id}/to_draft.json": {
+      "put": {
+        "tags": [
+          "Titles"
+        ],
+        "summary": "Send title to draft",
+        "description": "",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/title_id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/no_content"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/to_draft_controller/update/422") %>
+              }
+            }
           },
           "500": {
             "$ref": "#/components/responses/internal_server_error"
@@ -1567,7 +1608,12 @@
             "$ref": "#/components/responses/not_found"
           },
           "422": {
-            "$ref": "#/components/responses/unprocessable_entity"
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/chapters/to_review_controller/update/422") %>
+              }
+            }
           },
           "500": {
             "$ref": "#/components/responses/internal_server_error"
