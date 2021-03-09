@@ -3,7 +3,6 @@
     <div v-for="message in messages">
       <p>{{ message }}</p>
     </div>
-
   </div>
 </template>
 

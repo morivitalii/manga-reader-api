@@ -6,15 +6,17 @@
 // All it does is render <div>Hello Vue</div> at the bottom of the page.
 
 import Vue from 'vue'
-import App from '../application.vue'
+import Application from '../application.vue'
+import "bootstrap"
+import "../stylesheets/application"
 
 document.addEventListener('DOMContentLoaded', () => {
-  const app = new Vue({
-    render: h => h(App)
+  const application = new Vue({
+    render: h => h(Application)
   }).$mount()
-  document.body.appendChild(app.$el)
+  document.body.appendChild(application.$el)
 
-  console.log(app)
+  console.log(application)
 })
 
 
@@ -33,7 +35,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // import Vue from 'vue/dist/vue.esm'
-// import App from '../app.vue'
+// import App from '../application.vue'
+// import "bootstrap"
+// import "../stylesheets/application.scss"
 //
 // document.addEventListener('DOMContentLoaded', () => {
 //   const app = new Vue({
