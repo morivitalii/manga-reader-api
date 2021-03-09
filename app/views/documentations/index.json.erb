@@ -1444,6 +1444,72 @@
             "$ref": "#/components/responses/internal_server_error"
           }
         }
+      },
+      "post": {
+        "tags": ["Title chapters"],
+        "summary": "Create title chapter",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/title_id" }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Title",
+                    "examples": ["Title"]
+                  },
+                  "number": {
+                    "type": "integer",
+                    "description": "Number",
+                    "examples": [1]
+                  },
+                  "volume_id": {
+                    "type": "integer",
+                    "description": "Volume ID",
+                    "examples": [1]
+                  },
+                  "group_id": {
+                    "type": "integer",
+                    "description": "Group ID",
+                    "examples": [1]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/chapters_controller/create/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/chapters_controller/create/422") %>
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
       }
     },
     "/titles/{title_id}/chapters/{id}.json": {

@@ -57,7 +57,7 @@ Rails.application.routes.draw do
         resources :bookmarks, only: [:create, :destroy]
         resources :favorites, only: [:create, :destroy]
 
-        resources :chapters, only: [:index, :show] do
+        resources :chapters, only: [:index, :show, :create] do
           scope module: :chapters do
             resource :cover, only: [:update, :destroy], controller: :cover
             resources :views, only: [:create]
