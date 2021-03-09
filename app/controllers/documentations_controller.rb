@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-class DocumentationsController < ApplicationController
+class DocumentationsController < ActionController::Base
+  protect_from_forgery with: :exception
   layout false
   helper_method :schema
 
