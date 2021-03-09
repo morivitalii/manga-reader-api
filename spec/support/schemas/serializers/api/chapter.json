@@ -41,6 +41,11 @@
       "description": "Publication status",
       "examples": ["draft"]
     },
+    "pages_count": {
+      "type": "integer",
+      "description": "Pages count",
+      "examples": [1]
+    },
     "views_count": {
       "type": "integer",
       "description": "Views count",

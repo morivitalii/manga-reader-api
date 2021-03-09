@@ -269,7 +269,8 @@ CREATE TABLE public.chapters (
     cover_id bigint,
     publication_status integer NOT NULL,
     views_count bigint DEFAULT 0 NOT NULL,
-    bookmarks_count bigint DEFAULT 0 NOT NULL
+    bookmarks_count bigint DEFAULT 0 NOT NULL,
+    pages_count bigint DEFAULT 0 NOT NULL
 );
 
 
@@ -3802,6 +3803,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210303195048'),
 ('20210305215630'),
 ('20210305220246'),
-('20210305222349');
+('20210305222349'),
+('20210309040402');
 
 

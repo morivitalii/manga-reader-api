@@ -2,7 +2,7 @@ class Page < ApplicationRecord
   # This attributes should not be changed. Just because
   attr_readonly :chapter_id, :cleaner_id, :translator_id, :editor_id, :typer_id, :number
 
-  belongs_to :chapter
+  belongs_to :chapter, counter_cache: :pages_count
   belongs_to :cleaner, optional: true
   belongs_to :translator, optional: true
   belongs_to :editor, optional: true
