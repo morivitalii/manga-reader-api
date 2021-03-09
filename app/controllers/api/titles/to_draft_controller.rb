@@ -1,10 +1,10 @@
-class Api::Titles::ToReviewController < Api::ApplicationController
+class Api::Titles::ToDraftController < Api::ApplicationController
   before_action :set_title, only: [:update]
 
-  before_action -> { authorize(Api::Titles::ToReviewPolicy, @title) }, only: [:update]
+  before_action -> { authorize(Api::Titles::ToDraftPolicy, @title) }, only: [:update]
 
   def update
-    service = Api::Titles::ToReview.new(title: @title)
+    service = Api::Titles::ToDraft.new(title: @title)
 
     if service.call
       head 204

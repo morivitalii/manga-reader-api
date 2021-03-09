@@ -10,7 +10,7 @@ class Api::Titles::Chapters::ToReviewController < Api::ApplicationController
     if service.call
       head 204
     else
-      head 422
+      render json: service.errors, status: 422
     end
   end
 

@@ -9,6 +9,11 @@ FactoryBot.define do
       status { :draft }
     end
 
+    trait :review do
+      status { :review }
+    end
+
     factory :draft_title, traits: [:draft]
+    factory :review_title, traits: [:review]
   end
 end

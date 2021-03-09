@@ -1,4 +1,4 @@
-class Api::Titles::ToReview
+class Api::Titles::ToDraft
   include ActiveModel::Model
 
   attr_accessor :title
@@ -9,7 +9,7 @@ class Api::Titles::ToReview
     validate!
 
     ActiveRecord::Base.transaction do
-      title.update!(status: :review)
+      title.update!(status: :draft)
     end
   rescue ActiveRecord::RecordInvalid => invalid
     errors.merge!(invalid.record.errors)
@@ -22,7 +22,7 @@ class Api::Titles::ToReview
   private
 
   def validate_title_status
-    unless title.draft?
+    unless title.review?
       errors.add(:title, :invalid)
     end
   end

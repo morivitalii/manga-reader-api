@@ -1,5 +1,5 @@
 class Api::Titles::Chapters::ToReviewPolicy < Api::ApplicationPolicy
   def update?
-    user? && record.draft?
+    user?
   end
 end
