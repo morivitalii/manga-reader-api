@@ -4,9 +4,10 @@ RSpec.describe Api::Titles::CreateChapter do
   describe ".call" do
     it "does what it should" do
       title = create(:title)
-      user = create(:user)
       volume = create(:volume, title: title)
       group = create(:group)
+      user = create(:user)
+      _group_user = create(:group_user, group: group, user: user)
 
       service = described_class.new(
         number: 1,

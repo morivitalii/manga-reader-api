@@ -34,6 +34,7 @@ class Chapter < ApplicationRecord
 
   validates :status, presence: true
   validate :validate_volume_belongs_to_title
+  validate :validate_user_belongs_to_group, on: :create
 
   private
 
@@ -42,6 +43,12 @@ class Chapter < ApplicationRecord
 
     if title_id != volume.title_id
       errors.add(:volume_id, :invalid)
+    end
+  end
+
+  def validate_user_belongs_to_group
+    if GroupUser.where(user: user, group: group).none?
+      errors.add(:group_id, :invalid)
     end
   end
 end
