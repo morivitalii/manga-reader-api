@@ -60,6 +60,7 @@ Rails.application.routes.draw do
 
         resources :chapters, only: [:index, :show, :create] do
           scope module: :chapters do
+            resource :to_draft, only: [:update], controller: :to_draft
             resource :to_review, only: [:update], controller: :to_review
             resource :cover, only: [:update, :destroy], controller: :cover
             resources :views, only: [:create]
