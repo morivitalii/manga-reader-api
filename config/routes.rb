@@ -51,6 +51,7 @@ Rails.application.routes.draw do
       scope module: :titles do
         resource :to_draft, only: [:update], controller: :to_draft
         resource :to_review, only: [:update], controller: :to_review
+        resource :to_published, only: [:update], controller: :to_published
         resource :cover, only: [:update, :destroy], controller: :cover
         resources :covers, only: [:index, :show, :create, :destroy]
         resources :volumes, only: [:index, :show]

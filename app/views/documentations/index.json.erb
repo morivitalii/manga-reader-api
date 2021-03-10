@@ -1139,6 +1139,42 @@
         }
       }
     },
+    "/titles/{title_id}/to_published.json": {
+      "put": {
+        "tags": [
+          "Titles"
+        ],
+        "summary": "Send title to published",
+        "description": "",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/title_id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/no_content"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/to_published_controller/update/422") %>
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
+      }
+    },
     "/titles/{title_id}/cover.json": {
       "put": {
         "tags": ["Title cover"],
