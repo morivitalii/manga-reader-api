@@ -1692,6 +1692,41 @@
         }
       }
     },
+    "/titles/{title_id}/chapters/{chapter_id}/to_published.json": {
+      "put": {
+        "tags": [
+          "Title chapters"
+        ],
+        "summary": "Send chapter to published",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/title_id" },
+          { "$ref": "#/components/parameters/chapter_id" }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/no_content"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/chapters/to_published_controller/update/422") %>
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
+      }
+    },
     "/titles/{title_id}/views.json": {
       "post": {
         "tags": ["Title views"],
