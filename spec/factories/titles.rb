@@ -13,7 +13,12 @@ FactoryBot.define do
       status { :review }
     end
 
+    trait :published do
+      status { :review }
+    end
+
     factory :draft_title, traits: [:draft]
     factory :review_title, traits: [:review]
+    factory :published_title, traits: [:review]
   end
 end
