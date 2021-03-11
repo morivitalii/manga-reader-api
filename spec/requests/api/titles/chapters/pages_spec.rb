@@ -30,4 +30,23 @@ RSpec.describe Api::Titles::Chapters::PagesController do
       expect(response).to match_json_schema("controllers/api/titles/chapters/pages_controller/show/200")
     end
   end
+
+  describe ".create", context: :as_signed_in_user do
+    it "returns valid response" do
+      title = create(:title)
+      group = create(:group)
+      _group_user = create(:group_user, group: group, user: current_user)
+      chapter = create(:chapter, title: title, group: group)
+
+      params = {
+        number: 1,
+        file: Rack::Test::UploadedFile.new("spec/fixtures/page.jpg")
+      }
+
+      post "/api/titles/#{title.to_param}/chapters/#{chapter.to_param}/pages.json", params: params
+
+      expect(response).to have_http_status(200)
+      expect(response).to match_json_schema("controllers/api/titles/chapters/pages_controller/create/200")
+    end
+  end
 end

@@ -6,9 +6,9 @@ class Api::Titles::DeleteFavorite
   def call
     ActiveRecord::Base.transaction do
       favorite.destroy!
-
-      true
     end
+
+    true
   rescue ActiveRecord::RecordInvalid => invalid
     errors.merge!(invalid.record.errors)
 

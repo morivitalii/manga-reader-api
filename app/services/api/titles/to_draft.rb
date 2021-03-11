@@ -11,6 +11,8 @@ class Api::Titles::ToDraft
     ActiveRecord::Base.transaction do
       title.update!(status: :draft)
     end
+
+    true
   rescue ActiveRecord::RecordInvalid => invalid
     errors.merge!(invalid.record.errors)
 

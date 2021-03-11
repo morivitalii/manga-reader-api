@@ -785,7 +785,8 @@ CREATE TABLE public.pages (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     views_count bigint DEFAULT 0 NOT NULL,
-    bookmarks_count bigint DEFAULT 0 NOT NULL
+    bookmarks_count bigint DEFAULT 0 NOT NULL,
+    user_id bigint NOT NULL
 );
 
 
@@ -2790,6 +2791,13 @@ CREATE INDEX index_pages_on_typer_id ON public.pages USING btree (typer_id);
 
 
 --
+-- Name: index_pages_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_pages_on_user_id ON public.pages USING btree (user_id);
+
+
+--
 -- Name: index_painters_on_artist_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3477,6 +3485,14 @@ ALTER TABLE ONLY public.content_languages
 
 
 --
+-- Name: pages fk_rails_84a58494eb; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.pages
+    ADD CONSTRAINT fk_rails_84a58494eb FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: resource_formats fk_rails_8ab4963b64; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3824,6 +3840,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210309040402'),
 ('20210309132530'),
 ('20210309141322'),
-('20210309142454');
+('20210309142454'),
+('20210310063054');
 
 

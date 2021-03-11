@@ -68,7 +68,7 @@ Rails.application.routes.draw do
             resources :views, only: [:create]
             resources :bookmarks, only: [:create, :destroy]
 
-            resources :pages, only: [:index, :show] do
+            resources :pages, only: [:index, :show, :create] do
               scope module: :pages do
                 resources :views, only: [:create]
                 resources :bookmarks, only: [:create, :destroy]

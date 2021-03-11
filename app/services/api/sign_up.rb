@@ -5,11 +5,15 @@ class Api::SignUp
   attr_reader :user
 
   def call
-    @user = User.create!(
-      username: username,
-      email: email,
-      password: password
-    )
+    ActiveRecord::Base.transaction do
+      @user = User.create!(
+        username: username,
+        email: email,
+        password: password
+      )
+    end
+
+    true
   rescue ActiveRecord::RecordInvalid => invalid
     errors.merge!(invalid.record.errors)
 

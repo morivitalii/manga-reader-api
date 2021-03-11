@@ -17,5 +17,11 @@ class Api::Titles::Chapters::CreateBookmark
         resource: chapter
       )
     end
+
+    true
+  rescue ActiveRecord::RecordInvalid => invalid
+    errors.merge!(invalid.record.errors)
+
+    false
   end
 end

@@ -5,17 +5,19 @@ class Api::Titles::CreateChapter
   attr_reader :chapter
 
   def call
-    @chapter = Chapter.new(
-      name: name,
-      status: :draft,
-      number: number,
-      title: title,
-      user: user,
-      group_id: group_id,
-      volume_id: volume_id
-    )
+    ActiveRecord::Base.transaction do
+      @chapter = Chapter.new(
+        name: name,
+        status: :draft,
+        number: number,
+        title: title,
+        user: user,
+        group_id: group_id,
+        volume_id: volume_id
+      )
 
-    @chapter.save!
+      @chapter.save!
+    end
 
     true
   rescue ActiveRecord::RecordInvalid => invalid
