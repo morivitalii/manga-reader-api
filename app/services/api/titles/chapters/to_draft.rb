@@ -11,6 +11,8 @@ class Api::Titles::Chapters::ToDraft
     ActiveRecord::Base.transaction do
       chapter.update!(status: :draft)
     end
+
+    true
   rescue ActiveRecord::RecordInvalid => invalid
     errors.merge!(invalid.record.errors)
 

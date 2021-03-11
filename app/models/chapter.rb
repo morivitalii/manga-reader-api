@@ -1,6 +1,6 @@
 class Chapter < ApplicationRecord
   # This attributes should not be changed. Just because
-  attr_readonly :title_id, :volume_id, :group_id, :number
+  attr_readonly :title_id, :volume_id, :group_id, :user_id, :number
 
   belongs_to :title
   belongs_to :volume, optional: true
@@ -47,6 +47,9 @@ class Chapter < ApplicationRecord
   end
 
   def validate_user_belongs_to_group
+    return if group.blank?
+    return if user.blank?
+
     if GroupUser.where(user: user, group: group).none?
       errors.add(:group_id, :invalid)
     end

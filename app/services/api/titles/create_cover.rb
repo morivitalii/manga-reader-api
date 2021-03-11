@@ -13,9 +13,9 @@ class Api::Titles::CreateCover
       )
 
       title.covers << cover
-
-      true
     end
+
+    true
   rescue ActiveRecord::RecordInvalid => invalid
     errors.merge!(invalid.record.errors)
 

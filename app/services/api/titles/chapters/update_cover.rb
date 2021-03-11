@@ -6,9 +6,9 @@ class Api::Titles::Chapters::UpdateCover
   def call
     ActiveRecord::Base.transaction do
       chapter.update!(cover_id: cover_id)
-
-      true
     end
+
+    true
   rescue ActiveRecord::RecordInvalid => invalid
     errors.merge!(invalid.record.errors)
 

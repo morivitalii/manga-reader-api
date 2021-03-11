@@ -1,10 +1,10 @@
 class Api::Titles::Chapters::PagesController < Api::ApplicationController
-  before_action :set_title, only: [:index, :show]
-  before_action :set_chapter, only: [:index, :show]
+  before_action :set_title, only: [:index, :show, :create]
+  before_action :set_chapter, only: [:index, :show, :create]
   before_action :set_page, only: [:show]
   before_action :set_page_associations, only: [:show]
 
-  before_action -> { authorize(Api::Titles::Chapters::PagesPolicy) }, only: [:index]
+  before_action -> { authorize(Api::Titles::Chapters::PagesPolicy) }, only: [:index, :create]
   before_action -> { authorize(Api::Titles::Chapters::PagesPolicy, @page) }, only: [:show]
 
   def index
@@ -38,6 +38,19 @@ class Api::Titles::Chapters::PagesController < Api::ApplicationController
     render json: page, status: 200
   end
 
+  def create
+    service = Api::Titles::Chapters::CreatePage.new(create_params)
+
+    if service.call
+      page = Api::PageDecorator.decorate(service.page)
+      page = Api::PageSerializer.serialize(page)
+
+      render json: page, status: 200
+    else
+      render json: service.errors, status: 422
+    end
+  end
+
   private
 
   def set_title
@@ -50,6 +63,10 @@ class Api::Titles::Chapters::PagesController < Api::ApplicationController
 
   def set_page
     @page = pages_scope.find(params[:id])
+  end
+
+  def create_params
+    permitted_attributes(Api::Titles::Chapters::PagesPolicy, :create).merge(chapter: @chapter, user: Current.user)
   end
 
   def titles_scope

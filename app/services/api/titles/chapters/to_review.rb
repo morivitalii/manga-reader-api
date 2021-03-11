@@ -11,6 +11,8 @@ class Api::Titles::Chapters::ToReview
     ActiveRecord::Base.transaction do
       chapter.update!(status: :review)
     end
+
+    true
   rescue ActiveRecord::RecordInvalid => invalid
     errors.merge!(invalid.record.errors)
 

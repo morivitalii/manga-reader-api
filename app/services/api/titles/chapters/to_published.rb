@@ -11,6 +11,8 @@ class Api::Titles::Chapters::ToPublished
     ActiveRecord::Base.transaction do
       chapter.update!(status: :published)
     end
+
+    true
   rescue ActiveRecord::RecordInvalid => invalid
     errors.merge!(invalid.record.errors)
 

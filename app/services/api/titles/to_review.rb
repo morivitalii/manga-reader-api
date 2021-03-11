@@ -11,6 +11,8 @@ class Api::Titles::ToReview
     ActiveRecord::Base.transaction do
       title.update!(status: :review)
     end
+
+    true
   rescue ActiveRecord::RecordInvalid => invalid
     errors.merge!(invalid.record.errors)
 

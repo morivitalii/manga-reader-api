@@ -44,10 +44,10 @@ class Api::Titles::ChaptersController < Api::ApplicationController
     service = Api::Titles::CreateChapter.new(create_params)
 
     if service.call
-      title = Api::ChapterDecorator.decorate(service.chapter)
-      title = Api::ChapterSerializer.serialize(title)
+      chapter = Api::ChapterDecorator.decorate(service.chapter)
+      chapter = Api::ChapterSerializer.serialize(chapter)
 
-      render json: title, status: 200
+      render json: chapter, status: 200
     else
       render json: service.errors, status: 422
     end

@@ -6,9 +6,9 @@ class Api::Titles::Chapters::Pages::DeleteBookmark
   def call
     ActiveRecord::Base.transaction do
       bookmark.destroy!
-
-      true
     end
+
+    true
   rescue ActiveRecord::RecordInvalid => invalid
     errors.merge!(invalid.record.errors)
 

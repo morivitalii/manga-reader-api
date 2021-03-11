@@ -17,5 +17,11 @@ class Api::Titles::Chapters::Pages::CreateView
         )
       end
     end
+
+    true
+  rescue ActiveRecord::RecordInvalid => invalid
+    errors.merge!(invalid.record.errors)
+
+    false
   end
 end

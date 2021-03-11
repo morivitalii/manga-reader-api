@@ -11,6 +11,8 @@ class Api::Titles::ToPublished
     ActiveRecord::Base.transaction do
       title.update!(status: :published)
     end
+
+    true
   rescue ActiveRecord::RecordInvalid => invalid
     errors.merge!(invalid.record.errors)
 

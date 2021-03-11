@@ -6,9 +6,9 @@ class Api::Titles::DeleteTitleCover
   def call
     ActiveRecord::Base.transaction do
       title.update!(cover: nil)
-
-      true
     end
+
+    true
   rescue ActiveRecord::RecordInvalid => invalid
     errors.merge!(invalid.record.errors)
 
