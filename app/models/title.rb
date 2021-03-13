@@ -1,5 +1,6 @@
 class Title < ApplicationRecord
   include Translation
+  include Search::Title
 
   belongs_to :original_content_language, optional: true, class_name: "ContentLanguage"
   belongs_to :cover, optional: true

@@ -125,6 +125,19 @@ module Translation
 
           translation.read_attribute(attribute)
         end
+
+        # Reader methods for attributes in specific locale
+        I18n.available_locales.each do |locale|
+          locale = locale.to_s
+          locale_method_name = "#{method_name}_#{locale}"
+
+          define_method(locale_method_name) do
+            translation = find_or_build_translation(locale)
+
+            translation.read_attribute(attribute)
+          end
+        end
+
       end
 
       # Writer methods for attributes that available for translation

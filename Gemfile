@@ -10,6 +10,8 @@ gem "sidekiq", "~> 6"
 gem "pg", "~> 1"
 gem "hiredis", "~> 0"
 gem "redis", "~> 4", require: ["redis", "redis/connection/hiredis"]
+gem "elasticsearch-model", "~> 7"
+gem "elasticsearch-rails", "~> 7"
 gem "oj", "~> 3"
 gem "image_processing", "~> 1"
 gem "bcrypt", "~> 3"
