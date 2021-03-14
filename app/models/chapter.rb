@@ -1,7 +1,8 @@
 class Chapter < ApplicationRecord
   # This attributes should not be changed. Just because
-  attr_readonly :title_id, :volume_id, :group_id, :user_id, :number
+  attr_readonly :title_id, :content_language_id, :volume_id, :group_id, :user_id, :number
 
+  belongs_to :content_language
   belongs_to :title
   belongs_to :volume, optional: true
   belongs_to :user
@@ -26,13 +27,9 @@ class Chapter < ApplicationRecord
     inclusion: { in: -> (record) { record.pages } },
     if: -> (record) { record.cover.present? }
 
-  validates :name, allow_blank: true, length: { minimum: 1, maximum: 125 }
-
-  validates :number,
-    numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100_000 },
-    uniqueness: { scope: [:title_id, :group_id] }
-
   validates :status, presence: true
+  validates :name, allow_blank: true, length: { minimum: 1, maximum: 125 }
+  validates :number, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100_000 }
   validate :validate_volume_belongs_to_title
   validate :validate_user_belongs_to_group, on: :create
 

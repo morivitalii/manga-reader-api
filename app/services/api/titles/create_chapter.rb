@@ -1,7 +1,7 @@
 class Api::Titles::CreateChapter
   include ActiveModel::Model
 
-  attr_accessor :title, :user, :group_id, :volume_id, :name, :number
+  attr_accessor :title, :user, :content_language_id, :group_id, :volume_id, :name, :number
   attr_reader :chapter
 
   def call
@@ -12,6 +12,7 @@ class Api::Titles::CreateChapter
         number: number,
         title: title,
         user: user,
+        content_language_id: content_language_id,
         group_id: group_id,
         volume_id: volume_id
       )

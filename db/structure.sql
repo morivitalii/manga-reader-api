@@ -272,7 +272,8 @@ CREATE TABLE public.chapters (
     bookmarks_count bigint DEFAULT 0 NOT NULL,
     pages_count bigint DEFAULT 0 NOT NULL,
     user_id bigint NOT NULL,
-    name character varying DEFAULT ''::character varying NOT NULL
+    name character varying DEFAULT ''::character varying NOT NULL,
+    content_language_id bigint NOT NULL
 );
 
 
@@ -2497,6 +2498,13 @@ CREATE UNIQUE INDEX index_bookmarks_uniqueness ON public.bookmarks USING btree (
 
 
 --
+-- Name: index_chapters_on_content_language_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapters_on_content_language_id ON public.chapters USING btree (content_language_id);
+
+
+--
 -- Name: index_chapters_on_cover_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2522,13 +2530,6 @@ CREATE INDEX index_chapters_on_number ON public.chapters USING btree (number);
 --
 
 CREATE INDEX index_chapters_on_title_id ON public.chapters USING btree (title_id);
-
-
---
--- Name: index_chapters_on_title_id_and_group_id_and_number; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_chapters_on_title_id_and_group_id_and_number ON public.chapters USING btree (title_id, group_id, number);
 
 
 --
@@ -3309,6 +3310,14 @@ ALTER TABLE ONLY public.tag_translations
 
 
 --
+-- Name: chapters fk_rails_2587fa0bec; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapters
+    ADD CONSTRAINT fk_rails_2587fa0bec FOREIGN KEY (content_language_id) REFERENCES public.content_languages(id);
+
+
+--
 -- Name: content_language_translations fk_rails_2768f33fbe; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3842,6 +3851,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210309141322'),
 ('20210309142454'),
 ('20210310063054'),
-('20210311131331');
+('20210311131331'),
+('20210313233114'),
+('20210313233215');
 
 
