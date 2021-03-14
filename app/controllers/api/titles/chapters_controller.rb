@@ -11,6 +11,7 @@ class Api::Titles::ChaptersController < Api::ApplicationController
 
     ActiveRecord::Associations::Preloader.new.preload(
       chapters, [
+        :content_language,
         :volume,
         :group,
         :user,
@@ -70,6 +71,7 @@ class Api::Titles::ChaptersController < Api::ApplicationController
   def set_chapter_associations
     ActiveRecord::Associations::Preloader.new.preload(
       @chapter, [
+        :content_language,
         :volume,
         :group,
         :user,

@@ -8,6 +8,11 @@
       "description": "ID",
       "examples": [1]
     },
+    "content_language_id": {
+      "description": "Content language ID",
+      "type": "integer",
+      "examples": [1]
+    },
     "title_id": {
       "description": "Title ID",
       "type": "integer",
@@ -94,6 +99,16 @@
       "oneOf": [
         {
           "$ref": "file:/serializers/api/page.json#"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "content_language": {
+      "oneOf": [
+        {
+          "$ref": "file:/serializers/api/content_language.json#"
         },
         {
           "type": "null"

@@ -1,4 +1,5 @@
 class Api::ChapterSerializer < Api::ApplicationSerializer
+  serialize_associations :content_language, with: Api::ContentLanguageSerializer
   serialize_associations :title, with: Api::TitleSerializer
   serialize_associations :volume, with: Api::VolumeSerializer
   serialize_associations :cover, with: Api::PageSerializer
@@ -11,6 +12,7 @@ class Api::ChapterSerializer < Api::ApplicationSerializer
   def attributes
     {
       id: model.id,
+      content_language_id: model.content_language_id,
       title_id: model.title_id,
       volume_id: model.volume_id,
       cover_id: model.cover_id,
@@ -23,6 +25,7 @@ class Api::ChapterSerializer < Api::ApplicationSerializer
       bookmarks_count: model.bookmarks_count,
       created_at: model.created_at,
       updated_at: model.updated_at,
+      content_language: content_language,
       volume: volume,
       cover: cover,
       user: user,

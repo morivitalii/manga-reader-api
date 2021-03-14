@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe Api::Titles::CreateChapter do
   describe ".call" do
     it "does what it should" do
+      content_language = create(:content_language)
       title = create(:title)
       volume = create(:volume, title: title)
       group = create(:group)
@@ -14,6 +15,7 @@ RSpec.describe Api::Titles::CreateChapter do
         name: "Title",
         title: title,
         user: user,
+        content_language_id: content_language.id,
         volume_id: volume.id,
         group_id: group.id
       )

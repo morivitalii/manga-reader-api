@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :chapter do
+    association :content_language
     association :title
     association :group
     association :user
