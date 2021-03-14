@@ -22,6 +22,11 @@ module Search
             indexes :locale, type: :keyword
           end
 
+          indexes :published_chapters_content_languages, type: :object do
+            indexes :id, type: :keyword
+            indexes :locale, type: :keyword
+          end
+
           indexes :writers, type: :object do
             indexes :id, type: :keyword
             indexes :user_id, type: :keyword
@@ -117,6 +122,7 @@ module Search
         {
           status: status,
           publication_status: publication_status,
+          published_chapters_content_languages: published_chapters_content_languages,
           created_at: created_at,
           updated_at: updated_at,
           title: {
@@ -200,6 +206,15 @@ module Search
             }
           }
         }.to_json
+      end
+
+      def published_chapters_content_languages
+        ContentLanguage.includes(:locale).joins(:chapters).where(
+          chapters: {
+            status: :published,
+            title: self
+          }
+        ).distinct.all
       end
     end
   end
