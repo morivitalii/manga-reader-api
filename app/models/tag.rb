@@ -10,6 +10,8 @@ class Tag < ApplicationRecord
   has_one :mark, dependent: :destroy
   has_one :theme, dependent: :destroy
 
+  has_many :users, dependent: :restrict_with_error
+
   translates :title, :description
 
   validates :title, presence: true, length: { minimum: 1, maximum: 25 }

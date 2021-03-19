@@ -1,5 +1,5 @@
 class Api::ChapterSerializer < Api::ApplicationSerializer
-  serialize_associations :content_language, with: Api::ContentLanguageSerializer
+  serialize_association :content_language, with: Api::ContentLanguageSerializer
   serialize_associations :title, with: Api::TitleSerializer
   serialize_associations :volume, with: Api::VolumeSerializer
   serialize_associations :cover, with: Api::PageSerializer
@@ -18,6 +18,7 @@ class Api::ChapterSerializer < Api::ApplicationSerializer
       cover_id: model.cover_id,
       user_id: model.user_id,
       group_id: model.group_id,
+      name: model.name,
       number: model.number,
       status: model.status,
       pages_count: model.pages_count,
@@ -25,9 +26,9 @@ class Api::ChapterSerializer < Api::ApplicationSerializer
       bookmarks_count: model.bookmarks_count,
       created_at: model.created_at,
       updated_at: model.updated_at,
+      cover: cover,
       content_language: content_language,
       volume: volume,
-      cover: cover,
       user: user,
       group: group,
       view: view,

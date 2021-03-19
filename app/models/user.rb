@@ -5,6 +5,11 @@ class User < ApplicationRecord
   attr_readonly :username
 
   has_one :artist, dependent: :restrict_with_error
+  has_one :user_setting, dependent: :restrict_with_error
+  has_many :user_content_languages, dependent: :restrict_with_error
+  has_many :content_languages, through: :user_content_languages, class_name: "ContentLanguage"
+  has_many :user_excluded_tags, dependent: :restrict_with_error
+  has_many :excluded_tags, through: :user_excluded_tags, source: :tag, class_name: "Tag"
   has_many :chapters, dependent: :restrict_with_error
   has_many :pages, dependent: :restrict_with_error
   has_many :group_user, dependent: :restrict_with_error

@@ -10,7 +10,6 @@
     },
     "locale": {
       "type": "string",
-      "enum": ["en", "ru"],
       "description": "Locale key",
       "examples": ["en"]
     },

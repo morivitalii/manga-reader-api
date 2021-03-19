@@ -11,6 +11,8 @@ class Api::SignUp
         email: email,
         password: password
       )
+
+      @user.create_user_setting!
     end
 
     true

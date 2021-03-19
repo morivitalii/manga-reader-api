@@ -12,6 +12,7 @@ RSpec.describe Api::SignUp do
       service.call
 
       expect(User.count).to eq(1)
+      expect(UserSetting.count).to eq(1)
     end
   end
 end

@@ -12,6 +12,10 @@ Rails.application.routes.draw do
     resource :sign_in, only: [:create], controller: :sign_in
     resource :sign_out, only: [:destroy], controller: :sign_out
 
+    namespace :users do
+      resource :settings, only: [:show, :update]
+    end
+
     resources :interface_languages, only: [:index, :show]
     resources :content_languages, only: [:index, :show]
 

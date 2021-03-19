@@ -12,6 +12,14 @@ class Api::UsersController < Api::ApplicationController
 
     set_pagination_headers(pagination)
 
+    ActiveRecord::Associations::Preloader.new.preload(
+      users, [
+        user_setting: [
+          avatar_attachment: :blob
+        ]
+      ]
+    )
+
     users = Api::UserDecorator.decorate(users)
     users = Api::UserSerializer.serialize(users)
 
@@ -22,6 +30,14 @@ class Api::UsersController < Api::ApplicationController
     cache_key = cache_key(@user)
 
     user = Rails.cache.fetch(cache_key) do
+      ActiveRecord::Associations::Preloader.new.preload(
+        @user, [
+          user_setting: [
+            avatar_attachment: :blob
+          ]
+        ]
+      )
+
       user = Api::UserDecorator.decorate(@user)
 
       Api::UserSerializer.serialize(user).to_json

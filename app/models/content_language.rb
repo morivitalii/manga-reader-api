@@ -8,6 +8,7 @@ class ContentLanguage < ApplicationRecord
 
   has_many :covers, dependent: :restrict_with_error
   has_many :chapters, dependent: :restrict_with_error
+  has_many :users, dependent: :restrict_with_error
 
   translates :title
 

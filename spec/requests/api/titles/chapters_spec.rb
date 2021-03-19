@@ -32,12 +32,14 @@ RSpec.describe Api::Titles::ChaptersController do
 
   describe ".create", context: :as_signed_in_user do
     it "returns valid response" do
+      content_language = create(:content_language)
       title = create(:title)
       volume = create(:volume, title: title)
       group = create(:group)
       _group_user = create(:group_user, group: group, user: current_user)
 
       params = {
+        content_language_id: content_language.id,
         volume_id: volume.id,
         group_id: group.id,
         number: 1,

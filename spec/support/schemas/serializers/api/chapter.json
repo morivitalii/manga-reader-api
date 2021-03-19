@@ -106,14 +106,7 @@
       ]
     },
     "content_language": {
-      "oneOf": [
-        {
-          "$ref": "file:/serializers/api/content_language.json#"
-        },
-        {
-          "type": "null"
-        }
-      ]
+      "$ref": "file:/serializers/api/content_language.json#"
     },
     "volume": {
       "oneOf": [
