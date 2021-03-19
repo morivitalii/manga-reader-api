@@ -6,6 +6,8 @@ class InterfaceLanguage < ApplicationRecord
 
   belongs_to :locale
 
+  has_many :user_settings, dependent: :restrict_with_error
+
   translates :title
 
   validates :locale, uniqueness: true

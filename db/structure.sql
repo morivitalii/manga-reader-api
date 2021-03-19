@@ -1510,6 +1510,105 @@ ALTER SEQUENCE public.user_access_rights_id_seq OWNED BY public.user_access_righ
 
 
 --
+-- Name: user_content_languages; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.user_content_languages (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    content_language_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: user_content_languages_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.user_content_languages_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: user_content_languages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.user_content_languages_id_seq OWNED BY public.user_content_languages.id;
+
+
+--
+-- Name: user_excluded_tags; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.user_excluded_tags (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    tag_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: user_excluded_tags_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.user_excluded_tags_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: user_excluded_tags_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.user_excluded_tags_id_seq OWNED BY public.user_excluded_tags.id;
+
+
+--
+-- Name: user_settings; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.user_settings (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    interface_language_id bigint,
+    name character varying DEFAULT ''::character varying NOT NULL,
+    surname character varying DEFAULT ''::character varying NOT NULL,
+    sex integer NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: user_settings_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.user_settings_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: user_settings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.user_settings_id_seq OWNED BY public.user_settings.id;
+
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1957,6 +2056,27 @@ ALTER TABLE ONLY public.user_access_rights ALTER COLUMN id SET DEFAULT nextval('
 
 
 --
+-- Name: user_content_languages id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_content_languages ALTER COLUMN id SET DEFAULT nextval('public.user_content_languages_id_seq'::regclass);
+
+
+--
+-- Name: user_excluded_tags id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_excluded_tags ALTER COLUMN id SET DEFAULT nextval('public.user_excluded_tags_id_seq'::regclass);
+
+
+--
+-- Name: user_settings id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_settings ALTER COLUMN id SET DEFAULT nextval('public.user_settings_id_seq'::regclass);
+
+
+--
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2358,6 +2478,30 @@ ALTER TABLE ONLY public.typers
 
 ALTER TABLE ONLY public.user_access_rights
     ADD CONSTRAINT user_access_rights_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_content_languages user_content_languages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_content_languages
+    ADD CONSTRAINT user_content_languages_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_excluded_tags user_excluded_tags_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_excluded_tags
+    ADD CONSTRAINT user_excluded_tags_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_settings user_settings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_settings
+    ADD CONSTRAINT user_settings_pkey PRIMARY KEY (id);
 
 
 --
@@ -3177,6 +3321,62 @@ CREATE UNIQUE INDEX index_user_access_rights_on_user_id_and_access_right_id ON p
 
 
 --
+-- Name: index_user_content_languages_on_content_language_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_user_content_languages_on_content_language_id ON public.user_content_languages USING btree (content_language_id);
+
+
+--
+-- Name: index_user_content_languages_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_user_content_languages_on_user_id ON public.user_content_languages USING btree (user_id);
+
+
+--
+-- Name: index_user_content_languages_on_user_id_and_content_language_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_user_content_languages_on_user_id_and_content_language_id ON public.user_content_languages USING btree (user_id, content_language_id);
+
+
+--
+-- Name: index_user_excluded_tags_on_tag_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_user_excluded_tags_on_tag_id ON public.user_excluded_tags USING btree (tag_id);
+
+
+--
+-- Name: index_user_excluded_tags_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_user_excluded_tags_on_user_id ON public.user_excluded_tags USING btree (user_id);
+
+
+--
+-- Name: index_user_excluded_tags_on_user_id_and_tag_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_user_excluded_tags_on_user_id_and_tag_id ON public.user_excluded_tags USING btree (user_id, tag_id);
+
+
+--
+-- Name: index_user_settings_on_interface_language_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_user_settings_on_interface_language_id ON public.user_settings USING btree (interface_language_id);
+
+
+--
+-- Name: index_user_settings_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_user_settings_on_user_id ON public.user_settings USING btree (user_id);
+
+
+--
 -- Name: index_users_on_lower_email; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3307,6 +3507,14 @@ ALTER TABLE ONLY public.group_users
 
 ALTER TABLE ONLY public.tag_translations
     ADD CONSTRAINT fk_rails_1635fa7614 FOREIGN KEY (content_language_id) REFERENCES public.content_languages(id);
+
+
+--
+-- Name: user_excluded_tags fk_rails_220c1935e6; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_excluded_tags
+    ADD CONSTRAINT fk_rails_220c1935e6 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -3454,6 +3662,14 @@ ALTER TABLE ONLY public.views
 
 
 --
+-- Name: user_excluded_tags fk_rails_6b5876baa7; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_excluded_tags
+    ADD CONSTRAINT fk_rails_6b5876baa7 FOREIGN KEY (tag_id) REFERENCES public.tags(id);
+
+
+--
 -- Name: artists fk_rails_6bcbebdd23; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3467,6 +3683,14 @@ ALTER TABLE ONLY public.artists
 
 ALTER TABLE ONLY public.user_access_rights
     ADD CONSTRAINT fk_rails_6bf3700622 FOREIGN KEY (access_right_id) REFERENCES public.access_rights(id);
+
+
+--
+-- Name: user_settings fk_rails_6f5ae6f6a1; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_settings
+    ADD CONSTRAINT fk_rails_6f5ae6f6a1 FOREIGN KEY (interface_language_id) REFERENCES public.interface_languages(id);
 
 
 --
@@ -3622,11 +3846,27 @@ ALTER TABLE ONLY public.resource_genres
 
 
 --
+-- Name: user_content_languages fk_rails_cdf04b6b4c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_content_languages
+    ADD CONSTRAINT fk_rails_cdf04b6b4c FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: chapters fk_rails_cf8e4fa171; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.chapters
     ADD CONSTRAINT fk_rails_cf8e4fa171 FOREIGN KEY (group_id) REFERENCES public.groups(id);
+
+
+--
+-- Name: user_settings fk_rails_d1371c6356; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_settings
+    ADD CONSTRAINT fk_rails_d1371c6356 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -3723,6 +3963,14 @@ ALTER TABLE ONLY public.interface_languages
 
 ALTER TABLE ONLY public.resource_writers
     ADD CONSTRAINT fk_rails_fba6c65c95 FOREIGN KEY (writer_id) REFERENCES public.writers(id);
+
+
+--
+-- Name: user_content_languages fk_rails_fdb2557b4f; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_content_languages
+    ADD CONSTRAINT fk_rails_fdb2557b4f FOREIGN KEY (content_language_id) REFERENCES public.content_languages(id);
 
 
 --
@@ -3853,6 +4101,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210310063054'),
 ('20210311131331'),
 ('20210313233114'),
-('20210313233215');
+('20210313233215'),
+('20210314005930'),
+('20210314005957'),
+('20210314010005');
 
 
