@@ -266,7 +266,6 @@ CREATE TABLE public.chapters (
     number integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    cover_id bigint,
     status integer NOT NULL,
     views_count bigint DEFAULT 0 NOT NULL,
     bookmarks_count bigint DEFAULT 0 NOT NULL,
@@ -2649,13 +2648,6 @@ CREATE INDEX index_chapters_on_content_language_id ON public.chapters USING btre
 
 
 --
--- Name: index_chapters_on_cover_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_chapters_on_cover_id ON public.chapters USING btree (cover_id);
-
-
---
 -- Name: index_chapters_on_group_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3622,14 +3614,6 @@ ALTER TABLE ONLY public.interface_language_translations
 
 
 --
--- Name: chapters fk_rails_4e9d05d013; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.chapters
-    ADD CONSTRAINT fk_rails_4e9d05d013 FOREIGN KEY (cover_id) REFERENCES public.pages(id);
-
-
---
 -- Name: resource_painters fk_rails_583e3f2803; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -4104,6 +4088,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210313233215'),
 ('20210314005930'),
 ('20210314005957'),
-('20210314010005');
+('20210314010005'),
+('20210319213717');
 
 

@@ -8,7 +8,7 @@ class Api::Titles::Chapters::CoverPolicy < Api::ApplicationPolicy
   end
 
   def permitted_attributes_for_update
-    [:cover_id]
+    [:file]
   end
 
   class Scope < Api::ApplicationPolicy::Scope

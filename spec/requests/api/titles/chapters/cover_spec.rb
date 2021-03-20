@@ -5,11 +5,9 @@ RSpec.describe Api::Titles::Chapters::CoverController do
     it "returns valid response" do
       title = create(:title)
       chapter = create(:chapter, title: title)
-      page = create(:page, chapter: chapter)
-      chapter.update!(cover: page)
 
       params = {
-        cover_id: page.id,
+        file: Rack::Test::UploadedFile.new("spec/fixtures/cover.jpg"),
       }
 
       put "/api/titles/#{title.to_param}/chapters/#{chapter.to_param}/cover.json", params: params
@@ -23,8 +21,6 @@ RSpec.describe Api::Titles::Chapters::CoverController do
     it "returns valid response" do
       title = create(:title)
       chapter = create(:chapter, title: title)
-      page = create(:page, chapter: chapter)
-      chapter.update!(cover: page)
 
       delete "/api/titles/#{title.to_param}/chapters/#{chapter.to_param}/cover.json"
 

@@ -15,7 +15,7 @@ class Api::Titles::ChaptersController < Api::ApplicationController
         :volume,
         :group,
         :user,
-        cover: { file_attachment: :blob }
+        cover_attachment: :blob
       ]
     )
 
@@ -75,7 +75,7 @@ class Api::Titles::ChaptersController < Api::ApplicationController
         :volume,
         :group,
         :user,
-        cover: { file_attachment: :blob }
+        cover_attachment: :blob
       ]
     )
 
