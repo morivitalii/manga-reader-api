@@ -4,10 +4,9 @@ RSpec.describe Api::Titles::CoverController do
   describe ".create", context: :as_signed_in_user do
     it "returns valid response" do
       title = create(:title)
-      cover = create(:resource_cover, resource: title).cover
 
       params = {
-        cover_id: cover.id,
+        file: Rack::Test::UploadedFile.new("spec/fixtures/cover.jpg", "image/jpeg"),
       }
 
       put "/api/titles/#{title.to_param}/cover.json", params: params
@@ -20,8 +19,6 @@ RSpec.describe Api::Titles::CoverController do
   describe ".destroy", context: :as_signed_in_user do
     it "returns valid response" do
       title = create(:title)
-      cover = create(:resource_cover, resource: title).cover
-      title.update!(cover: cover)
 
       delete "/api/titles/#{title.to_param}/cover.json"
 

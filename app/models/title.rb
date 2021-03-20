@@ -3,7 +3,6 @@ class Title < ApplicationRecord
   include Search::Title
 
   belongs_to :original_content_language, optional: true, class_name: "ContentLanguage"
-  belongs_to :cover, optional: true
 
   has_many :resource_writers, as: :resource, dependent: :destroy
   has_many :writers, through: :resource_writers
@@ -29,9 +28,6 @@ class Title < ApplicationRecord
   has_many :volumes, dependent: :destroy
   has_many :chapters, dependent: :destroy
 
-  has_many :resource_covers, as: :resource, dependent: :destroy
-  has_many :covers, through: :resource_covers
-
   has_many :favorites, as: :resource, dependent: :destroy
   has_many :bookmarks, as: :resource, dependent: :destroy
   has_many :views, as: :resource, dependent: :destroy
@@ -45,15 +41,12 @@ class Title < ApplicationRecord
   # Defined to preload signed in user view
   has_one :view, -> { where(user: Current.user) }, as: :resource
 
+  has_one_attached :cover, service: :public
+
   translates :title, :description
 
   enum status: { draft: 1, review: 2, published: 3 }
   enum publication_status: { ongoing: 1, completed: 2, cancelled: 3 }
-
-  validates :cover, allow_blank: true,
-    uniqueness: true,
-    inclusion: { in: -> (record) { record.covers } },
-    if: -> (record) { record.cover.present? }
 
   validates :title, presence: true, length: { minimum: 1, maximum: 125 }
   validates :description, allow_blank: true, length: { minimum: 1, maximum: 5_000 }

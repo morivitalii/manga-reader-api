@@ -1,6 +1,5 @@
 class Api::TitleSerializer < Api::ApplicationSerializer
   serialize_association :original_content_language, with: Api::ContentLanguageSerializer
-  serialize_association :cover, with: Api::CoverSerializer
   serialize_associations :writers, with: Api::WriterSerializer
   serialize_associations :painters, with: Api::PainterSerializer
   serialize_associations :genres, with: Api::GenreSerializer
@@ -38,6 +37,22 @@ class Api::TitleSerializer < Api::ApplicationSerializer
       favorite: favorite,
       bookmark: bookmark,
       view: view,
+    }
+  end
+
+  private
+
+  def cover
+    return nil if model.cover.blank?
+
+    {
+      url: model.cover.url,
+      filename: model.cover.filename,
+      content_type: model.cover.content_type,
+      width: model.cover.metadata[:width],
+      height: model.cover.metadata[:height],
+      byte_size: model.cover.byte_size,
+      created_at: model.cover.created_at
     }
   end
 end

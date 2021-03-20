@@ -58,7 +58,60 @@
     "cover": {
       "oneOf": [
         {
-          "$ref": "file:/serializers/api/cover.json#"
+          "type": "object",
+          "description": "File",
+          "properties": {
+            "url": {
+              "type": "string",
+              "description": "Link",
+              "examples": ["http://example.com/eyJ...3d6/cover.jpg"]
+            },
+            "filename": {
+              "type": "string",
+              "description": "Filename",
+              "examples": ["cover.jpg"]
+            },
+            "content_type": {
+              "type": "string",
+              "description": "Content type",
+              "examples": ["image/jpeg"]
+            },
+            "width": {
+              "oneOf": [
+                {
+                  "type": "integer",
+                  "description": "Width",
+                  "examples": [1600]
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "height": {
+              "oneOf": [
+                {
+                  "type": "integer",
+                  "description": "Height",
+                  "examples": [2261]
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "byte_size": {
+              "type": "integer",
+              "description": "Size in bytes",
+              "examples": [1167999]
+            },
+            "created_at": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date of creation",
+              "examples": ["2020-12-13T00:00:00.000Z"]
+            }
+          }
         },
         {
           "type": "null"
