@@ -22,7 +22,7 @@ class Api::TitlesController < Api::ApplicationController
           :locale,
           ContentLanguage.translations_associations
         ],
-        cover: { file_attachment: :blob },
+        cover_attachment: :blob,
         writers: { artist: Artist.translations_associations },
         painters: { artist: Artist.translations_associations },
         genres: { tag: Tag.translations_associations },
@@ -91,7 +91,7 @@ class Api::TitlesController < Api::ApplicationController
           :locale,
           ContentLanguage.translations_associations
         ],
-        cover: { file_attachment: :blob },
+        cover_attachment: :blob,
         writers: { artist: Artist.translations_associations },
         painters: { artist: Artist.translations_associations },
         genres: { tag: Tag.translations_associations },

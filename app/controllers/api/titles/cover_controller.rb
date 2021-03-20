@@ -4,20 +4,20 @@ class Api::Titles::CoverController < Api::ApplicationController
   before_action -> { authorize(Api::Titles::CoverPolicy, @title) }, only: [:update, :destroy]
 
   def update
-    service = Api::Titles::UpdateTitleCover.new(update_params)
+    service = Api::Titles::UpdateCover.new(update_params)
 
     if service.call
-      cover = Api::CoverDecorator.decorate(service.title.cover)
-      cover = Api::CoverSerializer.serialize(cover)
+      title = Api::TitleDecorator.decorate(service.title)
+      title = Api::TitleSerializer.serialize(title)
 
-      render json: cover, status: 200
+      render json: title, status: 200
     else
       render json: service.errors, status: 422
     end
   end
 
   def destroy
-    service = Api::Titles::DeleteTitleCover.new(title: @title)
+    service = Api::Titles::DeleteCover.new(title: @title)
 
     if service.call
       head 204

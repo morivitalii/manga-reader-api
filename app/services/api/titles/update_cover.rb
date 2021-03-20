@@ -1,11 +1,11 @@
-class Api::Titles::UpdateTitleCover
+class Api::Titles::UpdateCover
   include ActiveModel::Model
 
-  attr_accessor :title, :cover_id
+  attr_accessor :title, :file
 
   def call
     ActiveRecord::Base.transaction do
-      title.update!(cover_id: cover_id)
+      title.update!(cover: file)
     end
 
     true

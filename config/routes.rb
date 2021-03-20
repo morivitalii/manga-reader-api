@@ -57,7 +57,6 @@ Rails.application.routes.draw do
         resource :to_review, only: [:update], controller: :to_review
         resource :to_published, only: [:update], controller: :to_published
         resource :cover, only: [:update, :destroy], controller: :cover
-        resources :covers, only: [:index, :show, :create, :destroy]
         resources :volumes, only: [:index, :show]
         resources :views, only: [:create]
         resources :bookmarks, only: [:create, :destroy]

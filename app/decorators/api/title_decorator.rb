@@ -1,6 +1,5 @@
 class Api::TitleDecorator < Api::ApplicationDecorator
   decorates_association :original_content_language, with: Api::ContentLanguageDecorator
-  decorates_association :cover, with: Api::CoverDecorator
   decorates_association :writers, with: Api::WriterDecorator
   decorates_association :painters, with: Api::PainterDecorator
   decorates_association :genres, with: Api::GenreDecorator

@@ -22,7 +22,6 @@
     { "name": "Marks" },
     { "name": "Titles" },
     { "name": "Title cover" },
-    { "name": "Title covers" },
     { "name": "Title volumes" },
     { "name": "Title chapters" },
     { "name": "Title views" },
@@ -1189,10 +1188,10 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "cover_id": {
-                    "type": "integer",
-                    "description": "Cover ID",
-                    "examples": [1]
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "File"
                   }
                 }
               }
@@ -1252,171 +1251,6 @@
             "content": {
               "application/json": {
                 "schema": <%= schema("titles/cover_controller/destroy/422") %>
-              }
-            }
-          },
-          "500": {
-            "$ref": "#/components/responses/internal_server_error"
-          }
-        }
-      }
-    },
-    "/titles/{title_id}/covers.json": {
-      "get": {
-        "tags": ["Title covers"],
-        "summary": "Title covers",
-        "description": "Sorted by id ASC",
-        "parameters": [
-          { "$ref": "#/components/parameters/title_id" },
-          { "$ref": "#/components/parameters/page" },
-          { "$ref": "#/components/parameters/limit" }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "headers": {
-              "X-Pagination-Page-Number": {
-                "$ref": "#/components/headers/X-Pagination-Page-Number"
-              },
-              "X-Pagination-Page-Items-Count": {
-                "$ref": "#/components/headers/X-Pagination-Page-Items-Count"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": <%= schema("titles/covers_controller/index/200") %>
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/unauthorized"
-          },
-          "403": {
-            "$ref": "#/components/responses/forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/not_found"
-          },
-          "500": {
-            "$ref": "#/components/responses/internal_server_error"
-          }
-        }
-      },
-      "post": {
-        "tags": ["Title covers"],
-        "summary": "Create title cover",
-        "description": "",
-        "parameters": [
-          { "$ref": "#/components/parameters/title_id" }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "content_language_id": {
-                    "type": "integer",
-                    "description": "Content language ID",
-                    "examples": [1]
-                  },
-                  "file": {
-                    "type": "string",
-                    "format": "binary",
-                    "description": "File"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": <%= schema("titles/covers_controller/create/200") %>
-              }
-            }
-          },
-          "403": {
-            "$ref": "#/components/responses/forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/not_found"
-          },
-          "422": {
-            "description": "Unprocessable entity",
-            "content": {
-              "application/json": {
-                "schema": <%= schema("titles/covers_controller/create/422") %>
-              }
-            }
-          },
-          "500": {
-            "$ref": "#/components/responses/internal_server_error"
-          }
-        }
-      }
-    },
-    "/titles/{title_id}/covers/{id}.json": {
-      "get": {
-        "tags": ["Title covers"],
-        "summary": "Title cover",
-        "description": "",
-        "parameters": [
-          { "$ref": "#/components/parameters/title_id" },
-          { "$ref": "#/components/parameters/id" }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": <%= schema("titles/covers_controller/show/200") %>
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/unauthorized"
-          },
-          "403": {
-            "$ref": "#/components/responses/forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/not_found"
-          },
-          "500": {
-            "$ref": "#/components/responses/internal_server_error"
-          }
-        }
-      },
-      "delete": {
-        "tags": ["Title covers"],
-        "summary": "Delete title cover",
-        "description": "",
-        "parameters": [
-          { "$ref": "#/components/parameters/title_id" },
-          { "$ref": "#/components/parameters/id" }
-        ],
-        "responses": {
-          "204": {
-            "$ref": "#/components/responses/no_content"
-          },
-          "401": {
-            "$ref": "#/components/responses/unauthorized"
-          },
-          "403": {
-            "$ref": "#/components/responses/forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/not_found"
-          },
-          "422": {
-            "description": "Unprocessable entity",
-            "content": {
-              "application/json": {
-                "schema": <%= schema("titles/covers_controller/destroy/422") %>
               }
             }
           },

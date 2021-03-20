@@ -1,11 +1,11 @@
 class Api::Titles::DeleteCover
   include ActiveModel::Model
 
-  attr_accessor :cover
+  attr_accessor :title
 
   def call
     ActiveRecord::Base.transaction do
-      cover.destroy!
+      title.update!(cover: nil)
     end
 
     true
