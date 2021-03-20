@@ -7,7 +7,6 @@ class Chapter < ApplicationRecord
   belongs_to :volume, optional: true
   belongs_to :user
   belongs_to :group
-  belongs_to :cover, optional: true, class_name: "Page"
 
   has_many :pages, dependent: :destroy
   has_many :bookmarks, as: :resource, dependent: :destroy
@@ -19,13 +18,9 @@ class Chapter < ApplicationRecord
   # Defined to preload signed in user view
   has_one :view, -> { where(user: Current.user) }, as: :resource
 
-  enum status: { draft: 1, review: 2, published: 3 }
+  has_one_attached :cover, service: :public
 
-  validates :cover,
-    allow_blank: true,
-    uniqueness: true,
-    inclusion: { in: -> (record) { record.pages } },
-    if: -> (record) { record.cover.present? }
+  enum status: { draft: 1, review: 2, published: 3 }
 
   validates :status, presence: true
   validates :name, allow_blank: true, length: { minimum: 1, maximum: 125 }

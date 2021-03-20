@@ -12,8 +12,6 @@ class Page < ApplicationRecord
   has_many :bookmarks, as: :resource, dependent: :destroy
   has_many :views, as: :resource, dependent: :destroy
 
-  has_one :chapter_where_cover, class_name: "Chapter", foreign_key: :cover_id, dependent: :nullify
-
   # Defined to preload signed in user bookmark
   has_one :bookmark, -> { where(user: Current.user) }, as: :resource
 

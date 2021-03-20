@@ -8,8 +8,8 @@ class Api::Titles::Chapters::CoverController < Api::ApplicationController
     service = Api::Titles::Chapters::UpdateCover.new(update_params)
 
     if service.call
-      cover = Api::PageDecorator.decorate(service.chapter.cover)
-      cover = Api::PageSerializer.serialize(cover)
+      cover = Api::ChapterDecorator.decorate(service.chapter)
+      cover = Api::ChapterSerializer.serialize(cover)
 
       render json: cover, status: 200
     else

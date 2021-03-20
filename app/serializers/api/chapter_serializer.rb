@@ -2,7 +2,6 @@ class Api::ChapterSerializer < Api::ApplicationSerializer
   serialize_association :content_language, with: Api::ContentLanguageSerializer
   serialize_associations :title, with: Api::TitleSerializer
   serialize_associations :volume, with: Api::VolumeSerializer
-  serialize_associations :cover, with: Api::PageSerializer
   serialize_associations :pages, with: Api::PageSerializer
   serialize_associations :user, with: Api::UserSerializer
   serialize_associations :group, with: Api::GroupSerializer
@@ -15,7 +14,6 @@ class Api::ChapterSerializer < Api::ApplicationSerializer
       content_language_id: model.content_language_id,
       title_id: model.title_id,
       volume_id: model.volume_id,
-      cover_id: model.cover_id,
       user_id: model.user_id,
       group_id: model.group_id,
       name: model.name,
@@ -33,6 +31,22 @@ class Api::ChapterSerializer < Api::ApplicationSerializer
       group: group,
       view: view,
       bookmark: bookmark,
+    }
+  end
+
+  private
+
+  def cover
+    return nil if model.cover.blank?
+
+    {
+      url: model.cover.url,
+      filename: model.cover.filename,
+      content_type: model.cover.content_type,
+      width: model.cover.metadata[:width],
+      height: model.cover.metadata[:height],
+      byte_size: model.cover.byte_size,
+      created_at: model.cover.created_at
     }
   end
 end
