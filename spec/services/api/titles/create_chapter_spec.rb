@@ -8,6 +8,11 @@ RSpec.describe Api::Titles::CreateChapter do
       volume = create(:volume, title: title)
       group = create(:group)
       user = create(:user)
+      first_user = create(:user)
+      second_user = create(:user)
+      ctet_ids = [first_user.id, second_user.id]
+      _group_user = create(:group_user, group: group, user: first_user)
+      _group_user = create(:group_user, group: group, user: second_user)
       _group_user = create(:group_user, group: group, user: user)
 
       service = described_class.new(
@@ -17,7 +22,11 @@ RSpec.describe Api::Titles::CreateChapter do
         user: user,
         content_language_id: content_language.id,
         volume_id: volume.id,
-        group_id: group.id
+        group_id: group.id,
+        cleaner_ids: ctet_ids,
+        translator_ids: ctet_ids,
+        editor_ids: ctet_ids,
+        typer_ids: ctet_ids
       )
 
       result = service.call

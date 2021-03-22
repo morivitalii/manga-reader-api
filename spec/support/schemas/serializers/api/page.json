@@ -13,54 +13,6 @@
       "type": "integer",
       "examples": [1]
     },
-    "cleaner_id": {
-      "oneOf": [
-        {
-          "description": "Cleaner ID",
-          "type": "integer",
-          "examples": [1]
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
-    "translator_id": {
-      "oneOf": [
-        {
-          "description": "Translator ID",
-          "type": "integer",
-          "examples": [1]
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
-    "editor_id": {
-      "oneOf": [
-        {
-          "description": "Editor ID",
-          "type": "integer",
-          "examples": [1]
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
-    "typer_id": {
-      "oneOf": [
-        {
-          "description": "Typer ID",
-          "type": "integer",
-          "examples": [1]
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
     "number": {
       "type": "integer",
       "description": "Number",

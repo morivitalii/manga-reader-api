@@ -98,7 +98,7 @@ module Translation
           private
 
           define_method(:touch_edited_at) do
-            return unless translation_attributes_changed?
+            return if !translation_attributes_changed? && edited_at.present?
 
             self.edited_at = Time.current
           end
