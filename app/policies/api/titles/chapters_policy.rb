@@ -12,7 +12,7 @@ class Api::Titles::ChaptersPolicy < Api::ApplicationPolicy
   end
 
   def permitted_attributes_for_create
-    [:content_language_id, :volume_id, :group_id, :name, :number]
+    [:content_language_id, :volume_id, :group_id, :name, :number, cleaner_ids: [], translator_ids: [], editor_ids: [], typer_ids: []]
   end
 
   class Scope < Api::ApplicationPolicy::Scope

@@ -6,5 +6,5 @@ class ResourceTranslator < ApplicationRecord
   belongs_to :resource, polymorphic: true
 
   validates :translator, presence: true, uniqueness: {scope: [:resource_type, :resource_id]}
-  validates :resource, association_type: { in: ["Page"] }
+  validates :resource, association_type: { in: ["Chapter"] }
 end

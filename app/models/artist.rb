@@ -19,6 +19,6 @@ class Artist < ApplicationRecord
 
   translates :name
 
-  validates :name, presence: true, length: { minimum: 1, maximum: 64 }
+  validates :name, allow_blank: true, length: { minimum: 1, maximum: 64 }
   validates :user, uniqueness: true, allow_nil: true
 end

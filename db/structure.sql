@@ -746,10 +746,6 @@ ALTER SEQUENCE public.marks_id_seq OWNED BY public.marks.id;
 CREATE TABLE public.pages (
     id bigint NOT NULL,
     chapter_id bigint NOT NULL,
-    cleaner_id bigint,
-    translator_id bigint,
-    editor_id bigint,
-    typer_id bigint,
     number integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
@@ -2791,38 +2787,10 @@ CREATE UNIQUE INDEX index_pages_on_chapter_id_and_number ON public.pages USING b
 
 
 --
--- Name: index_pages_on_cleaner_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_pages_on_cleaner_id ON public.pages USING btree (cleaner_id);
-
-
---
--- Name: index_pages_on_editor_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_pages_on_editor_id ON public.pages USING btree (editor_id);
-
-
---
 -- Name: index_pages_on_number; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_pages_on_number ON public.pages USING btree (number);
-
-
---
--- Name: index_pages_on_translator_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_pages_on_translator_id ON public.pages USING btree (translator_id);
-
-
---
--- Name: index_pages_on_typer_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_pages_on_typer_id ON public.pages USING btree (typer_id);
 
 
 --
@@ -3348,14 +3316,6 @@ ALTER TABLE ONLY public.title_translations
 
 
 --
--- Name: pages fk_rails_0da5652926; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.pages
-    ADD CONSTRAINT fk_rails_0da5652926 FOREIGN KEY (cleaner_id) REFERENCES public.cleaners(id);
-
-
---
 -- Name: group_users fk_rails_1486913327; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3436,14 +3396,6 @@ ALTER TABLE ONLY public.user_access_rights
 
 
 --
--- Name: pages fk_rails_3b4ae1edb8; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.pages
-    ADD CONSTRAINT fk_rails_3b4ae1edb8 FOREIGN KEY (typer_id) REFERENCES public.typers(id);
-
-
---
 -- Name: title_translations fk_rails_3c716d17ad; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3457,14 +3409,6 @@ ALTER TABLE ONLY public.title_translations
 
 ALTER TABLE ONLY public.painters
     ADD CONSTRAINT fk_rails_45262d9d58 FOREIGN KEY (artist_id) REFERENCES public.artists(id);
-
-
---
--- Name: pages fk_rails_464cb770d6; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.pages
-    ADD CONSTRAINT fk_rails_464cb770d6 FOREIGN KEY (translator_id) REFERENCES public.translators(id);
 
 
 --
@@ -3625,14 +3569,6 @@ ALTER TABLE ONLY public.chapters
 
 ALTER TABLE ONLY public.editors
     ADD CONSTRAINT fk_rails_b0f81755d1 FOREIGN KEY (artist_id) REFERENCES public.artists(id);
-
-
---
--- Name: pages fk_rails_be5c59539d; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.pages
-    ADD CONSTRAINT fk_rails_be5c59539d FOREIGN KEY (editor_id) REFERENCES public.editors(id);
 
 
 --
@@ -3938,6 +3874,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210319213717'),
 ('20210320055252'),
 ('20210320055508'),
-('20210320055517');
+('20210320055517'),
+('20210320063546');
 
 
