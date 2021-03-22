@@ -14,28 +14,8 @@
     { "name": "Authentication" },
     { "name": "Interface languages" },
     { "name": "Content languages" },
-    { "name": "Tags" },
-    { "name": "Genres" },
-    { "name": "Themes" },
-    { "name": "Demographics" },
-    { "name": "Formats" },
-    { "name": "Marks" },
-    { "name": "Titles" },
-    { "name": "Title cover" },
-    { "name": "Title volumes" },
-    { "name": "Title chapters" },
-    { "name": "Title views" },
-    { "name": "Title bookmarks" },
-    { "name": "Title favorites" },
-    { "name": "Chapter cover" },
-    { "name": "Chapter views" },
-    { "name": "Chapter bookmarks" },
-    { "name": "Chapter pages" },
-    { "name": "Page views" },
-    { "name": "Page bookmarks" },
     { "name": "Users" },
     { "name": "Artists" },
-    { "name": "Artist favorites" },
     { "name": "Writers" },
     { "name": "Painters" },
     { "name": "Cleaners" },
@@ -43,7 +23,16 @@
     { "name": "Editors" },
     { "name": "Typers" },
     { "name": "Groups" },
-    { "name": "Group favorites" }
+    { "name": "Tags" },
+    { "name": "Genres" },
+    { "name": "Themes" },
+    { "name": "Demographics" },
+    { "name": "Formats" },
+    { "name": "Marks" },
+    { "name": "Titles" },
+    { "name": "Volumes" },
+    { "name": "Chapters" },
+    { "name": "Pages" }
   ],
   "components": {
     "headers": {
@@ -1176,8 +1165,8 @@
     },
     "/titles/{title_id}/cover.json": {
       "put": {
-        "tags": ["Title cover"],
-        "summary": "Update title cover",
+        "tags": ["Titles"],
+        "summary": "Update cover",
         "description": "",
         "parameters": [
           { "$ref": "#/components/parameters/title_id" }
@@ -1227,8 +1216,8 @@
         }
       },
       "delete": {
-        "tags": ["Title cover"],
-        "summary": "Delete title cover",
+        "tags": ["Titles"],
+        "summary": "Delete cover",
         "description": "",
         "parameters": [
           { "$ref": "#/components/parameters/title_id" }
@@ -1262,8 +1251,8 @@
     },
     "/titles/{title_id}/volumes.json": {
       "get": {
-        "tags": ["Title volumes"],
-        "summary": "Title volumes",
+        "tags": ["Volumes"],
+        "summary": "Volumes",
         "description": "Sorted by number ASC",
         "parameters": [
           { "$ref": "#/components/parameters/title_id" }
@@ -1294,8 +1283,8 @@
     },
     "/titles/{title_id}/volumes/{id}.json": {
       "get": {
-        "tags": ["Title volumes"],
-        "summary": "Title volume",
+        "tags": ["Volumes"],
+        "summary": "Volume",
         "description": "",
         "parameters": [
           { "$ref": "#/components/parameters/title_id" },
@@ -1327,8 +1316,8 @@
     },
     "/titles/{title_id}/chapters.json": {
       "get": {
-        "tags": ["Title chapters"],
-        "summary": "Title chapters",
+        "tags": ["Chapters"],
+        "summary": "Chapters",
         "description": "Sorted by number ASC",
         "parameters": [
           { "$ref": "#/components/parameters/title_id" }
@@ -1357,8 +1346,8 @@
         }
       },
       "post": {
-        "tags": ["Title chapters"],
-        "summary": "Create title chapter",
+        "tags": ["Chapters"],
+        "summary": "Create chapter",
         "description": "",
         "parameters": [
           { "$ref": "#/components/parameters/title_id" }
@@ -1388,6 +1377,38 @@
                     "type": "integer",
                     "description": "Group ID",
                     "examples": [1]
+                  },
+                  "cleaners_ids": {
+                    "type": "array",
+                    "description": "Cleaners",
+                    "items": {
+                      "type": "integer",
+                      "examples": [1]
+                    }
+                  },
+                  "translators_ids": {
+                    "type": "array",
+                    "description": "Translators",
+                    "items": {
+                      "type": "integer",
+                      "examples": [1]
+                    }
+                  },
+                  "editors_ids": {
+                    "type": "array",
+                    "description": "Editors",
+                    "items": {
+                      "type": "integer",
+                      "examples": [1]
+                    }
+                  },
+                  "typers_ids": {
+                    "type": "array",
+                    "description": "Typers",
+                    "items": {
+                      "type": "integer",
+                      "examples": [1]
+                    }
                   }
                 }
               }
@@ -1425,8 +1446,8 @@
     },
     "/titles/{title_id}/chapters/{id}.json": {
       "get": {
-        "tags": ["Title chapters"],
-        "summary": "Title chapter",
+        "tags": ["Chapters"],
+        "summary": "Chapter",
         "description": "",
         "parameters": [
           { "$ref": "#/components/parameters/title_id" },
@@ -1459,7 +1480,7 @@
     "/titles/{title_id}/chapters/{chapter_id}/to_review.json": {
       "put": {
         "tags": [
-          "Title chapters"
+          "Chapters"
         ],
         "summary": "Send chapter to review",
         "description": "",
@@ -1494,7 +1515,7 @@
     "/titles/{title_id}/chapters/{chapter_id}/to_draft.json": {
       "put": {
         "tags": [
-          "Title chapters"
+          "Chapters"
         ],
         "summary": "Send chapter to draft",
         "description": "",
@@ -1529,7 +1550,7 @@
     "/titles/{title_id}/chapters/{chapter_id}/to_published.json": {
       "put": {
         "tags": [
-          "Title chapters"
+          "Chapters"
         ],
         "summary": "Send chapter to published",
         "description": "",
@@ -1563,8 +1584,8 @@
     },
     "/titles/{title_id}/views.json": {
       "post": {
-        "tags": ["Title views"],
-        "summary": "Create title view",
+        "tags": ["Titles"],
+        "summary": "Create view",
         "description": "",
         "parameters": [
           { "$ref": "#/components/parameters/title_id" }
@@ -1598,8 +1619,8 @@
     },
     "/titles/{title_id}/bookmarks.json": {
       "post": {
-        "tags": ["Title bookmarks"],
-        "summary": "Create title bookmark",
+        "tags": ["Titles"],
+        "summary": "Create bookmark",
         "description": "",
         "parameters": [
           { "$ref": "#/components/parameters/title_id" }
@@ -1633,8 +1654,8 @@
     },
     "/titles/{title_id}/bookmarks/{id}.json": {
       "delete": {
-        "tags": ["Title bookmarks"],
-        "summary": "Delete title bookmark",
+        "tags": ["Titles"],
+        "summary": "Delete bookmark",
         "description": "",
         "parameters": [
           { "$ref": "#/components/parameters/title_id" },
@@ -1664,8 +1685,8 @@
     },
     "/titles/{title_id}/favorites.json": {
       "post": {
-        "tags": ["Title favorites"],
-        "summary": "Create title favorite",
+        "tags": ["Titles"],
+        "summary": "Create favorite",
         "description": "",
         "parameters": [
           { "$ref": "#/components/parameters/title_id" }
@@ -1699,8 +1720,8 @@
     },
     "/titles/{title_id}/favorites/{id}.json": {
       "delete": {
-        "tags": ["Title favorites"],
-        "summary": "Delete title favorite",
+        "tags": ["Titles"],
+        "summary": "Delete favorite",
         "description": "",
         "parameters": [
           { "$ref": "#/components/parameters/title_id" },
@@ -1730,8 +1751,8 @@
     },
     "/titles/{title_id}/chapters/{chapter_id}/cover.json": {
       "put": {
-        "tags": ["Chapter cover"],
-        "summary": "Update chapter cover",
+        "tags": ["Chapters"],
+        "summary": "Update cover",
         "description": "",
         "parameters": [
           { "$ref": "#/components/parameters/title_id" },
@@ -1782,8 +1803,8 @@
         }
       },
       "delete": {
-        "tags": ["Chapter cover"],
-        "summary": "Delete chapter cover",
+        "tags": ["Chapters"],
+        "summary": "Delete cover",
         "description": "",
         "parameters": [
           { "$ref": "#/components/parameters/title_id" },
@@ -1818,8 +1839,8 @@
     },
     "/titles/{title_id}/chapters/{chapter_id}/views.json": {
       "post": {
-        "tags": ["Chapter views"],
-        "summary": "Create chapter view",
+        "tags": ["Chapters"],
+        "summary": "Create view",
         "description": "",
         "parameters": [
           { "$ref": "#/components/parameters/title_id" },
@@ -1854,8 +1875,8 @@
     },
     "/titles/{title_id}/chapters/{chapter_id}/bookmarks.json": {
       "post": {
-        "tags": ["Chapter bookmarks"],
-        "summary": "Create chapter bookmark",
+        "tags": ["Chapters"],
+        "summary": "Create bookmark",
         "description": "",
         "parameters": [
           { "$ref": "#/components/parameters/title_id" },
@@ -1890,8 +1911,8 @@
     },
     "/titles/{title_id}/chapters/{chapter_id}/bookmarks/{id}.json": {
       "delete": {
-        "tags": ["Chapter bookmarks"],
-        "summary": "Delete chapter bookmark",
+        "tags": ["Chapters"],
+        "summary": "Delete bookmark",
         "description": "",
         "parameters": [
           { "$ref": "#/components/parameters/title_id" },
@@ -1922,8 +1943,8 @@
     },
     "/titles/{title_id}/chapters/{chapter_id}/pages.json": {
       "get": {
-        "tags": ["Chapter pages"],
-        "summary": "Chapter pages",
+        "tags": ["Pages"],
+        "summary": "Pages",
         "description": "Sorted by number ASC",
         "parameters": [
           { "$ref": "#/components/parameters/title_id" },
@@ -1951,12 +1972,65 @@
             "$ref": "#/components/responses/internal_server_error"
           }
         }
+      },
+      "post": {
+        "tags": ["Pages"],
+        "summary": "Create page",
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "integer",
+                    "description": "Number",
+                    "examples": [1]
+                  },
+                  "description": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "File"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/chapters/pages_controller/create/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/chapters/pages_controller/create/422") %>
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
       }
     },
     "/titles/{title_id}/chapters/{chapter_id}/pages/{id}.json": {
       "get": {
-        "tags": ["Chapter pages"],
-        "summary": "Chapter page",
+        "tags": ["Pages"],
+        "summary": "Page",
         "description": "",
         "parameters": [
           { "$ref": "#/components/parameters/title_id" },
@@ -1989,8 +2063,8 @@
     },
     "/titles/{title_id}/chapters/{chapter_id}/pages/{page_id}/views.json": {
       "post": {
-        "tags": ["Page views"],
-        "summary": "Create page view",
+        "tags": ["Pages"],
+        "summary": "Create view",
         "description": "",
         "parameters": [
           { "$ref": "#/components/parameters/title_id" },
@@ -2026,8 +2100,8 @@
     },
     "/titles/{title_id}/chapters/{chapter_id}/pages/{page_id}/bookmarks.json": {
       "post": {
-        "tags": ["Page bookmarks"],
-        "summary": "Create page bookmark",
+        "tags": ["Pages"],
+        "summary": "Create bookmark",
         "description": "",
         "parameters": [
           { "$ref": "#/components/parameters/title_id" },
@@ -2063,8 +2137,8 @@
     },
     "/titles/{title_id}/chapters/{chapter_id}/pages/{page_id}/bookmarks/{id}.json": {
       "delete": {
-        "tags": ["Page bookmarks"],
-        "summary": "Delete page bookmark",
+        "tags": ["Pages"],
+        "summary": "Delete bookmark",
         "description": "",
         "parameters": [
           { "$ref": "#/components/parameters/title_id" },
@@ -2236,8 +2310,8 @@
     },
     "/artists/{artist_id}/favorites.json": {
       "post": {
-        "tags": ["Artist favorites"],
-        "summary": "Create artist favorite",
+        "tags": ["Artists"],
+        "summary": "Create favorite",
         "description": "",
         "parameters": [
           { "$ref": "#/components/parameters/artist_id" }
@@ -2271,8 +2345,8 @@
     },
     "/artists/{artist_id}/favorites/{id}.json": {
       "delete": {
-        "tags": ["Artist favorites"],
-        "summary": "Delete artist favorite",
+        "tags": ["Artists"],
+        "summary": "Delete favorite",
         "description": "",
         "parameters": [
           { "$ref": "#/components/parameters/artist_id" },
@@ -2792,8 +2866,8 @@
     },
     "/groups/{group_id}/favorites.json": {
       "post": {
-        "tags": ["Group favorites"],
-        "summary": "Create group favorite",
+        "tags": ["Groups"],
+        "summary": "Create favorite",
         "description": "",
         "parameters": [
           { "$ref": "#/components/parameters/group_id" }
@@ -2827,8 +2901,8 @@
     },
     "/groups/{group_id}/favorites/{id}.json": {
       "delete": {
-        "tags": ["Group favorites"],
-        "summary": "Delete group favorite",
+        "tags": ["Groups"],
+        "summary": "Delete favorite",
         "description": "",
         "parameters": [
           { "$ref": "#/components/parameters/group_id" },
