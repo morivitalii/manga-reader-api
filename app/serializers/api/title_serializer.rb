@@ -9,7 +9,6 @@ class Api::TitleSerializer < Api::ApplicationSerializer
   serialize_associations :themes, with: Api::ThemeSerializer
   serialize_associations :volumes, with: Api::VolumeSerializer
   serialize_associations :chapters, with: Api::ChapterSerializer
-  serialize_associations :favorite, with: Api::FavoriteSerializer
   serialize_associations :view, with: Api::ViewSerializer
 
   def attributes
@@ -33,7 +32,6 @@ class Api::TitleSerializer < Api::ApplicationSerializer
       demographics: demographics,
       marks: marks,
       themes: themes,
-      favorite: favorite,
       view: view,
     }
   end

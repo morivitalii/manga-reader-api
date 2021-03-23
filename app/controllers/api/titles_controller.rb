@@ -36,7 +36,6 @@ class Api::TitlesController < Api::ApplicationController
     if Current.user.present?
       ActiveRecord::Associations::Preloader.new.preload(
         titles, [
-          :favorite,
           :view
         ]
       )
@@ -104,7 +103,6 @@ class Api::TitlesController < Api::ApplicationController
     if Current.user.present?
       ActiveRecord::Associations::Preloader.new.preload(
         @title, [
-          :favorite,
           :view
         ]
       )
