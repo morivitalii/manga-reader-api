@@ -2,7 +2,6 @@ class Api::GroupsController < Api::ApplicationController
   include Pagination
 
   before_action :set_group, only: [:show]
-  before_action :set_group_associations, only: [:show]
 
   before_action -> { authorize(Api::GroupsPolicy) }, only: [:index]
   before_action -> { authorize(Api::GroupsPolicy, @group) }, only: [:show]
@@ -12,14 +11,6 @@ class Api::GroupsController < Api::ApplicationController
     pagination, groups = paginate_countless(groups)
 
     set_pagination_headers(pagination)
-
-    if Current.user.present?
-      ActiveRecord::Associations::Preloader.new.preload(
-        groups, [
-          :favorite
-        ]
-      )
-    end
 
     groups = Api::GroupDecorator.decorate_collection(groups)
     groups = Api::GroupSerializer.serialize(groups)
@@ -42,15 +33,5 @@ class Api::GroupsController < Api::ApplicationController
 
   def group_scope
     policy_scope(Api::GroupsPolicy, Group)
-  end
-
-  def set_group_associations
-    if Current.user.present?
-      ActiveRecord::Associations::Preloader.new.preload(
-        @group, [
-          :favorite
-        ]
-      )
-    end
   end
 end

@@ -8,6 +8,5 @@ class Api::TitleDecorator < Api::ApplicationDecorator
   decorates_association :marks, with: Api::MarkDecorator
   decorates_association :themes, with: Api::ThemeDecorator
   decorates_association :volumes, with: Api::VolumeDecorator
-  decorates_association :favorite, with: Api::FavoriteDecorator
   decorates_association :view, with: Api::ViewDecorator
 end

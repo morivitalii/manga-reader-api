@@ -21,8 +21,15 @@ Rails.application.routes.draw do
         resources :pages, only: [:index]
       end
 
+      namespace :favorites do
+        resources :titles, only: [:index]
+        resources :groups, only: [:index]
+        resources :artists, only: [:index]
+      end
+
       namespace :titles do
         resources :bookmarks, only: [:index]
+        resources :favorites, only: [:index]
       end
 
       namespace :chapters do
@@ -31,6 +38,14 @@ Rails.application.routes.draw do
 
       namespace :pages do
         resources :bookmarks, only: [:index]
+      end
+
+      namespace :groups do
+        resources :favorites, only: [:index]
+      end
+
+      namespace :artists do
+        resources :favorites, only: [:index]
       end
     end
 
