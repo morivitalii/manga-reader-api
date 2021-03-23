@@ -10,5 +10,4 @@ class Api::TitleDecorator < Api::ApplicationDecorator
   decorates_association :volumes, with: Api::VolumeDecorator
   decorates_association :favorite, with: Api::FavoriteDecorator
   decorates_association :view, with: Api::ViewDecorator
-  decorates_association :bookmark, with: Api::BookmarkDecorator
 end

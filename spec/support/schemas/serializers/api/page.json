@@ -84,16 +84,6 @@
         }
       }
     },
-    "bookmark": {
-      "oneOf": [
-        {
-          "$ref": "file:/serializers/api/bookmark.json#"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
     "view": {
       "oneOf": [
         {
