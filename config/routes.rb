@@ -27,17 +27,26 @@ Rails.application.routes.draw do
         resources :artists, only: [:index]
       end
 
+      namespace :views do
+        resources :titles, only: [:index]
+        resources :chapters, only: [:index]
+        resources :pages, only: [:index]
+      end
+
       namespace :titles do
         resources :bookmarks, only: [:index]
         resources :favorites, only: [:index]
+        resources :views, only: [:index]
       end
 
       namespace :chapters do
         resources :bookmarks, only: [:index]
+        resources :views, only: [:index]
       end
 
       namespace :pages do
         resources :bookmarks, only: [:index]
+        resources :views, only: [:index]
       end
 
       namespace :groups do

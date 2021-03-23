@@ -16,14 +16,6 @@ class Api::Titles::Chapters::PagesController < Api::ApplicationController
       ]
     )
 
-    if Current.user.present?
-      ActiveRecord::Associations::Preloader.new.preload(
-        pages, [
-          :view
-        ]
-      )
-    end
-
     pages = Api::PageDecorator.decorate(pages)
     pages = Api::PageSerializer.serialize(pages)
 
@@ -86,13 +78,5 @@ class Api::Titles::Chapters::PagesController < Api::ApplicationController
         file_attachment: :blob
       ]
     )
-
-    if Current.user.present?
-      ActiveRecord::Associations::Preloader.new.preload(
-      @page, [
-          :view
-        ]
-      )
-    end
   end
 end

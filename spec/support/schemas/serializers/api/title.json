@@ -160,26 +160,6 @@
         "$ref": "file:/serializers/api/theme.json#"
       }
     },
-    "favorite": {
-      "oneOf": [
-        {
-          "$ref": "file:/serializers/api/favorite.json#"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
-    "view": {
-      "oneOf": [
-        {
-          "$ref": "file:/serializers/api/view.json#"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
     "created_at": {
       "type": "string",
       "format": "date-time",

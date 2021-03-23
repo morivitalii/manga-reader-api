@@ -33,14 +33,6 @@ class Api::TitlesController < Api::ApplicationController
       ]
     )
 
-    if Current.user.present?
-      ActiveRecord::Associations::Preloader.new.preload(
-        titles, [
-          :view
-        ]
-      )
-    end
-
     titles = Api::TitleDecorator.decorate(titles)
     titles = Api::TitleSerializer.serialize(titles)
 
@@ -99,13 +91,5 @@ class Api::TitlesController < Api::ApplicationController
         themes: { tag: Tag.translations_associations }
       ]
     )
-
-    if Current.user.present?
-      ActiveRecord::Associations::Preloader.new.preload(
-        @title, [
-          :view
-        ]
-      )
-    end
   end
 end
