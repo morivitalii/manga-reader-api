@@ -22,7 +22,6 @@ class Api::Titles::ChaptersController < Api::ApplicationController
     if Current.user.present?
       ActiveRecord::Associations::Preloader.new.preload(
         chapters, [
-          :bookmark,
           :view
         ]
       )
@@ -82,7 +81,6 @@ class Api::Titles::ChaptersController < Api::ApplicationController
     if Current.user.present?
       ActiveRecord::Associations::Preloader.new.preload(
         @chapter, [
-          :bookmark,
           :view
         ]
       )

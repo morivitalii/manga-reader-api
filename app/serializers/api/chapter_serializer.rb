@@ -6,7 +6,6 @@ class Api::ChapterSerializer < Api::ApplicationSerializer
   serialize_associations :user, with: Api::UserSerializer
   serialize_associations :group, with: Api::GroupSerializer
   serialize_associations :view, with: Api::ViewSerializer
-  serialize_associations :bookmark, with: Api::BookmarkSerializer
 
   def attributes
     {
@@ -29,8 +28,7 @@ class Api::ChapterSerializer < Api::ApplicationSerializer
       volume: volume,
       user: user,
       group: group,
-      view: view,
-      bookmark: bookmark,
+      view: view
     }
   end
 

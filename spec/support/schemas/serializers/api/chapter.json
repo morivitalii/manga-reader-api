@@ -188,16 +188,6 @@
           "type": "null"
         }
       ]
-    },
-    "bookmark": {
-      "oneOf": [
-        {
-          "$ref": "file:/serializers/api/bookmark.json#"
-        },
-        {
-          "type": "null"
-        }
-      ]
     }
   }
 }

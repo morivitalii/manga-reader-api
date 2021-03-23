@@ -14,6 +14,24 @@ Rails.application.routes.draw do
 
     namespace :users do
       resource :settings, only: [:show, :update]
+
+      namespace :bookmarks do
+        resources :titles, only: [:index]
+        resources :chapters, only: [:index]
+        resources :pages, only: [:index]
+      end
+
+      namespace :titles do
+        resources :bookmarks, only: [:index]
+      end
+
+      namespace :chapters do
+        resources :bookmarks, only: [:index]
+      end
+
+      namespace :pages do
+        resources :bookmarks, only: [:index]
+      end
     end
 
     resources :interface_languages, only: [:index, :show]

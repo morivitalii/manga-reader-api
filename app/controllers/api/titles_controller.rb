@@ -37,7 +37,6 @@ class Api::TitlesController < Api::ApplicationController
       ActiveRecord::Associations::Preloader.new.preload(
         titles, [
           :favorite,
-          :bookmark,
           :view
         ]
       )
@@ -106,7 +105,6 @@ class Api::TitlesController < Api::ApplicationController
       ActiveRecord::Associations::Preloader.new.preload(
         @title, [
           :favorite,
-          :bookmark,
           :view
         ]
       )
