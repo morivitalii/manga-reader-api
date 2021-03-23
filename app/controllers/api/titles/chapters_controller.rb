@@ -19,14 +19,6 @@ class Api::Titles::ChaptersController < Api::ApplicationController
       ]
     )
 
-    if Current.user.present?
-      ActiveRecord::Associations::Preloader.new.preload(
-        chapters, [
-          :view
-        ]
-      )
-    end
-
     chapters = Api::ChapterDecorator.decorate(chapters)
     chapters = Api::ChapterSerializer.serialize(chapters)
 
@@ -77,14 +69,6 @@ class Api::Titles::ChaptersController < Api::ApplicationController
         cover_attachment: :blob
       ]
     )
-
-    if Current.user.present?
-      ActiveRecord::Associations::Preloader.new.preload(
-        @chapter, [
-          :view
-        ]
-      )
-    end
   end
 
   def titles_scope

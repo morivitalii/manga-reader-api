@@ -1,6 +1,4 @@
 class Api::PageSerializer < Api::ApplicationSerializer
-  serialize_associations :view, with: Api::ViewSerializer
-
   def attributes
     {
       id: model.id,
@@ -9,7 +7,6 @@ class Api::PageSerializer < Api::ApplicationSerializer
       views_count: model.views_count,
       bookmarks_count: model.bookmarks_count,
       file: file,
-      view: view,
       created_at: model.created_at,
       updated_at: model.updated_at
     }

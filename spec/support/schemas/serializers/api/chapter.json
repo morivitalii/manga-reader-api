@@ -178,16 +178,6 @@
           "type": "null"
         }
       ]
-    },
-    "view": {
-      "oneOf": [
-        {
-          "$ref": "file:/serializers/api/view.json#"
-        },
-        {
-          "type": "null"
-        }
-      ]
     }
   }
 }
