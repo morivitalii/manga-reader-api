@@ -13,6 +13,11 @@
       "description": "Title",
       "examples": ["Developers"]
     },
+    "users_count": {
+      "type": "integer",
+      "description": "Users count",
+      "examples": [1]
+    },
     "favorites_count": {
       "type": "integer",
       "description": "Favorites count",

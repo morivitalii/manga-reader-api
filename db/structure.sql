@@ -589,7 +589,8 @@ CREATE TABLE public.groups (
     title character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    favorites_count bigint DEFAULT 0 NOT NULL
+    favorites_count bigint DEFAULT 0 NOT NULL,
+    users_count bigint DEFAULT 0 NOT NULL
 );
 
 
@@ -3875,6 +3876,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210320055252'),
 ('20210320055508'),
 ('20210320055517'),
-('20210320063546');
+('20210320063546'),
+('20210324141332');
 
 
