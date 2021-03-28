@@ -8,20 +8,10 @@
       "description": "ID",
       "examples": [1]
     },
-    "username": {
+    "title": {
       "type": "string",
       "description": "Title",
       "examples": ["Developers"]
-    },
-    "users_count": {
-      "type": "integer",
-      "description": "Users count",
-      "examples": [1]
-    },
-    "favorites_count": {
-      "type": "integer",
-      "description": "Favorites count",
-      "examples": [1]
     },
     "created_at": {
       "type": "string",

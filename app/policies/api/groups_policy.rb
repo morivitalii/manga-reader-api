@@ -7,6 +7,14 @@ class Api::GroupsPolicy < Api::ApplicationPolicy
     true
   end
 
+  def create?
+    user?
+  end
+
+  def permitted_attributes_for_create
+    [:title]
+  end
+
   class Scope < Api::ApplicationPolicy::Scope
     def resolve
       scope.all

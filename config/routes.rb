@@ -87,7 +87,7 @@ Rails.application.routes.draw do
     resources :editors, only: [:index, :show]
     resources :typers, only: [:index, :show]
 
-    resources :groups, only: [:index, :show] do
+    resources :groups, only: [:index, :show, :create] do
       scope module: :groups do
         resources :favorites, only: [:create, :destroy]
       end

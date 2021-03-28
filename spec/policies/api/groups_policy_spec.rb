@@ -8,6 +8,10 @@ RSpec.describe Api::GroupsPolicy do
       it { is_expected.to permit(current_user) }
     end
 
+    permissions :create? do
+      it { is_expected.to_not permit(current_user) }
+    end
+
     permissions :show? do
       let(:group) { create(:group) }
 
@@ -16,7 +20,7 @@ RSpec.describe Api::GroupsPolicy do
   end
 
   context "as signed in user", context: :as_signed_in_user do
-    permissions :index? do
+    permissions :index?, :create? do
       it { is_expected.to permit(current_user) }
     end
 
