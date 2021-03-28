@@ -549,6 +549,69 @@ ALTER SEQUENCE public.genres_id_seq OWNED BY public.genres.id;
 
 
 --
+-- Name: group_access_rights; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.group_access_rights (
+    id bigint NOT NULL,
+    key integer NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: group_access_rights_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.group_access_rights_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: group_access_rights_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.group_access_rights_id_seq OWNED BY public.group_access_rights.id;
+
+
+--
+-- Name: group_user_access_rights; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.group_user_access_rights (
+    id bigint NOT NULL,
+    group_access_right_id bigint NOT NULL,
+    group_user_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: group_user_access_rights_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.group_user_access_rights_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: group_user_access_rights_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.group_user_access_rights_id_seq OWNED BY public.group_user_access_rights.id;
+
+
+--
 -- Name: group_users; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1784,6 +1847,20 @@ ALTER TABLE ONLY public.genres ALTER COLUMN id SET DEFAULT nextval('public.genre
 
 
 --
+-- Name: group_access_rights id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.group_access_rights ALTER COLUMN id SET DEFAULT nextval('public.group_access_rights_id_seq'::regclass);
+
+
+--
+-- Name: group_user_access_rights id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.group_user_access_rights ALTER COLUMN id SET DEFAULT nextval('public.group_user_access_rights_id_seq'::regclass);
+
+
+--
 -- Name: group_users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2155,6 +2232,22 @@ ALTER TABLE ONLY public.formats
 
 ALTER TABLE ONLY public.genres
     ADD CONSTRAINT genres_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: group_access_rights group_access_rights_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.group_access_rights
+    ADD CONSTRAINT group_access_rights_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: group_user_access_rights group_user_access_rights_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.group_user_access_rights
+    ADD CONSTRAINT group_user_access_rights_pkey PRIMARY KEY (id);
 
 
 --
@@ -2687,6 +2780,34 @@ CREATE UNIQUE INDEX index_formats_on_tag_id ON public.formats USING btree (tag_i
 --
 
 CREATE UNIQUE INDEX index_genres_on_tag_id ON public.genres USING btree (tag_id);
+
+
+--
+-- Name: index_group_access_rights_on_key; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_group_access_rights_on_key ON public.group_access_rights USING btree (key);
+
+
+--
+-- Name: index_group_user_access_rights_on_group_access_right_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_group_user_access_rights_on_group_access_right_id ON public.group_user_access_rights USING btree (group_access_right_id);
+
+
+--
+-- Name: index_group_user_access_rights_on_group_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_group_user_access_rights_on_group_user_id ON public.group_user_access_rights USING btree (group_user_id);
+
+
+--
+-- Name: index_group_user_access_rights_uniqueness; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_group_user_access_rights_uniqueness ON public.group_user_access_rights USING btree (group_access_right_id, group_user_id);
 
 
 --
@@ -3421,11 +3542,27 @@ ALTER TABLE ONLY public.interface_language_translations
 
 
 --
+-- Name: group_user_access_rights fk_rails_508c819b7c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.group_user_access_rights
+    ADD CONSTRAINT fk_rails_508c819b7c FOREIGN KEY (group_access_right_id) REFERENCES public.group_access_rights(id);
+
+
+--
 -- Name: resource_painters fk_rails_583e3f2803; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.resource_painters
     ADD CONSTRAINT fk_rails_583e3f2803 FOREIGN KEY (painter_id) REFERENCES public.painters(id);
+
+
+--
+-- Name: group_user_access_rights fk_rails_58df8754b7; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.group_user_access_rights
+    ADD CONSTRAINT fk_rails_58df8754b7 FOREIGN KEY (group_user_id) REFERENCES public.group_users(id);
 
 
 --
@@ -3877,6 +4014,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210320055508'),
 ('20210320055517'),
 ('20210320063546'),
-('20210324141332');
+('20210324141332'),
+('20210324143936'),
+('20210325173047');
 
 

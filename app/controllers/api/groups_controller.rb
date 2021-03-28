@@ -3,8 +3,10 @@ class Api::GroupsController < Api::ApplicationController
 
   before_action :set_group, only: [:show]
 
-  before_action -> { authorize(Api::GroupsPolicy) }, only: [:index]
+  before_action -> { authorize(Api::GroupsPolicy) }, only: [:index, :create]
   before_action -> { authorize(Api::GroupsPolicy, @group) }, only: [:show]
+
+  skip_after_action :verify_policy_scoped, only: [:create]
 
   def index
     groups = group_scope.order("groups.title ASC").all
@@ -25,10 +27,27 @@ class Api::GroupsController < Api::ApplicationController
     render json: group, status: 200
   end
 
+  def create
+    service = Api::CreateGroup.new(create_params)
+
+    if service.call
+      group = Api::GroupDecorator.decorate(service.group)
+      group = Api::GroupSerializer.serialize(group)
+
+      render json: group, status: 200
+    else
+      render json: service.errors, status: 422
+    end
+  end
+
   private
 
   def set_group
     @group = group_scope.find(params[:id])
+  end
+
+  def create_params
+    permitted_attributes(Api::GroupsPolicy, :create).merge(user: Current.user)
   end
 
   def group_scope

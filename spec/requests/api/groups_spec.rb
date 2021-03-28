@@ -35,4 +35,22 @@ RSpec.describe Api::GroupsController do
       expect(response).to match_json_schema("controllers/api/groups_controller/show/200")
     end
   end
+
+  describe ".create", context: :as_signed_in_user do
+    context "with valid params" do
+      it "returns valid response" do
+        create(:manage_users_group_access_right)
+        create(:manage_chapters_group_access_right)
+
+        params = {
+          title: "Title"
+        }
+
+        post "/api/groups.json", params: params
+
+        expect(response).to have_http_status(200)
+        expect(response).to match_json_schema("controllers/api/groups_controller/create/200")
+      end
+    end
+  end
 end

@@ -7,5 +7,7 @@ class GroupUser < ApplicationRecord
   belongs_to :group, counter_cache: :users_count
   belongs_to :user
 
+  has_many :group_user_access_rights, dependent: :destroy
+
   validates :user_id, uniqueness: { scope: [:group_id] }
 end
