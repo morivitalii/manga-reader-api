@@ -89,6 +89,7 @@ Rails.application.routes.draw do
 
     resources :groups, only: [:index, :show, :create, :update] do
       scope module: :groups do
+        resources :users, only: [:index, :show]
         resources :favorites, only: [:create, :destroy]
       end
     end
