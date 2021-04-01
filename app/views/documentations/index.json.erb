@@ -1071,6 +1071,9 @@
           "204": {
             "$ref": "#/components/responses/no_content"
           },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
           "403": {
             "$ref": "#/components/responses/forbidden"
           },
@@ -1107,6 +1110,9 @@
           "204": {
             "$ref": "#/components/responses/no_content"
           },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
           "403": {
             "$ref": "#/components/responses/forbidden"
           },
@@ -1142,6 +1148,9 @@
         "responses": {
           "204": {
             "$ref": "#/components/responses/no_content"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
           },
           "403": {
             "$ref": "#/components/responses/forbidden"
@@ -1195,6 +1204,9 @@
                 "schema": <%= schema("titles/cover_controller/update/200") %>
               }
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
           },
           "403": {
             "$ref": "#/components/responses/forbidden"
@@ -1492,6 +1504,9 @@
           "204": {
             "$ref": "#/components/responses/no_content"
           },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
           "403": {
             "$ref": "#/components/responses/forbidden"
           },
@@ -1527,6 +1542,9 @@
           "204": {
             "$ref": "#/components/responses/no_content"
           },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
           "403": {
             "$ref": "#/components/responses/forbidden"
           },
@@ -1561,6 +1579,9 @@
         "responses": {
           "204": {
             "$ref": "#/components/responses/no_content"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
           },
           "403": {
             "$ref": "#/components/responses/forbidden"
@@ -1782,6 +1803,9 @@
                 "schema": <%= schema("titles/chapters/cover_controller/update/200") %>
               }
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
           },
           "403": {
             "$ref": "#/components/responses/forbidden"
@@ -3688,6 +3712,61 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
+      }
+    },
+    "/groups/{group_id}.json": {
+      "put": {
+        "tags": ["Groups"],
+        "summary": "Update group",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/group_id" }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "Title"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("groups_controller/update/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("groups_controller/update/422") %>
+              }
+            }
           },
           "500": {
             "$ref": "#/components/responses/internal_server_error"

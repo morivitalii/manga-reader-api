@@ -1,4 +1,6 @@
 class Api::GroupsPolicy < Api::ApplicationPolicy
+  include Api::GroupAccessRights
+
   def index?
     true
   end
@@ -11,7 +13,15 @@ class Api::GroupsPolicy < Api::ApplicationPolicy
     user?
   end
 
+  def update?
+    user? && user_have_group_access_right?(record, :manage_group)
+  end
+
   def permitted_attributes_for_create
+    [:title]
+  end
+
+  def permitted_attributes_for_update
     [:title]
   end
 
