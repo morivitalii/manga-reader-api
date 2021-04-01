@@ -3774,6 +3774,71 @@
         }
       }
     },
+    "/groups/{group_id}/users.json": {
+      "get": {
+        "tags": ["Groups"],
+        "summary": "Group users",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/group_id" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("groups/users_controller/index/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
+      }
+    },
+    "/groups/{group_id}/users/{id}.json": {
+      "get": {
+        "tags": ["Groups"],
+        "summary": "Group user",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/group_id" },
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("groups/users_controller/show/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
+      }
+    },
     "/groups/{group_id}/favorites.json": {
       "post": {
         "tags": ["Groups"],

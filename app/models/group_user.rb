@@ -8,6 +8,7 @@ class GroupUser < ApplicationRecord
   belongs_to :user
 
   has_many :group_user_access_rights, dependent: :destroy
+  has_many :group_access_rights, through: :group_user_access_rights
 
   validates :user_id, uniqueness: { scope: [:group_id] }
 end
