@@ -1,10 +1,10 @@
 class Api::GroupsController < Api::ApplicationController
   include Pagination
 
-  before_action :set_group, only: [:show]
+  before_action :set_group, only: [:show, :update]
 
   before_action -> { authorize(Api::GroupsPolicy) }, only: [:index, :create]
-  before_action -> { authorize(Api::GroupsPolicy, @group) }, only: [:show]
+  before_action -> { authorize(Api::GroupsPolicy, @group) }, only: [:show, :update]
 
   skip_after_action :verify_policy_scoped, only: [:create]
 
@@ -40,6 +40,19 @@ class Api::GroupsController < Api::ApplicationController
     end
   end
 
+  def update
+    service = Api::UpdateGroup.new(update_params)
+
+    if service.call
+      group = Api::GroupDecorator.decorate(service.group)
+      group = Api::GroupSerializer.serialize(group)
+
+      render json: group, status: 200
+    else
+      render json: service.errors, status: 422
+    end
+  end
+
   private
 
   def set_group
@@ -48,6 +61,10 @@ class Api::GroupsController < Api::ApplicationController
 
   def create_params
     permitted_attributes(Api::GroupsPolicy, :create).merge(user: Current.user)
+  end
+
+  def update_params
+    permitted_attributes(Api::GroupsPolicy, :create).merge(group: @group)
   end
 
   def group_scope
