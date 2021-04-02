@@ -17,6 +17,10 @@ class Api::Groups::UsersPolicy < Api::ApplicationPolicy
     user? && user_have_group_access_right?(options[:group], :manage_users)
   end
 
+  def destroy?
+    user? && user_have_group_access_right?(options[:group], :manage_users)
+  end
+
   def permitted_attributes_for_create
     [:user_id, access_rights: []]
   end

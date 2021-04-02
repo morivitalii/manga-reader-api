@@ -1,11 +1,11 @@
 class Api::Groups::UsersController < Api::ApplicationController
-  before_action :set_group, only: [:index, :show, :create, :update]
-  before_action :set_group_user, only: [:show, :update]
+  before_action :set_group, only: [:index, :show, :create, :update, :destroy]
+  before_action :set_group_user, only: [:show, :update, :destroy]
 
   before_action -> { authorize(Api::Groups::UsersPolicy) }, only: [:index]
   before_action -> { authorize(Api::Groups::UsersPolicy, group: @group) }, only: [:create]
   before_action -> { authorize(Api::Groups::UsersPolicy, group_user: @group_user) }, only: [:show]
-  before_action -> { authorize(Api::Groups::UsersPolicy, group: @group, group_user: @group_user) }, only: [:update]
+  before_action -> { authorize(Api::Groups::UsersPolicy, group: @group, group_user: @group_user) }, only: [:update, :destroy]
 
   def index
     query = group_users_scope.order(id: :asc)
@@ -99,6 +99,16 @@ class Api::Groups::UsersController < Api::ApplicationController
       group_user = Api::GroupUserSerializer.serialize(group_user)
 
       render json: group_user, status: 200
+    else
+      render json: service.errors, status: 422
+    end
+  end
+
+  def destroy
+    service = Api::Groups::DeleteUser.new(group_user: @group_user)
+
+    if service.call
+      head 204
     else
       render json: service.errors, status: 422
     end
