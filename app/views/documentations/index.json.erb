@@ -3618,7 +3618,7 @@
                 "$ref": "#/components/headers/X-Pagination-Page-Number"
               },
               "X-Pagination-Page-Items-Count": {
-       Groups         "$ref": "#/components/headers/X-Pagination-Page-Items-Count"
+              "$ref": "#/components/headers/X-Pagination-Page-Items-Count"
               }
             },
             "content": {
@@ -3717,15 +3717,13 @@
             "$ref": "#/components/responses/internal_server_error"
           }
         }
-      }
-    },
-    "/groups/{group_id}.json": {
+      },
       "put": {
         "tags": ["Groups"],
         "summary": "Update group",
         "description": "",
         "parameters": [
-          { "$ref": "#/components/parameters/group_id" }
+          { "$ref": "#/components/parameters/id" }
         ],
         "requestBody": {
           "content": {
@@ -3892,6 +3890,64 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Groups"],
+        "summary": "Update group user",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/group_id" }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "access_rights": {
+                    "type": "array",
+                    "description": "Access rights",
+                    "items": {
+                      "type": "string",
+                      "enum": ["manage_group", "manage_users", "manage_chapters"],
+                      "example": "manage_group"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("groups/users_controller/update/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("groups/users_controller/update/422") %>
+              }
+            }
           },
           "500": {
             "$ref": "#/components/responses/internal_server_error"
