@@ -3953,6 +3953,35 @@
             "$ref": "#/components/responses/internal_server_error"
           }
         }
+      },
+      "delete": {
+        "tags": ["Groups"],
+        "summary": "Delete group user",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/group_id" },
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/no_content"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "$ref": "#/components/responses/unprocessable_entity"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
       }
     },
     "/groups/{group_id}/favorites.json": {
