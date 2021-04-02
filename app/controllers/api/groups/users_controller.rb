@@ -1,10 +1,11 @@
 class Api::Groups::UsersController < Api::ApplicationController
-  before_action :set_group, only: [:index, :show, :create]
-  before_action :set_group_user, only: [:show]
+  before_action :set_group, only: [:index, :show, :create, :update]
+  before_action :set_group_user, only: [:show, :update]
 
   before_action -> { authorize(Api::Groups::UsersPolicy) }, only: [:index]
   before_action -> { authorize(Api::Groups::UsersPolicy, group: @group) }, only: [:create]
   before_action -> { authorize(Api::Groups::UsersPolicy, group_user: @group_user) }, only: [:show]
+  before_action -> { authorize(Api::Groups::UsersPolicy, group: @group, group_user: @group_user) }, only: [:update]
 
   def index
     query = group_users_scope.order(id: :asc)
@@ -79,6 +80,30 @@ class Api::Groups::UsersController < Api::ApplicationController
     end
   end
 
+  def update
+    service = Api::Groups::UpdateUser.new(update_params)
+
+    if service.call
+      ActiveRecord::Associations::Preloader.new.preload(
+        service.group_user, [
+          :group_access_rights,
+          user: {
+            user_setting: {
+              avatar_attachment: :blob
+            }
+          }
+        ]
+      )
+
+      group_user = Api::GroupUserDecorator.decorate(service.group_user)
+      group_user = Api::GroupUserSerializer.serialize(group_user)
+
+      render json: group_user, status: 200
+    else
+      render json: service.errors, status: 422
+    end
+  end
+
   private
 
   def set_group
@@ -91,6 +116,10 @@ class Api::Groups::UsersController < Api::ApplicationController
 
   def create_params
     permitted_attributes(Api::Groups::UsersPolicy, :create).merge(group: @group)
+  end
+
+  def update_params
+    permitted_attributes(Api::Groups::UsersPolicy, :update).merge(group_user: @group_user)
   end
 
   def group_scope

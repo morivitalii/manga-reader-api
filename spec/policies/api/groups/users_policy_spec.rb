@@ -45,5 +45,22 @@ RSpec.describe Api::Groups::UsersPolicy do
         it { is_expected.to_not permit(current_user, group: group) }
       end
     end
+
+    permissions :update? do
+      let(:group) { create(:group) }
+      let(:group_user) { create(:group_user, group: group) }
+
+      context "with manage group access right" do
+        before(:each) do
+          create(:group_user_with_manage_users_access_right, group: group, user: current_user)
+        end
+
+        it { is_expected.to permit(current_user, group: group, group_user: group_user) }
+      end
+
+      context "without manage group access right" do
+        it { is_expected.to_not permit(current_user, group: group, group_user: group_user) }
+      end
+    end
   end
 end
