@@ -3618,7 +3618,7 @@
                 "$ref": "#/components/headers/X-Pagination-Page-Number"
               },
               "X-Pagination-Page-Items-Count": {
-                "$ref": "#/components/headers/X-Pagination-Page-Items-Count"
+       Groups         "$ref": "#/components/headers/X-Pagination-Page-Items-Count"
               }
             },
             "content": {
@@ -3799,6 +3799,66 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Groups"],
+        "summary": "Create group user",
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user_id": {
+                    "type": "integer",
+                    "description": "User ID",
+                    "examples": [1]
+                  },
+                  "access_rights": {
+                    "type": "array",
+                    "description": "Access rights",
+                    "items": {
+                      "type": "string",
+                      "enum": ["manage_group", "manage_users", "manage_chapters"],
+                      "examples": ["manage_group"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("groups/users_controller/create/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("groups/users_controller/create/422") %>
+              }
+            }
           },
           "500": {
             "$ref": "#/components/responses/internal_server_error"

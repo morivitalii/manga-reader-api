@@ -2,7 +2,7 @@ class Api::Groups::FavoritesController < Api::ApplicationController
   before_action :set_group, only: [:create, :destroy]
   before_action :set_favorite, only: [:destroy]
   before_action -> { authorize(Api::Groups::FavoritesPolicy) }, only: [:create]
-  before_action -> { authorize(Api::Groups::FavoritesPolicy, @favorite) }, only: [:destroy]
+  before_action -> { authorize(Api::Groups::FavoritesPolicy, favorite: @favorite) }, only: [:destroy]
 
   def create
     service = Api::Groups::CreateFavorite.new(group: @group, user: Current.user)

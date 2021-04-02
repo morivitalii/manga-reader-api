@@ -11,7 +11,7 @@ RSpec.describe Api::UsersPolicy do
     permissions :show? do
       let(:user) { create(:user) }
 
-      it { is_expected.to permit(current_user, user) }
+      it { is_expected.to permit(current_user, user: user) }
     end
   end
 
@@ -23,7 +23,7 @@ RSpec.describe Api::UsersPolicy do
     permissions :show? do
       let(:user) { create(:user) }
 
-      it { is_expected.to permit(current_user, user) }
+      it { is_expected.to permit(current_user, user: user) }
     end
   end
 end

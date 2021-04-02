@@ -3,7 +3,7 @@ class Api::Titles::Chapters::ToDraftController < Api::ApplicationController
   before_action :set_title, only: [:update]
   before_action :set_chapter, only: [:update]
 
-  before_action -> { authorize(Api::Titles::Chapters::ToDraftPolicy, @chapter) }, only: [:update]
+  before_action -> { authorize(Api::Titles::Chapters::ToDraftPolicy, chapter: @chapter) }, only: [:update]
 
   def update
     service = Api::Titles::Chapters::ToDraft.new(chapter: @chapter)

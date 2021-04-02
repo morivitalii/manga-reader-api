@@ -17,5 +17,7 @@ class Api::Groups::CreateFavorite
         resource: group
       )
     end
+
+    true
   end
 end

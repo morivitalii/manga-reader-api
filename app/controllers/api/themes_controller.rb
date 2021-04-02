@@ -2,7 +2,7 @@ class Api::ThemesController < Api::ApplicationController
   before_action :set_theme, only: [:show]
 
   before_action -> { authorize(Api::ThemesPolicy) }, only: [:index]
-  before_action -> { authorize(Api::ThemesPolicy, @theme) }, only: [:show]
+  before_action -> { authorize(Api::ThemesPolicy, theme: @theme) }, only: [:show]
 
   def index
     query = themes_scope.joins(tag: :translations).order("tag_translations.title ASC")

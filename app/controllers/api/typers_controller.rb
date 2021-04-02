@@ -4,7 +4,7 @@ class Api::TypersController < Api::ApplicationController
   before_action :set_typer, only: [:show]
 
   before_action -> { authorize(Api::TypersPolicy) }, only: [:index]
-  before_action -> { authorize(Api::TypersPolicy, @typer) }, only: [:show]
+  before_action -> { authorize(Api::TypersPolicy, typer: @typer) }, only: [:show]
 
   def index
     typers = typer_scope.order(id: :asc)

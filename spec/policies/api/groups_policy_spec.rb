@@ -15,13 +15,13 @@ RSpec.describe Api::GroupsPolicy do
     permissions :show? do
       let(:group) { create(:group) }
 
-      it { is_expected.to permit(current_user, group) }
+      it { is_expected.to permit(current_user, group: group) }
     end
 
     permissions :update? do
       let(:group) { create(:group) }
 
-      it { is_expected.to_not permit(current_user, group) }
+      it { is_expected.to_not permit(current_user, group: group) }
     end
   end
 
@@ -33,7 +33,7 @@ RSpec.describe Api::GroupsPolicy do
     permissions :show? do
       let(:group) { create(:group) }
 
-      it { is_expected.to permit(current_user, group) }
+      it { is_expected.to permit(current_user, group: group) }
     end
 
     permissions :update? do
@@ -44,7 +44,7 @@ RSpec.describe Api::GroupsPolicy do
           create(:group_user_with_manage_group_access_right, group: group, user: current_user)
         end
 
-        it { is_expected.to permit(current_user, group) }
+        it { is_expected.to permit(current_user, group: group) }
       end
 
       context "without manage group access right" do
@@ -52,7 +52,7 @@ RSpec.describe Api::GroupsPolicy do
           create(:group_user, group: group, user: current_user)
         end
 
-        it { is_expected.to_not permit(current_user, group) }
+        it { is_expected.to_not permit(current_user, group: group) }
       end
     end
   end

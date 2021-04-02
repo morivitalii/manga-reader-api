@@ -4,7 +4,7 @@ class Api::UsersController < Api::ApplicationController
   before_action :set_user, only: [:show]
 
   before_action -> { authorize(Api::UsersPolicy) }, only: [:index]
-  before_action -> { authorize(Api::UsersPolicy, @user) }, only: [:show]
+  before_action -> { authorize(Api::UsersPolicy, user: @user) }, only: [:show]
 
   def index
     users = user_scope.order(username: :asc)

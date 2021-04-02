@@ -7,7 +7,7 @@ RSpec.describe Api::Tags::TranslationsPolicy do
     permissions :show? do
       let(:tag) { create(:tag) }
 
-      it { is_expected.to permit(current_user, tag) }
+      it { is_expected.to permit(current_user, tag: tag) }
     end
   end
 
@@ -15,7 +15,7 @@ RSpec.describe Api::Tags::TranslationsPolicy do
     permissions :show? do
       let(:tag) { create(:tag) }
 
-      it { is_expected.to permit(current_user, tag) }
+      it { is_expected.to permit(current_user, tag: tag) }
     end
   end
 end

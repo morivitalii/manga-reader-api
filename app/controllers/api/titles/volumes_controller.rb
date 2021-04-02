@@ -3,7 +3,7 @@ class Api::Titles::VolumesController < Api::ApplicationController
   before_action :set_volume, only: [:show]
 
   before_action -> { authorize(Api::Titles::VolumesPolicy) }, only: [:index]
-  before_action -> { authorize(Api::Titles::VolumesPolicy, @volume) }, only: [:show]
+  before_action -> { authorize(Api::Titles::VolumesPolicy, volume: @volume) }, only: [:show]
 
   def index
     volumes = volumes_scope.order("volumes.number ASC").all

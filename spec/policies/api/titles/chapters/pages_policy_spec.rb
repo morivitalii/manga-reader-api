@@ -15,7 +15,7 @@ RSpec.describe Api::Titles::Chapters::PagesPolicy do
     permissions :show? do
       let(:page) { create(:page) }
 
-      it { is_expected.to permit(current_user, page) }
+      it { is_expected.to permit(current_user, page: page) }
     end
   end
 
@@ -27,7 +27,7 @@ RSpec.describe Api::Titles::Chapters::PagesPolicy do
     permissions :show? do
       let(:page) { create(:page) }
 
-      it { is_expected.to permit(current_user, page) }
+      it { is_expected.to permit(current_user, page: page) }
     end
   end
 end

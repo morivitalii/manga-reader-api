@@ -4,7 +4,7 @@ class Api::EditorsController < Api::ApplicationController
   before_action :set_editor, only: [:show]
 
   before_action -> { authorize(Api::EditorsPolicy) }, only: [:index]
-  before_action -> { authorize(Api::EditorsPolicy, @editor) }, only: [:show]
+  before_action -> { authorize(Api::EditorsPolicy, editor: @editor) }, only: [:show]
 
   def index
     editors = editor_scope.order(id: :asc)

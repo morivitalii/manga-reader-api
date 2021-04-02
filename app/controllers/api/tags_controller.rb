@@ -2,7 +2,7 @@ class Api::TagsController < Api::ApplicationController
   before_action :set_tag, only: [:show]
 
   before_action -> { authorize(Api::TagsPolicy) }, only: [:index]
-  before_action -> { authorize(Api::TagsPolicy, @tag) }, only: [:show]
+  before_action -> { authorize(Api::TagsPolicy, tag: @tag) }, only: [:show]
 
   def index
     query = tag_scope.joins(:translations).order("tag_translations.title ASC")

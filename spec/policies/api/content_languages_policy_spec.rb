@@ -11,7 +11,7 @@ RSpec.describe Api::ContentLanguagesPolicy do
     permissions :show? do
       let(:content_language) { create(:content_language) }
 
-      it { is_expected.to permit(current_user, content_language) }
+      it { is_expected.to permit(current_user, content_language: content_language) }
     end
   end
 
@@ -23,7 +23,7 @@ RSpec.describe Api::ContentLanguagesPolicy do
     permissions :show? do
       let(:content_language) { create(:content_language) }
 
-      it { is_expected.to permit(current_user, content_language) }
+      it { is_expected.to permit(current_user, content_language: content_language) }
     end
   end
 end

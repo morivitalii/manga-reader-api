@@ -5,7 +5,7 @@ class Api::ArtistsController < Api::ApplicationController
   before_action :set_artist_associations, only: [:show]
 
   before_action -> { authorize(Api::ArtistsPolicy) }, only: [:index]
-  before_action -> { authorize(Api::ArtistsPolicy, @artist) }, only: [:show]
+  before_action -> { authorize(Api::ArtistsPolicy, artist: @artist) }, only: [:show]
 
   def index
     artists = artists_scope.joins(:translations).order("artist_translations.name ASC").all

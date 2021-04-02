@@ -21,8 +21,8 @@ module Authorization
 
   private
 
-  def authorize(policy_class, record = nil)
-    super(record, policy_class: policy_class)
+  def authorize(policy_class, options = {})
+    super(options, policy_class: policy_class)
   end
 
   def policy_scope(policy_class, scope)

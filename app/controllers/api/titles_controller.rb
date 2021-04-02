@@ -5,7 +5,7 @@ class Api::TitlesController < Api::ApplicationController
   before_action :set_title_associations, only: [:show]
 
   before_action -> { authorize(Api::TitlesPolicy) }, only: [:index, :create]
-  before_action -> { authorize(Api::TitlesPolicy, @title) }, only: [:show]
+  before_action -> { authorize(Api::TitlesPolicy, title: @title) }, only: [:show]
 
   skip_after_action :verify_policy_scoped, only: [:create]
 

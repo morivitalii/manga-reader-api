@@ -13,7 +13,7 @@ RSpec.describe Api::Titles::BookmarksPolicy do
     permissions :create?, :destroy? do
       let(:bookmark) { create(:bookmark, user: current_user) }
 
-      it { is_expected.to permit(current_user, bookmark) }
+      it { is_expected.to permit(current_user, bookmark: bookmark) }
     end
   end
 end

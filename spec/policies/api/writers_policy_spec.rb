@@ -11,7 +11,7 @@ RSpec.describe Api::WritersPolicy do
     permissions :show? do
       let(:writer) { create(:writer) }
 
-      it { is_expected.to permit(current_user, writer) }
+      it { is_expected.to permit(current_user, writer: writer) }
     end
   end
 
@@ -23,7 +23,7 @@ RSpec.describe Api::WritersPolicy do
     permissions :show? do
       let(:writer) { create(:writer) }
 
-      it { is_expected.to permit(current_user, writer) }
+      it { is_expected.to permit(current_user, writer: writer) }
     end
   end
 end

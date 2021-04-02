@@ -2,7 +2,7 @@ class Api::DemographicsController < Api::ApplicationController
   before_action :set_demographic, only: [:show]
 
   before_action -> { authorize(Api::DemographicsPolicy) }, only: [:index]
-  before_action -> { authorize(Api::DemographicsPolicy, @demographic) }, only: [:show]
+  before_action -> { authorize(Api::DemographicsPolicy, demographic: @demographic) }, only: [:show]
 
   def index
     query = demographics_scope.joins(tag: :translations).order("tag_translations.title ASC")

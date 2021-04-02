@@ -11,7 +11,7 @@ RSpec.describe Api::TagsPolicy do
     permissions :show? do
       let(:tag) { create(:tag) }
 
-      it { is_expected.to permit(current_user, tag) }
+      it { is_expected.to permit(current_user, tag: tag) }
     end
   end
 
@@ -23,7 +23,7 @@ RSpec.describe Api::TagsPolicy do
     permissions :show? do
       let(:tag) { create(:tag) }
 
-      it { is_expected.to permit(current_user, tag) }
+      it { is_expected.to permit(current_user, tag: tag) }
     end
   end
 end

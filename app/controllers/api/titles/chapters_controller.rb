@@ -4,7 +4,7 @@ class Api::Titles::ChaptersController < Api::ApplicationController
   before_action :set_chapter_associations, only: [:show]
 
   before_action -> { authorize(Api::Titles::ChaptersPolicy) }, only: [:index, :create]
-  before_action -> { authorize(Api::Titles::ChaptersPolicy, @chapter) }, only: [:show]
+  before_action -> { authorize(Api::Titles::ChaptersPolicy, chapter: @chapter) }, only: [:show]
 
   def index
     chapters = chapters_scope.order("chapters.number ASC").all

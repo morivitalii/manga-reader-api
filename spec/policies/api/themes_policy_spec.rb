@@ -11,7 +11,7 @@ RSpec.describe Api::ThemesPolicy do
     permissions :show? do
       let(:theme) { create(:theme) }
 
-      it { is_expected.to permit(current_user, theme) }
+      it { is_expected.to permit(current_user, theme: theme) }
     end
   end
 
@@ -23,7 +23,7 @@ RSpec.describe Api::ThemesPolicy do
     permissions :show? do
       let(:theme) { create(:theme) }
 
-      it { is_expected.to permit(current_user, theme) }
+      it { is_expected.to permit(current_user, theme: theme) }
     end
   end
 end

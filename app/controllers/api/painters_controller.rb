@@ -4,7 +4,7 @@ class Api::PaintersController < Api::ApplicationController
   before_action :set_painter, only: [:show]
 
   before_action -> { authorize(Api::PaintersPolicy) }, only: [:index]
-  before_action -> { authorize(Api::PaintersPolicy, @painter) }, only: [:show]
+  before_action -> { authorize(Api::PaintersPolicy, painter: @painter) }, only: [:show]
 
   def index
     painters = painter_scope.order(id: :asc)

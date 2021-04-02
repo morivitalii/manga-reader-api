@@ -11,7 +11,7 @@ RSpec.describe Api::TypersPolicy do
     permissions :show? do
       let(:typer) { create(:typer) }
 
-      it { is_expected.to permit(current_user, typer) }
+      it { is_expected.to permit(current_user, typer: typer) }
     end
   end
 
@@ -23,7 +23,7 @@ RSpec.describe Api::TypersPolicy do
     permissions :show? do
       let(:typer) { create(:typer) }
 
-      it { is_expected.to permit(current_user, typer) }
+      it { is_expected.to permit(current_user, typer: typer) }
     end
   end
 end

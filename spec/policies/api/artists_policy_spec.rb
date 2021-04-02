@@ -11,7 +11,7 @@ RSpec.describe Api::ArtistsPolicy do
     permissions :show? do
       let(:artist) { create(:artist) }
 
-      it { is_expected.to permit(current_user, artist) }
+      it { is_expected.to permit(current_user, artist: artist) }
     end
   end
 
@@ -23,7 +23,7 @@ RSpec.describe Api::ArtistsPolicy do
     permissions :show? do
       let(:artist) { create(:artist) }
 
-      it { is_expected.to permit(current_user, artist) }
+      it { is_expected.to permit(current_user, artist: artist) }
     end
   end
 end

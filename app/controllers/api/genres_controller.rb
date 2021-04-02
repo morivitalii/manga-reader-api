@@ -2,7 +2,7 @@ class Api::GenresController < Api::ApplicationController
   before_action :set_genre, only: [:show]
 
   before_action -> { authorize(Api::GenresPolicy) }, only: [:index]
-  before_action -> { authorize(Api::GenresPolicy, @genre) }, only: [:show]
+  before_action -> { authorize(Api::GenresPolicy, genre: @genre) }, only: [:show]
 
   def index
     query = genres_scope.joins(tag: :translations).order("tag_translations.title ASC")

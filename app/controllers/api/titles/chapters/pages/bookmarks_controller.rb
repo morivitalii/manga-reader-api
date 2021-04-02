@@ -4,7 +4,7 @@ class Api::Titles::Chapters::Pages::BookmarksController < Api::ApplicationContro
   before_action :set_page, only: [:create, :destroy]
   before_action :set_bookmark, only: [:destroy]
   before_action -> { authorize(Api::Titles::Chapters::Pages::BookmarksPolicy) }, only: [:create]
-  before_action -> { authorize(Api::Titles::Chapters::Pages::BookmarksPolicy, @bookmark) }, only: [:destroy]
+  before_action -> { authorize(Api::Titles::Chapters::Pages::BookmarksPolicy, bookmark: @bookmark) }, only: [:destroy]
 
   def create
     service =  Api::Titles::Chapters::Pages::CreateBookmark.new(page: @page, user: Current.user)

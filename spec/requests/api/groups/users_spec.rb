@@ -27,4 +27,23 @@ RSpec.describe Api::Groups::UsersController do
       expect(response).to match_json_schema("controllers/api/groups/users_controller/show/200")
     end
   end
+
+  describe ".create", context: :as_signed_in_user do
+    it "returns valid response" do
+      group = create(:group)
+      _group_user = create(:group_user_with_manage_users_access_right, group: group, user: current_user)
+      user = create(:user)
+      access_right = create(:manage_group_access_right)
+
+      params = {
+        user_id: user.id,
+        access_rights: [access_right.key]
+      }
+
+      post "/api/groups/#{group.to_param}/users.json", params: params
+
+      expect(response).to have_http_status(200)
+      expect(response).to match_json_schema("controllers/api/groups/users_controller/create/200")
+    end
+  end
 end

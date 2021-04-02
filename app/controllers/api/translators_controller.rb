@@ -4,7 +4,7 @@ class Api::TranslatorsController < Api::ApplicationController
   before_action :set_translator, only: [:show]
 
   before_action -> { authorize(Api::TranslatorsPolicy) }, only: [:index]
-  before_action -> { authorize(Api::TranslatorsPolicy, @translator) }, only: [:show]
+  before_action -> { authorize(Api::TranslatorsPolicy, translator: @translator) }, only: [:show]
 
   def index
     translators = translator_scope.order(id: :asc)

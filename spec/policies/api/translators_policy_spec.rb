@@ -11,7 +11,7 @@ RSpec.describe Api::TranslatorsPolicy do
     permissions :show? do
       let(:translator) { create(:translator) }
 
-      it { is_expected.to permit(current_user, translator) }
+      it { is_expected.to permit(current_user, translator: translator) }
     end
   end
 
@@ -23,7 +23,7 @@ RSpec.describe Api::TranslatorsPolicy do
     permissions :show? do
       let(:translator) { create(:translator) }
 
-      it { is_expected.to permit(current_user, translator) }
+      it { is_expected.to permit(current_user, translator: translator) }
     end
   end
 end

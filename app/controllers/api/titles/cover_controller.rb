@@ -1,7 +1,7 @@
 class Api::Titles::CoverController < Api::ApplicationController
   before_action :set_title, only: [:update, :destroy]
 
-  before_action -> { authorize(Api::Titles::CoverPolicy, @title) }, only: [:update, :destroy]
+  before_action -> { authorize(Api::Titles::CoverPolicy, title: @title) }, only: [:update, :destroy]
 
   def update
     service = Api::Titles::UpdateCover.new(update_params)

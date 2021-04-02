@@ -11,7 +11,7 @@ RSpec.describe Api::GenresPolicy do
     permissions :show? do
       let(:genre) { create(:genre) }
 
-      it { is_expected.to permit(current_user, genre) }
+      it { is_expected.to permit(current_user, genre: genre) }
     end
   end
 
@@ -23,7 +23,7 @@ RSpec.describe Api::GenresPolicy do
     permissions :show? do
       let(:genre) { create(:genre) }
 
-      it { is_expected.to permit(current_user, genre) }
+      it { is_expected.to permit(current_user, genre: genre) }
     end
   end
 end

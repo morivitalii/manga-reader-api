@@ -11,7 +11,7 @@ RSpec.describe Api::CleanersPolicy do
     permissions :show? do
       let(:cleaner) { create(:cleaner) }
 
-      it { is_expected.to permit(current_user, cleaner) }
+      it { is_expected.to permit(current_user, cleaner: cleaner) }
     end
   end
 
@@ -23,7 +23,7 @@ RSpec.describe Api::CleanersPolicy do
     permissions :show? do
       let(:cleaner) { create(:cleaner) }
 
-      it { is_expected.to permit(current_user, cleaner) }
+      it { is_expected.to permit(current_user, cleaner: cleaner) }
     end
   end
 end

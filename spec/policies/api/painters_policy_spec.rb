@@ -11,7 +11,7 @@ RSpec.describe Api::PaintersPolicy do
     permissions :show? do
       let(:painter) { create(:painter) }
 
-      it { is_expected.to permit(current_user, painter) }
+      it { is_expected.to permit(current_user, painter: painter) }
     end
   end
 
@@ -23,7 +23,7 @@ RSpec.describe Api::PaintersPolicy do
     permissions :show? do
       let(:painter) { create(:painter) }
 
-      it { is_expected.to permit(current_user, painter) }
+      it { is_expected.to permit(current_user, painter: painter) }
     end
   end
 end
