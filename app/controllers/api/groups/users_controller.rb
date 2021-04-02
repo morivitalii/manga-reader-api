@@ -1,9 +1,10 @@
 class Api::Groups::UsersController < Api::ApplicationController
-  before_action :set_group, only: [:index, :show]
+  before_action :set_group, only: [:index, :show, :create]
   before_action :set_group_user, only: [:show]
 
   before_action -> { authorize(Api::Groups::UsersPolicy) }, only: [:index]
-  before_action -> { authorize(Api::Groups::UsersPolicy, @group_user) }, only: [:show]
+  before_action -> { authorize(Api::Groups::UsersPolicy, group: @group) }, only: [:create]
+  before_action -> { authorize(Api::Groups::UsersPolicy, group_user: @group_user) }, only: [:show]
 
   def index
     query = group_users_scope.order(id: :asc)
@@ -14,8 +15,12 @@ class Api::Groups::UsersController < Api::ApplicationController
 
       ActiveRecord::Associations::Preloader.new.preload(
         group_users, [
-          :user,
-          :group_access_rights
+          :group_access_rights,
+          user: {
+            user_setting: {
+              avatar_attachment: :blob
+            }
+          }
         ]
       )
 
@@ -33,8 +38,12 @@ class Api::Groups::UsersController < Api::ApplicationController
     group_user = Rails.cache.fetch(cache_key) do
       ActiveRecord::Associations::Preloader.new.preload(
         @group_user, [
-          :user,
-          :group_access_rights
+          :group_access_rights,
+          user: {
+            user_setting: {
+              avatar_attachment: :blob
+            }
+          }
         ]
       )
 
@@ -46,6 +55,30 @@ class Api::Groups::UsersController < Api::ApplicationController
     render json: group_user, status: 200
   end
 
+  def create
+    service = Api::Groups::CreateUser.new(create_params)
+
+    if service.call
+      ActiveRecord::Associations::Preloader.new.preload(
+        service.group_user, [
+          :group_access_rights,
+          user: {
+            user_setting: {
+              avatar_attachment: :blob
+            }
+          }
+        ]
+      )
+
+      group_user = Api::GroupUserDecorator.decorate(service.group_user)
+      group_user = Api::GroupUserSerializer.serialize(group_user)
+
+      render json: group_user, status: 200
+    else
+      render json: service.errors, status: 422
+    end
+  end
+
   private
 
   def set_group
@@ -54,6 +87,10 @@ class Api::Groups::UsersController < Api::ApplicationController
 
   def set_group_user
     @group_user = group_users_scope.find(params[:id])
+  end
+
+  def create_params
+    permitted_attributes(Api::Groups::UsersPolicy, :create).merge(group: @group)
   end
 
   def group_scope

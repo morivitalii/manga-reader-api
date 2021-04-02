@@ -7,7 +7,7 @@ RSpec.describe Api::Titles::Chapters::CoverPolicy do
     permissions :update?, :destroy? do
       let(:chapter) { create(:chapter) }
 
-      it { is_expected.to_not permit(current_user, chapter) }
+      it { is_expected.to_not permit(current_user, chapter: chapter) }
     end
   end
 
@@ -15,7 +15,7 @@ RSpec.describe Api::Titles::Chapters::CoverPolicy do
     permissions :update?, :destroy? do
       let(:chapter) { create(:chapter) }
 
-      it { is_expected.to permit(current_user, chapter) }
+      it { is_expected.to permit(current_user, chapter: chapter) }
     end
   end
 end

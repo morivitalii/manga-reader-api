@@ -11,7 +11,7 @@ RSpec.describe Api::FormatsPolicy do
     permissions :show? do
       let(:format) { create(:format) }
 
-      it { is_expected.to permit(current_user, format) }
+      it { is_expected.to permit(current_user, format: format) }
     end
   end
 
@@ -23,7 +23,7 @@ RSpec.describe Api::FormatsPolicy do
     permissions :show? do
       let(:format) { create(:format) }
 
-      it { is_expected.to permit(current_user, format) }
+      it { is_expected.to permit(current_user, format: format) }
     end
   end
 end

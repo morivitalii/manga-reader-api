@@ -11,7 +11,7 @@ RSpec.describe Api::MarksPolicy do
     permissions :show? do
       let(:mark) { create(:mark) }
 
-      it { is_expected.to permit(current_user, mark) }
+      it { is_expected.to permit(current_user, mark: mark) }
     end
   end
 
@@ -23,7 +23,7 @@ RSpec.describe Api::MarksPolicy do
     permissions :show? do
       let(:mark) { create(:mark) }
 
-      it { is_expected.to permit(current_user, mark) }
+      it { is_expected.to permit(current_user, mark: mark) }
     end
   end
 end

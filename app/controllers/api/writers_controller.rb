@@ -5,7 +5,7 @@ class Api::WritersController < Api::ApplicationController
   before_action :set_writer_associations, only: [:show]
 
   before_action -> { authorize(Api::WritersPolicy) }, only: [:index]
-  before_action -> { authorize(Api::WritersPolicy, @writer) }, only: [:show]
+  before_action -> { authorize(Api::WritersPolicy, writer: @writer) }, only: [:show]
 
   def index
     writers = writer_scope.order(id: :asc)

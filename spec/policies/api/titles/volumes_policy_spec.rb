@@ -11,7 +11,7 @@ RSpec.describe Api::Titles::VolumesPolicy do
     permissions :show? do
       let(:volume) { create(:volume) }
 
-      it { is_expected.to permit(current_user, volume) }
+      it { is_expected.to permit(current_user, volume: volume) }
     end
   end
 
@@ -23,7 +23,7 @@ RSpec.describe Api::Titles::VolumesPolicy do
     permissions :show? do
       let(:volume) { create(:volume) }
 
-      it { is_expected.to permit(current_user, volume) }
+      it { is_expected.to permit(current_user, volume: volume) }
     end
   end
 end

@@ -5,7 +5,7 @@ class Api::Titles::Chapters::PagesController < Api::ApplicationController
   before_action :set_page_associations, only: [:show]
 
   before_action -> { authorize(Api::Titles::Chapters::PagesPolicy) }, only: [:index, :create]
-  before_action -> { authorize(Api::Titles::Chapters::PagesPolicy, @page) }, only: [:show]
+  before_action -> { authorize(Api::Titles::Chapters::PagesPolicy, page: @page) }, only: [:show]
 
   def index
     pages = pages_scope.order("pages.number ASC").all

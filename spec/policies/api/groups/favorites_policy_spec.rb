@@ -13,7 +13,7 @@ RSpec.describe Api::Groups::FavoritesPolicy do
     permissions :create?, :destroy? do
       let(:favorite) { create(:favorite, user: current_user) }
 
-      it { is_expected.to permit(current_user, favorite) }
+      it { is_expected.to permit(current_user, favorite: favorite) }
     end
   end
 end

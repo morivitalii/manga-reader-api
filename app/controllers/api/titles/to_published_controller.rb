@@ -1,7 +1,7 @@
 class Api::Titles::ToPublishedController < Api::ApplicationController
   before_action :set_title, only: [:update]
 
-  before_action -> { authorize(Api::Titles::ToPublishedPolicy, @title) }, only: [:update]
+  before_action -> { authorize(Api::Titles::ToPublishedPolicy, title: @title) }, only: [:update]
 
   def update
     service = Api::Titles::ToPublished.new(title: @title)

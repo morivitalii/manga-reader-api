@@ -11,7 +11,7 @@ RSpec.describe Api::DemographicsPolicy do
     permissions :show? do
       let(:demographic) { create(:demographic) }
 
-      it { is_expected.to permit(current_user, demographic) }
+      it { is_expected.to permit(current_user, demographic: demographic) }
     end
   end
 
@@ -23,7 +23,7 @@ RSpec.describe Api::DemographicsPolicy do
     permissions :show? do
       let(:demographic) { create(:demographic) }
 
-      it { is_expected.to permit(current_user, demographic) }
+      it { is_expected.to permit(current_user, demographic: demographic) }
     end
   end
 end

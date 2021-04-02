@@ -1,7 +1,7 @@
 class Api::ApplicationPolicy
-  def initialize(user, record = nil)
+  def initialize(user, options = {})
     @user = user
-    @record = record
+    @options = options
   end
 
   class Scope
@@ -19,7 +19,7 @@ class Api::ApplicationPolicy
 
   private
 
-  attr_reader :user, :record
+  attr_reader :user, :options
 
   def visitor?
     !user?

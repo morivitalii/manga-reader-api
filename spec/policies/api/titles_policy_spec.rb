@@ -11,7 +11,7 @@ RSpec.describe Api::TitlesPolicy do
     permissions :show? do
       let(:title) { create(:title) }
 
-      it { is_expected.to permit(current_user, title) }
+      it { is_expected.to permit(current_user, title: title) }
     end
 
     permissions :create? do
@@ -27,7 +27,7 @@ RSpec.describe Api::TitlesPolicy do
     permissions :show? do
       let(:title) { create(:title) }
 
-      it { is_expected.to permit(current_user, title) }
+      it { is_expected.to permit(current_user, title: title) }
     end
   end
 end

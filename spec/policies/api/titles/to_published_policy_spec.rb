@@ -7,7 +7,7 @@ RSpec.describe Api::Titles::ToPublishedPolicy do
     let(:title) { create(:review_title) }
 
     permissions :update? do
-      it { is_expected.to_not permit(current_user, title) }
+      it { is_expected.to_not permit(current_user, title: title) }
     end
   end
 
@@ -15,7 +15,7 @@ RSpec.describe Api::Titles::ToPublishedPolicy do
     let(:title) { create(:review_title) }
 
     permissions :update? do
-      it { is_expected.to permit(current_user, title) }
+      it { is_expected.to permit(current_user, title: title) }
     end
   end
 end

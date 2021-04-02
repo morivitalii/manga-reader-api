@@ -11,7 +11,7 @@ RSpec.describe Api::EditorsPolicy do
     permissions :show? do
       let(:editor) { create(:editor) }
 
-      it { is_expected.to permit(current_user, editor) }
+      it { is_expected.to permit(current_user, editor: editor) }
     end
   end
 
@@ -23,7 +23,7 @@ RSpec.describe Api::EditorsPolicy do
     permissions :show? do
       let(:editor) { create(:editor) }
 
-      it { is_expected.to permit(current_user, editor) }
+      it { is_expected.to permit(current_user, editor: editor) }
     end
   end
 end

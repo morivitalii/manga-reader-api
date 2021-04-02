@@ -2,7 +2,7 @@ class Api::Titles::Chapters::ToReviewController < Api::ApplicationController
   before_action :set_title, only: [:update]
   before_action :set_chapter, only: [:update]
 
-  before_action -> { authorize(Api::Titles::Chapters::ToReviewPolicy, @chapter) }, only: [:update]
+  before_action -> { authorize(Api::Titles::Chapters::ToReviewPolicy, chapter: @chapter) }, only: [:update]
 
   def update
     service = Api::Titles::Chapters::ToReview.new(chapter: @chapter)

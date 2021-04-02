@@ -3,7 +3,7 @@ class Api::Titles::Chapters::BookmarksController < Api::ApplicationController
   before_action :set_chapter, only: [:create, :destroy]
   before_action :set_bookmark, only: [:destroy]
   before_action -> { authorize(Api::Titles::Chapters::BookmarksPolicy) }, only: [:create]
-  before_action -> { authorize(Api::Titles::Chapters::BookmarksPolicy, @bookmark) }, only: [:destroy]
+  before_action -> { authorize(Api::Titles::Chapters::BookmarksPolicy, bookmark: @bookmark) }, only: [:destroy]
 
   def create
     service = Api::Titles::Chapters::CreateBookmark.new(chapter: @chapter, user: Current.user)

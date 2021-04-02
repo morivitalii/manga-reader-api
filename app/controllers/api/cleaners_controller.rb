@@ -4,7 +4,7 @@ class Api::CleanersController < Api::ApplicationController
   before_action :set_cleaner, only: [:show]
 
   before_action -> { authorize(Api::CleanersPolicy) }, only: [:index]
-  before_action -> { authorize(Api::CleanersPolicy, @cleaner) }, only: [:show]
+  before_action -> { authorize(Api::CleanersPolicy, cleaner: @cleaner) }, only: [:show]
 
   def index
     cleaners = cleaner_scope.order(id: :asc)

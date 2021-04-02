@@ -11,7 +11,7 @@ RSpec.describe Api::InterfaceLanguagesPolicy do
     permissions :show? do
       let(:interface_language) { create(:interface_language) }
 
-      it { is_expected.to permit(current_user, interface_language) }
+      it { is_expected.to permit(current_user, interface_language: interface_language) }
     end
   end
 
@@ -23,7 +23,7 @@ RSpec.describe Api::InterfaceLanguagesPolicy do
     permissions :show? do
       let(:interface_language) { create(:interface_language) }
 
-      it { is_expected.to permit(current_user, interface_language) }
+      it { is_expected.to permit(current_user, interface_language: interface_language) }
     end
   end
 end

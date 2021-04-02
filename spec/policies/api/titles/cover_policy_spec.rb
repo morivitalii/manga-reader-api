@@ -7,7 +7,7 @@ RSpec.describe Api::Titles::CoverPolicy do
     permissions :update?, :destroy? do
       let(:title) { create(:title) }
 
-      it { is_expected.to_not permit(current_user, title) }
+      it { is_expected.to_not permit(current_user, title: title) }
     end
   end
 
@@ -15,7 +15,7 @@ RSpec.describe Api::Titles::CoverPolicy do
     permissions :update?, :destroy? do
       let(:title) { create(:title) }
 
-      it { is_expected.to permit(current_user, title) }
+      it { is_expected.to permit(current_user, title: title) }
     end
   end
 end

@@ -4,7 +4,7 @@ class Api::GroupsController < Api::ApplicationController
   before_action :set_group, only: [:show, :update]
 
   before_action -> { authorize(Api::GroupsPolicy) }, only: [:index, :create]
-  before_action -> { authorize(Api::GroupsPolicy, @group) }, only: [:show, :update]
+  before_action -> { authorize(Api::GroupsPolicy, group: @group) }, only: [:show, :update]
 
   skip_after_action :verify_policy_scoped, only: [:create]
 

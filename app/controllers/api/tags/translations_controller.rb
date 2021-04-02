@@ -2,7 +2,7 @@ class Api::Tags::TranslationsController < Api::ApplicationController
   before_action :set_tag, only: [:show]
   before_action :set_tag_associations, only: [:show]
 
-  before_action -> { authorize(Api::Tags::TranslationsPolicy, @tag) }, only: [:show]
+  before_action -> { authorize(Api::Tags::TranslationsPolicy, tag: @tag) }, only: [:show]
 
   def show
     tag = Api::TagDecorator.decorate(@tag)

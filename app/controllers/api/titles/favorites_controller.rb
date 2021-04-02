@@ -2,7 +2,7 @@ class Api::Titles::FavoritesController < Api::ApplicationController
   before_action :set_title, only: [:create, :destroy]
   before_action :set_favorite, only: [:destroy]
   before_action -> { authorize(Api::Titles::FavoritesPolicy) }, only: [:create]
-  before_action -> { authorize(Api::Titles::FavoritesPolicy, @favorite) }, only: [:destroy]
+  before_action -> { authorize(Api::Titles::FavoritesPolicy, favorite: @favorite) }, only: [:destroy]
 
   def create
     service = Api::Titles::CreateFavorite.new(title: @title, user: Current.user)

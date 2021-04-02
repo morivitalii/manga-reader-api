@@ -2,7 +2,7 @@ class Api::MarksController < Api::ApplicationController
   before_action :set_mark, only: [:show]
 
   before_action -> { authorize(Api::MarksPolicy) }, only: [:index]
-  before_action -> { authorize(Api::MarksPolicy, @mark) }, only: [:show]
+  before_action -> { authorize(Api::MarksPolicy, mark: @mark) }, only: [:show]
 
   def index
     query = marks_scope.joins(tag: :translations).order("tag_translations.title ASC")

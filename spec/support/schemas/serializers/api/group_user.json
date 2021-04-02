@@ -22,7 +22,7 @@
       "examples": [1]
     },
     "user": {
-      "$ref": "file:/serializers/api/group.json#"
+      "$ref": "file:/serializers/api/user.json#"
     },
     "access_rights": {
       "type": "array",

@@ -1,7 +1,7 @@
 class Api::Titles::ToDraftController < Api::ApplicationController
   before_action :set_title, only: [:update]
 
-  before_action -> { authorize(Api::Titles::ToDraftPolicy, @title) }, only: [:update]
+  before_action -> { authorize(Api::Titles::ToDraftPolicy, title: @title) }, only: [:update]
 
   def update
     service = Api::Titles::ToDraft.new(title: @title)
