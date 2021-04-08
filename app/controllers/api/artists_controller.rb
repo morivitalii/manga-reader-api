@@ -2,7 +2,6 @@ class Api::ArtistsController < Api::ApplicationController
   include Pagination
 
   before_action :set_artist, only: [:show]
-  before_action :set_artist_associations, only: [:show]
 
   before_action -> { authorize(Api::ArtistsPolicy) }, only: [:index]
   before_action -> { authorize(Api::ArtistsPolicy, artist: @artist) }, only: [:show]
@@ -26,6 +25,12 @@ class Api::ArtistsController < Api::ApplicationController
   end
 
   def show
+    ActiveRecord::Associations::Preloader.new.preload(
+      @artist, [
+        Artist.translations_associations
+      ]
+    )
+
     artist = Api::ArtistDecorator.decorate(@artist)
     artist = Api::ArtistSerializer.serialize(artist)
 
@@ -40,13 +45,5 @@ class Api::ArtistsController < Api::ApplicationController
 
   def artists_scope
     policy_scope(Api::ArtistsPolicy, Artist)
-  end
-
-  def set_artist_associations
-    ActiveRecord::Associations::Preloader.new.preload(
-      @artist, [
-        Artist.translations_associations
-      ]
-    )
   end
 end

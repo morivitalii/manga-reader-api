@@ -2,7 +2,6 @@ class Api::WritersController < Api::ApplicationController
   include Pagination
 
   before_action :set_writer, only: [:show]
-  before_action :set_writer_associations, only: [:show]
 
   before_action -> { authorize(Api::WritersPolicy) }, only: [:index]
   before_action -> { authorize(Api::WritersPolicy, writer: @writer) }, only: [:show]
@@ -51,13 +50,5 @@ class Api::WritersController < Api::ApplicationController
 
   def writer_scope
     policy_scope(Api::WritersPolicy, Writer)
-  end
-
-  def set_writer_associations
-    ActiveRecord::Associations::Preloader.new.preload(
-      @writer, [
-        artist: Artist.translations_associations
-      ]
-    )
   end
 end

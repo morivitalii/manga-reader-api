@@ -1476,6 +1476,100 @@
             "$ref": "#/components/responses/internal_server_error"
           }
         }
+      },
+      "put": {
+        "tags": ["Chapters"],
+        "summary": "Update chapter",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/title_id" },
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Title",
+                    "examples": ["Title"]
+                  },
+                  "number": {
+                    "type": "integer",
+                    "description": "Number",
+                    "examples": [1]
+                  },
+                  "volume_id": {
+                    "type": "integer",
+                    "description": "Volume ID",
+                    "examples": [1]
+                  },
+                  "cleaners_ids": {
+                    "type": "array",
+                    "description": "Cleaners",
+                    "items": {
+                      "type": "integer",
+                      "examples": [1]
+                    }
+                  },
+                  "translators_ids": {
+                    "type": "array",
+                    "description": "Translators",
+                    "items": {
+                      "type": "integer",
+                      "examples": [1]
+                    }
+                  },
+                  "editors_ids": {
+                    "type": "array",
+                    "description": "Editors",
+                    "items": {
+                      "type": "integer",
+                      "examples": [1]
+                    }
+                  },
+                  "typers_ids": {
+                    "type": "array",
+                    "description": "Typers",
+                    "items": {
+                      "type": "integer",
+                      "examples": [1]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/chapters_controller/update/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/chapters_controller/update/422") %>
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
       }
     },
     "/titles/{title_id}/chapters/{chapter_id}/to_review.json": {

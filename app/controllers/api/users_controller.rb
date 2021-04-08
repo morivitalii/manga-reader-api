@@ -14,9 +14,9 @@ class Api::UsersController < Api::ApplicationController
 
     ActiveRecord::Associations::Preloader.new.preload(
       users, [
-        user_setting: [
+        user_setting: {
           avatar_attachment: :blob
-        ]
+        }
       ]
     )
 
@@ -32,9 +32,9 @@ class Api::UsersController < Api::ApplicationController
     user = Rails.cache.fetch(cache_key) do
       ActiveRecord::Associations::Preloader.new.preload(
         @user, [
-          user_setting: [
+          user_setting: {
             avatar_attachment: :blob
-          ]
+          }
         ]
       )
 

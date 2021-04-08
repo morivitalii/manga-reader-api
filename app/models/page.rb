@@ -19,18 +19,4 @@ class Page < ApplicationRecord
   validates :number,
     numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 10_000 },
     uniqueness: { scope: [:chapter_id] }
-
-  validate :validate_user_belongs_to_chapter_group, on: :create
-
-  private
-
-  def validate_user_belongs_to_chapter_group
-    return if chapter.blank?
-    return if chapter.group.blank?
-    return if user.blank?
-
-    if GroupUser.where(user: user, group: chapter.group).none?
-      errors.add(:user_id, :invalid)
-    end
-  end
 end

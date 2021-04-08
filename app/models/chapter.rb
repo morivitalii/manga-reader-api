@@ -43,7 +43,6 @@ class Chapter < ApplicationRecord
   validates :name, allow_blank: true, length: { minimum: 1, maximum: 125 }
   validates :number, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100_000 }
   validate :validate_volume_belongs_to_title
-  validate :validate_user_belongs_to_group, on: :create
   validate :validate_cleaners_size
   validate :validate_translators_size
   validate :validate_editors_size
@@ -56,15 +55,6 @@ class Chapter < ApplicationRecord
 
     if title_id != volume.title_id
       errors.add(:volume_id, :invalid)
-    end
-  end
-
-  def validate_user_belongs_to_group
-    return if group.blank?
-    return if user.blank?
-
-    if GroupUser.where(user: user, group: group).none?
-      errors.add(:group_id, :invalid)
     end
   end
 
@@ -93,8 +83,6 @@ class Chapter < ApplicationRecord
   end
 
   def validate_typers_size
-    return if typers.blank?
-
     if typers.size > TYPERS_LIMIT
       errors.add(:typers, :invalid)
     end
