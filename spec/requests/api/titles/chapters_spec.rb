@@ -41,7 +41,7 @@ RSpec.describe Api::Titles::ChaptersController do
       ctet_ids = [first_user.id, second_user.id]
       _group_user = create(:group_user, group: group, user: first_user)
       _group_user = create(:group_user, group: group, user: second_user)
-      _group_user = create(:group_user, group: group, user: current_user)
+      _group_user = create(:group_user_with_manage_chapters_access_right, group: group, user: current_user)
 
       params = {
         content_language_id: content_language.id,
@@ -59,6 +59,38 @@ RSpec.describe Api::Titles::ChaptersController do
 
       expect(response).to have_http_status(200)
       expect(response).to match_json_schema("controllers/api/titles/chapters_controller/create/200")
+    end
+  end
+
+  describe ".update", context: :as_signed_in_user do
+    it "returns valid response" do
+      content_language = create(:content_language)
+      title = create(:title)
+      volume = create(:volume, title: title)
+      group = create(:group)
+      chapter = create(:chapter, title: title, group: group)
+      first_user = create(:user)
+      second_user = create(:user)
+      ctet_ids = [first_user.id, second_user.id]
+      _group_user = create(:group_user, group: group, user: first_user)
+      _group_user = create(:group_user, group: group, user: second_user)
+      _group_user = create(:group_user_with_manage_chapters_access_right, group: group, user: current_user)
+
+      params = {
+        content_language_id: content_language.id,
+        volume_id: volume.id,
+        number: 1,
+        name: "Title",
+        cleaner_ids: ctet_ids,
+        translator_ids: ctet_ids,
+        editor_ids: ctet_ids,
+        typer_ids: ctet_ids
+      }
+
+      put "/api/titles/#{title.to_param}/chapters/#{chapter.to_param}.json", params: params
+
+      expect(response).to have_http_status(200)
+      expect(response).to match_json_schema("controllers/api/titles/chapters_controller/update/200")
     end
   end
 end

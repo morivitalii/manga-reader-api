@@ -2,7 +2,6 @@ class Api::TitlesController < Api::ApplicationController
   include Pagination
 
   before_action :set_title, only: [:show]
-  before_action :set_title_associations, only: [:show]
 
   before_action -> { authorize(Api::TitlesPolicy) }, only: [:index, :create]
   before_action -> { authorize(Api::TitlesPolicy, title: @title) }, only: [:show]
@@ -40,6 +39,24 @@ class Api::TitlesController < Api::ApplicationController
   end
 
   def show
+    ActiveRecord::Associations::Preloader.new.preload(
+      @title, [
+        Title.translations_associations,
+        original_content_language: [
+          :locale,
+          ContentLanguage.translations_associations
+        ],
+        cover_attachment: :blob,
+        writers: { artist: Artist.translations_associations },
+        painters: { artist: Artist.translations_associations },
+        genres: { tag: Tag.translations_associations },
+        formats: { tag: Tag.translations_associations },
+        demographics: { tag: Tag.translations_associations },
+        marks: { tag: Tag.translations_associations },
+        themes: { tag: Tag.translations_associations }
+      ]
+    )
+
     title = Api::TitleDecorator.decorate(@title)
     title = Api::TitleSerializer.serialize(title)
 
@@ -50,6 +67,24 @@ class Api::TitlesController < Api::ApplicationController
     service = Api::CreateTitle.new(create_params)
 
     if service.call
+      ActiveRecord::Associations::Preloader.new.preload(
+        service.title_object, [
+          Title.translations_associations,
+          original_content_language: [
+            :locale,
+            ContentLanguage.translations_associations
+          ],
+          cover_attachment: :blob,
+          writers: { artist: Artist.translations_associations },
+          painters: { artist: Artist.translations_associations },
+          genres: { tag: Tag.translations_associations },
+          formats: { tag: Tag.translations_associations },
+          demographics: { tag: Tag.translations_associations },
+          marks: { tag: Tag.translations_associations },
+          themes: { tag: Tag.translations_associations }
+        ]
+      )
+
       title = Api::TitleDecorator.decorate(service.title_object)
       title = Api::TitleSerializer.serialize(title)
 
@@ -71,25 +106,5 @@ class Api::TitlesController < Api::ApplicationController
 
   def titles_scope
     policy_scope(Api::TitlesPolicy, Title)
-  end
-
-  def set_title_associations
-    ActiveRecord::Associations::Preloader.new.preload(
-      @title, [
-        Title.translations_associations,
-        original_content_language: [
-          :locale,
-          ContentLanguage.translations_associations
-        ],
-        cover_attachment: :blob,
-        writers: { artist: Artist.translations_associations },
-        painters: { artist: Artist.translations_associations },
-        genres: { tag: Tag.translations_associations },
-        formats: { tag: Tag.translations_associations },
-        demographics: { tag: Tag.translations_associations },
-        marks: { tag: Tag.translations_associations },
-        themes: { tag: Tag.translations_associations }
-      ]
-    )
   end
 end

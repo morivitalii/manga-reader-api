@@ -1,10 +1,11 @@
 class Api::Titles::Chapters::PagesController < Api::ApplicationController
   before_action :set_title, only: [:index, :show, :create]
   before_action :set_chapter, only: [:index, :show, :create]
+  before_action :set_group, only: [:create]
   before_action :set_page, only: [:show]
-  before_action :set_page_associations, only: [:show]
 
-  before_action -> { authorize(Api::Titles::Chapters::PagesPolicy) }, only: [:index, :create]
+  before_action -> { authorize(Api::Titles::Chapters::PagesPolicy) }, only: [:index]
+  before_action -> { authorize(Api::Titles::Chapters::PagesPolicy, group: @group) }, only: [:create]
   before_action -> { authorize(Api::Titles::Chapters::PagesPolicy, page: @page) }, only: [:show]
 
   def index
@@ -23,6 +24,12 @@ class Api::Titles::Chapters::PagesController < Api::ApplicationController
   end
 
   def show
+    ActiveRecord::Associations::Preloader.new.preload(
+      @page, [
+        file_attachment: :blob
+      ]
+    )
+
     page = Api::PageDecorator.decorate(@page)
     page = Api::PageSerializer.serialize(page)
 
@@ -33,6 +40,12 @@ class Api::Titles::Chapters::PagesController < Api::ApplicationController
     service = Api::Titles::Chapters::CreatePage.new(create_params)
 
     if service.call
+      ActiveRecord::Associations::Preloader.new.preload(
+        service.page, [
+          file_attachment: :blob
+        ]
+      )
+
       page = Api::PageDecorator.decorate(service.page)
       page = Api::PageSerializer.serialize(page)
 
@@ -56,6 +69,10 @@ class Api::Titles::Chapters::PagesController < Api::ApplicationController
     @page = pages_scope.find(params[:id])
   end
 
+  def set_group
+    @group = @chapter.group
+  end
+
   def create_params
     permitted_attributes(Api::Titles::Chapters::PagesPolicy, :create).merge(chapter: @chapter, user: Current.user)
   end
@@ -70,13 +87,5 @@ class Api::Titles::Chapters::PagesController < Api::ApplicationController
 
   def pages_scope
     policy_scope(Api::Titles::Chapters::PagesPolicy, @chapter.pages)
-  end
-
-  def set_page_associations
-    ActiveRecord::Associations::Preloader.new.preload(
-    @page, [
-        file_attachment: :blob
-      ]
-    )
   end
 end

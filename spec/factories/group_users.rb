@@ -17,7 +17,7 @@ FactoryBot.define do
       end
     end
 
-    factory :group_user_with_manage_chapters_group_access_right do
+    factory :group_user_with_manage_chapters_access_right do
       after(:create) do |object|
         group_access_right = create(:manage_chapters_group_access_right)
         create(:group_user_access_right, group_user: object, group_access_right: group_access_right)
