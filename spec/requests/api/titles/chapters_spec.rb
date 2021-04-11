@@ -93,4 +93,17 @@ RSpec.describe Api::Titles::ChaptersController do
       expect(response).to match_json_schema("controllers/api/titles/chapters_controller/update/200")
     end
   end
+
+  describe ".destroy", context: :as_signed_in_user do
+    it "returns valid response" do
+      title = create(:title)
+      group = create(:group)
+      chapter = create(:chapter, title: title, group: group)
+      _group_user = create(:group_user_with_manage_chapters_access_right, group: group, user: current_user)
+
+      delete "/api/titles/#{title.to_param}/chapters/#{chapter.to_param}.json"
+
+      expect(response).to have_http_status(204)
+    end
+  end
 end

@@ -1,12 +1,12 @@
 class Api::Titles::ChaptersController < Api::ApplicationController
   before_action :set_group, only: [:create]
-  before_action :set_title, only: [:index, :show, :create, :update]
-  before_action :set_chapter, only: [:show, :update]
+  before_action :set_title, only: [:index, :show, :create, :update, :destroy]
+  before_action :set_chapter, only: [:show, :update, :destroy]
 
   before_action -> { authorize(Api::Titles::ChaptersPolicy) }, only: [:index]
   before_action -> { authorize(Api::Titles::ChaptersPolicy, group: @group) }, only: [:create]
   before_action -> { authorize(Api::Titles::ChaptersPolicy, chapter: @chapter) }, only: [:show]
-  before_action -> { authorize(Api::Titles::ChaptersPolicy, group: @chapter.group, chapter: @chapter) }, only: [:update]
+  before_action -> { authorize(Api::Titles::ChaptersPolicy, group: @chapter.group, chapter: @chapter) }, only: [:update, :destroy]
 
   def index
     chapters = chapters_scope.order("chapters.number ASC").all
@@ -101,6 +101,16 @@ class Api::Titles::ChaptersController < Api::ApplicationController
       chapter = Api::ChapterSerializer.serialize(chapter)
 
       render json: chapter, status: 200
+    else
+      render json: service.errors, status: 422
+    end
+  end
+
+  def destroy
+    service = Api::Titles::DeleteChapter.new(chapter: @chapter)
+
+    if service.call
+      head 204
     else
       render json: service.errors, status: 422
     end

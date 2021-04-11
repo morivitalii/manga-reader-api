@@ -18,7 +18,7 @@ RSpec.describe Api::Titles::ChaptersPolicy do
       it { is_expected.to_not permit(current_user) }
     end
 
-    permissions :update? do
+    permissions :update?, :destroy? do
       let(:chapter) { create(:chapter) }
 
       it { is_expected.to_not permit(current_user, chapter: chapter) }
@@ -53,7 +53,7 @@ RSpec.describe Api::Titles::ChaptersPolicy do
       end
     end
 
-    permissions :update? do
+    permissions :update?, :destroy? do
       let(:group) { create(:group) }
       let(:chapter) { create(:chapter, group: group) }
 
