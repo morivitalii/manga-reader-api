@@ -105,7 +105,7 @@ Rails.application.routes.draw do
         resources :bookmarks, only: [:create, :destroy]
         resources :favorites, only: [:create, :destroy]
 
-        resources :chapters, only: [:index, :show, :create, :update] do
+        resources :chapters, only: [:index, :show, :create, :update, :destroy] do
           scope module: :chapters do
             resource :to_draft, only: [:update], controller: :to_draft
             resource :to_review, only: [:update], controller: :to_review

@@ -1,0 +1,5 @@
+class AddDeletedAtToChapters < ActiveRecord::Migration[6.1]
+  def change
+    add_column :chapters, :deleted_at, :datetime
+  end
+end

@@ -37,7 +37,7 @@ class Chapter < ApplicationRecord
 
   has_one_attached :cover, service: :public
 
-  enum status: { draft: 1, review: 2, published: 3 }
+  enum status: { draft: 1, review: 2, published: 3, deleted: 4 }
 
   validates :status, presence: true
   validates :name, allow_blank: true, length: { minimum: 1, maximum: 125 }

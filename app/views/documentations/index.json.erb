@@ -1570,6 +1570,40 @@
             "$ref": "#/components/responses/internal_server_error"
           }
         }
+      },
+      "delete": {
+        "tags": ["Chapters"],
+        "summary": "Delete chapter",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/title_id" },
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/no_content"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/chapters_controller/destroy/422") %>
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
       }
     },
     "/titles/{title_id}/chapters/{chapter_id}/to_review.json": {

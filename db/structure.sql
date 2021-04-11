@@ -272,7 +272,8 @@ CREATE TABLE public.chapters (
     pages_count bigint DEFAULT 0 NOT NULL,
     user_id bigint NOT NULL,
     name character varying DEFAULT ''::character varying NOT NULL,
-    content_language_id bigint NOT NULL
+    content_language_id bigint NOT NULL,
+    deleted_at timestamp without time zone
 );
 
 
@@ -2657,6 +2658,13 @@ CREATE INDEX index_chapters_on_number ON public.chapters USING btree (number);
 
 
 --
+-- Name: index_chapters_on_status; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapters_on_status ON public.chapters USING btree (status);
+
+
+--
 -- Name: index_chapters_on_title_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -4016,6 +4024,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210320063546'),
 ('20210324141332'),
 ('20210324143936'),
-('20210325173047');
+('20210325173047'),
+('20210408171457'),
+('20210408172319');
 
 
