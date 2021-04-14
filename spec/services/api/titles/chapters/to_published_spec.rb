@@ -12,6 +12,7 @@ RSpec.describe Api::Titles::Chapters::ToPublished do
       service.call
 
       expect(chapter.status).to eq("published")
+      expect(chapter.published_at).to be_present
     end
   end
 end

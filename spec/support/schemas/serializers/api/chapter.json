@@ -77,6 +77,12 @@
       "description": "Sent to review date",
       "examples": ["2020-12-13T00:00:00.000Z"]
     },
+    "published_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Published at date",
+      "examples": ["2020-12-13T00:00:00.000Z"]
+    },
     "created_at": {
       "type": "string",
       "format": "date-time",

@@ -9,7 +9,10 @@ class Api::Titles::Chapters::ToPublished
     validate!
 
     ActiveRecord::Base.transaction do
-      chapter.update!(status: :published)
+      chapter.update!(
+        status: :published,
+        published_at: Time.current
+      )
     end
 
     true
