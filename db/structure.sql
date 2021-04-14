@@ -3246,6 +3246,13 @@ CREATE INDEX index_titles_on_original_content_language_id ON public.titles USING
 
 
 --
+-- Name: index_titles_on_status; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_titles_on_status ON public.titles USING btree (status);
+
+
+--
 -- Name: index_translators_on_artist_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -4026,6 +4033,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210324143936'),
 ('20210325173047'),
 ('20210408171457'),
-('20210408172319');
+('20210408172319'),
+('20210414141045');
 
 
