@@ -1387,7 +1387,8 @@ CREATE TABLE public.titles (
     bookmarks_count bigint DEFAULT 0 NOT NULL,
     original_content_language_id bigint,
     favorites_count bigint DEFAULT 0 NOT NULL,
-    status integer NOT NULL
+    status integer NOT NULL,
+    sent_to_review_at timestamp without time zone
 );
 
 
@@ -4034,6 +4035,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210325173047'),
 ('20210408171457'),
 ('20210408172319'),
-('20210414141045');
+('20210414141045'),
+('20210414141234');
 
 

@@ -160,6 +160,12 @@
         "$ref": "file:/serializers/api/theme.json#"
       }
     },
+    "sent_to_review_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Sent to review date",
+      "examples": ["2020-12-13T00:00:00.000Z"]
+    },
     "created_at": {
       "type": "string",
       "format": "date-time",

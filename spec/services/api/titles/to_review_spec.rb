@@ -12,6 +12,7 @@ RSpec.describe Api::Titles::ToReview do
       service.call
 
       expect(title.status).to eq("review")
+      expect(title.sent_to_review_at).to be_present
     end
   end
 end
