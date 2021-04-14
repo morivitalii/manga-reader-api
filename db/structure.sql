@@ -273,7 +273,8 @@ CREATE TABLE public.chapters (
     user_id bigint NOT NULL,
     name character varying DEFAULT ''::character varying NOT NULL,
     content_language_id bigint NOT NULL,
-    deleted_at timestamp without time zone
+    deleted_at timestamp without time zone,
+    sent_to_review_at timestamp without time zone
 );
 
 
@@ -4036,6 +4037,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210408171457'),
 ('20210408172319'),
 ('20210414141045'),
-('20210414141234');
+('20210414141234'),
+('20210414141547');
 
 
