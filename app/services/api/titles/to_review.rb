@@ -9,7 +9,10 @@ class Api::Titles::ToReview
     validate!
 
     ActiveRecord::Base.transaction do
-      title.update!(status: :review)
+      title.update!(
+        status: :review,
+        sent_to_review_at: Time.current
+      )
     end
 
     true
