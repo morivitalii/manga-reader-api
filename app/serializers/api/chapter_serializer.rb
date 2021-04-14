@@ -20,6 +20,7 @@ class Api::ChapterSerializer < Api::ApplicationSerializer
       pages_count: model.pages_count,
       views_count: model.views_count,
       bookmarks_count: model.bookmarks_count,
+      sent_to_review_at: model.sent_to_review_at,
       created_at: model.created_at,
       updated_at: model.updated_at,
       cover: cover,
