@@ -1096,8 +1096,13 @@
           }
         ],
         "responses": {
-          "204": {
-            "$ref": "#/components/responses/no_content"
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/to_draft_controller/create/200") %>
+              }
+            }
           },
           "401": {
             "$ref": "#/components/responses/unauthorized"

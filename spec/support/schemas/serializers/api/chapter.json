@@ -71,17 +71,31 @@
       "description": "Bookmarks count",
       "examples": [1]
     },
-    "sent_to_review_at": {
-      "type": "string",
-      "format": "date-time",
-      "description": "Sent to review date",
-      "examples": ["2020-12-13T00:00:00.000Z"]
-    },
     "published_at": {
-      "type": "string",
-      "format": "date-time",
-      "description": "Published at date",
-      "examples": ["2020-12-13T00:00:00.000Z"]
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time",
+          "description": "Published at date",
+          "examples": ["2020-12-13T00:00:00.000Z"]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "sent_to_review_at": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time",
+          "description": "Sent to review date",
+          "examples": ["2020-12-13T00:00:00.000Z"]
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "created_at": {
       "type": "string",
