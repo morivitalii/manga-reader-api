@@ -8,7 +8,8 @@ RSpec.describe Api::Titles::Chapters::ToDraftController do
 
       put "/api/titles/#{title.to_param}/chapters/#{chapter.to_param}/to_draft.json"
 
-      expect(response).to have_http_status(204)
+      expect(response).to have_http_status(200)
+      expect(response).to match_json_schema("controllers/api/titles/chapters/to_draft_controller/update/200")
     end
   end
 end

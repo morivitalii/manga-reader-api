@@ -9,7 +9,24 @@ class Api::Titles::Chapters::ToDraftController < Api::ApplicationController
     service = Api::Titles::Chapters::ToDraft.new(chapter: @chapter)
 
     if service.call
-      head 204
+      ActiveRecord::Associations::Preloader.new.preload(
+        @chapter, [
+          :content_language,
+          :volume,
+          :group,
+          cover_attachment: :blob,
+          user: {
+            user_setting: {
+              avatar_attachment: :blob
+            }
+          }
+        ]
+      )
+
+      chapter = Api::ChapterDecorator.decorate(@chapter)
+      chapter = Api::ChapterSerializer.serialize(chapter)
+
+      render json: chapter, status: 200
     else
       render json: service.errors, status: 422
     end
