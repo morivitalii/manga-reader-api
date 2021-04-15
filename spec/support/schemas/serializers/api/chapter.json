@@ -97,6 +97,19 @@
         }
       ]
     },
+    "deleted_at": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time",
+          "description": "Deleted date",
+          "examples": ["2020-12-13T00:00:00.000Z"]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "created_at": {
       "type": "string",
       "format": "date-time",
