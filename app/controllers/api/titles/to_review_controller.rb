@@ -7,7 +7,28 @@ class Api::Titles::ToReviewController < Api::ApplicationController
     service = Api::Titles::ToReview.new(title: @title)
 
     if service.call
-      head 204
+      ActiveRecord::Associations::Preloader.new.preload(
+        @title, [
+          Title.translations_associations,
+          original_content_language: [
+            :locale,
+            ContentLanguage.translations_associations
+          ],
+          cover_attachment: :blob,
+          writers: { artist: Artist.translations_associations },
+          painters: { artist: Artist.translations_associations },
+          genres: { tag: Tag.translations_associations },
+          formats: { tag: Tag.translations_associations },
+          demographics: { tag: Tag.translations_associations },
+          marks: { tag: Tag.translations_associations },
+          themes: { tag: Tag.translations_associations }
+        ]
+      )
+
+      title = Api::TitleDecorator.decorate(@title)
+      title = Api::TitleSerializer.serialize(title)
+
+      render json: title, status: 200
     else
       render json: service.errors, status: 422
     end
