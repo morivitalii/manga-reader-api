@@ -1057,8 +1057,13 @@
           }
         ],
         "responses": {
-          "204": {
-            "$ref": "#/components/responses/no_content"
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/to_review_controller/update/200") %>
+              }
+            }
           },
           "401": {
             "$ref": "#/components/responses/unauthorized"
@@ -1100,7 +1105,7 @@
             "description": "Success",
             "content": {
               "application/json": {
-                "schema": <%= schema("titles/to_draft_controller/create/200") %>
+                "schema": <%= schema("titles/to_draft_controller/update/200") %>
               }
             }
           },
@@ -1140,8 +1145,13 @@
           }
         ],
         "responses": {
-          "204": {
-            "$ref": "#/components/responses/no_content"
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/to_published_controller/update/200") %>
+              }
+            }
           },
           "401": {
             "$ref": "#/components/responses/unauthorized"
@@ -1623,8 +1633,13 @@
           { "$ref": "#/components/parameters/chapter_id" }
         ],
         "responses": {
-          "204": {
-            "$ref": "#/components/responses/no_content"
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/chapters/to_review_controller/update/200") %>
+              }
+            }
           },
           "401": {
             "$ref": "#/components/responses/unauthorized"
@@ -1661,8 +1676,13 @@
           { "$ref": "#/components/parameters/chapter_id" }
         ],
         "responses": {
-          "204": {
-            "$ref": "#/components/responses/no_content"
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/chapters/to_draft_controller/update/200") %>
+              }
+            }
           },
           "401": {
             "$ref": "#/components/responses/unauthorized"
@@ -1699,8 +1719,13 @@
           { "$ref": "#/components/parameters/chapter_id" }
         ],
         "responses": {
-          "204": {
-            "$ref": "#/components/responses/no_content"
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("titles/chapters/to_published_controller/update/200") %>
+              }
+            }
           },
           "401": {
             "$ref": "#/components/responses/unauthorized"
