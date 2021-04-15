@@ -21,6 +21,7 @@ class Api::ChapterSerializer < Api::ApplicationSerializer
       views_count: model.views_count,
       bookmarks_count: model.bookmarks_count,
       sent_to_review_at: model.sent_to_review_at,
+      deleted_at: model.deleted_at,
       created_at: model.created_at,
       updated_at: model.updated_at,
       cover: cover,
