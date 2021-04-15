@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Api::Titles::Chapters::ToReviewController do
-  describe ".create", context: :as_signed_in_user do
+  describe ".update", context: :as_signed_in_user do
     it "returns valid response" do
       title = create(:title)
       chapter = create(:draft_chapter, title: title)
