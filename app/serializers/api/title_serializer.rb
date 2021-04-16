@@ -24,6 +24,7 @@ class Api::TitleSerializer < Api::ApplicationSerializer
       published_at: model.published_at,
       created_at: model.created_at,
       updated_at: model.updated_at,
+      original_content_language_id: model.original_content_language_id,
       original_content_language: original_content_language,
       cover: cover,
       writers: writers,

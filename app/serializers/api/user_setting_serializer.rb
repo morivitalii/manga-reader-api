@@ -6,6 +6,7 @@ class Api::UserSettingSerializer < Api::ApplicationSerializer
     {
       id: model.id,
       user_id: model.user_id,
+      interface_language_id: model.interface_language_id,
       name: model.name,
       surname: model.surname,
       sex: model.sex,

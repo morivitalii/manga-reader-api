@@ -1,8 +1,6 @@
 class Api::ChapterSerializer < Api::ApplicationSerializer
   serialize_association :content_language, with: Api::ContentLanguageSerializer
-  serialize_associations :title, with: Api::TitleSerializer
   serialize_associations :volume, with: Api::VolumeSerializer
-  serialize_associations :pages, with: Api::PageSerializer
   serialize_associations :user, with: Api::UserSerializer
   serialize_associations :group, with: Api::GroupSerializer
 

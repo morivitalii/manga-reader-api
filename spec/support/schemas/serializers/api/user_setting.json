@@ -13,6 +13,11 @@
       "description": "User ID",
       "examples": [1]
     },
+    "interface_language_id": {
+      "type": "integer",
+      "description": "Interface language ID",
+      "examples": [1]
+    },
     "name": {
       "type": "string",
       "description": "Name",

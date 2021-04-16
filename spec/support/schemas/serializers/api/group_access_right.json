@@ -1,27 +1,18 @@
 {
-  "id": "file:/serializers/api/interface_language.json#",
+  "id": "file:/serializers/api/group_access_right.json#",
   "type": "object",
-  "title": "Interface language",
+  "title": "Group access right",
   "properties": {
     "id": {
       "type": "integer",
       "description": "ID",
       "examples": [1]
     },
-    "title": {
+    "key": {
       "type": "string",
-      "description": "Title",
-      "examples": ["English"]
-    },
-    "locale": {
-      "type": "string",
-      "description": "Locale key",
-      "examples": ["en"]
-    },
-    "locale_id": {
-      "type": "integer",
-      "description": "Locale ID",
-      "examples": [1]
+      "description": "Key",
+      "enum": ["manage_group", "manage_users", "manage_chapters"],
+      "examples": ["manage_group"]
     },
     "created_at": {
       "type": "string",

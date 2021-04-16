@@ -5,5 +5,5 @@ class AccessRight < ApplicationRecord
   has_many :user_access_rights, dependent: :destroy
   has_many :users, through: :user_access_rights
 
-  validates :key, presence: true, uniqueness: { case_sensitive: false }
+  validates :key, presence: true, uniqueness: true
 end
