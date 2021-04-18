@@ -16,6 +16,7 @@ class Api::Groups::UsersController < Api::ApplicationController
 
       ActiveRecord::Associations::Preloader.new.preload(
         group_users, [
+          :group,
           :group_access_rights,
           user: {
             user_setting: {
@@ -39,6 +40,7 @@ class Api::Groups::UsersController < Api::ApplicationController
     group_user = Rails.cache.fetch(cache_key) do
       ActiveRecord::Associations::Preloader.new.preload(
         @group_user, [
+          :group,
           :group_access_rights,
           user: {
             user_setting: {
@@ -62,6 +64,7 @@ class Api::Groups::UsersController < Api::ApplicationController
     if service.call
       ActiveRecord::Associations::Preloader.new.preload(
         service.group_user, [
+          :group,
           :group_access_rights,
           user: {
             user_setting: {
@@ -86,6 +89,7 @@ class Api::Groups::UsersController < Api::ApplicationController
     if service.call
       ActiveRecord::Associations::Preloader.new.preload(
         service.group_user, [
+          :group,
           :group_access_rights,
           user: {
             user_setting: {

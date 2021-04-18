@@ -13,6 +13,11 @@
       "description": "Title",
       "examples": ["Adventure"]
     },
+    "key": {
+      "type": "string",
+      "description": "Key",
+      "examples": ["adventure"]
+    },
     "description": {
       "type": "string",
       "description": "Description",

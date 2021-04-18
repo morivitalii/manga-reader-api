@@ -45,6 +45,18 @@
       "description": "Favorites count",
       "examples": [1]
     },
+    "original_content_language_id": {
+      "description": "Original content language ID",
+      "oneOf": [
+        {
+          "type": "integer",
+          "examples": [1]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "original_content_language": {
       "oneOf": [
         {

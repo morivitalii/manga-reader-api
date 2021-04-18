@@ -2536,10 +2536,10 @@ ALTER TABLE ONLY public.writers
 
 
 --
--- Name: index_access_rights_on_lower_key; Type: INDEX; Schema: public; Owner: -
+-- Name: index_access_rights_on_key; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_access_rights_on_lower_key ON public.access_rights USING btree (lower((key)::text));
+CREATE UNIQUE INDEX index_access_rights_on_key ON public.access_rights USING btree (key);
 
 
 --
@@ -4042,6 +4042,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210414141234'),
 ('20210414141547'),
 ('20210414143145'),
-('20210414143447');
+('20210414143447'),
+('20210416222957');
 
 

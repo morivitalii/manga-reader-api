@@ -13,24 +13,22 @@
       "description": "Group ID",
       "examples": [1]
     },
-    "group": {
-      "$ref": "file:/serializers/api/group.json#"
-    },
     "user_id": {
       "type": "integer",
       "description": "User ID",
       "examples": [1]
     },
+    "group": {
+      "$ref": "file:/serializers/api/group.json#"
+    },
     "user": {
       "$ref": "file:/serializers/api/user.json#"
     },
-    "access_rights": {
+    "group_access_rights": {
       "type": "array",
-      "description": "Access rights",
+      "description": "Group access rights",
       "items": {
-        "type": "string",
-        "enum": ["manage_group", "manage_users", "manage_chapters"],
-        "examples": ["manage_group"]
+        "$ref": "file:/serializers/api/group_access_right.json#"
       }
     },
     "created_at": {

@@ -1,6 +1,7 @@
 class Api::UserSerializer < Api::ApplicationSerializer
   serialize_associations :excluded_tags, with: Api::TagSerializer
   serialize_associations :content_languages, with: Api::ContentLanguageSerializer
+  serialize_associations :access_rights, with: Api::AccessRightSerializer
 
   def attributes
     {
@@ -10,6 +11,7 @@ class Api::UserSerializer < Api::ApplicationSerializer
       surname: model.user_setting&.surname,
       sex: model.user_setting&.sex,
       avatar: avatar,
+      access_rights: access_rights,
       favorites_count: model.favorites_count,
       bookmarks_count: model.bookmarks_count,
       views_count: model.views_count,
