@@ -14,9 +14,6 @@ class Artist < ApplicationRecord
   has_one :typer, dependent: :destroy
   has_many :favorites, as: :resource, dependent: :destroy
 
-  # Defined to preload signed in user favorite
-  has_one :favorite, -> { where(user: Current.user) }, as: :resource
-
   translates :name
 
   validates :name, allow_blank: true, length: { minimum: 1, maximum: 64 }

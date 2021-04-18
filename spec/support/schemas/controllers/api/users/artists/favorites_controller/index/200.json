@@ -1,6 +1,6 @@
 {
   "type": "array",
   "items": {
-    "$ref": "file:/serializers/api/favorite.json#"
+    "$ref": "file:/serializers/api/artist_favorite.json#"
   }
 }
