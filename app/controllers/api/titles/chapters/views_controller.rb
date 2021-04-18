@@ -7,8 +7,8 @@ class Api::Titles::Chapters::ViewsController < Api::ApplicationController
     service = Api::Titles::Chapters::CreateView.new(chapter: @chapter, user: Current.user)
 
     if service.call
-      view = Api::ViewDecorator.decorate(service.view)
-      view = Api::ViewSerializer.serialize(view)
+      view = Api::ChapterViewDecorator.decorate(service.view)
+      view = Api::ChapterViewSerializer.serialize(view)
 
       render json: view, status: 200
     else

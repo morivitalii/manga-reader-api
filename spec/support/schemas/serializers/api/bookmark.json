@@ -13,10 +13,10 @@
       "description": "User ID",
       "examples": [1]
     },
-    "resource_type": {
+    "resource_name": {
       "type": "string",
       "enum": ["Title", "Chapter", "Page"],
-      "description": "Resource type",
+      "description": "Resource name",
       "examples": ["Title"]
     },
     "resource_id": {

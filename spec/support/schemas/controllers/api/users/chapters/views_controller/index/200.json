@@ -1,6 +1,6 @@
 {
   "type": "array",
   "items": {
-    "$ref": "file:/serializers/api/view.json#"
+    "$ref": "file:/serializers/api/chapter_view.json#"
   }
 }

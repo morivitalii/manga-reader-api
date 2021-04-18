@@ -1,6 +1,6 @@
 {
   "type": "array",
   "items": {
-    "$ref": "file:/serializers/api/bookmark.json#"
+    "$ref": "file:/serializers/api/title_bookmark.json#"
   }
 }

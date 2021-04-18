@@ -8,8 +8,8 @@ class Api::Titles::BookmarksController < Api::ApplicationController
     service = Api::Titles::CreateBookmark.new(title: @title, user: Current.user)
 
     if service.call
-      bookmark = Api::BookmarkDecorator.decorate(service.bookmark)
-      bookmark = Api::BookmarkSerializer.serialize(bookmark)
+      bookmark = Api::TitleBookmarkDecorator.decorate(service.bookmark)
+      bookmark = Api::TitleBookmarkSerializer.serialize(bookmark)
 
       render json: bookmark, status: 200
     else

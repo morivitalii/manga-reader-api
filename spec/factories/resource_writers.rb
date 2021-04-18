@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :resource_writer do
     association :writer
-    association :resource, factory: :title
+    association :resource, factory: :chapter
   end
 end

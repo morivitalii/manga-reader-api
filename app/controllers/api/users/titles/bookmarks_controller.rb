@@ -6,8 +6,8 @@ class Api::Users::Titles::BookmarksController < Api::ApplicationController
     service = Api::Users::Titles::FilterBookmarks.new(filter_params)
 
     if service.call
-      bookmarks = Api::BookmarkDecorator.decorate(service.bookmarks)
-      bookmarks = Api::BookmarkSerializer.serialize(bookmarks)
+      bookmarks = Api::TitleBookmarkDecorator.decorate(service.bookmarks)
+      bookmarks = Api::TitleBookmarkSerializer.serialize(bookmarks)
 
       render json: bookmarks, status: 200
     else
