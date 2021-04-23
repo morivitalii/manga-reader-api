@@ -12,8 +12,8 @@ class User < ApplicationRecord
   has_many :excluded_tags, through: :user_excluded_tags, source: :tag, class_name: "Tag"
   has_many :chapters, dependent: :restrict_with_error
   has_many :pages, dependent: :restrict_with_error
-  has_many :group_user, dependent: :restrict_with_error
-  has_many :groups, through: :group_user
+  has_many :group_users, dependent: :restrict_with_error
+  has_many :groups, through: :group_users
   has_many :user_access_rights, dependent: :destroy
   has_many :access_rights, through: :user_access_rights
   has_many :views, dependent: :destroy

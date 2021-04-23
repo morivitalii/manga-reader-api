@@ -1,6 +1,4 @@
 class Api::Titles::Chapters::PagesPolicy < Api::ApplicationPolicy
-  include Api::GroupAccessRights
-
   def index?
     true
   end
@@ -10,7 +8,7 @@ class Api::Titles::Chapters::PagesPolicy < Api::ApplicationPolicy
   end
 
   def create?
-    user? && user_have_group_access_right?(options[:group], :manage_chapters)
+    user? && options[:group].present? && group_access_right?(options[:group], :manage_chapters)
   end
 
   def permitted_attributes_for_create

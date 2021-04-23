@@ -1,6 +1,4 @@
 class Api::Groups::UsersPolicy < Api::ApplicationPolicy
-  include Api::GroupAccessRights
-
   def index?
     true
   end
@@ -10,15 +8,15 @@ class Api::Groups::UsersPolicy < Api::ApplicationPolicy
   end
 
   def create?
-    user? && user_have_group_access_right?(options[:group], :manage_users)
+    user? && group_access_right?(options[:group], :manage_users)
   end
 
   def update?
-    user? && user_have_group_access_right?(options[:group], :manage_users)
+    user? && group_access_right?(options[:group], :manage_users)
   end
 
   def destroy?
-    user? && user_have_group_access_right?(options[:group], :manage_users)
+    user? && group_access_right?(options[:group], :manage_users)
   end
 
   def permitted_attributes_for_create

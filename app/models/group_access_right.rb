@@ -3,8 +3,7 @@ class GroupAccessRight < ApplicationRecord
   attr_readonly :key
 
   has_many :group_user_access_rights, dependent: :destroy
-
-  enum key: { manage_group: 1, manage_users: 2, manage_chapters: 3 }
+  has_many :group_users, through: :group_user_access_rights
 
   validates :key, presence: true, uniqueness: true
 end

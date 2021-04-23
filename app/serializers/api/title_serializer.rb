@@ -22,6 +22,7 @@ class Api::TitleSerializer < Api::ApplicationSerializer
       favorites_count: model.favorites_count,
       sent_to_review_at: model.sent_to_review_at,
       published_at: model.published_at,
+      deleted_at: model.deleted_at,
       created_at: model.created_at,
       updated_at: model.updated_at,
       original_content_language_id: model.original_content_language_id,

@@ -67,4 +67,16 @@ RSpec.describe Api::TitlesController do
       expect(response).to match_json_schema("controllers/api/titles_controller/create/200")
     end
   end
+
+  describe ".destroy", context: :as_signed_in_user do
+    it "returns valid response" do
+      title = create(:title)
+      access_right = create(:manage_titles_access_right)
+      _user_access_right = create(:user_access_right, user: current_user, access_right: access_right)
+
+      delete "/api/titles/#{title.to_param}.json"
+
+      expect(response).to have_http_status(204)
+    end
+  end
 end

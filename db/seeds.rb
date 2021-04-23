@@ -1,3 +1,15 @@
+# Group access rights
+ActiveRecord::Base.transaction do
+  # Manage group access right
+  GroupAccessRight.create!(key: :manage_group)
+
+  # Manage group users access right
+  AccessRight.create!(key: :manage_users)
+
+  # Manage group chapters right
+  AccessRight.create!(key: :manage_chapters)
+end
+
 # Locales
 ActiveRecord::Base.transaction do
   # English locale
