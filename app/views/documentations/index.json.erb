@@ -1042,6 +1042,34 @@
             "$ref": "#/components/responses/internal_server_error"
           }
         }
+      },
+      "delete": {
+        "tags": ["Titles"],
+        "summary": "Delete title",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/no_content"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "$ref": "#/components/responses/unprocessable_entity"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
       }
     },
     "/titles/{title_id}/to_review.json": {
@@ -2934,7 +2962,7 @@
     "/users/views/titles.json": {
       "get": {
         "tags": ["Users"],
-        "summary": "User view titles",
+        "summary": "User viewed titles",
         "description": "Sorted by updated_at DESC",
         "parameters": [
           { "$ref": "#/components/parameters/page" },
@@ -2972,7 +3000,7 @@
     "/users/views/chapters.json": {
       "get": {
         "tags": ["Users"],
-        "summary": "User view chapters",
+        "summary": "User viewed chapters",
         "description": "Sorted by updated_at DESC",
         "parameters": [
           { "$ref": "#/components/parameters/page" },
@@ -3010,7 +3038,7 @@
     "/users/views/pages.json": {
       "get": {
         "tags": ["Users"],
-        "summary": "User view pages",
+        "summary": "User viewed pages",
         "description": "Sorted by updated_at DESC",
         "parameters": [
           { "$ref": "#/components/parameters/page" },

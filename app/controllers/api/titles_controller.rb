@@ -1,10 +1,10 @@
 class Api::TitlesController < Api::ApplicationController
   include Pagination
 
-  before_action :set_title, only: [:show]
+  before_action :set_title, only: [:show, :destroy]
 
   before_action -> { authorize(Api::TitlesPolicy) }, only: [:index, :create]
-  before_action -> { authorize(Api::TitlesPolicy, title: @title) }, only: [:show]
+  before_action -> { authorize(Api::TitlesPolicy, title: @title) }, only: [:show, :destroy]
 
   skip_after_action :verify_policy_scoped, only: [:create]
 
@@ -89,6 +89,16 @@ class Api::TitlesController < Api::ApplicationController
       title = Api::TitleSerializer.serialize(title)
 
       render json: title, status: 200
+    else
+      render json: service.errors, status: 422
+    end
+  end
+
+  def destroy
+    service = Api::DeleteTitle.new(title: @title)
+
+    if service.call
+      head 204
     else
       render json: service.errors, status: 422
     end

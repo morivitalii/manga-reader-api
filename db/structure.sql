@@ -557,7 +557,7 @@ ALTER SEQUENCE public.genres_id_seq OWNED BY public.genres.id;
 
 CREATE TABLE public.group_access_rights (
     id bigint NOT NULL,
-    key integer NOT NULL,
+    key character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -1391,7 +1391,8 @@ CREATE TABLE public.titles (
     favorites_count bigint DEFAULT 0 NOT NULL,
     status integer NOT NULL,
     sent_to_review_at timestamp without time zone,
-    published_at timestamp without time zone
+    published_at timestamp without time zone,
+    deleted_at timestamp without time zone
 );
 
 
@@ -4043,6 +4044,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210414141547'),
 ('20210414143145'),
 ('20210414143447'),
-('20210416222957');
+('20210416222957'),
+('20210418162435'),
+('20210422152211');
 
 
