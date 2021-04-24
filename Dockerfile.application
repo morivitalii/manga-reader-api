@@ -1,0 +1,28 @@
+FROM ruby:2.7.2
+
+WORKDIR /app
+
+COPY Gemfile Gemfile.lock /app/
+
+RUN apt-get -yq install curl
+
+RUN curl -sL https://deb.nodesource.com/setup_12.x \
+            && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+            && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+
+RUN apt-get clean \
+      && apt-get update -qq --allow-unauthenticated --allow-insecure-repositories \
+      && apt-get -yq install --no-install-recommends \
+     nodejs \
+     yarn \
+     git \
+     build-essential \
+     libpq-dev \
+     libvips \
+     nano \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN bundle install --jobs 6
+RUN yarn install
+
+COPY . /app/
