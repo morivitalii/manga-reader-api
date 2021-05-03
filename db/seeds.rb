@@ -1,5 +1,14 @@
-# Group access rights
 ActiveRecord::Base.transaction do
+  # Access rights
+
+  # Manage site settings right
+  AccessRight.create!(key: :manage_settings)
+
+  # Manage titles access right
+  AccessRight.create!(key: :manage_titles)
+
+  # Group access rights
+
   # Manage group access right
   GroupAccessRight.create!(key: :manage_group)
 
@@ -8,193 +17,193 @@ ActiveRecord::Base.transaction do
 
   # Manage group chapters right
   AccessRight.create!(key: :manage_chapters)
-end
 
-# Locales
-ActiveRecord::Base.transaction do
-  # English locale
-  @english_locale = Locale.create!(key: "en")
 
   # Russian locale
-  @russian_locale = Locale.create!(key: "ru")
-end
-
-# Content languages
-# Because content language model refers to itself this operations MUST be done in one transaction
-ActiveRecord::Base.transaction do
-  # English content language
-  @english_content_language = ContentLanguage.new(locale: @english_locale)
-  @english_content_language.save(validate: false)
+  russian_locale = Locale.create!(key: "ru")
 
   # Russian content language
-  @russian_content_language = ContentLanguage.new(locale: @russian_locale)
-  @russian_content_language.save(validate: false)
+  unless ContentLanguage.where(locale: russian_locale).exists?
+    @russian_content_language = ContentLanguage.new(locale: russian_locale)
+    @russian_content_language.save(validate: false)
 
-  # All content languages
-  @all_content_languages = ContentLanguage.all
+    @russian_content_language.translations.build(
+      resource: @russian_content_language,
+      content_language: @russian_content_language,
+      title: "Русский"
+    )
 
-  Current.set(content_languages: @all_content_languages) do
-    I18n.with_locale(:en) do
-      # English translations for english content language
-      @english_content_language.translations.build(
-        resource: @english_content_language,
-        content_language: @english_content_language,
-        title: "English"
-      )
-
-      @english_content_language.save!
-
-      # English translations for russian content language
-      @russian_content_language.translations.build(
-        resource: @russian_content_language,
-        content_language: @english_content_language,
-        title: "Russian"
-      )
-
-      @russian_content_language.save
-    end
+    @russian_content_language.save!
   end
 
-  Current.set(content_languages: @all_content_languages) do
-    I18n.with_locale(:ru) do
-      # Russian translations for english content language
-      @english_content_language.translations.build(
-        resource: @english_content_language,
-        content_language: @russian_content_language,
-        title: "Английский"
-      )
-
-      @english_content_language.save!
-
-      # Russian translations for russian content language
-      @russian_content_language.translations.build(
-        resource: @russian_content_language,
-        content_language: @russian_content_language,
-        title: "Русский"
-      )
-
-      @russian_content_language.save!
-    end
-  end
-end
-
-# Interface languages
-ActiveRecord::Base.transaction do
-  Current.set(content_languages: @all_content_languages, content_language: @english_content_language) do
-    I18n.with_locale(:en) do
-      # English interface language with english translation
-      @english_interface_language = InterfaceLanguage.new(locale: @english_locale, title: "English")
-      @english_interface_language.save!
-
-      # Russian interface language with english translation
-      @russian_interface_language = InterfaceLanguage.new(locale: @russian_locale, title: "Russian")
-      @russian_interface_language.save!
-    end
+  # Russian interface language
+  unless InterfaceLanguage.where(locale: russian_locale).exists?
+    @russian_interface_language = InterfaceLanguage.new(locale: russian_locale, title: "Русский")
+    @russian_interface_language.save!
   end
 
-  Current.set(content_languages: @all_content_languages, content_language: @russian_content_language) do
-    I18n.with_locale(:ru) do
-      # Russian translations for english interface language
-      @english_interface_language.assign_attributes(title: "Английский")
-      @english_interface_language.save!
+  current_options = {
+    content_languages: ContentLanguage.all,
+    interface_languages: InterfaceLanguage.all,
+    content_language: @russian_content_language,
+    interface_language: @russian_interface_language
+  }
 
-      # Russian translations for russian interface language
-      @russian_interface_language.assign_attributes(title: "Русский")
-      @russian_interface_language.save!
+  Current.set(current_options) do
+    # Genres
+    genres = [
+      {
+        key: :action,
+        title: "Экшен"
+      },
+      {
+        key: :adventure,
+        title: "Приключение"
+      },
+      {
+        key: :comedy,
+        title: "Комедия"
+      },
+      {
+        key: :drama,
+        title: "Драма"
+      },
+      {
+        key: :slice_of_life,
+        title: "Повседневность"
+      },
+      {
+        key: :fantasy,
+        title: "Фэнтези"
+      },
+      {
+        key: :magic,
+        title: "Магия"
+      },
+      {
+        key: :supernatural,
+        title: "Сверхъестественное"
+      },
+      {
+        key: :horror,
+        title: "Ужасы"
+      },
+      {
+        key: :psychological,
+        title: "Психология"
+      },
+      {
+        key: :romance,
+        title: "Романтика"
+      },
+      {
+        key: :sci_fi,
+        title: "Фантастика"
+      },
+      {
+        key: :cyberpunk,
+        title: "Киберпанк"
+      },
+      {
+        key: :harem,
+        title: "Гарем"
+      },
+      {
+        key: :martial_arts,
+        title: "Боевые искуства"
+      },
+      {
+        key: :historical,
+        title: "История"
+      },
+      {
+        key: :isekai,
+        title: "Исекай"
+      },
+      {
+        key: :mecha,
+        title: "Меха"
+      },
+      {
+        key: :music,
+        title: "Музыка"
+      },
+      {
+        key: :sports,
+        title: "Спорт"
+      },
+      {
+        key: :tragedy,
+        title: "Трагедия"
+      },
+      {
+        key: :ecchi,
+        title: "Эччи"
+      },
+      {
+        key: :yuri,
+        title: "Юри"
+      },
+      {
+        key: :yaoi,
+        title: "Яой"
+      }
+    ]
+
+    genres.each do |genre|
+      tag = Tag.new(key: genre[:key], title: genre[:title])
+      tag.save
+
+      Genre.create!(tag: tag)
     end
-  end
-end
 
-# Genres
-ActiveRecord::Base.transaction do
-  # Seed only with english content language
-  Current.set(content_languages: @all_content_languages, content_language: @english_content_language) do
-    I18n.with_locale(:en) do
-      # Adventure genre
-      @adventure_tag = Tag.new(key: :adventure, title: "Adventure", description: "")
-      @adventure_tag.save
+    # Formats
+    formats = [
+      {
+        key: :manga,
+        title: "Манга"
+      },
+      {
+        key: :manhwa,
+        title: "Манхва"
+      },
+      {
+        key: :manhua,
+        title: "Маньхуа"
+      },
+      {
+        key: :comic,
+        title: "Комикс"
+      },
 
-      @adventure_genre = Genre.create!(tag: @adventure_tag)
+    ]
 
-      # Drama genre
-      @drama_tag = Tag.new(key: :drama, title: "Drama", description: "")
-      @drama_tag.save
+    formats.each do |formats|
+      tag = Tag.new(key: formats[:key], title: formats[:title])
+      tag.save
 
-      @drama_genre = Genre.create!(tag: @drama_tag)
+      Format.create!(tag: tag)
     end
-  end
-end
 
-# Formats
-ActiveRecord::Base.transaction do
-  # Seed only with english content language
-  Current.set(content_languages: @all_content_languages, content_language: @english_content_language) do
-    I18n.with_locale(:en) do
-      # Doujinshi format
-      @doujinshi_tag = Tag.new(key: :doujinshi, title: "Doujinshi", description: "")
-      @doujinshi_tag.save
+    # Marks
+    marks = [
+      {
+        key: :explicit,
+        title: "18+"
+      }
+    ]
 
-      @doujinshi_format = Format.create!(tag: @doujinshi_tag)
+    marks.each do |mark|
+      tag = Tag.new(key: mark[:key], title: mark[:title])
+      tag.save
 
-      # Yonkoma format
-      @yonkoma_tag = Tag.new(key: :yonkoma, title: "Yonkoma", description: "")
-      @yonkoma_tag.save
-
-      @yonkoma_format = Format.create!(tag: @yonkoma_tag)
+      Mark.create!(tag: tag)
     end
-  end
-end
 
-# Demographics
-ActiveRecord::Base.transaction do
-  # Seed only with english content language
-  Current.set(content_languages: @all_content_languages, content_language: @english_content_language) do
-    I18n.with_locale(:en) do
-      # Seinen demographic
-      @seinen_tag = Tag.new(key: :seinen, title: "Seinen", description: "")
-      @seinen_tag.save
+    # Demographics
+    # TODO
 
-      @seinen_demographic = Demographic.create!(tag: @seinen_tag)
-
-      # Josei demographic
-      @josei_tag = Tag.new(key: :josei, title: "Josei", description: "")
-      @josei_tag.save
-
-      @josei_demographic = Demographic.create!(tag: @josei_tag)
-    end
-  end
-end
-
-# Marks
-ActiveRecord::Base.transaction do
-  # Seed only with english content language
-  Current.set(content_languages: @all_content_languages, content_language: @english_content_language) do
-    I18n.with_locale(:en) do
-      # Explicit mark
-      @explicit_tag = Tag.new(key: :explicit, title: "Explicit", description: "")
-      @explicit_tag.save
-
-      @explicit_mark = Mark.create!(tag: @explicit_tag)
-    end
-  end
-end
-
-# Themes
-ActiveRecord::Base.transaction do
-  # Seed only with english content language
-  Current.set(content_languages: @all_content_languages, content_language: @english_content_language) do
-    I18n.with_locale(:en) do
-      # Lolicon theme
-      @lolicon_tag = Tag.new(key: :lolicon, title: "Lolicon", description: "")
-      @lolicon_tag.save
-
-      @lolicon_theme = Theme.create!(tag: @lolicon_tag)
-
-      # Shotacon theme
-      @shotacon_tag = Tag.new(key: :shotacon, title: "Shotacon", description: "")
-      @shotacon_tag.save
-
-      @shotacon_theme = Theme.create!(tag: @shotacon_tag)
-    end
+    # Themes
+    # TODO
   end
 end
