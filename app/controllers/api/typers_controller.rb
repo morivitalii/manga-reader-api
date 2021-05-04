@@ -8,9 +8,7 @@ class Api::TypersController < Api::ApplicationController
 
   def index
     typers = typer_scope.order(id: :asc)
-    pagination, typers = paginate_countless(typers)
-
-    set_pagination_headers(pagination)
+    typers = paginate_countless(typers)
 
     ActiveRecord::Associations::Preloader.new.preload(
       typers, [

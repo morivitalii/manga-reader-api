@@ -8,9 +8,7 @@ class Api::WritersController < Api::ApplicationController
 
   def index
     writers = writer_scope.order(id: :asc)
-    pagination, writers = paginate_countless(writers)
-
-    set_pagination_headers(pagination)
+    writers = paginate_countless(writers)
 
     ActiveRecord::Associations::Preloader.new.preload(
       writers, [

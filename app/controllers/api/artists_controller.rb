@@ -8,9 +8,7 @@ class Api::ArtistsController < Api::ApplicationController
 
   def index
     artists = artists_scope.joins(:translations).order("artist_translations.name ASC").all
-    pagination, artists = paginate_countless(artists)
-
-    set_pagination_headers(pagination)
+    artists = paginate_countless(artists)
 
     ActiveRecord::Associations::Preloader.new.preload(
       artists, [

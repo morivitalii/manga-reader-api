@@ -10,9 +10,7 @@ class Api::TitlesController < Api::ApplicationController
 
   def index
     titles = titles_scope.joins(:translations).order("title_translations.title ASC").all
-    pagination, titles = paginate_countless(titles)
-
-    set_pagination_headers(pagination)
+    titles = paginate_countless(titles)
 
     ActiveRecord::Associations::Preloader.new.preload(
       titles, [

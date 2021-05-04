@@ -4,7 +4,7 @@ class Api::Titles::Chapters::BookmarksPolicy < Api::ApplicationPolicy
   end
 
   def destroy?
-    user? && user.id == options[:bookmark].user_id
+    user? && user.id == options.bookmark.user_id
   end
 
   class Scope < Api::ApplicationPolicy::Scope

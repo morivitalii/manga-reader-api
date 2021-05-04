@@ -6,9 +6,7 @@ class Api::Users::Views::TitlesController < Api::ApplicationController
 
   def index
     titles = titles_scope.joins(:views).where(views: {user: @user}).order("views.updated_at DESC")
-    pagination, titles = paginate_countless(titles)
-
-    set_pagination_headers(pagination)
+    titles = paginate_countless(titles)
 
     ActiveRecord::Associations::Preloader.new.preload(
       titles, [

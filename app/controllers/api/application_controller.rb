@@ -9,4 +9,5 @@ class Api::ApplicationController < ActionController::API
   include Authentication
   include Pundit
   include Authorization
+  include Filtering
 end

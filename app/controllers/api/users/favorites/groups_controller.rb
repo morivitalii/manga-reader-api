@@ -6,9 +6,7 @@ class Api::Users::Favorites::GroupsController < Api::ApplicationController
 
   def index
     groups = groups_scope.joins(:favorites).where(favorites: {user: @user}).order("favorites.updated_at DESC")
-    pagination, groups = paginate_countless(groups)
-
-    set_pagination_headers(pagination)
+    groups = paginate_countless(groups)
 
     groups = Api::GroupDecorator.decorate(groups)
     groups = Api::GroupSerializer.serialize(groups)

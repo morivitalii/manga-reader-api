@@ -8,9 +8,7 @@ class Api::UsersController < Api::ApplicationController
 
   def index
     users = user_scope.order(username: :asc)
-    pagination, users = paginate_countless(users)
-
-    set_pagination_headers(pagination)
+    users = paginate_countless(users)
 
     ActiveRecord::Associations::Preloader.new.preload(
       users, [

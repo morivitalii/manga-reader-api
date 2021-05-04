@@ -6,9 +6,7 @@ class Api::Users::Favorites::TitlesController < Api::ApplicationController
 
   def index
     titles = titles_scope.joins(:favorites).where(favorites: {user: @user}).order("favorites.updated_at DESC")
-    pagination, titles = paginate_countless(titles)
-
-    set_pagination_headers(pagination)
+    titles = paginate_countless(titles)
 
     ActiveRecord::Associations::Preloader.new.preload(
       titles, [

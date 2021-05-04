@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Api::Users::Titles::BookmarksPolicy do
+RSpec.describe Api::BookmarksPolicy do
   subject { described_class }
 
   context "as signed out user", context: :as_signed_out_user do

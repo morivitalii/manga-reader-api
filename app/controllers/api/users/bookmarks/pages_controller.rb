@@ -6,9 +6,7 @@ class Api::Users::Bookmarks::PagesController < Api::ApplicationController
 
   def index
     pages = pages_scope.joins(:bookmarks).where(bookmarks: {user: @user}).order("bookmarks.updated_at DESC")
-    pagination, pages = paginate_countless(pages)
-
-    set_pagination_headers(pagination)
+    pages = paginate_countless(pages)
 
     ActiveRecord::Associations::Preloader.new.preload(
       pages, [

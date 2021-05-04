@@ -13,9 +13,9 @@ module Authorization
 
   def authorization_error
     if pundit_user.present?
-      render json: {error: "Forbidden"}, status: :forbidden
+      render json: {error: "Forbidden"}, status: 403
     else
-      render json: {error: "Unauthorized"}, status: :unauthorized
+      render json: {error: "Unauthorized"}, status: 401
     end
   end
 

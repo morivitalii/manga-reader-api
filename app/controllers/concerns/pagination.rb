@@ -4,7 +4,14 @@ module Pagination
   included do
     include Pagy::Backend
 
-    alias_method :paginate_countless, :pagy_countless
     alias_method :set_pagination_headers, :pagy_headers_merge
+
+    def paginate_countless(collection)
+      pagination, collection = pagy_countless(collection)
+
+      set_pagination_headers(pagination)
+
+      collection
+    end
   end
 end
