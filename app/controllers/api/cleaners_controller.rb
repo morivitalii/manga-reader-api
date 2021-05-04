@@ -8,9 +8,7 @@ class Api::CleanersController < Api::ApplicationController
 
   def index
     cleaners = cleaner_scope.order(id: :asc)
-    pagination, cleaners = paginate_countless(cleaners)
-
-    set_pagination_headers(pagination)
+    cleaners = paginate_countless(cleaners)
 
     ActiveRecord::Associations::Preloader.new.preload(
       cleaners, [

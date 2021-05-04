@@ -21,7 +21,8 @@
     { "name": "Titles" },
     { "name": "Volumes" },
     { "name": "Chapters" },
-    { "name": "Pages" }
+    { "name": "Pages" },
+    { "name": "Bookmarks" }
   ],
   "components": {
     "headers": {
@@ -2551,153 +2552,6 @@
         }
       }
     },
-    "/users/titles/bookmarks.json": {
-      "get": {
-        "tags": ["Users"],
-        "summary": "User titles bookmarks",
-        "description": "",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "filter",
-            "description": "Filter parameters",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "ids": {
-                  "type": "array",
-                  "maximum": 100,
-                  "description": "Titles ids",
-                  "items": {
-                    "type": "integer"
-                  }
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": <%= schema("users/titles/bookmarks_controller/index/200") %>
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/unauthorized"
-          },
-          "403": {
-            "$ref": "#/components/responses/forbidden"
-          },
-          "422": {
-            "$ref": "#/components/responses/unprocessable_entity"
-          },
-          "500": {
-            "$ref": "#/components/responses/internal_server_error"
-          }
-        }
-      }
-    },
-    "/users/chapters/bookmarks.json": {
-      "get": {
-        "tags": ["Users"],
-        "summary": "User chapters bookmarks",
-        "description": "",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "filter",
-            "description": "Filter parameters",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "ids": {
-                  "type": "array",
-                  "maximum": 100,
-                  "description": "Chapters ids",
-                  "items": {
-                    "type": "integer"
-                  }
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": <%= schema("users/chapters/bookmarks_controller/index/200") %>
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/unauthorized"
-          },
-          "403": {
-            "$ref": "#/components/responses/forbidden"
-          },
-          "422": {
-            "$ref": "#/components/responses/unprocessable_entity"
-          },
-          "500": {
-            "$ref": "#/components/responses/internal_server_error"
-          }
-        }
-      }
-    },
-    "/users/pages/bookmarks.json": {
-      "get": {
-        "tags": ["Users"],
-        "summary": "User pages bookmarks",
-        "description": "",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "filter",
-            "description": "Filter parameters",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "ids": {
-                  "type": "array",
-                  "maximum": 100,
-                  "description": "Pages ids",
-                  "items": {
-                    "type": "integer"
-                  }
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": <%= schema("users/pages/bookmarks_controller/index/200") %>
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/unauthorized"
-          },
-          "403": {
-            "$ref": "#/components/responses/forbidden"
-          },
-          "422": {
-            "$ref": "#/components/responses/unprocessable_entity"
-          },
-          "500": {
-            "$ref": "#/components/responses/internal_server_error"
-          }
-        }
-      }
-    },
     "/users/favorites/artists.json": {
       "get": {
         "tags": ["Users"],
@@ -4215,6 +4069,70 @@
           },
           "404": {
             "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "$ref": "#/components/responses/unprocessable_entity"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
+      }
+    },
+    "/bookmarks.json": {
+      "get": {
+        "tags": ["Bookmarks"],
+        "summary": "Bookmarks",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/page" },
+          { "$ref": "#/components/parameters/limit" },
+          {
+            "in": "query",
+            "name": "resource_type",
+            "description": "Resource type",
+            "schema": {
+              "type": "string",
+              "enum": ["Title", "Chapter", "Page"],
+              "examples": "Title"
+            }
+          },
+          {
+            "in": "query",
+            "name": "resource_ids",
+            "description": "Resource ids",
+            "schema": {
+              "type": "array",
+              "maximum": 150,
+              "items": {
+                "type": "integer",
+                "examples": [1]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-Pagination-Page-Number": {
+                "$ref": "#/components/headers/X-Pagination-Page-Number"
+              },
+              "X-Pagination-Page-Items-Count": {
+                "$ref": "#/components/headers/X-Pagination-Page-Items-Count"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": <%= schema("bookmarks_controller/index/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
           },
           "422": {
             "$ref": "#/components/responses/unprocessable_entity"

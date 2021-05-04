@@ -10,9 +10,7 @@ class Api::GroupsController < Api::ApplicationController
 
   def index
     groups = group_scope.order("groups.title ASC").all
-    pagination, groups = paginate_countless(groups)
-
-    set_pagination_headers(pagination)
+    groups = paginate_countless(groups)
 
     groups = Api::GroupDecorator.decorate_collection(groups)
     groups = Api::GroupSerializer.serialize(groups)

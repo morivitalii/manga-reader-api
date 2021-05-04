@@ -6,9 +6,7 @@ class Api::Users::Favorites::ArtistsController < Api::ApplicationController
 
   def index
     artists = artists_scope.joins(:favorites).where(favorites: {user: @user}).order("favorites.updated_at DESC")
-    pagination, artists = paginate_countless(artists)
-
-    set_pagination_headers(pagination)
+    artists = paginate_countless(artists)
 
     ActiveRecord::Associations::Preloader.new.preload(
       artists, [

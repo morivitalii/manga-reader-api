@@ -8,9 +8,7 @@ class Api::PaintersController < Api::ApplicationController
 
   def index
     painters = painter_scope.order(id: :asc)
-    pagination, painters = paginate_countless(painters)
-
-    set_pagination_headers(pagination)
+    painters = paginate_countless(painters)
 
     ActiveRecord::Associations::Preloader.new.preload(
       painters, [

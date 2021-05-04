@@ -8,9 +8,7 @@ class Api::EditorsController < Api::ApplicationController
 
   def index
     editors = editor_scope.order(id: :asc)
-    pagination, editors = paginate_countless(editors)
-
-    set_pagination_headers(pagination)
+    editors = paginate_countless(editors)
 
     ActiveRecord::Associations::Preloader.new.preload(
       editors, [

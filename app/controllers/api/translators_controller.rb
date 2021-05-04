@@ -8,9 +8,7 @@ class Api::TranslatorsController < Api::ApplicationController
 
   def index
     translators = translator_scope.order(id: :asc)
-    pagination, translators = paginate_countless(translators)
-
-    set_pagination_headers(pagination)
+    translators = paginate_countless(translators)
 
     ActiveRecord::Associations::Preloader.new.preload(
       translators, [

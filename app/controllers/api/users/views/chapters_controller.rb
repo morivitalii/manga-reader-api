@@ -6,9 +6,7 @@ class Api::Users::Views::ChaptersController < Api::ApplicationController
 
   def index
     chapters = chapters_scope.joins(:views).where(views: {user: @user}).order("views.updated_at DESC")
-    pagination, chapters = paginate_countless(chapters)
-
-    set_pagination_headers(pagination)
+    chapters = paginate_countless(chapters)
 
     ActiveRecord::Associations::Preloader.new.preload(
       chapters, [
