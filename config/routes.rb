@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     resources :editors, only: [:index, :show]
     resources :typers, only: [:index, :show]
     resources :bookmarks, only: [:index]
+    resources :views, only: [:index]
 
     resources :tags, only: [:index, :show] do
       scope module: :tags do
@@ -99,15 +100,6 @@ Rails.application.routes.draw do
 
       namespace :titles do
         resources :favorites, only: [:index]
-        resources :views, only: [:index]
-      end
-
-      namespace :chapters do
-        resources :views, only: [:index]
-      end
-
-      namespace :pages do
-        resources :views, only: [:index]
       end
 
       namespace :groups do

@@ -1,5 +1,5 @@
 {
   "allOf": [
-    { "$ref": "file:/serializers/api/chapter_view.json#" }
+    { "$ref": "file:/serializers/api/view.json#" }
   ]
 }
