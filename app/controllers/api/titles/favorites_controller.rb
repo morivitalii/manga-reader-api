@@ -8,8 +8,8 @@ class Api::Titles::FavoritesController < Api::ApplicationController
     service = Api::Titles::CreateFavorite.new(title: @title, user: Current.user)
 
     if service.call
-      favorite = Api::TitleFavoriteDecorator.decorate(service.favorite)
-      favorite = Api::TitleFavoriteSerializer.serialize(favorite)
+      favorite = Api::FavoriteDecorator.decorate(service.favorite)
+      favorite = Api::FavoriteSerializer.serialize(favorite)
 
       render json: favorite, status: 200
     else

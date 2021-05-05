@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Api::Users::Groups::FavoritesPolicy do
+RSpec.describe Api::FavoritesPolicy do
   subject { described_class }
 
   context "as signed out user", context: :as_signed_out_user do
