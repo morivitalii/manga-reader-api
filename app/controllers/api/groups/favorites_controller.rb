@@ -8,8 +8,8 @@ class Api::Groups::FavoritesController < Api::ApplicationController
     service = Api::Groups::CreateFavorite.new(group: @group, user: Current.user)
 
     if service.call
-      favorite = Api::GroupFavoriteDecorator.decorate(service.favorite)
-      favorite = Api::GroupFavoriteSerializer.serialize(favorite)
+      favorite = Api::FavoriteDecorator.decorate(service.favorite)
+      favorite = Api::FavoriteSerializer.serialize(favorite)
 
       render json: favorite, status: 200
     else

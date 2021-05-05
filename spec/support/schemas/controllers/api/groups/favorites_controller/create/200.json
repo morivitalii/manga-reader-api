@@ -1,5 +1,5 @@
 {
   "allOf": [
-    { "$ref": "file:/serializers/api/group_favorite.json#" }
+    { "$ref": "file:/serializers/api/favorite.json#" }
   ]
 }
