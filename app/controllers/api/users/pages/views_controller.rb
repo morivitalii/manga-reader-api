@@ -6,8 +6,8 @@ class Api::Users::Pages::ViewsController < Api::ApplicationController
     service = Api::Users::Pages::FilterViews.new(filter_params)
 
     if service.call
-      views = Api::PageViewDecorator.decorate(service.views)
-      views = Api::PageViewSerializer.serialize(views)
+      views = Api::ViewDecorator.decorate(service.views)
+      views = Api::ViewSerializer.serialize(views)
 
       render json: views, status: 200
     else

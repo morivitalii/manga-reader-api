@@ -1,4 +1,4 @@
-class Api::BookmarksPolicy < Api::ApplicationPolicy
+class Api::ViewsPolicy < Api::ApplicationPolicy
   def index?
     user?
   end

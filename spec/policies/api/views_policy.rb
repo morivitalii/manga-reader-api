@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Api::Users::Chapters::ViewsPolicy do
+RSpec.describe Api::ViewsPolicy do
   subject { described_class }
 
   context "as signed out user", context: :as_signed_out_user do
