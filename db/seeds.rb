@@ -1,8 +1,11 @@
 ActiveRecord::Base.transaction do
   # Access rights
 
-  # Manage site settings right
-  AccessRight.create!(key: :manage_settings)
+  # Manage system settings right
+  AccessRight.create!(key: :manage_system_settings)
+
+  # Manage system content right
+  AccessRight.create!(key: :manage_system_content)
 
   # Manage titles access right
   AccessRight.create!(key: :manage_titles)

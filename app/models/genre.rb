@@ -4,7 +4,7 @@ class Genre < ApplicationRecord
 
   belongs_to :tag
 
-  has_many :resource_genres
+  has_many :resource_genres, dependent: :restrict_with_error
   has_many :titles, through: :resource_genres, source: :resource, source_type: "Title"
 
   validates :tag, uniqueness: true
