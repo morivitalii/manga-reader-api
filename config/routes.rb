@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     resources :interface_languages, only: [:index, :show]
     resources :content_languages, only: [:index, :show]
     resources :marks, only: [:index, :show]
-    resources :genres, only: [:index, :show]
+    resources :genres, only: [:index, :show, :create, :update, :destroy]
     resources :themes, only: [:index, :show]
     resources :formats, only: [:index, :show]
     resources :demographics, only: [:index, :show]
