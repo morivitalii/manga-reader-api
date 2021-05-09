@@ -14,6 +14,8 @@
     { "name": "Authentication" },
     { "name": "Interface languages" },
     { "name": "Content languages" },
+    { "name": "Genres" },
+    { "name": "Formats" },
     { "name": "Users" },
     { "name": "Artists" },
     { "name": "Groups" },
@@ -477,6 +479,416 @@
         }
       }
     },
+    "/genres.json": {
+      "get": {
+        "tags": ["Genres"],
+        "summary": "Genres",
+        "description": "Sorted by title ASC",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("genres_controller/index/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Genres"],
+        "summary": "Create genre",
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "type": "string",
+                    "description": "Key",
+                    "examples": ["Adventure"]
+                  },
+                  "title": {
+                    "type": "string",
+                    "description": "Title",
+                    "examples": ["Title"]
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Description",
+                    "examples": ["Description"]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("genres_controller/create/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("genres_controller/create/422") %>
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
+      }
+    },
+    "/genres/{id}.json": {
+      "get": {
+        "tags": ["Genres"],
+        "summary": "Genre",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("genres_controller/show/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Genres"],
+        "summary": "Update genre",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "type": "string",
+                    "description": "adventure"
+                  },
+                  "title": {
+                    "type": "string",
+                    "description": "Adventure"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Description"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("genres_controller/update/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("genres_controller/update/422") %>
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Genres"],
+        "summary": "Delete genre",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/no_content"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "$ref": "#/components/responses/unprocessable_entity"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
+      }
+    },
+    "/formats.json": {
+      "get": {
+        "tags": ["Formats"],
+        "summary": "Formats",
+        "description": "Sorted by title ASC",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("formats_controller/index/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Formats"],
+        "summary": "Create format",
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "type": "string",
+                    "description": "Key",
+                    "examples": ["manga"]
+                  },
+                  "title": {
+                    "type": "string",
+                    "description": "Title",
+                    "examples": ["Manga"]
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Description",
+                    "examples": ["Description"]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("formats_controller/create/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("formats_controller/create/422") %>
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
+      }
+    },
+    "/formats/{id}.json": {
+      "get": {
+        "tags": ["Format"],
+        "summary": "Format",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("formats_controller/show/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Formats"],
+        "summary": "Update format",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "type": "string",
+                    "description": "manga"
+                  },
+                  "title": {
+                    "type": "string",
+                    "description": "Manga"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Description"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("formats_controller/update/200") %>
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": <%= schema("formats_controller/update/422") %>
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Formats"],
+        "summary": "Delete format",
+        "description": "",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/no_content"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not_found"
+          },
+          "422": {
+            "$ref": "#/components/responses/unprocessable_entity"
+          },
+          "500": {
+            "$ref": "#/components/responses/internal_server_error"
+          }
+        }
+      }
+    },
     "/tags.json": {
       "get": {
         "tags": ["Tags"],
@@ -549,64 +961,6 @@
             "content": {
               "application/json": {
                 "schema": <%= schema("tags/translations_controller/show/200") %>
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/unauthorized"
-          },
-          "403": {
-            "$ref": "#/components/responses/forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/not_found"
-          },
-          "500": {
-            "$ref": "#/components/responses/internal_server_error"
-          }
-        }
-      }
-    },
-    "/genres.json": {
-      "get": {
-        "tags": ["Tags"],
-        "summary": "Genres",
-        "description": "Sorted by title ASC",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": <%= schema("genres_controller/index/200") %>
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/unauthorized"
-          },
-          "403": {
-            "$ref": "#/components/responses/forbidden"
-          },
-          "500": {
-            "$ref": "#/components/responses/internal_server_error"
-          }
-        }
-      }
-    },
-    "/genres/{id}.json": {
-      "get": {
-        "tags": ["Tags"],
-        "summary": "Genre",
-        "description": "",
-        "parameters": [
-          { "$ref": "#/components/parameters/id" }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": <%= schema("genres_controller/show/200") %>
               }
             }
           },
@@ -723,64 +1077,6 @@
             "content": {
               "application/json": {
                 "schema": <%= schema("demographics_controller/show/200") %>
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/unauthorized"
-          },
-          "403": {
-            "$ref": "#/components/responses/forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/not_found"
-          },
-          "500": {
-            "$ref": "#/components/responses/internal_server_error"
-          }
-        }
-      }
-    },
-    "/formats.json": {
-      "get": {
-        "tags": ["Tags"],
-        "summary": "Formats",
-        "description": "Sorted by title ASC",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": <%= schema("formats_controller/index/200") %>
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/unauthorized"
-          },
-          "403": {
-            "$ref": "#/components/responses/forbidden"
-          },
-          "500": {
-            "$ref": "#/components/responses/internal_server_error"
-          }
-        }
-      }
-    },
-    "/formats/{id}.json": {
-      "get": {
-        "tags": ["Tags"],
-        "summary": "Format",
-        "description": "",
-        "parameters": [
-          { "$ref": "#/components/parameters/id" }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": <%= schema("formats_controller/show/200") %>
               }
             }
           },

@@ -16,7 +16,7 @@
     "title": {
       "type": "string",
       "description": "Title",
-      "examples": ["Doujinshi"]
+      "examples": ["Manga"]
     },
     "description": {
       "type": "string",
