@@ -4,7 +4,7 @@ class Format < ApplicationRecord
 
   belongs_to :tag
 
-  has_many :resource_formats
+  has_many :resource_formats, dependent: :restrict_with_error
   has_many :titles, through: :resource_formats, source: :resource, source_type: "Title"
 
   validates :tag, uniqueness: true
