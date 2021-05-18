@@ -1,0 +1,31 @@
+id: /documentation/models/api/tag.json#
+type: object
+title: Tag
+properties:
+  id:
+    type: integer
+    description: ID
+  title:
+    type: string
+    description: Title
+  key:
+    type: string
+    description: Key
+  description:
+    type: string
+    description: Description
+  created_at:
+    type: string
+    format: date-time
+    description: Date of creation
+  updated_at:
+    type: string
+    format: date-time
+    description: Date of last update
+example:
+  id: 1
+  title: Adventure
+  key: adventure
+  description: Description
+  created_at: 2020-12-13T00:00:00.000Z
+  updated_at: 2020-12-13T00:00:00.000Z

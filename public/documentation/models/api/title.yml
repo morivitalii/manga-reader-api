@@ -1,0 +1,118 @@
+id: /documentation/models/api/title.json#
+type: object
+title: Title
+properties:
+  id:
+    type: integer
+    description: ID
+  title:
+    type: string
+    description: Title
+  description:
+    type: string
+    description: Description
+  status:
+    type: string
+    description: Status
+    enum:
+      - draft
+      - review
+      - published
+  publication_status:
+    type: string
+    description: Publication status
+    enum:
+      - ongoing
+      - completed
+      - cancelled
+  views_count:
+    type: integer
+    description: Views count
+  bookmarks_count:
+    type: integer
+    description: Bookmarks count
+  favorites_count:
+    type: integer
+    description: Favorites count
+  original_content_language_id:
+    description: Original content language ID
+    oneOf:
+      - type: integer
+      - type: null
+  original_content_language:
+    oneOf:
+      - "$ref": /documentation/models/api/content_language.json#
+      - type: null
+  cover:
+    oneOf:
+      - "$ref": /documentation/models/api/file.json#
+      - type: null
+  writers:
+    type: array
+    items:
+      "$ref": /documentation/models/api/writer.json#
+  painters:
+    type: array
+    items:
+      "$ref": /documentation/models/api/painter.json#
+  genres:
+    type: array
+    items:
+      "$ref": /documentation/models/api/genre.json#
+  formats:
+    type: array
+    items:
+      "$ref": /documentation/models/api/format.json#
+  demographics:
+    type: array
+    items:
+      "$ref": /documentation/models/api/demographic.json#
+  marks:
+    type: array
+    items:
+      "$ref": /documentation/models/api/mark.json#
+  themes:
+    type: array
+    items:
+      "$ref": /documentation/models/api/theme.json#
+  published_at:
+    oneOf:
+      - type: string
+        format: date-time
+        description: Published at date
+      - type: null
+  sent_to_review_at:
+    oneOf:
+      - type: string
+        format: date-time
+        description: Sent to review date
+      - type: null
+  deleted_at:
+    oneOf:
+      - type: string
+        format: date-time
+        description: Deleted at date
+      - type: null
+  created_at:
+    type: string
+    format: date-time
+    description: Date of creation
+  updated_at:
+    type: string
+    format: date-time
+    description: Date of last update
+example:
+  id: 1
+  title: Made in Abyss
+  description: Description
+  status: published
+  publication_status: ongoing
+  views_count: 1
+  bookmarks_count: 1
+  favorites_count: 1
+  original_content_language_id: 1
+  published_at: 2020-12-13T00:00:00.000Z
+  sent_to_review_at: 2020-12-13T00:00:00.000Z
+  deleted_at: 2020-12-13T00:00:00.000Z
+  created_at: 2020-12-13T00:00:00.000Z
+  updated_at: 2020-12-13T00:00:00.000Z

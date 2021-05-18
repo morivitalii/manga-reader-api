@@ -1,0 +1,108 @@
+id: /documentation/models/api/chapter.json#
+type: object
+title: Chapter
+properties:
+  id:
+    type: integer
+    description: ID
+  content_language_id:
+    description: Content language ID
+    type: integer
+  title_id:
+    description: Title ID
+    type: integer
+  volume_id:
+    oneOf:
+      - description: Volume ID
+        type: integer
+      - type: null
+  user_id:
+    description: User ID
+    type: integer
+  group_id:
+    description: Group ID
+    type: integer
+  name:
+    type: string
+    description: Title
+  number:
+    type: integer
+    description: Number
+  status:
+    type: string
+    enum:
+      - draft
+      - review
+      - published
+    description: Status
+  pages_count:
+    type: integer
+    description: Pages count
+  views_count:
+    type: integer
+    description: Views count
+  bookmarks_count:
+    type: integer
+    description: Bookmarks count
+  published_at:
+    oneOf:
+      - type: string
+        format: date-time
+        description: Published at date
+      - type: null
+  sent_to_review_at:
+    oneOf:
+      - type: string
+        format: date-time
+        description: Sent to review date
+      - type: null
+  deleted_at:
+    oneOf:
+      - type: string
+        format: date-time
+        description: Deleted date
+      - type: null
+  created_at:
+    type: string
+    format: date-time
+    description: Date of creation
+  updated_at:
+    type: string
+    format: date-time
+    description: Date of last update
+  cover:
+    oneOf:
+      - "$ref": /documentation/models/api/file.json#
+      - type: null
+  content_language:
+    "$ref": /documentation/models/api/content_language.json#
+  volume:
+    oneOf:
+      - "$ref": /documentation/models/api/volume.json#
+      - type: null
+  user:
+    oneOf:
+      - "$ref": /documentation/models/api/user.json#
+      - type: null
+  group:
+    oneOf:
+      - "$ref": /documentation/models/api/group.json#
+      - type: null
+example:
+  id: 1
+  content_language_id: 1
+  title_id: 1
+  volume_id: 1
+  user_id: 1
+  group_id: 1
+  name: Title
+  number: 1
+  status: draft
+  pages_count: 1
+  views_count: 1
+  bookmarks_count: 1
+  published_at: 2020-12-13T00:00:00.000Z
+  sent_to_review_at: 2020-12-13T00:00:00.000Z
+  deleted_at: 2020-12-13T00:00:00.000Z
+  created_at: 2020-12-13T00:00:00.000Z
+  updated_at: 2020-12-13T00:00:00.000Z

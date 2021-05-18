@@ -1,0 +1,5 @@
+{
+  "allOf": [
+    { "$ref": "/documentation/models/api/title.json#" }
+  ]
+}

@@ -1,56 +1,37 @@
 {
   "id": "file:/serializers/api/title.json#",
   "type": "object",
-  "title": "Title",
   "properties": {
     "id": {
-      "type": "integer",
-      "description": "ID",
-      "examples": [1]
+      "type": "integer"
     },
     "title": {
-      "type": "string",
-      "description": "Title",
-      "examples": ["Made in Abyss"]
+      "type": "string"
     },
     "description": {
-      "type": "string",
-      "description": "Description",
-      "examples": ["Description"]
+      "type": "string"
     },
     "status": {
       "type": "string",
-      "enum": ["draft", "review", "published"],
-      "description": "Status",
-      "examples": ["draft"]
+      "enum": ["draft", "review", "published"]
     },
     "publication_status": {
       "type": "string",
-      "enum": ["ongoing", "completed", "cancelled"],
-      "description": "Publication status",
-      "examples": ["ongoing"]
+      "enum": ["ongoing", "completed", "cancelled"]
     },
     "views_count": {
-      "type": "integer",
-      "description": "Views count",
-      "examples": [1]
+      "type": "integer"
     },
     "bookmarks_count": {
-      "type": "integer",
-      "description": "Bookmarks count",
-      "examples": [1]
+      "type": "integer"
     },
     "favorites_count": {
-      "type": "integer",
-      "description": "Favorites count",
-      "examples": [1]
+      "type": "integer"
     },
     "original_content_language_id": {
-      "description": "Original content language ID",
       "oneOf": [
         {
-          "type": "integer",
-          "examples": [1]
+          "type": "integer"
         },
         {
           "type": "null"
@@ -71,29 +52,20 @@
       "oneOf": [
         {
           "type": "object",
-          "description": "File",
           "properties": {
             "url": {
-              "type": "string",
-              "description": "Link",
-              "examples": ["http://example.com/eyJ...3d6/cover.jpg"]
+              "type": "string"
             },
             "filename": {
-              "type": "string",
-              "description": "Filename",
-              "examples": ["cover.jpg"]
+              "type": "string"
             },
             "content_type": {
-              "type": "string",
-              "description": "Content type",
-              "examples": ["image/jpeg"]
+              "type": "string"
             },
             "width": {
               "oneOf": [
                 {
-                  "type": "integer",
-                  "description": "Width",
-                  "examples": [1600]
+                  "type": "integer"
                 },
                 {
                   "type": "null"
@@ -103,9 +75,7 @@
             "height": {
               "oneOf": [
                 {
-                  "type": "integer",
-                  "description": "Height",
-                  "examples": [2261]
+                  "type": "integer"
                 },
                 {
                   "type": "null"
@@ -113,15 +83,11 @@
               ]
             },
             "byte_size": {
-              "type": "integer",
-              "description": "Size in bytes",
-              "examples": [1167999]
+              "type": "integer"
             },
             "created_at": {
               "type": "string",
-              "format": "date-time",
-              "description": "Date of creation",
-              "examples": ["2020-12-13T00:00:00.000Z"]
+              "format": "date-time"
             }
           }
         },
@@ -176,9 +142,7 @@
       "oneOf": [
         {
           "type": "string",
-          "format": "date-time",
-          "description": "Published at date",
-          "examples": ["2020-12-13T00:00:00.000Z"]
+          "format": "date-time"
         },
         {
           "type": "null"
@@ -189,9 +153,7 @@
       "oneOf": [
         {
           "type": "string",
-          "format": "date-time",
-          "description": "Sent to review date",
-          "examples": ["2020-12-13T00:00:00.000Z"]
+          "format": "date-time"
         },
         {
           "type": "null"
@@ -202,9 +164,7 @@
       "oneOf": [
         {
           "type": "string",
-          "format": "date-time",
-          "description": "Deleted at date",
-          "examples": ["2020-12-13T00:00:00.000Z"]
+          "format": "date-time"
         },
         {
           "type": "null"
@@ -213,15 +173,11 @@
     },
     "created_at": {
       "type": "string",
-      "format": "date-time",
-      "description": "Date of creation",
-      "examples": ["2020-12-13T00:00:00.000Z"]
+      "format": "date-time"
     },
     "updated_at": {
       "type": "string",
-      "format": "date-time",
-      "description": "Date of last update",
-      "examples": ["2020-12-13T00:00:00.000Z"]
+      "format": "date-time"
     }
   }
 }

@@ -39,6 +39,6 @@ class Api::ViewsController < Api::ApplicationController
   def index_params
     permitted_attributes = permitted_attributes(Api::ViewsPolicy, :index)
 
-    Api::Views::IndexParams.new(permitted_attributes.keys, permitted_attributes)
+    Api::Views::IndexParams.new(permitted_attributes)
   end
 end

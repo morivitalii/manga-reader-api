@@ -1,40 +1,27 @@
 {
   "id": "file:/serializers/api/favorite.json#",
   "type": "object",
-  "title": "Favorite",
   "properties": {
     "id": {
-      "type": "integer",
-      "description": "ID",
-      "examples": [1]
+      "type": "integer"
     },
     "user_id": {
-      "type": "integer",
-      "description": "User ID",
-      "examples": [1]
+      "type": "integer"
     },
     "resource_type": {
       "type": "string",
-      "enum": ["Title", "Group", "Artist"],
-      "description": "Resource type",
-      "examples": ["Title"]
+      "enum": ["Title", "Group", "Artist"]
     },
     "resource_id": {
-      "type": "integer",
-      "description": "Resource ID",
-      "examples": [1]
+      "type": "integer"
     },
     "created_at": {
       "type": "string",
-      "format": "date-time",
-      "description": "Date of creation",
-      "examples": ["2020-12-13T00:00:00.000Z"]
+      "format": "date-time"
     },
     "updated_at": {
       "type": "string",
-      "format": "date-time",
-      "description": "Date of last update",
-      "examples": ["2020-12-13T00:00:00.000Z"]
+      "format": "date-time"
     }
   }
 }

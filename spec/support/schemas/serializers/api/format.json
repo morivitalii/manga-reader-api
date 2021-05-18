@@ -1,39 +1,26 @@
 {
   "id": "file:/serializers/api/format.json#",
   "type": "object",
-  "title": "Format",
   "properties": {
     "id": {
-      "type": "integer",
-      "description": "ID",
-      "examples": [1]
+      "type": "integer"
     },
     "tag_id": {
-      "type": "integer",
-      "description": "Tag ID",
-      "examples": [1]
+      "type": "integer"
     },
     "title": {
-      "type": "string",
-      "description": "Title",
-      "examples": ["Manga"]
+      "type": "string"
     },
     "description": {
-      "type": "string",
-      "description": "Description",
-      "examples": ["Description"]
+      "type": "string"
     },
     "created_at": {
       "type": "string",
-      "format": "date-time",
-      "description": "Date of creation",
-      "examples": ["2020-12-13T00:00:00.000Z"]
+      "format": "date-time"
     },
     "updated_at": {
       "type": "string",
-      "format": "date-time",
-      "description": "Date of last update",
-      "examples": ["2020-12-13T00:00:00.000Z"]
+      "format": "date-time"
     }
   }
 }

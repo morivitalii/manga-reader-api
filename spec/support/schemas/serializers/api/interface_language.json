@@ -1,39 +1,26 @@
 {
   "id": "file:/serializers/api/interface_language.json#",
   "type": "object",
-  "title": "Interface language",
   "properties": {
     "id": {
-      "type": "integer",
-      "description": "ID",
-      "examples": [1]
+      "type": "integer"
     },
     "title": {
-      "type": "string",
-      "description": "Title",
-      "examples": ["English"]
+      "type": "string"
     },
     "locale": {
-      "type": "string",
-      "description": "Locale key",
-      "examples": ["en"]
+      "type": "string"
     },
     "locale_id": {
-      "type": "integer",
-      "description": "Locale ID",
-      "examples": [1]
+      "type": "integer"
     },
     "created_at": {
       "type": "string",
-      "format": "date-time",
-      "description": "Date of creation",
-      "examples": ["2020-12-13T00:00:00.000Z"]
+      "format": "date-time"
     },
     "updated_at": {
       "type": "string",
-      "format": "date-time",
-      "description": "Date of last update",
-      "examples": ["2020-12-13T00:00:00.000Z"]
+      "format": "date-time"
     }
   }
 }

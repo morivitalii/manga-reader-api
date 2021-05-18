@@ -1,0 +1,35 @@
+id: /documentation/models/api/bookmark.json#
+type: object
+title: Bookmark
+properties:
+  id:
+    type: integer
+    description: ID
+  user_id:
+    type: integer
+    description: User ID
+  resource_type:
+    type: string
+    enum:
+      - Title
+      - Chapter
+      - Page
+    description: Resource type
+  resource_id:
+    type: integer
+    description: Resource ID
+  created_at:
+    type: string
+    format: date-time
+    description: Date of creation
+  updated_at:
+    type: string
+    format: date-time
+    description: Date of last update
+example:
+  id: 1
+  user_id: 1
+  resource_type: Title
+  resource_id: 1
+  created_at: 2020-12-13T00:00:00.000Z
+  updated_at: 2020-12-13T00:00:00.000Z

@@ -1,0 +1,40 @@
+{
+  "id": "/documentation/models/api/tag_translation.json#",
+  "type": "object",
+  "title": "Tag translation",
+  "properties": {
+    "attributes_names": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["title", "description"],
+        "description": "Attribute name",
+        "examples": ["title"]
+      }
+    },
+    "attributes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Title",
+            "examples": ["Seinen"]
+          },
+          "description": {
+            "type": "string",
+            "description": "Description",
+            "examples": ["Description"]
+          },
+          "$extends": {
+            "$ref": "/documentation/helpers/serializers/api/translation/metadata_attributes.json#"
+          }
+        }
+      }
+    },
+    "content_languages": {
+      "$ref": "/documentation/helpers/serializers/api/translation/content_languages.json#"
+    }
+  }
+}

@@ -1,38 +1,25 @@
 {
   "id": "file:/serializers/api/user_setting.json#",
   "type": "object",
-  "title": "User",
   "properties": {
     "id": {
-      "type": "integer",
-      "description": "ID",
-      "examples": [1]
+      "type": "integer"
     },
     "user_id": {
-      "type": "integer",
-      "description": "User ID",
-      "examples": [1]
+      "type": "integer"
     },
     "interface_language_id": {
-      "type": "integer",
-      "description": "Interface language ID",
-      "examples": [1]
+      "type": "integer"
     },
     "name": {
-      "type": "string",
-      "description": "Name",
-      "examples": ["Riko"]
+      "type": "string"
     },
     "surname": {
-      "type": "string",
-      "description": "Surname",
-      "examples": ["Unknown"]
+      "type": "string"
     },
     "sex": {
       "type": "string",
-      "enum": ["male", "female", "other"],
-      "description": "Sex",
-      "examples": ["female"]
+      "enum": ["male", "female", "other"]
     },
     "interface_language": {
       "oneOf": [
@@ -60,29 +47,20 @@
       "oneOf": [
         {
           "type": "object",
-          "description": "Avatar",
           "properties": {
             "url": {
-              "type": "string",
-              "description": "Link",
-              "examples": ["http://example.com/eyJ...8c8/avatar.jpg"]
+              "type": "string"
             },
             "filename": {
-              "type": "string",
-              "description": "Filename",
-              "examples": ["page.jpg"]
+              "type": "string"
             },
             "content_type": {
-              "type": "string",
-              "description": "Content type",
-              "examples": ["image/jpeg"]
+              "type": "string"
             },
             "width": {
               "oneOf": [
                 {
-                  "type": "integer",
-                  "description": "Width",
-                  "examples": [1600]
+                  "type": "integer"
                 },
                 {
                   "type": "null"
@@ -92,9 +70,7 @@
             "height": {
               "oneOf": [
                 {
-                  "type": "integer",
-                  "description": "Height",
-                  "examples": [2261]
+                  "type": "integer"
                 },
                 {
                   "type": "null"
@@ -102,15 +78,11 @@
               ]
             },
             "byte_size": {
-              "type": "integer",
-              "description": "Size in bytes",
-              "examples": [1167999]
+              "type": "integer"
             },
             "created_at": {
               "type": "string",
-              "format": "date-time",
-              "description": "Date of creation",
-              "examples": ["2020-12-13T00:00:00.000Z"]
+              "format": "date-time"
             }
           }
         },
@@ -121,15 +93,11 @@
     },
     "created_at": {
       "type": "string",
-      "format": "date-time",
-      "description": "Date of creation",
-      "examples": ["2020-12-13T00:00:00.000Z"]
+      "format": "date-time"
     },
     "updated_at": {
       "type": "string",
-      "format": "date-time",
-      "description": "Date of last update",
-      "examples": ["2020-12-13T00:00:00.000Z"]
+      "format": "date-time"
     }
   }
 }

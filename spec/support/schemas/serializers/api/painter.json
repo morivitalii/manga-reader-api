@@ -1,19 +1,14 @@
 {
   "id": "file:/serializers/api/painter.json#",
   "type": "object",
-  "title": "Painter",
   "properties": {
     "id": {
-      "type": "integer",
-      "description": "ID",
-      "examples": [1]
+      "type": "integer"
     },
     "user_id": {
-      "description": "User ID",
       "oneOf": [
         {
-          "type": "integer",
-          "examples": [1]
+          "type": "integer"
         },
         {
           "type": "null"
@@ -21,26 +16,18 @@
       ]
     },
     "artist_id": {
-      "type": "integer",
-      "description": "Artist ID",
-      "examples": [1]
+      "type": "integer"
     },
     "name": {
-      "type": "string",
-      "description": "Name",
-      "examples": ["Akihito Tsukushi"]
+      "type": "string"
     },
     "created_at": {
       "type": "string",
-      "format": "date-time",
-      "description": "Date of creation",
-      "examples": ["2020-12-13T00:00:00.000Z"]
+      "format": "date-time"
     },
     "updated_at": {
       "type": "string",
-      "format": "date-time",
-      "description": "Date of last update",
-      "examples": ["2020-12-13T00:00:00.000Z"]
+      "format": "date-time"
     }
   }
 }

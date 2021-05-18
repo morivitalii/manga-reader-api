@@ -1,32 +1,27 @@
 {
   "id": "file:/helpers/serializers/api/translation/content_languages.json#",
   "type": "object",
-  "description": "Content languages status",
   "properties": {
     "available": {
       "type": "array",
-      "description": "Content languages available for translation",
       "items": {
         "$ref": "file:/helpers/serializers/api/translation/content_language.json#"
       }
     },
     "completed": {
       "type": "array",
-      "description": "Content languages available for translation",
       "items": {
         "$ref": "file:/helpers/serializers/api/translation/content_language.json#"
       }
     },
     "progress": {
       "type": "array",
-      "description": "Content languages available for translation",
       "items": {
         "$ref": "file:/helpers/serializers/api/translation/content_language.json#"
       }
     },
     "absent": {
       "type": "array",
-      "description": "Content languages available for translation",
       "items": {
         "$ref": "file:/helpers/serializers/api/translation/content_language.json#"
       }

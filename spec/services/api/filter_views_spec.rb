@@ -9,10 +9,7 @@ RSpec.describe Api::FilterViews do
         _third_view = create(:chapter_view)
         _fourth_view = create(:page_view)
 
-        params = Api::Views::IndexParams.new(
-          [:resource_type],
-          { resource_type: "Title" }
-        )
+        params = Api::Views::IndexParams.new(resource_type: "Title")
 
         service = described_class.new(
           scope: View.all,
@@ -35,17 +32,11 @@ RSpec.describe Api::FilterViews do
         _fifth_view = create(:page_view)
 
         params = Api::Views::IndexParams.new(
-          [
-            :resource_type,
-            :resource_ids
-          ],
-          {
-            resource_type: "Title",
-            resource_ids: [
-              first_view.title_id,
-              second_view.title_id
-            ]
-          }
+          resource_type: "Title",
+          resource_ids: [
+            first_view.title_id,
+            second_view.title_id
+          ]
         )
 
         service = described_class.new(

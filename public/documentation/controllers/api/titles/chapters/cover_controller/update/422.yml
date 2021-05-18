@@ -1,0 +1,4 @@
+type: object
+properties:
+  file:
+    $ref: /documentation/helpers/serializers/api/validation_error.json#
