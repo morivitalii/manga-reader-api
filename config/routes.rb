@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     resources :content_languages, only: [:index, :show]
     resources :marks, only: [:index, :show]
     resources :genres, only: [:index, :show, :create, :update, :destroy]
-    resources :themes, only: [:index, :show]
+    resources :themes, only: [:index, :show, :create, :update, :destroy]
     resources :formats, only: [:index, :show, :create, :update, :destroy]
     resources :demographics, only: [:index, :show, :create, :update, :destroy]
     resources :writers, only: [:index, :show]
