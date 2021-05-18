@@ -39,6 +39,6 @@ class Api::BookmarksController < Api::ApplicationController
   def index_params
     permitted_attributes = permitted_attributes(Api::BookmarksPolicy, :index)
 
-    Api::Bookmarks::IndexParams.new(permitted_attributes.keys, permitted_attributes)
+    Api::Bookmarks::IndexParams.new(permitted_attributes)
   end
 end

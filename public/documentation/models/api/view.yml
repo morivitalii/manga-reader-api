@@ -1,0 +1,35 @@
+id: /documentation/models/api/view.json#
+type: object
+title: View
+properties:
+  id:
+    type: integer
+    description: ID
+  user_id:
+    type: integer
+    description: User ID
+  resource_type:
+    type: string
+    description: Resource type
+    enum:
+      - Title
+      - Chapter
+      - Page
+  resource_id:
+    type: integer
+    description: Resource ID
+  created_at:
+    type: string
+    format: date-time
+    description: Date of creation
+  updated_at:
+    type: string
+    format: date-time
+    description: Date of last update
+example:
+  id: 1
+  user_id: 1
+  resource_type: Title
+  resource_id: 1
+  created_at: 2020-12-13T00:00:00.000Z
+  updated_at: 2020-12-13T00:00:00.000Z

@@ -1,0 +1,2 @@
+allOf:
+  - $ref: /documentation/models/api/interface_language.json#

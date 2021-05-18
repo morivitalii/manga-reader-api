@@ -39,6 +39,6 @@ class Api::FavoritesController < Api::ApplicationController
   def index_params
     permitted_attributes = permitted_attributes(Api::FavoritesPolicy, :index)
 
-    Api::Favorites::IndexParams.new(permitted_attributes.keys, permitted_attributes)
+    Api::Favorites::IndexParams.new(permitted_attributes)
   end
 end

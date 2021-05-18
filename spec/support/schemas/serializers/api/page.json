@@ -1,63 +1,41 @@
 {
   "id": "file:/serializers/api/page.json#",
   "type": "object",
-  "title": "Page",
   "properties": {
     "id": {
-      "type": "integer",
-      "description": "ID",
-      "examples": [1]
+      "type": "integer"
     },
     "chapter_id": {
-      "description": "Chapter ID",
-      "type": "integer",
-      "examples": [1]
+      "type": "integer"
     },
     "user_id": {
-      "description": "User ID",
-      "type": "integer",
-      "examples": [1]
+      "type": "integer"
     },
     "number": {
-      "type": "integer",
-      "description": "Number",
-      "examples": [1]
+      "type": "integer"
     },
     "views_count": {
-      "type": "integer",
-      "description": "Views count",
-      "examples": [1]
+      "type": "integer"
     },
     "bookmarks_count": {
-      "type": "integer",
-      "description": "Bookmarks count",
-      "examples": [1]
+      "type": "integer"
     },
     "file": {
       "type": "object",
-      "description": "File",
       "properties": {
         "url": {
-          "type": "string",
-          "description": "Link",
-          "examples": ["http://example.com/eyJ...8c8/page.jpg"]
+          "type": "string"
         },
         "filename": {
-          "type": "string",
-          "description": "Filename",
-          "examples": ["page.jpg"]
+          "type": "string"
         },
         "content_type": {
-          "type": "string",
-          "description": "Content type",
-          "examples": ["image/jpeg"]
+          "type": "string"
         },
         "width": {
           "oneOf": [
             {
-              "type": "integer",
-              "description": "Width",
-              "examples": [1600]
+              "type": "integer"
             },
             {
               "type": "null"
@@ -67,9 +45,7 @@
         "height": {
           "oneOf": [
             {
-              "type": "integer",
-              "description": "Height",
-              "examples": [2261]
+              "type": "integer"
             },
             {
               "type": "null"
@@ -77,29 +53,21 @@
           ]
         },
         "byte_size": {
-          "type": "integer",
-          "description": "Size in bytes",
-          "examples": [1167999]
+          "type": "integer"
         },
         "created_at": {
           "type": "string",
-          "format": "date-time",
-          "description": "Date of creation",
-          "examples": ["2020-12-13T00:00:00.000Z"]
+          "format": "date-time"
         }
       }
     },
     "created_at": {
       "type": "string",
-      "format": "date-time",
-      "description": "Date of creation",
-      "examples": ["2020-12-13T00:00:00.000Z"]
+      "format": "date-time"
     },
     "updated_at": {
       "type": "string",
-      "format": "date-time",
-      "description": "Date of last update",
-      "examples": ["2020-12-13T00:00:00.000Z"]
+      "format": "date-time"
     }
   }
 }

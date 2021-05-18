@@ -9,10 +9,7 @@ RSpec.describe Api::FilterFavorites do
         _third_favorite = create(:group_favorite)
         _fourth_favorite = create(:artist_favorite)
 
-        params = Api::Favorites::IndexParams.new(
-          [:resource_type],
-          { resource_type: "Title" }
-        )
+        params = Api::Favorites::IndexParams.new(resource_type: "Title")
 
         service = described_class.new(
           scope: Favorite.all,
@@ -35,17 +32,11 @@ RSpec.describe Api::FilterFavorites do
         _fourth_favorite = create(:artist_favorite)
 
         params = Api::Favorites::IndexParams.new(
-          [
-            :resource_type,
-            :resource_ids
-          ],
-          {
-            resource_type: "Title",
-            resource_ids: [
-              first_favorite.title_id,
-              second_favorite.title_id
-            ]
-          }
+          resource_type: "Title",
+          resource_ids: [
+            first_favorite.title_id,
+            second_favorite.title_id
+          ]
         )
 
         service = described_class.new(

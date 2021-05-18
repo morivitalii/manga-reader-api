@@ -1,29 +1,20 @@
 {
   "id": "file:/serializers/api/group.json#",
   "type": "object",
-  "title": "Group",
   "properties": {
     "id": {
-      "type": "integer",
-      "description": "ID",
-      "examples": [1]
+      "type": "integer"
     },
     "title": {
-      "type": "string",
-      "description": "Title",
-      "examples": ["Developers"]
+      "type": "string"
     },
     "created_at": {
       "type": "string",
-      "format": "date-time",
-      "description": "Date of creation",
-      "examples": ["2020-12-13T00:00:00.000Z"]
+      "format": "date-time"
     },
     "updated_at": {
       "type": "string",
-      "format": "date-time",
-      "description": "Date of last update",
-      "examples": ["2020-12-13T00:00:00.000Z"]
+      "format": "date-time"
     }
   }
 }

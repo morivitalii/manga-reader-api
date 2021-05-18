@@ -1,34 +1,23 @@
 {
   "id": "file:/serializers/api/volume.json#",
   "type": "object",
-  "title": "Volume",
   "properties": {
     "id": {
-      "type": "integer",
-      "description": "ID",
-      "examples": [1]
+      "type": "integer"
     },
     "title_id": {
-      "description": "Title ID",
-      "type": "integer",
-      "examples": [1]
+      "type": "integer"
     },
     "number": {
-      "type": "integer",
-      "description": "Number",
-      "examples": [1]
+      "type": "integer"
     },
     "created_at": {
       "type": "string",
-      "format": "date-time",
-      "description": "Date of creation",
-      "examples": ["2020-12-13T00:00:00.000Z"]
+      "format": "date-time"
     },
     "updated_at": {
       "type": "string",
-      "format": "date-time",
-      "description": "Date of last update",
-      "examples": ["2020-12-13T00:00:00.000Z"]
+      "format": "date-time"
     }
   }
 }

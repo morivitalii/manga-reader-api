@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "properties": {
+    "title": {
+      "$ref": "/documentation/helpers/serializers/api/validation_error.json#"
+    },
+    "description": {
+      "$ref": "/documentation/helpers/serializers/api/validation_error.json#"
+    },
+    "publication_status": {
+      "$ref": "/documentation/helpers/serializers/api/validation_error.json#"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+id: /documentation/helpers/serializers/api/validation_error.json#
+type: array
+description: Validation errors
+items:
+  type: string
+  examples:
+    - is invalid

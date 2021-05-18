@@ -1,0 +1,31 @@
+id: /documentation/models/api/format.json#
+type: object
+title: Format
+properties:
+  id:
+    type: integer
+    description: ID
+  tag_id:
+    type: integer
+    description: Tag ID
+  title:
+    type: string
+    description: Title
+  description:
+    type: string
+    description: Description
+  created_at:
+    type: string
+    format: date-time
+    description: Date of creation
+  updated_at:
+    type: string
+    format: date-time
+    description: Date of last update
+example:
+  id: 1
+  tag_id: 1
+  title: Manga
+  description: Description
+  created_at: 2020-12-13T00:00:00.000Z
+  updated_at: 2020-12-13T00:00:00.000Z

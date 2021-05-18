@@ -1,0 +1,59 @@
+id: /documentation/models/api/user_setting.json#
+type: object
+title: User
+properties:
+  id:
+    type: integer
+    description: ID
+  user_id:
+    type: integer
+    description: User ID
+  interface_language_id:
+    type: integer
+    description: Interface language ID
+  name:
+    type: string
+    description: Name
+  surname:
+    type: string
+    description: Surname
+  sex:
+    type: string
+    enum:
+      - male
+      - female
+      - other
+    description: Sex
+  interface_language:
+    oneOf:
+      - "$ref": /documentation/models/api/interface_language.json#
+      - type: null
+  excluded_tags:
+    type: array
+    items:
+      "$ref": /documentation/models/api/tag.json#
+  content_languages:
+    type: array
+    items:
+      "$ref": /documentation/models/api/content_language.json#
+  avatar:
+    oneOf:
+      - "$ref": /documentation/models/api/file.json#
+      - type: null
+  created_at:
+    type: string
+    format: date-time
+    description: Date of creation
+  updated_at:
+    type: string
+    format: date-time
+    description: Date of last update
+example:
+  id: 1
+  user_id: 1
+  interface_language_id: 1
+  name: Riko
+  surname: Unknown
+  sex: female
+  created_at: 2020-12-13T00:00:00.000Z
+  updated_at: 2020-12-13T00:00:00.000Z

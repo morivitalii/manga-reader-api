@@ -1,30 +1,21 @@
 {
   "id": "file:/serializers/api/group_access_right.json#",
   "type": "object",
-  "title": "Group access right",
   "properties": {
     "id": {
-      "type": "integer",
-      "description": "ID",
-      "examples": [1]
+      "type": "integer"
     },
     "key": {
       "type": "string",
-      "description": "Key",
-      "enum": ["manage_group", "manage_users", "manage_chapters"],
-      "examples": ["manage_group"]
+      "enum": ["manage_group", "manage_users", "manage_chapters"]
     },
     "created_at": {
       "type": "string",
-      "format": "date-time",
-      "description": "Date of creation",
-      "examples": ["2020-12-13T00:00:00.000Z"]
+      "format": "date-time"
     },
     "updated_at": {
       "type": "string",
-      "format": "date-time",
-      "description": "Date of last update",
-      "examples": ["2020-12-13T00:00:00.000Z"]
+      "format": "date-time"
     }
   }
 }

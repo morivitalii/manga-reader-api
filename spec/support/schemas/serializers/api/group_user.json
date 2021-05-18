@@ -1,22 +1,15 @@
 {
   "id": "file:/serializers/api/group_user.json#",
   "type": "object",
-  "title": "Group user",
   "properties": {
     "id": {
-      "type": "integer",
-      "description": "ID",
-      "examples": [1]
+      "type": "integer"
     },
     "group_id": {
-      "type": "integer",
-      "description": "Group ID",
-      "examples": [1]
+      "type": "integer"
     },
     "user_id": {
-      "type": "integer",
-      "description": "User ID",
-      "examples": [1]
+      "type": "integer"
     },
     "group": {
       "$ref": "file:/serializers/api/group.json#"
@@ -26,22 +19,17 @@
     },
     "group_access_rights": {
       "type": "array",
-      "description": "Group access rights",
       "items": {
         "$ref": "file:/serializers/api/group_access_right.json#"
       }
     },
     "created_at": {
       "type": "string",
-      "format": "date-time",
-      "description": "Date of creation",
-      "examples": ["2020-12-13T00:00:00.000Z"]
+      "format": "date-time"
     },
     "updated_at": {
       "type": "string",
-      "format": "date-time",
-      "description": "Date of last update",
-      "examples": ["2020-12-13T00:00:00.000Z"]
+      "format": "date-time"
     }
   }
 }

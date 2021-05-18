@@ -9,10 +9,7 @@ RSpec.describe Api::FilterBookmarks do
         _third_bookmark = create(:chapter_bookmark)
         _fourth_bookmark = create(:page_bookmark)
 
-        params = Api::Bookmarks::IndexParams.new(
-          [:resource_type],
-          { resource_type: "Title" }
-        )
+        params = Api::Bookmarks::IndexParams.new(resource_type: "Title")
 
         service = described_class.new(
           scope: Bookmark.all,
@@ -35,17 +32,11 @@ RSpec.describe Api::FilterBookmarks do
         _fifth_bookmark = create(:page_bookmark)
 
         params = Api::Bookmarks::IndexParams.new(
-          [
-            :resource_type,
-            :resource_ids
-          ],
-          {
-            resource_type: "Title",
-            resource_ids: [
-              first_bookmark.title_id,
-              second_bookmark.title_id
-            ]
-          }
+          resource_type: "Title",
+          resource_ids: [
+            first_bookmark.title_id,
+            second_bookmark.title_id
+          ]
         )
 
         service = described_class.new(

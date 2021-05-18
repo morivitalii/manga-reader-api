@@ -1,22 +1,15 @@
 {
   "id": "file:/helpers/serializers/api/translation/content_language.json#",
   "type": "object",
-  "description": "Content language",
   "properties": {
     "id": {
-      "type": "integer",
-      "description": "ID",
-      "examples": [1]
+      "type": "integer"
     },
     "title": {
-      "type": "string",
-      "description": "Title",
-      "examples": ["English"]
+      "type": "string"
     },
     "locale": {
-      "type": "string",
-      "description": "Locale key",
-      "examples": ["en"]
+      "type": "string"
     }
   }
 }

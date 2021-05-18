@@ -1,15 +1,12 @@
 {
   "id": "file:/serializers/api/tag_translation.json#",
   "type": "object",
-  "title": "Tag translation",
   "properties": {
     "attributes_names": {
       "type": "array",
       "items": {
         "type": "string",
-        "enum": ["title", "description"],
-        "description": "Attribute name",
-        "examples": ["title"]
+        "enum": ["title", "description"]
       }
     },
     "attributes": {
@@ -18,14 +15,10 @@
         "type": "object",
         "properties": {
           "title": {
-            "type": "string",
-            "description": "Title",
-            "examples": ["Seinen"]
+            "type": "string"
           },
           "description": {
-            "type": "string",
-            "description": "Description",
-            "examples": ["Description"]
+            "type": "string"
           },
           "$extends": {
             "$ref": "file:/helpers/serializers/api/translation/metadata_attributes.json#"
