@@ -4,7 +4,7 @@ class Demographic < ApplicationRecord
 
   belongs_to :tag
 
-  has_many :resource_demographics
+  has_many :resource_demographics, dependent: :restrict_with_error
   has_many :titles, through: :resource_demographics, source: :resource, source_type: "Title"
 
   validates :tag, uniqueness: true

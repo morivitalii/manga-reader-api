@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "properties": {
+    "title": {
+      "$ref": "file:/helpers/serializers/api/validation_error.json#"
+    },
+    "description": {
+      "$ref": "file:/helpers/serializers/api/validation_error.json#"
+    }
+  }
+}
