@@ -11,6 +11,7 @@ tags:
   - name: Content languages
   - name: Genres
   - name: Formats
+  - name: Demographics
   - name: Users
   - name: Artists
   - name: Groups
@@ -755,8 +756,8 @@ paths:
   /demographics.json:
     get:
       tags:
-        - Tags
-      summary: Demographics
+        - demographics
+      summary: demographics
       description: Sorted by title ASC
       responses:
         '200':
@@ -771,29 +772,135 @@ paths:
           $ref: '#/components/responses/forbidden'
         '500':
           $ref: '#/components/responses/internal_server_error'
-  '/demographics/{id}.json':
-    get:
+    post:
       tags:
-        - Tags
-      summary: Demographic
+        - demographics
+      summary: Create demographic
       description: ''
-      parameters:
-        - $ref: '#/components/parameters/id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                key:
+                  type: string
+                  description: Key
+                title:
+                  type: string
+                  description: Title
+                description:
+                  type: string
+                  description: Description
+              example:
+                key: manga
+                title: Manga
+                description: Description
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/demographics_controller/show/200.json
+                $ref: /documentation/controllers/api/demographics_controller/create/200.json
         '401':
           $ref: '#/components/responses/unauthorized'
         '403':
           $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              schema:
+                $ref: /documentation/controllers/api/demographics_controller/create/422.json
         '500':
           $ref: '#/components/responses/internal_server_error'
+    '/demographics/{id}.json':
+      get:
+        tags:
+          - demographic
+        summary: demographic
+        description: ''
+        parameters:
+          - $ref: '#/components/parameters/id'
+        responses:
+          '200':
+            description: Success
+            content:
+              application/json:
+                schema:
+                  $ref: /documentation/controllers/api/demographics_controller/show/200.json
+          '401':
+            $ref: '#/components/responses/unauthorized'
+          '403':
+            $ref: '#/components/responses/forbidden'
+          '404':
+            $ref: '#/components/responses/not_found'
+          '500':
+            $ref: '#/components/responses/internal_server_error'
+      put:
+        tags:
+          - demographics
+        summary: Update demographic
+        description: ''
+        parameters:
+          - $ref: '#/components/parameters/id'
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  key:
+                    type: string
+                    description: manga
+                  title:
+                    type: string
+                    description: Manga
+                  description:
+                    type: string
+                    description: Description
+        responses:
+          '200':
+            description: Success
+            content:
+              application/json:
+                schema:
+                  $ref: /documentation/controllers/api/demographics_controller/update/200.json
+          '401':
+            $ref: '#/components/responses/unauthorized'
+          '403':
+            $ref: '#/components/responses/forbidden'
+          '404':
+            $ref: '#/components/responses/not_found'
+          '422':
+            description: Unprocessable entity
+            content:
+              application/json:
+                schema:
+                  $ref: /documentation/controllers/api/demographics_controller/update/422.json
+          '500':
+            $ref: '#/components/responses/internal_server_error'
+      delete:
+        tags:
+          - demographics
+        summary: Delete demographic
+        description: ''
+        parameters:
+          - $ref: '#/components/parameters/id'
+        responses:
+          '204':
+            $ref: '#/components/responses/no_content'
+          '401':
+            $ref: '#/components/responses/unauthorized'
+          '403':
+            $ref: '#/components/responses/forbidden'
+          '404':
+            $ref: '#/components/responses/not_found'
+          '422':
+            $ref: '#/components/responses/unprocessable_entity'
+          '500':
+            $ref: '#/components/responses/internal_server_error'
   /marks.json:
     get:
       tags:

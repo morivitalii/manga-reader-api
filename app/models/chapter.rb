@@ -9,7 +9,10 @@ class Chapter < ApplicationRecord
 
   belongs_to :content_language
   belongs_to :title
+
+  # optional: true because it could be that title still have no volumes
   belongs_to :volume, optional: true
+
   belongs_to :user
   belongs_to :group
 
@@ -53,24 +56,18 @@ class Chapter < ApplicationRecord
   end
 
   def validate_cleaners_size
-    return if cleaners.blank?
-
     if cleaners.size > CLEANERS_LIMIT
       errors.add(:cleaners, :invalid)
     end
   end
 
   def validate_translators_size
-    return if translators.blank?
-
     if translators.size > TRANSLATORS_LIMIT
       errors.add(:translators, :invalid)
     end
   end
 
   def validate_editors_size
-    return if editors.blank?
-
     if editors.size > EDITORS_LIMIT
       errors.add(:editors, :invalid)
     end

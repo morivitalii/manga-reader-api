@@ -5,7 +5,7 @@ class Translator < ApplicationRecord
   belongs_to :artist
 
   has_many :resource_translators, dependent: :restrict_with_error
-  has_many :pages, through: :resource_translators, source: :resource, source_type: "Page"
+  has_many :chapters, through: :resource_translators, source: :resource, source_type: "Chapter"
 
   validates :artist, uniqueness: true
 end

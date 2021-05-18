@@ -1,11 +1,13 @@
 class Api::DemographicsController < Api::ApplicationController
-  before_action :set_demographic, only: [:show]
+  before_action :set_demographic, only: [:show, :update, :destroy]
 
-  before_action -> { authorize(Api::DemographicsPolicy) }, only: [:index]
-  before_action -> { authorize(Api::DemographicsPolicy, demographic: @demographic) }, only: [:show]
+  before_action -> { authorize(Api::DemographicsPolicy) }, only: [:index, :create]
+  before_action -> { authorize(Api::DemographicsPolicy, demographic: @demographic) }, only: [:show, :update, :destroy]
+
+  skip_after_action :verify_policy_scoped, only: [:create]
 
   def index
-    query = demographics_scope.joins(tag: :translations).order("tag_translations.title ASC")
+    query = demographic_scope.joins(tag: :translations).order("tag_translations.title ASC")
     cache_key = cache_key(query)
 
     demographics = Rails.cache.fetch(cache_key) do
@@ -16,6 +18,7 @@ class Api::DemographicsController < Api::ApplicationController
       )
 
       demographics = Api::DemographicDecorator.decorate_collection(demographics)
+
       Api::DemographicSerializer.serialize(demographics).to_json
     end
 
@@ -38,13 +41,69 @@ class Api::DemographicsController < Api::ApplicationController
     render json: demographic, status: 200
   end
 
+  def create
+    service = Api::CreateDemographic.new(create_params)
+
+    if service.call
+      ActiveRecord::Associations::Preloader.new.preload(
+        service.demographic, [
+        tag: Tag.translations_associations
+      ]
+      )
+
+      demographic = Api::DemographicDecorator.decorate(service.demographic)
+      demographic = Api::DemographicSerializer.serialize(demographic)
+
+      render json: demographic, status: 200
+    else
+      render json: service.errors, status: 422
+    end
+  end
+
+  def update
+    service = Api::UpdateDemographic.new(update_params)
+
+    if service.call
+      ActiveRecord::Associations::Preloader.new.preload(
+        service.demographic, [
+        tag: Tag.translations_associations
+      ]
+      )
+
+      demographic = Api::DemographicDecorator.decorate(service.demographic)
+      demographic = Api::DemographicSerializer.serialize(demographic)
+
+      render json: demographic, status: 200
+    else
+      render json: service.errors, status: 422
+    end
+  end
+
+  def destroy
+    service = Api::DeleteDemographic.new(demographic: @demographic)
+
+    if service.call
+      head 204
+    else
+      render json: service.errors, status: 422
+    end
+  end
+
   private
 
   def set_demographic
-    @demographic = demographics_scope.find(params[:id])
+    @demographic = demographic_scope.find(params[:id])
   end
 
-  def demographics_scope
+  def create_params
+    permitted_attributes(Api::DemographicsPolicy, :create)
+  end
+
+  def update_params
+    permitted_attributes(Api::DemographicsPolicy, :update).merge(demographic: @demographic)
+  end
+
+  def demographic_scope
     policy_scope(Api::DemographicsPolicy, Demographic)
   end
 end
