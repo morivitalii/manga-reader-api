@@ -47,8 +47,8 @@ class Api::ThemesController < Api::ApplicationController
     if service.call
       ActiveRecord::Associations::Preloader.new.preload(
         service.theme, [
-        tag: Tag.translations_associations
-      ]
+          tag: Tag.translations_associations
+        ]
       )
 
       theme = Api::ThemeDecorator.decorate(service.theme)

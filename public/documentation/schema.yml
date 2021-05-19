@@ -714,8 +714,8 @@ paths:
   /themes.json:
     get:
       tags:
-        - Tags
-      summary: Themes
+        - themes
+      summary: themes
       description: Sorted by title ASC
       responses:
         '200':
@@ -730,29 +730,135 @@ paths:
           $ref: '#/components/responses/forbidden'
         '500':
           $ref: '#/components/responses/internal_server_error'
-  '/themes/{id}.json':
-    get:
+    post:
       tags:
-        - Tags
-      summary: Theme
+        - themes
+      summary: Create theme
       description: ''
-      parameters:
-        - $ref: '#/components/parameters/id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                key:
+                  type: string
+                  description: Key
+                title:
+                  type: string
+                  description: Title
+                description:
+                  type: string
+                  description: Description
+              example:
+                key: manga
+                title: Manga
+                description: Description
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/themes_controller/show/200.json
+                $ref: /documentation/controllers/api/themes_controller/create/200.json
         '401':
           $ref: '#/components/responses/unauthorized'
         '403':
           $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              schema:
+                $ref: /documentation/controllers/api/themes_controller/create/422.json
         '500':
           $ref: '#/components/responses/internal_server_error'
+    '/themes/{id}.json':
+      get:
+        tags:
+          - theme
+        summary: theme
+        description: ''
+        parameters:
+          - $ref: '#/components/parameters/id'
+        responses:
+          '200':
+            description: Success
+            content:
+              application/json:
+                schema:
+                  $ref: /documentation/controllers/api/themes_controller/show/200.json
+          '401':
+            $ref: '#/components/responses/unauthorized'
+          '403':
+            $ref: '#/components/responses/forbidden'
+          '404':
+            $ref: '#/components/responses/not_found'
+          '500':
+            $ref: '#/components/responses/internal_server_error'
+      put:
+        tags:
+          - themes
+        summary: Update theme
+        description: ''
+        parameters:
+          - $ref: '#/components/parameters/id'
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  key:
+                    type: string
+                    description: manga
+                  title:
+                    type: string
+                    description: Manga
+                  description:
+                    type: string
+                    description: Description
+        responses:
+          '200':
+            description: Success
+            content:
+              application/json:
+                schema:
+                  $ref: /documentation/controllers/api/themes_controller/update/200.json
+          '401':
+            $ref: '#/components/responses/unauthorized'
+          '403':
+            $ref: '#/components/responses/forbidden'
+          '404':
+            $ref: '#/components/responses/not_found'
+          '422':
+            description: Unprocessable entity
+            content:
+              application/json:
+                schema:
+                  $ref: /documentation/controllers/api/themes_controller/update/422.json
+          '500':
+            $ref: '#/components/responses/internal_server_error'
+      delete:
+        tags:
+          - themes
+        summary: Delete theme
+        description: ''
+        parameters:
+          - $ref: '#/components/parameters/id'
+        responses:
+          '204':
+            $ref: '#/components/responses/no_content'
+          '401':
+            $ref: '#/components/responses/unauthorized'
+          '403':
+            $ref: '#/components/responses/forbidden'
+          '404':
+            $ref: '#/components/responses/not_found'
+          '422':
+            $ref: '#/components/responses/unprocessable_entity'
+          '500':
+            $ref: '#/components/responses/internal_server_error'
   /demographics.json:
     get:
       tags:
