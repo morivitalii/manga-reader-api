@@ -3,11 +3,11 @@ module Caching
 
   private
 
-  def cache_key(scope, name = nil, endpoint_specific = true)
-    if endpoint_specific
-      [I18n.locale, "endpoint", params[:controller], params[:action], "scope", scope.cache_key_with_version].compact.join("/")
-    else
-      [I18n.locale, "variable", name, "scope", scope.cache_key_with_version].compact.join("/")
-    end
+  def endpoint_cache_key(scope)
+    [I18n.locale, "endpoint", params[:controller], params[:action], "scope", scope.cache_key_with_version].join("/")
+  end
+
+  def variable_cache_key(scope)
+    [I18n.locale, "scope", scope.cache_key_with_version].join("/")
   end
 end

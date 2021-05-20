@@ -8,7 +8,7 @@ class Api::GenresController < Api::ApplicationController
 
   def index
     query = genres_scope.joins(tag: :translations).order("tag_translations.title ASC")
-    cache_key = cache_key(query)
+    cache_key = endpoint_cache_key(query)
 
     genres = Rails.cache.fetch(cache_key) do
       genres = query.all
@@ -26,7 +26,7 @@ class Api::GenresController < Api::ApplicationController
   end
 
   def show
-    cache_key = cache_key(@genre)
+    cache_key = endpoint_cache_key(@genre)
 
     genre = Rails.cache.fetch(cache_key) do
       ActiveRecord::Associations::Preloader.new.preload(

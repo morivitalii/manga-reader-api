@@ -1,12 +1,14 @@
 class Api::MarksController < Api::ApplicationController
-  before_action :set_mark, only: [:show]
+  before_action :set_mark, only: [:show, :update, :destroy]
 
-  before_action -> { authorize(Api::MarksPolicy) }, only: [:index]
-  before_action -> { authorize(Api::MarksPolicy, mark: @mark) }, only: [:show]
+  before_action -> { authorize(Api::MarksPolicy) }, only: [:index, :create]
+  before_action -> { authorize(Api::MarksPolicy, mark: @mark) }, only: [:show, :update, :destroy]
+
+  skip_after_action :verify_policy_scoped, only: [:create]
 
   def index
-    query = marks_scope.joins(tag: :translations).order("tag_translations.title ASC")
-    cache_key = cache_key(query)
+    query = mark_scope.joins(tag: :translations).order("tag_translations.title ASC")
+    cache_key = endpoint_cache_key(query)
 
     marks = Rails.cache.fetch(cache_key) do
       marks = query.all
@@ -24,7 +26,7 @@ class Api::MarksController < Api::ApplicationController
   end
 
   def show
-    cache_key = cache_key(@mark)
+    cache_key = endpoint_cache_key(@mark)
 
     mark = Rails.cache.fetch(cache_key) do
       ActiveRecord::Associations::Preloader.new.preload(
@@ -39,13 +41,69 @@ class Api::MarksController < Api::ApplicationController
     render json: mark, status: 200
   end
 
+  def create
+    service = Api::CreateMark.new(create_params)
+
+    if service.call
+      ActiveRecord::Associations::Preloader.new.preload(
+        service.mark, [
+        tag: Tag.translations_associations
+      ]
+      )
+
+      mark = Api::MarkDecorator.decorate(service.mark)
+      mark = Api::MarkSerializer.serialize(mark)
+
+      render json: mark, status: 200
+    else
+      render json: service.errors, status: 422
+    end
+  end
+
+  def update
+    service = Api::UpdateMark.new(update_params)
+
+    if service.call
+      ActiveRecord::Associations::Preloader.new.preload(
+        service.mark, [
+        tag: Tag.translations_associations
+      ]
+      )
+
+      mark = Api::MarkDecorator.decorate(service.mark)
+      mark = Api::MarkSerializer.serialize(mark)
+
+      render json: mark, status: 200
+    else
+      render json: service.errors, status: 422
+    end
+  end
+
+  def destroy
+    service = Api::DeleteMark.new(mark: @mark)
+
+    if service.call
+      head 204
+    else
+      render json: service.errors, status: 422
+    end
+  end
+
   private
 
   def set_mark
-    @mark = marks_scope.find(params[:id])
+    @mark = mark_scope.find(params[:id])
   end
 
-  def marks_scope
+  def create_params
+    permitted_attributes(Api::MarksPolicy, :create)
+  end
+
+  def update_params
+    permitted_attributes(Api::MarksPolicy, :update).merge(mark: @mark)
+  end
+
+  def mark_scope
     policy_scope(Api::MarksPolicy, Mark)
   end
 end

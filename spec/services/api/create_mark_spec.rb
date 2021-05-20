@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Api::CreateTheme do
+RSpec.describe Api::CreateMark do
   describe ".call" do
     it "does what it should" do
       service = described_class.new(
@@ -12,7 +12,7 @@ RSpec.describe Api::CreateTheme do
       result = service.call
 
       expect(result).to be_truthy
-      expect(Theme.count).to eq(1)
+      expect(Mark.count).to eq(1)
     end
   end
 end

@@ -8,7 +8,7 @@ class Api::ThemesController < Api::ApplicationController
 
   def index
     query = themes_scope.joins(tag: :translations).order("tag_translations.title ASC")
-    cache_key = cache_key(query)
+    cache_key = endpoint_cache_key(query)
 
     themes = Rails.cache.fetch(cache_key) do
       themes = query.all
@@ -26,7 +26,7 @@ class Api::ThemesController < Api::ApplicationController
   end
 
   def show
-    cache_key = cache_key(@theme)
+    cache_key = endpoint_cache_key(@theme)
 
     theme = Rails.cache.fetch(cache_key) do
       ActiveRecord::Associations::Preloader.new.preload(

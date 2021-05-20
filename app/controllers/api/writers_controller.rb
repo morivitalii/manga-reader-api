@@ -23,7 +23,7 @@ class Api::WritersController < Api::ApplicationController
   end
 
   def show
-    cache_key = cache_key(@writer)
+    cache_key = endpoint_cache_key(@writer)
 
     writer = Rails.cache.fetch(cache_key) do
       ActiveRecord::Associations::Preloader.new.preload(

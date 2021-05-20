@@ -23,7 +23,7 @@ class Api::TypersController < Api::ApplicationController
   end
 
   def show
-    cache_key = cache_key(@typer)
+    cache_key = endpoint_cache_key(@typer)
 
     typer = Rails.cache.fetch(cache_key) do
       ActiveRecord::Associations::Preloader.new.preload(

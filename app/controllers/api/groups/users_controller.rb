@@ -9,7 +9,7 @@ class Api::Groups::UsersController < Api::ApplicationController
 
   def index
     query = group_users_scope.order(id: :asc)
-    cache_key = cache_key(query)
+    cache_key = endpoint_cache_key(query)
 
     group_users = Rails.cache.fetch(cache_key) do
       group_users = query.all
@@ -35,7 +35,7 @@ class Api::Groups::UsersController < Api::ApplicationController
   end
 
   def show
-    cache_key = cache_key(@group_user)
+    cache_key = endpoint_cache_key(@group_user)
 
     group_user = Rails.cache.fetch(cache_key) do
       ActiveRecord::Associations::Preloader.new.preload(
