@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  version: 1.0
+  version: "1.0"
   title: API
   description: API
 servers:
@@ -12,6 +12,7 @@ tags:
   - name: Genres
   - name: Formats
   - name: Demographics
+  - name: Marks
   - name: Users
   - name: Artists
   - name: Groups
@@ -119,8 +120,9 @@ components:
     no_content:
       description: No content
       content:
-        schema:
-          type: integer
+        application/json:
+          schema:
+            type: integer
     unauthorized:
       description: Unauthorized access
       content:
@@ -133,8 +135,8 @@ components:
               error:
                 type: string
                 description: Error message
-                examples:
-                  - Unauthorized
+            example:
+              error: Unauthorized
     forbidden:
       description: Access forbidden
       content:
@@ -147,8 +149,8 @@ components:
               error:
                 type: string
                 description: Error message
-                examples:
-                  - Forbidden
+            example:
+              error: Forbidden
     not_found:
       description: Not found
       content:
@@ -161,25 +163,1183 @@ components:
               error:
                 type: string
                 description: Error message
-                examples:
-                  - Not Found
+            example:
+              error: Not Found
     unprocessable_entity:
       description: Unprocessable entity
       content:
-        schema:
-          type: integer
+        application/json:
+          schema:
+            type: object
+            required:
+              - error
+            properties:
+              attribute:
+                type: array
+                items:
+                  type: string
+            example:
+              attribute: Attribute invalid
     internal_server_error:
       description: Internal Server Error
       content:
-        schema:
+        application/json:
+          schema:
+            type: integer
+  schemas:
+    artist:
+      type: object
+      title: Artist
+      properties:
+        id:
           type: integer
+          description: ID
+        user_id:
+          description: User ID
+          oneOf:
+            - type: integer
+              nullable: true
+        name:
+          type: string
+          description: Name
+        favorites_count:
+          type: integer
+          description: Favorites count
+        created_at:
+          type: string
+          format: date-time
+          description: Date of creation
+        updated_at:
+          type: string
+          format: date-time
+          description: Date of last update
+      example:
+        id: 1
+        user_id: 1
+        name: Akihito Tsukushi
+        favorites_count: 1
+        created_at: 2020-12-13T00:00:00.000Z
+        updated_at: 2020-12-13T00:00:00.000Z
+    bookmark:
+      type: object
+      title: Bookmark
+      properties:
+        id:
+          type: integer
+          description: ID
+        user_id:
+          type: integer
+          description: User ID
+        resource_type:
+          type: string
+          enum:
+            - Title
+            - Chapter
+            - Page
+          description: Resource type
+        resource_id:
+          type: integer
+          description: Resource ID
+        created_at:
+          type: string
+          format: date-time
+          description: Date of creation
+        updated_at:
+          type: string
+          format: date-time
+          description: Date of last update
+      example:
+        id: 1
+        user_id: 1
+        resource_type: Title
+        resource_id: 1
+        created_at: 2020-12-13T00:00:00.000Z
+        updated_at: 2020-12-13T00:00:00.000Z
+    chapter:
+      type: object
+      title: Chapter
+      properties:
+        id:
+          type: integer
+          description: ID
+        content_language_id:
+          description: Content language ID
+          type: integer
+        title_id:
+          description: Title ID
+          type: integer
+        volume_id:
+          oneOf:
+            - description: Volume ID
+              type: integer
+              nullable: true
+        user_id:
+          description: User ID
+          type: integer
+        group_id:
+          description: Group ID
+          type: integer
+        name:
+          type: string
+          description: Title
+        number:
+          type: integer
+          description: Number
+        status:
+          type: string
+          enum:
+            - draft
+            - review
+            - published
+          description: Status
+        pages_count:
+          type: integer
+          description: Pages count
+        views_count:
+          type: integer
+          description: Views count
+        bookmarks_count:
+          type: integer
+          description: Bookmarks count
+        published_at:
+          oneOf:
+            - type: string
+              format: date-time
+              description: Published at date
+              nullable: true
+        sent_to_review_at:
+          oneOf:
+            - type: string
+              format: date-time
+              description: Sent to review date
+              nullable: true
+        deleted_at:
+          oneOf:
+            - type: string
+              format: date-time
+              description: Deleted date
+              nullable: true
+        created_at:
+          type: string
+          format: date-time
+          description: Date of creation
+        updated_at:
+          type: string
+          format: date-time
+          description: Date of last update
+        cover:
+          oneOf:
+            - $ref: "#/components/schemas/file"
+              nullable: true
+        content_language:
+          $ref: "#/components/schemas/content_language"
+        volume:
+          oneOf:
+            - $ref: "#/components/schemas/volume"
+              nullable: true
+        user:
+          oneOf:
+            - $ref: "#/components/schemas/user"
+              nullable: true
+        group:
+          oneOf:
+            - $ref: "#/components/schemas/group"
+              nullable: true
+      example:
+        id: 1
+        content_language_id: 1
+        title_id: 1
+        volume_id: 1
+        user_id: 1
+        group_id: 1
+        name: Title
+        number: 1
+        status: draft
+        pages_count: 1
+        views_count: 1
+        bookmarks_count: 1
+        published_at: 2020-12-13T00:00:00.000Z
+        sent_to_review_at: 2020-12-13T00:00:00.000Z
+        deleted_at: 2020-12-13T00:00:00.000Z
+        created_at: 2020-12-13T00:00:00.000Z
+        updated_at: 2020-12-13T00:00:00.000Z
+    cleaner:
+      type: object
+      title: Cleaner
+      properties:
+        id:
+          type: integer
+          description: ID
+        user_id:
+          description: User ID
+          oneOf:
+            - type: integer
+              nullable: true
+        artist_id:
+          type: integer
+          description: Artist ID
+        name:
+          type: string
+          description: Name
+        created_at:
+          type: string
+          format: date-time
+          description: Date of creation
+        updated_at:
+          type: string
+          format: date-time
+          description: Date of last update
+      example:
+        id: 1
+        user_id: 1
+        artist_id: 1
+        name: Akihito Tsukushi
+        created_at: 2020-12-13T00:00:00.000Z
+        updated_at: 2020-12-13T00:00:00.000Z
+    content_language:
+      type: object
+      title: Content language
+      properties:
+        id:
+          type: integer
+          description: ID
+        title:
+          type: string
+          description: Title
+        locale:
+          type: string
+          description: Locale key
+        locale_id:
+          type: integer
+          description: Locale ID
+        created_at:
+          type: string
+          format: date-time
+          description: Date of creation
+        updated_at:
+          type: string
+          format: date-time
+          description: Date of last update
+      example:
+        id: 1
+        title: English
+        locale: en
+        locale_id: 1
+        created_at: 2020-12-13T00:00:00.000Z
+        updated_at: 2020-12-13T00:00:00.000Z
+    demographic:
+      type: object
+      title: Demographic
+      properties:
+        id:
+          type: integer
+          description: ID
+        tag_id:
+          type: integer
+          description: Tag ID
+        title:
+          type: string
+          description: Title
+        description:
+          type: string
+          description: Description
+        created_at:
+          type: string
+          format: date-time
+          description: Date of creation
+        updated_at:
+          type: string
+          format: date-time
+          description: Date of last update
+      example:
+        id: 1
+        tag_id: 1
+        title: Seinen
+        description: Description
+        created_at: 2020-12-13T00:00:00.000Z
+        updated_at: 2020-12-13T00:00:00.000Z
+    editor:
+      type: object
+      title: Editor
+      properties:
+        id:
+          type: integer
+          description: ID
+        user_id:
+          description: User ID
+          oneOf:
+            - type: integer
+              nullable: true
+        artist_id:
+          type: integer
+          description: Artist ID
+        name:
+          type: string
+          description: Name
+        created_at:
+          type: string
+          format: date-time
+          description: Date of creation
+        updated_at:
+          type: string
+          format: date-time
+          description: Date of last update
+      example:
+        id: 1
+        user_id: 1
+        artist_id: 1
+        name: Akihito Tsukushi
+        created_at: 2020-12-13T00:00:00.000Z
+        updated_at: 2020-12-13T00:00:00.000Z
+    favorite:
+      type: object
+      title: Favorite
+      properties:
+        id:
+          type: integer
+          description: ID
+        user_id:
+          type: integer
+          description: User ID
+        resource_type:
+          type: string
+          enum:
+            - Title
+            - Group
+            - Artist
+          description: Resource type
+        resource_id:
+          type: integer
+          description: Resource ID
+        created_at:
+          type: string
+          format: date-time
+          description: Date of creation
+        updated_at:
+          type: string
+          format: date-time
+          description: Date of last update
+      example:
+        id: 1
+        user_id: 1
+        resource_type: Title
+        resource_id: 1
+        created_at: 2020-12-13T00:00:00.000Z
+        updated_at: 2020-12-13T00:00:00.000Z
+    file:
+      type: object
+      title: File
+      description: File
+      properties:
+        url:
+          type: string
+          description: Link
+        filename:
+          type: string
+          description: Filename
+        content_type:
+          type: string
+          description: Content type
+        width:
+          oneOf:
+            - type: integer
+              description: Width
+              nullable: true
+        height:
+          oneOf:
+            - type: integer
+              description: Height
+              nullable: true
+        byte_size:
+          type: integer
+          description: Size in bytes
+        created_at:
+          type: string
+          format: date-time
+          description: Date of creation
+      example:
+        url: "http://example.com/eyJ...3d6/file.jpg"
+        filename: file.jpg
+        content_type: image/jpeg
+        width: 1600
+        height: 2260
+        byte_size: 1167999
+        created_at: 2020-12-13T00:00:00.000Z
+    format:
+      type: object
+      title: Format
+      properties:
+        id:
+          type: integer
+          description: ID
+        tag_id:
+          type: integer
+          description: Tag ID
+        title:
+          type: string
+          description: Title
+        description:
+          type: string
+          description: Description
+        created_at:
+          type: string
+          format: date-time
+          description: Date of creation
+        updated_at:
+          type: string
+          format: date-time
+          description: Date of last update
+      example:
+        id: 1
+        tag_id: 1
+        title: Manga
+        description: Description
+        created_at: 2020-12-13T00:00:00.000Z
+        updated_at: 2020-12-13T00:00:00.000Z
+    genre:
+      type: object
+      title: Genre
+      properties:
+        id:
+          type: integer
+          description: ID
+        tag_id:
+          type: integer
+          description: Tag ID
+        title:
+          type: string
+          description: Title
+        description:
+          type: string
+          description: Description
+        created_at:
+          type: string
+          format: date-time
+          description: Date of creation
+        updated_at:
+          type: string
+          format: date-time
+          description: Date of last update
+      example:
+        id: 1
+        tag_id: 1
+        title: Adventure
+        description: Description
+        created_at: 2020-12-13T00:00:00.000Z
+        updated_at: 2020-12-13T00:00:00.000Z
+    group:
+      type: object
+      title: Group
+      properties:
+        id:
+          type: integer
+          description: ID
+        title:
+          type: string
+          description: Title
+        created_at:
+          type: string
+          format: date-time
+          description: Date of creation
+        updated_at:
+          type: string
+          format: date-time
+          description: Date of last update
+      example:
+        id: 1
+        title: Developers
+        created_at: 2020-12-13T00:00:00.000Z
+        updated_at: 2020-12-13T00:00:00.000Z
+    group_access_right:
+      type: object
+      title: Group access right
+      properties:
+        id:
+          type: integer
+          description: ID
+        key:
+          type: string
+          description: Key
+          enum:
+            - manage_group
+            - manage_users
+            - manage_chapters
+        created_at:
+          type: string
+          format: date-time
+          description: Date of creation
+        updated_at:
+          type: string
+          format: date-time
+          description: Date of last update
+      example:
+        id: 1
+        key: manage_group
+        created_at: 2020-12-13T00:00:00.000Z
+        updated_at: 2020-12-13T00:00:00.000Z
+    group_user:
+      type: object
+      title: Group user
+      properties:
+        id:
+          type: integer
+          description: ID
+        group_id:
+          type: integer
+          description: Group ID
+        user_id:
+          type: integer
+          description: User ID
+        group:
+          $ref: "#/components/schemas/group"
+        user:
+          $ref: "#/components/schemas/user"
+        group_access_rights:
+          type: array
+          description: Group access rights
+          items:
+            $ref: "#/components/schemas/group_access_right"
+        created_at:
+          type: string
+          format: date-time
+          description: Date of creation
+        updated_at:
+          type: string
+          format: date-time
+          description: Date of last update
+      example:
+        id: 1
+        group_id: 1
+        user_id: 1
+        created_at: 2020-12-13T00:00:00.000Z
+        updated_at: 2020-12-13T00:00:00.000Z
+    interface_language:
+      type: object
+      title: Interface language
+      properties:
+        id:
+          type: integer
+          description: ID
+        title:
+          type: string
+          description: Title
+        locale:
+          type: string
+          description: Locale key
+        locale_id:
+          type: integer
+          description: Locale ID
+        created_at:
+          type: string
+          format: date-time
+          description: Date of creation
+        updated_at:
+          type: string
+          format: date-time
+          description: Date of last update
+      example:
+        id: 1
+        title: English
+        locale: en
+        locale_id: 1
+        created_at: 2020-12-13T00:00:00.000Z
+        updated_at: 2020-12-13T00:00:00.000Z
+    locale:
+      type: object
+      title: Locale
+      properties:
+        id:
+          type: integer
+          description: ID
+        key:
+          type: string
+          description: Locale key
+        created_at:
+          type: string
+          format: date-time
+          description: Date of creation
+        updated_at:
+          type: string
+          format: date-time
+          description: Date of last update
+      example:
+        id: 1
+        key: en
+        created_at: 2020-12-13T00:00:00.000Z
+        updated_at: 2020-12-13T00:00:00.000Z
+    mark:
+      type: object
+      title: Mark
+      properties:
+        id:
+          type: integer
+          description: ID
+        tag_id:
+          type: integer
+          description: Tag ID
+        title:
+          type: string
+          description: Title
+        description:
+          type: string
+          description: Description
+        created_at:
+          type: string
+          format: date-time
+          description: Date of creation
+        updated_at:
+          type: string
+          format: date-time
+          description: Date of last update
+      example:
+        id: 1
+        tag_id: 1
+        title: Explicit
+        description: Description
+        created_at: 2020-12-13T00:00:00.000Z
+        updated_at: 2020-12-13T00:00:00.000Z
+    page:
+      type: object
+      title: Page
+      properties:
+        id:
+          type: integer
+          description: ID
+        chapter_id:
+          description: Chapter ID
+          type: integer
+        user_id:
+          description: User ID
+          type: integer
+        number:
+          type: integer
+          description: Number
+        views_count:
+          type: integer
+          description: Views count
+        bookmarks_count:
+          type: integer
+          description: Bookmarks count
+        file:
+          $ref: "#/components/schemas/file"
+        created_at:
+          type: string
+          format: date-time
+          description: Date of creation
+        updated_at:
+          type: string
+          format: date-time
+          description: Date of last update
+      example:
+        id: 1
+        chapter_id: 1
+        user_id: 1
+        number: 1
+        views_count: 1
+        bookmarks_count: 1
+        created_at: 2020-12-13T00:00:00.000Z
+        updated_at: 2020-12-13T00:00:00.000Z
+    painter:
+      type: object
+      title: Painter
+      properties:
+        id:
+          type: integer
+          description: ID
+        user_id:
+          description: User ID
+          oneOf:
+            - type: integer
+              nullable: true
+        artist_id:
+          type: integer
+          description: Artist ID
+        name:
+          type: string
+          description: Name
+        created_at:
+          type: string
+          format: date-time
+          description: Date of creation
+        updated_at:
+          type: string
+          format: date-time
+          description: Date of last update
+      example:
+        id: 1
+        user_id: 1
+        artist_id: 1
+        name: Akihito Tsukushi
+        created_at: 2020-12-13T00:00:00.000Z
+        updated_at: 2020-12-13T00:00:00.000Z
+    tag:
+      type: object
+      title: Tag
+      properties:
+        id:
+          type: integer
+          description: ID
+        title:
+          type: string
+          description: Title
+        key:
+          type: string
+          description: Key
+        description:
+          type: string
+          description: Description
+        created_at:
+          type: string
+          format: date-time
+          description: Date of creation
+        updated_at:
+          type: string
+          format: date-time
+          description: Date of last update
+      example:
+        id: 1
+        title: Adventure
+        key: adventure
+        description: Description
+        created_at: 2020-12-13T00:00:00.000Z
+        updated_at: 2020-12-13T00:00:00.000Z
+    theme:
+      type: object
+      title: Theme
+      properties:
+        id:
+          type: integer
+          description: ID
+        tag_id:
+          type: integer
+          description: Tag ID
+        title:
+          type: string
+          description: Title
+        description:
+          type: string
+          description: Description
+        created_at:
+          type: string
+          format: date-time
+          description: Date of creation
+        updated_at:
+          type: string
+          format: date-time
+          description: Date of last update
+      example:
+        id: 1
+        tag_id: 1
+        title: Lolicon
+        description: Description
+        created_at: 2020-12-13T00:00:00.000Z
+        updated_at: 2020-12-13T00:00:00.000Z
+    title:
+      type: object
+      title: Title
+      properties:
+        id:
+          type: integer
+          description: ID
+        title:
+          type: string
+          description: Title
+        description:
+          type: string
+          description: Description
+        status:
+          type: string
+          description: Status
+          enum:
+            - draft
+            - review
+            - published
+        publication_status:
+          type: string
+          description: Publication status
+          enum:
+            - ongoing
+            - completed
+            - cancelled
+        views_count:
+          type: integer
+          description: Views count
+        bookmarks_count:
+          type: integer
+          description: Bookmarks count
+        favorites_count:
+          type: integer
+          description: Favorites count
+        original_content_language_id:
+          description: Original content language ID
+          oneOf:
+            - type: integer
+              nullable: true
+        original_content_language:
+          oneOf:
+            - $ref: "#/components/schemas/content_language"
+              nullable: true
+        cover:
+          oneOf:
+            - $ref: "#/components/schemas/file"
+              nullable: true
+        writers:
+          type: array
+          items:
+            $ref: "#/components/schemas/writer"
+        painters:
+          type: array
+          items:
+            $ref: "#/components/schemas/painter"
+        genres:
+          type: array
+          items:
+            $ref: "#/components/schemas/genre"
+        formats:
+          type: array
+          items:
+            $ref: "#/components/schemas/format"
+        demographics:
+          type: array
+          items:
+            $ref: "#/components/schemas/demographic"
+        marks:
+          type: array
+          items:
+            $ref: "#/components/schemas/mark"
+        themes:
+          type: array
+          items:
+            $ref: "#/components/schemas/theme"
+        published_at:
+          oneOf:
+            - type: string
+              format: date-time
+              description: Published at date
+              nullable: true
+        sent_to_review_at:
+          oneOf:
+            - type: string
+              format: date-time
+              description: Sent to review date
+              nullable: true
+        deleted_at:
+          oneOf:
+            - type: string
+              format: date-time
+              description: Deleted at date
+              nullable: true
+        created_at:
+          type: string
+          format: date-time
+          description: Date of creation
+        updated_at:
+          type: string
+          format: date-time
+          description: Date of last update
+      example:
+        id: 1
+        title: Made in Abyss
+        description: Description
+        status: published
+        publication_status: ongoing
+        views_count: 1
+        bookmarks_count: 1
+        favorites_count: 1
+        original_content_language_id: 1
+        published_at: 2020-12-13T00:00:00.000Z
+        sent_to_review_at: 2020-12-13T00:00:00.000Z
+        deleted_at: 2020-12-13T00:00:00.000Z
+        created_at: 2020-12-13T00:00:00.000Z
+        updated_at: 2020-12-13T00:00:00.000Z
+    translator:
+      type: object
+      title: Translator
+      properties:
+        id:
+          type: integer
+          description: ID
+        user_id:
+          description: User ID
+          oneOf:
+            - type: integer
+              nullable: true
+        artist_id:
+          type: integer
+          description: Artist ID
+        name:
+          type: string
+          description: Name
+        created_at:
+          type: string
+          format: date-time
+          description: Date of creation
+        updated_at:
+          type: string
+          format: date-time
+          description: Date of last update
+      example:
+        id: 1
+        user_id: 1
+        artist_id: 1
+        name: Akihito Tsukushi
+        created_at: 2020-12-13T00:00:00.000Z
+        updated_at: 2020-12-13T00:00:00.000Z
+    typer:
+      type: object
+      title: Typer
+      properties:
+        id:
+          type: integer
+          description: ID
+        user_id:
+          description: User ID
+          oneOf:
+            - type: integer
+              nullable: true
+        artist_id:
+          type: integer
+          description: Artist ID
+        name:
+          type: string
+          description: Name
+        created_at:
+          type: string
+          format: date-time
+          description: Date of creation
+        updated_at:
+          type: string
+          format: date-time
+          description: Date of last update
+      example:
+        id: 1
+        user_id: 1
+        artist_id: 1
+        name: Akihito Tsukushi
+        created_at: 2020-12-13T00:00:00.000Z
+        updated_at: 2020-12-13T00:00:00.000Z
+    user:
+      type: object
+      title: User
+      properties:
+        id:
+          type: integer
+          description: ID
+        username:
+          type: string
+          description: Username
+        name:
+          oneOf:
+            - type: string
+              description: Name
+              nullable: true
+        surname:
+          oneOf:
+            - type: string
+              description: Surname
+              nullable: true
+        sex:
+          oneOf:
+            - type: string
+              description: Sex
+              enum:
+                - male
+                - female
+                - other
+              nullable: true
+        avatar:
+          oneOf:
+            - $ref: "#/components/schemas/file"
+              nullable: true
+        favorites_count:
+          type: integer
+          description: Favorites count
+        bookmarks_count:
+          type: integer
+          description: Bookmarks count
+        views_count:
+          type: integer
+          description: Views count
+        created_at:
+          type: string
+          format: date-time
+          description: Date of creation
+        updated_at:
+          type: string
+          format: date-time
+          description: Date of last update
+      example:
+        id: 1
+        username: riko
+        name: Riko
+        surname: Unknown
+        sex: female
+        favorites_count: 1
+        bookmarks_count: 1
+        views_count: 1
+        created_at: 2020-12-13T00:00:00.000Z
+        updated_at: 2020-12-13T00:00:00.000Z
+    user_settings:
+      type: object
+      title: User
+      properties:
+        id:
+          type: integer
+          description: ID
+        user_id:
+          type: integer
+          description: User ID
+        interface_language_id:
+          type: integer
+          description: Interface language ID
+        name:
+          type: string
+          description: Name
+        surname:
+          type: string
+          description: Surname
+        sex:
+          type: string
+          enum:
+            - male
+            - female
+            - other
+          description: Sex
+        interface_language:
+          oneOf:
+            - $ref: "#/components/schemas/interface_language"
+              nullable: true
+        excluded_tags:
+          type: array
+          items:
+            $ref: "#/components/schemas/tag"
+        content_languages:
+          type: array
+          items:
+            $ref: "#/components/schemas/content_language"
+        avatar:
+          oneOf:
+            - $ref: "#/components/schemas/file"
+              nullable: true
+        created_at:
+          type: string
+          format: date-time
+          description: Date of creation
+        updated_at:
+          type: string
+          format: date-time
+          description: Date of last update
+      example:
+        id: 1
+        user_id: 1
+        interface_language_id: 1
+        name: Riko
+        surname: Unknown
+        sex: female
+        created_at: 2020-12-13T00:00:00.000Z
+        updated_at: 2020-12-13T00:00:00.000Z
+    view:
+      type: object
+      title: View
+      properties:
+        id:
+          type: integer
+          description: ID
+        user_id:
+          type: integer
+          description: User ID
+        resource_type:
+          type: string
+          description: Resource type
+          enum:
+            - Title
+            - Chapter
+            - Page
+        resource_id:
+          type: integer
+          description: Resource ID
+        created_at:
+          type: string
+          format: date-time
+          description: Date of creation
+        updated_at:
+          type: string
+          format: date-time
+          description: Date of last update
+      example:
+        id: 1
+        user_id: 1
+        resource_type: Title
+        resource_id: 1
+        created_at: 2020-12-13T00:00:00.000Z
+        updated_at: 2020-12-13T00:00:00.000Z
+    volume:
+      type: object
+      title: Volume
+      properties:
+        id:
+          type: integer
+          description: ID
+        title_id:
+          description: Title ID
+          type: integer
+        number:
+          type: integer
+          description: Number
+        created_at:
+          type: string
+          format: date-time
+          description: Date of creation
+        updated_at:
+          type: string
+          format: date-time
+          description: Date of last update
+      example:
+        id: 1
+        title_id: 1
+        number: 1
+        created_at: 2020-12-13T00:00:00.000Z
+        updated_at: 2020-12-13T00:00:00.000Z
+    writer:
+      type: object
+      title: Writer
+      properties:
+        id:
+          type: integer
+          description: ID
+        user_id:
+          description: User ID
+          oneOf:
+            - type: integer
+              nullable: true
+        artist_id:
+          type: integer
+          description: Artist ID
+        name:
+          type: string
+          description: Name
+        created_at:
+          type: string
+          format: date-time
+          description: Date of creation
+        updated_at:
+          type: string
+          format: date-time
+          description: Date of last update
+      example:
+        id: 1
+        user_id: 1
+        artist_id: 1
+        name: Akihito Tsukushi
+        created_at: 2020-12-13T00:00:00.000Z
+        updated_at: 2020-12-13T00:00:00.000Z
 paths:
   /sign_up.json:
     post:
       tags:
         - Authentication
       summary: Sign up
-      description: ''
+      description: ""
       requestBody:
         content:
           application/json:
@@ -200,28 +1360,25 @@ paths:
                 email: riko@example.com
                 password: password
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/sign_up_controller/create/200.yml
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '422':
-          description: Unprocessable entity
-          content:
-            application/json:
-              schema:
-                $ref: /documentation/controllers/api/sign_up_controller/create/422.yml
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                allOf:
+                  - $ref: "#/components/schemas/user"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /sign_in.json:
     post:
       tags:
         - Authentication
       summary: Sign in
-      description: ''
+      description: ""
       requestBody:
         content:
           application/json:
@@ -238,34 +1395,32 @@ paths:
                 username: riko
                 password: password
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/sign_in_controller/create/200.yml
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '422':
-          description: Unprocessable entity
-          content:
-            application/json:
-              $ref: /documentation/controllers/api/sign_in_controller/create/422.yml
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                allOf:
+                  - $ref: "#/components/schemas/user"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /sign_out.json:
     delete:
       tags:
         - Authentication
       summary: Sign out
-      description: ''
+      description: ""
       responses:
-        '204':
-          $ref: '#/components/responses/no_content'
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+        "204":
+          $ref: "#/components/responses/no_content"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /interface_languages.json:
     get:
       tags:
@@ -273,41 +1428,44 @@ paths:
       summary: Interface languages
       description: Sorted by id ASC
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/interface_languages_controller/index/200.yml
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/interface_languages/{id}.json':
+                type: array
+                items:
+                  $ref: "#/components/schemas/interface_language"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /interface_languages/{id}.json:
     get:
       tags:
         - Interface languages
       summary: Interface language
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/interface_languages_controller/show/200.yml
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                allOf:
+                  - $ref: "#/components/schemas/interface_language"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /content_languages.json:
     get:
       tags:
@@ -315,41 +1473,44 @@ paths:
       summary: Content languages
       description: Sorted by id ASC
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/content_languages_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/content_languages/{id}.json':
+                type: array
+                items:
+                  $ref: "#/components/schemas/content_language"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /content_languages/{id}.json:
     get:
       tags:
         - Content languages
       summary: Content language
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/content_languages_controller/show/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                allOf:
+                  - $ref: "#/components/schemas/content_language"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /genres.json:
     get:
       tags:
@@ -357,23 +1518,25 @@ paths:
       summary: Genres
       description: Sorted by title ASC
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/genres_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                type: array
+                items:
+                  $ref: "#/components/schemas/genre"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
     post:
       tags:
         - Genres
       summary: Create genre
-      description: ''
+      description: ""
       requestBody:
         content:
           application/json:
@@ -394,54 +1557,52 @@ paths:
                 title: Title
                 description: Description
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/genres_controller/create/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '422':
-          description: Unprocessable entity
-          content:
-            application/json:
-              schema:
-                $ref: /documentation/controllers/api/genres_controller/create/422.json
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/genres/{id}.json':
+                allOf:
+                  - $ref: "#/components/schemas/genre"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /genres/{id}.json:
     get:
       tags:
         - Genres
       summary: Genre
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/genres_controller/show/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                allOf:
+                  - $ref: "#/components/schemas/genre"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
     put:
       tags:
         - Genres
       summary: Update genre
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/id"
       requestBody:
         content:
           application/json:
@@ -458,46 +1619,43 @@ paths:
                   type: string
                   description: Description
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/genres_controller/update/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          description: Unprocessable entity
-          content:
-            application/json:
-              schema:
-                $ref: /documentation/controllers/api/genres_controller/update/422.json
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                allOf:
+                  - $ref: "#/components/schemas/genre"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
     delete:
       tags:
         - Genres
       summary: Delete genre
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/id"
       responses:
-        '204':
-          $ref: '#/components/responses/no_content'
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          $ref: '#/components/responses/unprocessable_entity'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+        "204":
+          $ref: "#/components/responses/no_content"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /formats.json:
     get:
       tags:
@@ -505,23 +1663,25 @@ paths:
       summary: Formats
       description: Sorted by title ASC
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/formats_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                type: array
+                items:
+                  $ref: "#/components/schemas/format"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
     post:
       tags:
         - Formats
       summary: Create format
-      description: ''
+      description: ""
       requestBody:
         content:
           application/json:
@@ -542,54 +1702,52 @@ paths:
                 title: Manga
                 description: Description
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/formats_controller/create/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '422':
-          description: Unprocessable entity
-          content:
-            application/json:
-              schema:
-                $ref: /documentation/controllers/api/formats_controller/create/422.json
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/formats/{id}.json':
+                allOf:
+                  - $ref: "#/components/schemas/format"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /formats/{id}.json:
     get:
       tags:
-        - Format
+        - Formats
       summary: Format
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/formats_controller/show/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                allOf:
+                  - $ref: "#/components/schemas/format"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
     put:
       tags:
         - Formats
       summary: Update format
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/id"
       requestBody:
         content:
           application/json:
@@ -606,46 +1764,43 @@ paths:
                   type: string
                   description: Description
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/formats_controller/update/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          description: Unprocessable entity
-          content:
-            application/json:
-              schema:
-                $ref: /documentation/controllers/api/formats_controller/update/422.json
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                allOf:
+                  - $ref: "#/components/schemas/format"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
     delete:
       tags:
         - Formats
       summary: Delete format
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/id"
       responses:
-        '204':
-          $ref: '#/components/responses/no_content'
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          $ref: '#/components/responses/unprocessable_entity'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+        "204":
+          $ref: "#/components/responses/no_content"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /tags.json:
     get:
       tags:
@@ -653,88 +1808,70 @@ paths:
       summary: Tags
       description: Sorted by title ASC
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/tags_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/tags/{id}.json':
+                type: array
+                items:
+                  $ref: "#/components/schemas/tag"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /tags/{id}.json:
     get:
       tags:
         - Tags
       summary: Tag
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/tags_controller/show/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/tags/{tag_id}/translations.json':
-    get:
-      tags:
-        - Tags
-      summary: Tag translations
-      description: ''
-      parameters:
-        - $ref: '#/components/parameters/tag_id'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: /documentation/controllers/api/tags/translations_controller/show/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                allOf:
+                  - $ref: "#/components/schemas/tag"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /themes.json:
     get:
       tags:
-        - themes
-      summary: themes
+        - Themes
+      summary: Themes
       description: Sorted by title ASC
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/themes_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                type: array
+                items:
+                  $ref: "#/components/schemas/theme"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
     post:
       tags:
-        - themes
+        - Themes
       summary: Create theme
-      description: ''
+      description: ""
       requestBody:
         content:
           application/json:
@@ -755,134 +1892,131 @@ paths:
                 title: Manga
                 description: Description
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/themes_controller/create/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '422':
-          description: Unprocessable entity
+                allOf:
+                  - $ref: "#/components/schemas/theme"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /themes/{id}.json:
+    get:
+      tags:
+        - Themes
+      summary: Theme
+      description: ""
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/themes_controller/create/422.json
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-    '/themes/{id}.json':
-      get:
-        tags:
-          - theme
-        summary: theme
-        description: ''
-        parameters:
-          - $ref: '#/components/parameters/id'
-        responses:
-          '200':
-            description: Success
-            content:
-              application/json:
-                schema:
-                  $ref: /documentation/controllers/api/themes_controller/show/200.json
-          '401':
-            $ref: '#/components/responses/unauthorized'
-          '403':
-            $ref: '#/components/responses/forbidden'
-          '404':
-            $ref: '#/components/responses/not_found'
-          '500':
-            $ref: '#/components/responses/internal_server_error'
-      put:
-        tags:
-          - themes
-        summary: Update theme
-        description: ''
-        parameters:
-          - $ref: '#/components/parameters/id'
-        requestBody:
+                allOf:
+                  - $ref: "#/components/schemas/theme"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+    put:
+      tags:
+        - Themes
+      summary: Update theme
+      description: ""
+      parameters:
+        - $ref: "#/components/parameters/id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                key:
+                  type: string
+                  description: manga
+                title:
+                  type: string
+                  description: Manga
+                description:
+                  type: string
+                  description: Description
+      responses:
+        "200":
+          description: Success
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  key:
-                    type: string
-                    description: manga
-                  title:
-                    type: string
-                    description: Manga
-                  description:
-                    type: string
-                    description: Description
-        responses:
-          '200':
-            description: Success
-            content:
-              application/json:
-                schema:
-                  $ref: /documentation/controllers/api/themes_controller/update/200.json
-          '401':
-            $ref: '#/components/responses/unauthorized'
-          '403':
-            $ref: '#/components/responses/forbidden'
-          '404':
-            $ref: '#/components/responses/not_found'
-          '422':
-            description: Unprocessable entity
-            content:
-              application/json:
-                schema:
-                  $ref: /documentation/controllers/api/themes_controller/update/422.json
-          '500':
-            $ref: '#/components/responses/internal_server_error'
-      delete:
-        tags:
-          - themes
-        summary: Delete theme
-        description: ''
-        parameters:
-          - $ref: '#/components/parameters/id'
-        responses:
-          '204':
-            $ref: '#/components/responses/no_content'
-          '401':
-            $ref: '#/components/responses/unauthorized'
-          '403':
-            $ref: '#/components/responses/forbidden'
-          '404':
-            $ref: '#/components/responses/not_found'
-          '422':
-            $ref: '#/components/responses/unprocessable_entity'
-          '500':
-            $ref: '#/components/responses/internal_server_error'
+                allOf:
+                  - $ref: "#/components/schemas/theme"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+    delete:
+      tags:
+        - Themes
+      summary: Delete theme
+      description: ""
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "204":
+          $ref: "#/components/responses/no_content"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /demographics.json:
     get:
       tags:
-        - demographics
-      summary: demographics
+        - Demographics
+      summary: Demographics
       description: Sorted by title ASC
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/demographics_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                type: array
+                items:
+                  $ref: "#/components/schemas/demographic"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
     post:
       tags:
-        - demographics
+        - Demographics
       summary: Create demographic
-      description: ''
+      description: ""
       requestBody:
         content:
           application/json:
@@ -903,152 +2037,250 @@ paths:
                 title: Manga
                 description: Description
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/demographics_controller/create/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '422':
-          description: Unprocessable entity
+                allOf:
+                  - $ref: "#/components/schemas/demographic"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /demographics/{id}.json:
+    get:
+      tags:
+        - Demographics
+      summary: Demographic
+      description: ""
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/demographics_controller/create/422.json
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-    '/demographics/{id}.json':
-      get:
-        tags:
-          - demographic
-        summary: demographic
-        description: ''
-        parameters:
-          - $ref: '#/components/parameters/id'
-        responses:
-          '200':
-            description: Success
-            content:
-              application/json:
-                schema:
-                  $ref: /documentation/controllers/api/demographics_controller/show/200.json
-          '401':
-            $ref: '#/components/responses/unauthorized'
-          '403':
-            $ref: '#/components/responses/forbidden'
-          '404':
-            $ref: '#/components/responses/not_found'
-          '500':
-            $ref: '#/components/responses/internal_server_error'
-      put:
-        tags:
-          - demographics
-        summary: Update demographic
-        description: ''
-        parameters:
-          - $ref: '#/components/parameters/id'
-        requestBody:
+                allOf:
+                  - $ref: "#/components/schemas/demographic"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+    put:
+      tags:
+        - Demographics
+      summary: Update demographic
+      description: ""
+      parameters:
+        - $ref: "#/components/parameters/id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                key:
+                  type: string
+                  description: manga
+                title:
+                  type: string
+                  description: Manga
+                description:
+                  type: string
+                  description: Description
+      responses:
+        "200":
+          description: Success
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  key:
-                    type: string
-                    description: manga
-                  title:
-                    type: string
-                    description: Manga
-                  description:
-                    type: string
-                    description: Description
-        responses:
-          '200':
-            description: Success
-            content:
-              application/json:
-                schema:
-                  $ref: /documentation/controllers/api/demographics_controller/update/200.json
-          '401':
-            $ref: '#/components/responses/unauthorized'
-          '403':
-            $ref: '#/components/responses/forbidden'
-          '404':
-            $ref: '#/components/responses/not_found'
-          '422':
-            description: Unprocessable entity
-            content:
-              application/json:
-                schema:
-                  $ref: /documentation/controllers/api/demographics_controller/update/422.json
-          '500':
-            $ref: '#/components/responses/internal_server_error'
-      delete:
-        tags:
-          - demographics
-        summary: Delete demographic
-        description: ''
-        parameters:
-          - $ref: '#/components/parameters/id'
-        responses:
-          '204':
-            $ref: '#/components/responses/no_content'
-          '401':
-            $ref: '#/components/responses/unauthorized'
-          '403':
-            $ref: '#/components/responses/forbidden'
-          '404':
-            $ref: '#/components/responses/not_found'
-          '422':
-            $ref: '#/components/responses/unprocessable_entity'
-          '500':
-            $ref: '#/components/responses/internal_server_error'
+                allOf:
+                  - $ref: "#/components/schemas/demographic"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+    delete:
+      tags:
+        - Demographics
+      summary: Delete demographic
+      description: ""
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "204":
+          $ref: "#/components/responses/no_content"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /marks.json:
     get:
       tags:
-        - Tags
+        - Marks
       summary: Marks
       description: Sorted by title ASC
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/marks_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/marks/{id}.json':
+                type: array
+                items:
+                  $ref: "#/components/schemas/mark"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+    post:
+      tags:
+        - Marks
+      summary: Create mark
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                key:
+                  type: string
+                  description: Key
+                title:
+                  type: string
+                  description: Title
+                description:
+                  type: string
+                  description: Description
+              example:
+                key: manga
+                title: Manga
+                description: Description
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/mark"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /marks/{id}.json:
     get:
       tags:
-        - Tags
+        - Marks
       summary: Mark
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/marks_controller/show/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                allOf:
+                  - $ref: "#/components/schemas/mark"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+    put:
+      tags:
+        - Marks
+      summary: Update mark
+      description: ""
+      parameters:
+        - $ref: "#/components/parameters/id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                key:
+                  type: string
+                  description: manga
+                title:
+                  type: string
+                  description: Manga
+                description:
+                  type: string
+                  description: Description
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/mark"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+    delete:
+      tags:
+        - Marks
+      summary: Delete mark
+      description: ""
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "204":
+          $ref: "#/components/responses/no_content"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /titles.json:
     get:
       tags:
@@ -1056,31 +2288,33 @@ paths:
       summary: Titles
       description: Sorted by title ASC
       parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/limit'
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
       responses:
-        '200':
+        "200":
           description: Success
           headers:
             X-Pagination-Page-Number:
-              $ref: '#/components/headers/X-Pagination-Page-Number'
+              $ref: "#/components/headers/X-Pagination-Page-Number"
             X-Pagination-Page-Items-Count:
-              $ref: '#/components/headers/X-Pagination-Page-Items-Count'
+              $ref: "#/components/headers/X-Pagination-Page-Items-Count"
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/titles_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                type: array
+                items:
+                  $ref: "#/components/schemas/title"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
     post:
       tags:
         - Titles
       summary: Create title
-      description: ''
+      description: ""
       requestBody:
         content:
           application/json:
@@ -1164,162 +2398,151 @@ paths:
                   - 12
                   - 13
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/titles_controller/create/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '422':
-          description: Unprocessable entity
-          content:
-            application/json:
-              schema:
-                $ref: /documentation/controllers/api/titles_controller/create/422.json
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/titles/{id}.json':
+                allOf:
+                  - $ref: "#/components/schemas/title"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /titles/{id}.json:
     get:
       tags:
         - Titles
       summary: Title
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/titles_controller/show/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                allOf:
+                  - $ref: "#/components/schemas/title"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
     delete:
       tags:
         - Titles
       summary: Delete title
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/id"
       responses:
-        '204':
-          $ref: '#/components/responses/no_content'
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          $ref: '#/components/responses/unprocessable_entity'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/titles/{title_id}/to_review.json':
+        "204":
+          $ref: "#/components/responses/no_content"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /titles/{title_id}/to_review.json:
     put:
       tags:
         - Titles
       summary: Send title to review
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/title_id'
+        - $ref: "#/components/parameters/title_id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/titles/to_review_controller/update/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          description: Unprocessable entity
-          content:
-            application/json:
-              schema:
-                $ref: /documentation/controllers/api/titles/to_review_controller/update/422.json
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/titles/{title_id}/to_draft.json':
+                allOf:
+                  - $ref: "#/components/schemas/title"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /titles/{title_id}/to_draft.json:
     put:
       tags:
         - Titles
       summary: Send title to draft
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/title_id'
+        - $ref: "#/components/parameters/title_id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/titles/to_draft_controller/update/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          description: Unprocessable entity
-          content:
-            application/json:
-              schema:
-                $ref: /documentation/controllers/api/titles/to_draft_controller/update/422.json
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/titles/{title_id}/to_published.json':
+                allOf:
+                  - $ref: "#/components/schemas/title"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /titles/{title_id}/to_published.json:
     put:
       tags:
         - Titles
       summary: Send title to published
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/title_id'
+        - $ref: "#/components/parameters/title_id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/titles/to_published_controller/update/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          description: Unprocessable entity
-          content:
-            application/json:
-              schema:
-                $ref: /documentation/controllers/api/titles/to_published_controller/update/422.json
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/titles/{title_id}/cover.json':
+                allOf:
+                  - $ref: "#/components/schemas/title"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /titles/{title_id}/cover.json:
     put:
       tags:
         - Titles
       summary: Update cover
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/title_id'
+        - $ref: "#/components/parameters/title_id"
       requestBody:
         content:
           application/json:
@@ -1331,127 +2554,125 @@ paths:
                   format: binary
                   description: File
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/titles/cover_controller/update/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          description: Unprocessable entity
-          content:
-            application/json:
-              schema:
-                $ref: /documentation/controllers/api/titles/cover_controller/update/422.json
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                allOf:
+                  - $ref: "#/components/schemas/title"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
     delete:
       tags:
         - Titles
       summary: Delete cover
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/title_id'
+        - $ref: "#/components/parameters/title_id"
       responses:
-        '204':
-          $ref: '#/components/responses/no_content'
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          description: Unprocessable entity
-          content:
-            application/json:
-              schema:
-                $ref: /documentation/controllers/api/titles/cover_controller/destroy/422.json
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/titles/{title_id}/volumes.json':
+        "204":
+          $ref: "#/components/responses/no_content"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /titles/{title_id}/volumes.json:
     get:
       tags:
         - Volumes
       summary: Volumes
       description: Sorted by number ASC
       parameters:
-        - $ref: '#/components/parameters/title_id'
+        - $ref: "#/components/parameters/title_id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/titles/volumes_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/titles/{title_id}/volumes/{id}.json':
+                type: array
+                items:
+                  $ref: "#/components/schemas/volume"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /titles/{title_id}/volumes/{id}.json:
     get:
       tags:
         - Volumes
       summary: Volume
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/title_id'
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/titles/volumes_controller/show/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/titles/{title_id}/chapters.json':
+                allOf:
+                  - $ref: "#/components/schemas/volume"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /titles/{title_id}/chapters.json:
     get:
       tags:
         - Chapters
       summary: Chapters
       description: Sorted by number ASC
       parameters:
-        - $ref: '#/components/parameters/title_id'
+        - $ref: "#/components/parameters/title_id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/titles/chapters_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                type: array
+                items:
+                  $ref: "#/components/schemas/chapter"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
     post:
       tags:
         - Chapters
       summary: Create chapter
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/title_id'
+        - $ref: "#/components/parameters/title_id"
       requestBody:
         content:
           application/json:
@@ -1507,56 +2728,54 @@ paths:
                 typers_ids:
                   - 7
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/titles/chapters_controller/create/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '422':
-          description: Unprocessable entity
-          content:
-            application/json:
-              schema:
-                $ref: /documentation/controllers/api/titles/chapters_controller/create/422.json
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/titles/{title_id}/chapters/{id}.json':
+                allOf:
+                  - $ref: "#/components/schemas/chapter"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /titles/{title_id}/chapters/{id}.json:
     get:
       tags:
         - Chapters
       summary: Chapter
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/title_id'
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/titles/chapters_controller/show/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                allOf:
+                  - $ref: "#/components/schemas/chapter"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
     put:
       tags:
         - Chapters
       summary: Update chapter
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/title_id'
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/id"
       requestBody:
         content:
           application/json:
@@ -1593,7 +2812,7 @@ paths:
                   items:
                     type: integer
               example:
-                name: 'Orth, City on the Edge'
+                name: "Orth, City on the Edge"
                 number: 1
                 volume_id: 1
                 cleaners_ids:
@@ -1608,267 +2827,254 @@ paths:
                 typers_ids:
                   - 7
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/titles/chapters_controller/update/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '422':
-          description: Unprocessable entity
-          content:
-            application/json:
-              schema:
-                $ref: /documentation/controllers/api/titles/chapters_controller/update/422.json
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                allOf:
+                  - $ref: "#/components/schemas/chapter"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
     delete:
       tags:
         - Chapters
       summary: Delete chapter
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/title_id'
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/id"
       responses:
-        '204':
-          $ref: '#/components/responses/no_content'
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          description: Unprocessable entity
-          content:
-            application/json:
-              schema:
-                $ref: /documentation/controllers/api/titles/chapters_controller/destroy/422.json
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/titles/{title_id}/chapters/{chapter_id}/to_review.json':
+        "204":
+          $ref: "#/components/responses/no_content"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /titles/{title_id}/chapters/{chapter_id}/to_review.json:
     put:
       tags:
         - Chapters
       summary: Send chapter to review
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/title_id'
-        - $ref: '#/components/parameters/chapter_id'
+        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/chapter_id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/titles/chapters/to_review_controller/update/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          description: Unprocessable entity
-          content:
-            application/json:
-              schema:
-                $ref: /documentation/controllers/api/titles/chapters/to_review_controller/update/422.json
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/titles/{title_id}/chapters/{chapter_id}/to_draft.json':
+                allOf:
+                  - $ref: "#/components/schemas/chapter"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /titles/{title_id}/chapters/{chapter_id}/to_draft.json:
     put:
       tags:
         - Chapters
       summary: Send chapter to draft
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/title_id'
-        - $ref: '#/components/parameters/chapter_id'
+        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/chapter_id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/titles/chapters/to_draft_controller/update/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          description: Unprocessable entity
-          content:
-            application/json:
-              schema:
-                $ref: /documentation/controllers/api/titles/chapters/to_draft_controller/update/422.json
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/titles/{title_id}/chapters/{chapter_id}/to_published.json':
+                allOf:
+                  - $ref: "#/components/schemas/chapter"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /titles/{title_id}/chapters/{chapter_id}/to_published.json:
     put:
       tags:
         - Chapters
       summary: Send chapter to published
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/title_id'
-        - $ref: '#/components/parameters/chapter_id'
+        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/chapter_id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/titles/chapters/to_published_controller/update/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          description: Unprocessable entity
-          content:
-            application/json:
-              schema:
-                $ref: /documentation/controllers/api/titles/chapters/to_published_controller/update/422.json
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/titles/{title_id}/views.json':
+                allOf:
+                  - $ref: "#/components/schemas/chapter"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /titles/{title_id}/views.json:
     post:
       tags:
         - Titles
       summary: Create view
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/title_id'
+        - $ref: "#/components/parameters/title_id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/titles/views_controller/create/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          $ref: '#/components/responses/unprocessable_entity'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/titles/{title_id}/bookmarks.json':
+                allOf:
+                  - $ref: "#/components/schemas/view"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /titles/{title_id}/bookmarks.json:
     post:
       tags:
         - Titles
       summary: Create bookmark
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/title_id'
+        - $ref: "#/components/parameters/title_id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/titles/bookmarks_controller/create/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          $ref: '#/components/responses/unprocessable_entity'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/titles/{title_id}/bookmarks/{id}.json':
+                allOf:
+                  - $ref: "#/components/schemas/bookmark"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /titles/{title_id}/bookmarks/{id}.json:
     delete:
       tags:
         - Titles
       summary: Delete bookmark
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/title_id'
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/id"
       responses:
-        '204':
-          $ref: '#/components/responses/no_content'
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          $ref: '#/components/responses/unprocessable_entity'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/titles/{title_id}/favorites.json':
+        "204":
+          $ref: "#/components/responses/no_content"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /titles/{title_id}/favorites.json:
     post:
       tags:
         - Titles
       summary: Create favorite
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/title_id'
+        - $ref: "#/components/parameters/title_id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/titles/favorites_controller/create/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          $ref: '#/components/responses/unprocessable_entity'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/titles/{title_id}/favorites/{id}.json':
+                allOf:
+                  - $ref: "#/components/schemas/favorite"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /titles/{title_id}/favorites/{id}.json:
     delete:
       tags:
         - Titles
       summary: Delete favorite
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/title_id'
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/id"
       responses:
-        '204':
-          $ref: '#/components/responses/no_content'
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          $ref: '#/components/responses/unprocessable_entity'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/titles/{title_id}/chapters/{chapter_id}/cover.json':
+        "204":
+          $ref: "#/components/responses/no_content"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /titles/{title_id}/chapters/{chapter_id}/cover.json:
     put:
       tags:
         - Chapters
       summary: Update cover
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/title_id'
-        - $ref: '#/components/parameters/chapter_id'
+        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/chapter_id"
       requestBody:
         content:
           application/json:
@@ -1880,155 +3086,152 @@ paths:
                   format: binary
                   description: File
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/titles/chapters/cover_controller/update/200.yml
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          description: Unprocessable entity
-          content:
-            application/json:
-              schema:
-                $ref: /documentation/controllers/api/titles/chapters/cover_controller/update/422.yml
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                allOf:
+                  - $ref: "#/components/schemas/chapter"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
     delete:
       tags:
         - Chapters
       summary: Delete cover
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/title_id'
-        - $ref: '#/components/parameters/chapter_id'
+        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/chapter_id"
       responses:
-        '204':
-          $ref: '#/components/responses/no_content'
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          description: Unprocessable entity
-          content:
-            application/json:
-              schema:
-                $ref: /documentation/controllers/api/titles/chapters/cover_controller/destroy/422.json
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/titles/{title_id}/chapters/{chapter_id}/views.json':
+        "204":
+          $ref: "#/components/responses/no_content"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /titles/{title_id}/chapters/{chapter_id}/views.json:
     post:
       tags:
         - Chapters
       summary: Create view
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/title_id'
-        - $ref: '#/components/parameters/chapter_id'
+        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/chapter_id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/titles/chapters/views_controller/create/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          $ref: '#/components/responses/unprocessable_entity'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/titles/{title_id}/chapters/{chapter_id}/bookmarks.json':
+                allOf:
+                  - $ref: "#/components/schemas/view"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /titles/{title_id}/chapters/{chapter_id}/bookmarks.json:
     post:
       tags:
         - Chapters
       summary: Create bookmark
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/title_id'
-        - $ref: '#/components/parameters/chapter_id'
+        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/chapter_id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/titles/chapters/bookmarks_controller/create/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          $ref: '#/components/responses/unprocessable_entity'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/titles/{title_id}/chapters/{chapter_id}/bookmarks/{id}.json':
+                allOf:
+                  - $ref: "#/components/schemas/bookmark"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /titles/{title_id}/chapters/{chapter_id}/bookmarks/{id}.json:
     delete:
       tags:
         - Chapters
       summary: Delete bookmark
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/title_id'
-        - $ref: '#/components/parameters/chapter_id'
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/chapter_id"
+        - $ref: "#/components/parameters/id"
       responses:
-        '204':
-          $ref: '#/components/responses/no_content'
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          $ref: '#/components/responses/unprocessable_entity'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/titles/{title_id}/chapters/{chapter_id}/pages.json':
+        "204":
+          $ref: "#/components/responses/no_content"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /titles/{title_id}/chapters/{chapter_id}/pages.json:
     get:
       tags:
         - Pages
       summary: Pages
       description: Sorted by number ASC
       parameters:
-        - $ref: '#/components/parameters/title_id'
-        - $ref: '#/components/parameters/chapter_id'
+        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/chapter_id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/titles/chapters/pages_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                type: array
+                items:
+                  $ref: "#/components/schemas/page"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
     post:
       tags:
         - Pages
       summary: Create page
-      description: ''
+      description: ""
       requestBody:
         content:
           application/json:
@@ -2044,129 +3247,129 @@ paths:
                   description: File
               example:
                 number: 1
-                file: "binary data"
+                file: Binary data
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/titles/chapters/pages_controller/create/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '422':
-          description: Unprocessable entity
-          content:
-            application/json:
-              schema:
-                $ref: /documentation/controllers/api/titles/chapters/pages_controller/create/422.json
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/titles/{title_id}/chapters/{chapter_id}/pages/{id}.json':
+                allOf:
+                  - $ref: "#/components/schemas/page"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /titles/{title_id}/chapters/{chapter_id}/pages/{id}.json:
     get:
       tags:
         - Pages
       summary: Page
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/title_id'
-        - $ref: '#/components/parameters/chapter_id'
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/chapter_id"
+        - $ref: "#/components/parameters/id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/titles/chapters/pages_controller/show/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/titles/{title_id}/chapters/{chapter_id}/pages/{page_id}/views.json':
+                allOf:
+                  - $ref: "#/components/schemas/page"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /titles/{title_id}/chapters/{chapter_id}/pages/{page_id}/views.json:
     post:
       tags:
         - Pages
       summary: Create view
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/title_id'
-        - $ref: '#/components/parameters/chapter_id'
-        - $ref: '#/components/parameters/page_id'
+        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/chapter_id"
+        - $ref: "#/components/parameters/page_id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/titles/chapters/pages/views_controller/create/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          $ref: '#/components/responses/unprocessable_entity'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/titles/{title_id}/chapters/{chapter_id}/pages/{page_id}/bookmarks.json':
+                allOf:
+                  - $ref: "#/components/schemas/view"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /titles/{title_id}/chapters/{chapter_id}/pages/{page_id}/bookmarks.json:
     post:
       tags:
         - Pages
       summary: Create bookmark
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/title_id'
-        - $ref: '#/components/parameters/chapter_id'
-        - $ref: '#/components/parameters/page_id'
+        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/chapter_id"
+        - $ref: "#/components/parameters/page_id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/titles/chapters/pages/bookmarks_controller/create/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          $ref: '#/components/responses/unprocessable_entity'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/titles/{title_id}/chapters/{chapter_id}/pages/{page_id}/bookmarks/{id}.json':
+                allOf:
+                  - $ref: "#/components/schemas/bookmark"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /titles/{title_id}/chapters/{chapter_id}/pages/{page_id}/bookmarks/{id}.json:
     delete:
       tags:
         - Pages
       summary: Delete bookmark
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/title_id'
-        - $ref: '#/components/parameters/chapter_id'
-        - $ref: '#/components/parameters/page_id'
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/chapter_id"
+        - $ref: "#/components/parameters/page_id"
+        - $ref: "#/components/parameters/id"
       responses:
-        '204':
-          $ref: '#/components/responses/no_content'
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          $ref: '#/components/responses/unprocessable_entity'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+        "204":
+          $ref: "#/components/responses/no_content"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /users.json:
     get:
       tags:
@@ -2174,49 +3377,52 @@ paths:
       summary: Users
       description: Sorted by username ASC
       parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/limit'
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
       responses:
-        '200':
+        "200":
           description: Success
           headers:
             X-Pagination-Page-Number:
-              $ref: '#/components/headers/X-Pagination-Page-Number'
+              $ref: "#/components/headers/X-Pagination-Page-Number"
             X-Pagination-Page-Items-Count:
-              $ref: '#/components/headers/X-Pagination-Page-Items-Count'
+              $ref: "#/components/headers/X-Pagination-Page-Items-Count"
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/users_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/users/{id}.json':
+                type: array
+                items:
+                  $ref: "#/components/schemas/user"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /users/{id}.json:
     get:
       tags:
         - Users
       summary: User
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/users_controller/show/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                allOf:
+                  - $ref: "#/components/schemas/user"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /users/bookmarks/titles.json:
     get:
       tags:
@@ -2224,26 +3430,28 @@ paths:
       summary: User bookmarked titles
       description: Sorted by updated_at DESC
       parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/limit'
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
       responses:
-        '200':
+        "200":
           description: Success
           headers:
             X-Pagination-Page-Number:
-              $ref: '#/components/headers/X-Pagination-Page-Number'
+              $ref: "#/components/headers/X-Pagination-Page-Number"
             X-Pagination-Page-Items-Count:
-              $ref: '#/components/headers/X-Pagination-Page-Items-Count'
+              $ref: "#/components/headers/X-Pagination-Page-Items-Count"
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/users/bookmarks/titles_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                type: array
+                items:
+                  $ref: "#/components/schemas/title"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /users/bookmarks/chapters.json:
     get:
       tags:
@@ -2251,26 +3459,28 @@ paths:
       summary: User bookmarked chapters
       description: Sorted by updated_at DESC
       parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/limit'
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
       responses:
-        '200':
+        "200":
           description: Success
           headers:
             X-Pagination-Page-Number:
-              $ref: '#/components/headers/X-Pagination-Page-Number'
+              $ref: "#/components/headers/X-Pagination-Page-Number"
             X-Pagination-Page-Items-Count:
-              $ref: '#/components/headers/X-Pagination-Page-Items-Count'
+              $ref: "#/components/headers/X-Pagination-Page-Items-Count"
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/users/bookmarks/chapters_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                type: array
+                items:
+                  $ref: "#/components/schemas/chapter"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /users/bookmarks/pages.json:
     get:
       tags:
@@ -2278,26 +3488,28 @@ paths:
       summary: User bookmarked pages
       description: Sorted by updated_at DESC
       parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/limit'
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
       responses:
-        '200':
+        "200":
           description: Success
           headers:
             X-Pagination-Page-Number:
-              $ref: '#/components/headers/X-Pagination-Page-Number'
+              $ref: "#/components/headers/X-Pagination-Page-Number"
             X-Pagination-Page-Items-Count:
-              $ref: '#/components/headers/X-Pagination-Page-Items-Count'
+              $ref: "#/components/headers/X-Pagination-Page-Items-Count"
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/users/bookmarks/pages_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                type: array
+                items:
+                  $ref: "#/components/schemas/page"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /users/favorites/artists.json:
     get:
       tags:
@@ -2305,26 +3517,28 @@ paths:
       summary: User favorite artists
       description: Sorted by updated_at DESC
       parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/limit'
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
       responses:
-        '200':
+        "200":
           description: Success
           headers:
             X-Pagination-Page-Number:
-              $ref: '#/components/headers/X-Pagination-Page-Number'
+              $ref: "#/components/headers/X-Pagination-Page-Number"
             X-Pagination-Page-Items-Count:
-              $ref: '#/components/headers/X-Pagination-Page-Items-Count'
+              $ref: "#/components/headers/X-Pagination-Page-Items-Count"
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/users/favorites/artists_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                type: array
+                items:
+                  $ref: "#/components/schemas/artist"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /users/favorites/groups.json:
     get:
       tags:
@@ -2332,26 +3546,28 @@ paths:
       summary: User favorite groups
       description: Sorted by updated_at DESC
       parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/limit'
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
       responses:
-        '200':
+        "200":
           description: Success
           headers:
             X-Pagination-Page-Number:
-              $ref: '#/components/headers/X-Pagination-Page-Number'
+              $ref: "#/components/headers/X-Pagination-Page-Number"
             X-Pagination-Page-Items-Count:
-              $ref: '#/components/headers/X-Pagination-Page-Items-Count'
+              $ref: "#/components/headers/X-Pagination-Page-Items-Count"
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/users/favorites/groups_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                type: array
+                items:
+                  $ref: "#/components/schemas/group"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /users/favorites/titles.json:
     get:
       tags:
@@ -2359,26 +3575,28 @@ paths:
       summary: User favorite titles
       description: Sorted by updated_at DESC
       parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/limit'
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
       responses:
-        '200':
+        "200":
           description: Success
           headers:
             X-Pagination-Page-Number:
-              $ref: '#/components/headers/X-Pagination-Page-Number'
+              $ref: "#/components/headers/X-Pagination-Page-Number"
             X-Pagination-Page-Items-Count:
-              $ref: '#/components/headers/X-Pagination-Page-Items-Count'
+              $ref: "#/components/headers/X-Pagination-Page-Items-Count"
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/users/favorites/titles_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                type: array
+                items:
+                  $ref: "#/components/schemas/title"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /users/views/titles.json:
     get:
       tags:
@@ -2386,26 +3604,28 @@ paths:
       summary: User viewed titles
       description: Sorted by updated_at DESC
       parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/limit'
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
       responses:
-        '200':
+        "200":
           description: Success
           headers:
             X-Pagination-Page-Number:
-              $ref: '#/components/headers/X-Pagination-Page-Number'
+              $ref: "#/components/headers/X-Pagination-Page-Number"
             X-Pagination-Page-Items-Count:
-              $ref: '#/components/headers/X-Pagination-Page-Items-Count'
+              $ref: "#/components/headers/X-Pagination-Page-Items-Count"
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/users/views/titles_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                type: array
+                items:
+                  $ref: "#/components/schemas/title"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /users/views/chapters.json:
     get:
       tags:
@@ -2413,26 +3633,28 @@ paths:
       summary: User viewed chapters
       description: Sorted by updated_at DESC
       parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/limit'
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
       responses:
-        '200':
+        "200":
           description: Success
           headers:
             X-Pagination-Page-Number:
-              $ref: '#/components/headers/X-Pagination-Page-Number'
+              $ref: "#/components/headers/X-Pagination-Page-Number"
             X-Pagination-Page-Items-Count:
-              $ref: '#/components/headers/X-Pagination-Page-Items-Count'
+              $ref: "#/components/headers/X-Pagination-Page-Items-Count"
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/users/views/chapters_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                type: array
+                items:
+                  $ref: "#/components/schemas/chapter"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /users/views/pages.json:
     get:
       tags:
@@ -2440,26 +3662,28 @@ paths:
       summary: User viewed pages
       description: Sorted by updated_at DESC
       parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/limit'
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
       responses:
-        '200':
+        "200":
           description: Success
           headers:
             X-Pagination-Page-Number:
-              $ref: '#/components/headers/X-Pagination-Page-Number'
+              $ref: "#/components/headers/X-Pagination-Page-Number"
             X-Pagination-Page-Items-Count:
-              $ref: '#/components/headers/X-Pagination-Page-Items-Count'
+              $ref: "#/components/headers/X-Pagination-Page-Items-Count"
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/users/views/pages_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                type: array
+                items:
+                  $ref: "#/components/schemas/page"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /artists.json:
     get:
       tags:
@@ -2467,96 +3691,100 @@ paths:
       summary: Artists
       description: Sorted by title ASC
       parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/limit'
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
       responses:
-        '200':
+        "200":
           description: Success
           headers:
             X-Pagination-Page-Number:
-              $ref: '#/components/headers/X-Pagination-Page-Number'
+              $ref: "#/components/headers/X-Pagination-Page-Number"
             X-Pagination-Page-Items-Count:
-              $ref: '#/components/headers/X-Pagination-Page-Items-Count'
+              $ref: "#/components/headers/X-Pagination-Page-Items-Count"
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/artists_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/artists/{id}.json':
+                type: array
+                items:
+                  $ref: "#/components/schemas/artist"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /artists/{id}.json:
     get:
       tags:
         - Artists
       summary: Artist
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/artists_controller/show/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/artists/{artist_id}/favorites.json':
+                allOf:
+                  - $ref: "#/components/schemas/artist"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /artists/{artist_id}/favorites.json:
     post:
       tags:
         - Artists
       summary: Create favorite
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/artist_id'
+        - $ref: "#/components/parameters/artist_id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/artists/favorites_controller/create/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          $ref: '#/components/responses/unprocessable_entity'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/artists/{artist_id}/favorites/{id}.json':
+                allOf:
+                  - $ref: "#/components/schemas/favorite"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /artists/{artist_id}/favorites/{id}.json:
     delete:
       tags:
         - Artists
       summary: Delete favorite
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/artist_id'
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/artist_id"
+        - $ref: "#/components/parameters/id"
       responses:
-        '204':
-          $ref: '#/components/responses/no_content'
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          $ref: '#/components/responses/unprocessable_entity'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+        "204":
+          $ref: "#/components/responses/no_content"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /writers.json:
     get:
       tags:
@@ -2564,49 +3792,52 @@ paths:
       summary: Writers
       description: Sorted by id ASC
       parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/limit'
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
       responses:
-        '200':
+        "200":
           description: Success
           headers:
             X-Pagination-Page-Number:
-              $ref: '#/components/headers/X-Pagination-Page-Number'
+              $ref: "#/components/headers/X-Pagination-Page-Number"
             X-Pagination-Page-Items-Count:
-              $ref: '#/components/headers/X-Pagination-Page-Items-Count'
+              $ref: "#/components/headers/X-Pagination-Page-Items-Count"
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/writers_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/writers/{id}.json':
+                type: array
+                items:
+                  $ref: "#/components/schemas/writer"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /writers/{id}.json:
     get:
       tags:
         - Artists
       summary: Writer
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/writers_controller/show/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                allOf:
+                  - $ref: "#/components/schemas/writer"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /painters.json:
     get:
       tags:
@@ -2614,49 +3845,52 @@ paths:
       summary: Painters
       description: Sorted by id ASC
       parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/limit'
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
       responses:
-        '200':
+        "200":
           description: Success
           headers:
             X-Pagination-Page-Number:
-              $ref: '#/components/headers/X-Pagination-Page-Number'
+              $ref: "#/components/headers/X-Pagination-Page-Number"
             X-Pagination-Page-Items-Count:
-              $ref: '#/components/headers/X-Pagination-Page-Items-Count'
+              $ref: "#/components/headers/X-Pagination-Page-Items-Count"
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/painters_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/painters/{id}.json':
+                type: array
+                items:
+                  $ref: "#/components/schemas/painter"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /painters/{id}.json:
     get:
       tags:
         - Artists
       summary: Painter
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/painters_controller/show/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                allOf:
+                  - $ref: "#/components/schemas/painter"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /cleaners.json:
     get:
       tags:
@@ -2664,49 +3898,52 @@ paths:
       summary: Cleaners
       description: Sorted by id ASC
       parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/limit'
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
       responses:
-        '200':
+        "200":
           description: Success
           headers:
             X-Pagination-Page-Number:
-              $ref: '#/components/headers/X-Pagination-Page-Number'
+              $ref: "#/components/headers/X-Pagination-Page-Number"
             X-Pagination-Page-Items-Count:
-              $ref: '#/components/headers/X-Pagination-Page-Items-Count'
+              $ref: "#/components/headers/X-Pagination-Page-Items-Count"
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/cleaners_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/cleaners/{id}.json':
+                type: array
+                items:
+                  $ref: "#/components/schemas/cleaner"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /cleaners/{id}.json:
     get:
       tags:
         - Artists
       summary: Cleaner
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/cleaners_controller/show/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                allOf:
+                  - $ref: "#/components/schemas/cleaner"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /translators.json:
     get:
       tags:
@@ -2714,49 +3951,52 @@ paths:
       summary: Translators
       description: Sorted by id ASC
       parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/limit'
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
       responses:
-        '200':
+        "200":
           description: Success
           headers:
             X-Pagination-Page-Number:
-              $ref: '#/components/headers/X-Pagination-Page-Number'
+              $ref: "#/components/headers/X-Pagination-Page-Number"
             X-Pagination-Page-Items-Count:
-              $ref: '#/components/headers/X-Pagination-Page-Items-Count'
+              $ref: "#/components/headers/X-Pagination-Page-Items-Count"
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/translators_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/translators/{id}.json':
+                type: array
+                items:
+                  $ref: "#/components/schemas/translator"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /translators/{id}.json:
     get:
       tags:
         - Artists
       summary: Translator
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/translators_controller/show/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                allOf:
+                  - $ref: "#/components/schemas/translator"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /editors.json:
     get:
       tags:
@@ -2764,49 +4004,52 @@ paths:
       summary: Editors
       description: Sorted by id ASC
       parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/limit'
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
       responses:
-        '200':
+        "200":
           description: Success
           headers:
             X-Pagination-Page-Number:
-              $ref: '#/components/headers/X-Pagination-Page-Number'
+              $ref: "#/components/headers/X-Pagination-Page-Number"
             X-Pagination-Page-Items-Count:
-              $ref: '#/components/headers/X-Pagination-Page-Items-Count'
+              $ref: "#/components/headers/X-Pagination-Page-Items-Count"
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/editors_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/editors/{id}.json':
+                type: array
+                items:
+                  $ref: "#/components/schemas/editor"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /editors/{id}.json:
     get:
       tags:
         - Artists
       summary: Editor
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/editors_controller/show/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                allOf:
+                  - $ref: "#/components/schemas/editor"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /typers.json:
     get:
       tags:
@@ -2814,49 +4057,52 @@ paths:
       summary: Typers
       description: Sorted by id ASC
       parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/limit'
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
       responses:
-        '200':
+        "200":
           description: Success
           headers:
             X-Pagination-Page-Number:
-              $ref: '#/components/headers/X-Pagination-Page-Number'
+              $ref: "#/components/headers/X-Pagination-Page-Number"
             X-Pagination-Page-Items-Count:
-              $ref: '#/components/headers/X-Pagination-Page-Items-Count'
+              $ref: "#/components/headers/X-Pagination-Page-Items-Count"
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/typers_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/typers/{id}.json':
+                type: array
+                items:
+                  $ref: "#/components/schemas/typer"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /typers/{id}.json:
     get:
       tags:
         - Artists
       summary: Typer
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/typers_controller/show/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                allOf:
+                  - $ref: "#/components/schemas/typer"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /groups.json:
     get:
       tags:
@@ -2864,31 +4110,33 @@ paths:
       summary: Groups
       description: Sorted by title ASC
       parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/limit'
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
       responses:
-        '200':
+        "200":
           description: Success
           headers:
             X-Pagination-Page-Number:
-              $ref: '#/components/headers/X-Pagination-Page-Number'
+              $ref: "#/components/headers/X-Pagination-Page-Number"
             X-Pagination-Page-Items-Count:
-              $ref: '#/components/headers/X-Pagination-Page-Items-Count'
+              $ref: "#/components/headers/X-Pagination-Page-Items-Count"
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/groups_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                type: array
+                items:
+                  $ref: "#/components/schemas/group"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
     post:
       tags:
         - Groups
       summary: Create group
-      description: ''
+      description: ""
       requestBody:
         content:
           application/json:
@@ -2901,54 +4149,52 @@ paths:
               example:
                 title: Developers
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/groups_controller/create/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '422':
-          description: Unprocessable entity
-          content:
-            application/json:
-              schema:
-                $ref: /documentation/controllers/api/groups_controller/create/422.json
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/groups/{id}.json':
+                allOf:
+                  - $ref: "#/components/schemas/group"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /groups/{id}.json:
     get:
       tags:
         - Groups
       summary: Group
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/groups_controller/show/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                allOf:
+                  - $ref: "#/components/schemas/group"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
     put:
       tags:
         - Groups
       summary: Update group
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/id"
       requestBody:
         content:
           application/json:
@@ -2959,54 +4205,53 @@ paths:
                   type: string
                   description: Title
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/groups_controller/update/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          description: Unprocessable entity
-          content:
-            application/json:
-              schema:
-                $ref: /documentation/controllers/api/groups_controller/update/422.json
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/groups/{group_id}/users.json':
+                allOf:
+                  - $ref: "#/components/schemas/group"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /groups/{group_id}/users.json:
     get:
       tags:
         - Groups
       summary: Group users
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/group_id'
+        - $ref: "#/components/parameters/group_id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/groups/users_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                type: array
+                items:
+                  $ref: "#/components/schemas/group_user"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
     post:
       tags:
         - Groups
       summary: Create group user
-      description: ''
+      description: ""
       requestBody:
         content:
           application/json:
@@ -3031,57 +4276,55 @@ paths:
                   - manage_group
                   - manage_users
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/groups/users_controller/create/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          description: Unprocessable entity
-          content:
-            application/json:
-              schema:
-                $ref: /documentation/controllers/api/groups/users_controller/create/422.json
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/groups/{group_id}/users/{id}.json':
+                allOf:
+                  - $ref: "#/components/schemas/group_user"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /groups/{group_id}/users/{id}.json:
     get:
       tags:
         - Groups
       summary: Group user
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/group_id'
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/group_id"
+        - $ref: "#/components/parameters/id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/groups/users_controller/show/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                allOf:
+                  - $ref: "#/components/schemas/group_user"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
     put:
       tags:
         - Groups
       summary: Update group user
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/group_id'
+        - $ref: "#/components/parameters/group_id"
       requestBody:
         content:
           application/json:
@@ -3097,105 +4340,108 @@ paths:
                       - manage_group
                       - manage_users
                       - manage_chapters
-                    example: manage_group
+              example:
+                access_rights: manage_group
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/groups/users_controller/update/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
+                allOf:
+                  - $ref: "#/components/schemas/group_user"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
           description: Unprocessable entity
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/groups/users_controller/update/422.json
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
     delete:
       tags:
         - Groups
       summary: Delete group user
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/group_id'
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/group_id"
+        - $ref: "#/components/parameters/id"
       responses:
-        '204':
-          $ref: '#/components/responses/no_content'
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          $ref: '#/components/responses/unprocessable_entity'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/groups/{group_id}/favorites.json':
+        "204":
+          $ref: "#/components/responses/no_content"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /groups/{group_id}/favorites.json:
     post:
       tags:
         - Groups
       summary: Create favorite
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/group_id'
+        - $ref: "#/components/parameters/group_id"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/groups/favorites_controller/create/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          $ref: '#/components/responses/unprocessable_entity'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
-  '/groups/{group_id}/favorites/{id}.json':
+                allOf:
+                  - $ref: "#/components/schemas/favorite"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /groups/{group_id}/favorites/{id}.json:
     delete:
       tags:
         - Groups
       summary: Delete favorite
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/group_id'
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/group_id"
+        - $ref: "#/components/parameters/id"
       responses:
-        '204':
-          $ref: '#/components/responses/no_content'
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '404':
-          $ref: '#/components/responses/not_found'
-        '422':
-          $ref: '#/components/responses/unprocessable_entity'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+        "204":
+          $ref: "#/components/responses/no_content"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /bookmarks.json:
     get:
       tags:
         - Bookmarks
       summary: Bookmarks
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/limit'
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
         - in: query
           name: resource_type
           description: Resource type
@@ -3205,7 +4451,6 @@ paths:
               - Title
               - Chapter
               - Page
-            examples: Title
         - in: query
           name: resource_ids
           description: Resource ids
@@ -3214,37 +4459,37 @@ paths:
             maximum: 150
             items:
               type: integer
-              examples:
-                - 1
       responses:
-        '200':
+        "200":
           description: Success
           headers:
             X-Pagination-Page-Number:
-              $ref: '#/components/headers/X-Pagination-Page-Number'
+              $ref: "#/components/headers/X-Pagination-Page-Number"
             X-Pagination-Page-Items-Count:
-              $ref: '#/components/headers/X-Pagination-Page-Items-Count'
+              $ref: "#/components/headers/X-Pagination-Page-Items-Count"
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/bookmarks_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '422':
-          $ref: '#/components/responses/unprocessable_entity'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                type: array
+                items:
+                  $ref: "#/components/schemas/bookmark"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /favorites.json:
     get:
       tags:
         - Favorites
       summary: Favorites
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/limit'
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
         - in: query
           name: resource_type
           description: Resource type
@@ -3254,7 +4499,6 @@ paths:
               - Title
               - Chapter
               - Page
-            examples: Title
         - in: query
           name: resource_ids
           description: Resource ids
@@ -3263,37 +4507,37 @@ paths:
             maximum: 150
             items:
               type: integer
-              examples:
-                - 1
       responses:
-        '200':
+        "200":
           description: Success
           headers:
             X-Pagination-Page-Number:
-              $ref: '#/components/headers/X-Pagination-Page-Number'
+              $ref: "#/components/headers/X-Pagination-Page-Number"
             X-Pagination-Page-Items-Count:
-              $ref: '#/components/headers/X-Pagination-Page-Items-Count'
+              $ref: "#/components/headers/X-Pagination-Page-Items-Count"
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/favorites_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '422':
-          $ref: '#/components/responses/unprocessable_entity'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                type: array
+                items:
+                  $ref: "#/components/schemas/favorite"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /views.json:
     get:
       tags:
         - Views
       summary: Views
-      description: ''
+      description: ""
       parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/limit'
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
         - in: query
           name: resource_type
           description: Resource type
@@ -3303,7 +4547,6 @@ paths:
               - Title
               - Chapter
               - Page
-            examples: Title
         - in: query
           name: resource_ids
           description: Resource ids
@@ -3312,25 +4555,25 @@ paths:
             maximum: 150
             items:
               type: integer
-              examples:
-                - 1
       responses:
-        '200':
+        "200":
           description: Success
           headers:
             X-Pagination-Page-Number:
-              $ref: '#/components/headers/X-Pagination-Page-Number'
+              $ref: "#/components/headers/X-Pagination-Page-Number"
             X-Pagination-Page-Items-Count:
-              $ref: '#/components/headers/X-Pagination-Page-Items-Count'
+              $ref: "#/components/headers/X-Pagination-Page-Items-Count"
           content:
             application/json:
               schema:
-                $ref: /documentation/controllers/api/views_controller/index/200.json
-        '401':
-          $ref: '#/components/responses/unauthorized'
-        '403':
-          $ref: '#/components/responses/forbidden'
-        '422':
-          $ref: '#/components/responses/unprocessable_entity'
-        '500':
-          $ref: '#/components/responses/internal_server_error'
+                type: array
+                items:
+                  $ref: "#/components/schemas/view"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"

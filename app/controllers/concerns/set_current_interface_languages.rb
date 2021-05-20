@@ -9,7 +9,7 @@ module SetCurrentInterfaceLanguages
 
   def set_current_interface_languages
     query = InterfaceLanguage.order(id: :asc)
-    cache_key = cache_key(query, :current_interface_languages, false)
+    cache_key = variable_cache_key(query)
 
     interface_languages = Rails.cache.fetch(cache_key) do
       interface_languages = query.all

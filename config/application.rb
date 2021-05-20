@@ -19,7 +19,7 @@ require "action_view/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module Webtoons
+module App
   class Application < Rails::Application
     config.load_defaults 6.1
 

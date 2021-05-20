@@ -6,7 +6,7 @@ class Api::ContentLanguagesController < Api::ApplicationController
 
   def index
     query = content_languages_scope.order(id: :asc)
-    cache_key = cache_key(query)
+    cache_key = endpoint_cache_key(query)
 
     content_languages = Rails.cache.fetch(cache_key) do
       content_languages = query.all
@@ -27,7 +27,7 @@ class Api::ContentLanguagesController < Api::ApplicationController
   end
 
   def show
-    cache_key = cache_key(@content_language)
+    cache_key = endpoint_cache_key(@content_language)
 
     content_language = Rails.cache.fetch(cache_key) do
       ActiveRecord::Associations::Preloader.new.preload(

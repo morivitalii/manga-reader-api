@@ -23,7 +23,7 @@ class Api::EditorsController < Api::ApplicationController
   end
 
   def show
-    cache_key = cache_key(@editor)
+    cache_key = endpoint_cache_key(@editor)
 
     editor = Rails.cache.fetch(cache_key) do
       ActiveRecord::Associations::Preloader.new.preload(

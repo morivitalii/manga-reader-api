@@ -23,7 +23,7 @@ class Api::PaintersController < Api::ApplicationController
   end
 
   def show
-    cache_key = cache_key(@painter)
+    cache_key = endpoint_cache_key(@painter)
 
     painter = Rails.cache.fetch(cache_key) do
       ActiveRecord::Associations::Preloader.new.preload(

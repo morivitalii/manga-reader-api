@@ -8,7 +8,7 @@ class Api::FormatsController < Api::ApplicationController
   
   def index
     query = format_scope.joins(tag: :translations).order("tag_translations.title ASC")
-    cache_key = cache_key(query)
+    cache_key = endpoint_cache_key(query)
 
     formats = Rails.cache.fetch(cache_key) do
       formats = query.all
@@ -26,7 +26,7 @@ class Api::FormatsController < Api::ApplicationController
   end
 
   def show
-    cache_key = cache_key(@format)
+    cache_key = endpoint_cache_key(@format)
 
     format = Rails.cache.fetch(cache_key) do
       ActiveRecord::Associations::Preloader.new.preload(

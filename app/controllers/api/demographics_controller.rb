@@ -8,7 +8,7 @@ class Api::DemographicsController < Api::ApplicationController
 
   def index
     query = demographic_scope.joins(tag: :translations).order("tag_translations.title ASC")
-    cache_key = cache_key(query)
+    cache_key = endpoint_cache_key(query)
 
     demographics = Rails.cache.fetch(cache_key) do
       demographics = query.all
@@ -26,7 +26,7 @@ class Api::DemographicsController < Api::ApplicationController
   end
 
   def show
-    cache_key = cache_key(@demographic)
+    cache_key = endpoint_cache_key(@demographic)
 
     demographic = Rails.cache.fetch(cache_key) do
       ActiveRecord::Associations::Preloader.new.preload(

@@ -1,8 +1,0 @@
-type: object
-properties:
-  username:
-    $ref: /documentation/helpers/serializers/api/validation_error.json#
-  email:
-    $ref: /documentation/helpers/serializers/api/validation_error.json#
-  password:
-    $ref: /documentation/helpers/serializers/api/validation_error.json#

@@ -1,7 +1,0 @@
-{
-  "allOf": [
-    {
-      "$ref": "/documentation/models/api/group.json#"
-    }
-  ]
-}

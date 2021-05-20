@@ -6,7 +6,7 @@ class Api::Users::SettingsController < Api::ApplicationController
   before_action :set_user_setting, only: [:show, :update]
 
   def show
-    cache_key = cache_key(@user_setting)
+    cache_key = endpoint_cache_key(@user_setting)
 
     user_setting = Rails.cache.fetch(cache_key) do
       ActiveRecord::Associations::Preloader.new.preload(

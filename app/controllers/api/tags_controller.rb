@@ -6,7 +6,7 @@ class Api::TagsController < Api::ApplicationController
 
   def index
     query = tag_scope.joins(:translations).order("tag_translations.title ASC")
-    cache_key = cache_key(query)
+    cache_key = endpoint_cache_key(query)
 
     tags = Rails.cache.fetch(cache_key) do
       tags = query.all
@@ -24,7 +24,7 @@ class Api::TagsController < Api::ApplicationController
   end
 
   def show
-    cache_key = cache_key(@tag)
+    cache_key = endpoint_cache_key(@tag)
 
     tag = Rails.cache.fetch(cache_key) do
       ActiveRecord::Associations::Preloader.new.preload(
