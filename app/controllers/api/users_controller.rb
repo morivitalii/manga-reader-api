@@ -28,6 +28,8 @@ class Api::UsersController < Api::ApplicationController
   def show
     cache_key = endpoint_cache_key(@user)
 
+    # Any change in this code block must be accompanied by thinking
+    # about the cache invalidation with model associations
     user = Rails.cache.fetch(cache_key) do
       ActiveRecord::Associations::Preloader.new.preload(
         @user, [
