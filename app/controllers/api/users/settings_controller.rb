@@ -8,7 +8,9 @@ class Api::Users::SettingsController < Api::ApplicationController
   def show
     cache_key = endpoint_cache_key(@user_setting)
 
-    user_setting = Rails.cache.fetch(cache_key) do
+    # Any change in this code block must be accompanied by thinking
+    # about the cache invalidation with model associations
+    user_setting = Rails.cache.fetch(cache_key, expires_in: 1.hour) do
       ActiveRecord::Associations::Preloader.new.preload(
         @user_setting, [
           avatar_attachment: :blob,

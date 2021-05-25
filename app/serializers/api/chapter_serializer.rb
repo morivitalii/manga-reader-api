@@ -1,9 +1,4 @@
 class Api::ChapterSerializer < Api::ApplicationSerializer
-  serialize_association :content_language, with: Api::ContentLanguageSerializer
-  serialize_associations :volume, with: Api::VolumeSerializer
-  serialize_associations :user, with: Api::UserSerializer
-  serialize_associations :group, with: Api::GroupSerializer
-
   def attributes
     {
       id: model.id,
@@ -16,17 +11,10 @@ class Api::ChapterSerializer < Api::ApplicationSerializer
       number: model.number,
       status: model.status,
       pages_count: model.pages_count,
-      views_count: model.views_count,
-      bookmarks_count: model.bookmarks_count,
       sent_to_review_at: model.sent_to_review_at,
       deleted_at: model.deleted_at,
       created_at: model.created_at,
-      updated_at: model.updated_at,
-      cover: cover,
-      content_language: content_language,
-      volume: volume,
-      user: user,
-      group: group
+      cover: cover
     }
   end
 
@@ -37,12 +25,9 @@ class Api::ChapterSerializer < Api::ApplicationSerializer
 
     {
       url: model.cover.url,
-      filename: model.cover.filename,
       content_type: model.cover.content_type,
       width: model.cover.metadata[:width],
-      height: model.cover.metadata[:height],
-      byte_size: model.cover.byte_size,
-      created_at: model.cover.created_at
+      height: model.cover.metadata[:height]
     }
   end
 end

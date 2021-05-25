@@ -1,0 +1,12 @@
+{
+  "id": "file:/serializers/api/access_right.json#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "key": {
+      "type": "string"
+    }
+  }
+}

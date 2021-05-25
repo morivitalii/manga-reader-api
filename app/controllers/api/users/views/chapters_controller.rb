@@ -13,7 +13,6 @@ class Api::Users::Views::ChaptersController < Api::ApplicationController
         :content_language,
         :volume,
         :group,
-        :user,
         cover_attachment: :blob
       ]
     )

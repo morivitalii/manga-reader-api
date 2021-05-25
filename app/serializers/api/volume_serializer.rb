@@ -3,9 +3,7 @@ class Api::VolumeSerializer < Api::ApplicationSerializer
     {
       id: model.id,
       title_id: model.title_id,
-      number: model.number,
-      created_at: model.created_at,
-      updated_at: model.updated_at
+      number: model.number
     }
   end
 end

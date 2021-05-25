@@ -9,10 +9,9 @@ class Api::GroupUserSerializer < Api::ApplicationSerializer
       group_id: model.group_id,
       user_id: model.user_id,
       group_access_rights: group_access_rights,
-      group: group,
-      user: user,
       created_at: model.created_at,
-      updated_at: model.updated_at
+      group: group,
+      user: user
     }
   end
 end

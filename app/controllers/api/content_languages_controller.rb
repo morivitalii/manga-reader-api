@@ -8,13 +8,14 @@ class Api::ContentLanguagesController < Api::ApplicationController
     query = content_languages_scope.order(id: :asc)
     cache_key = endpoint_cache_key(query)
 
-    content_languages = Rails.cache.fetch(cache_key) do
+    # Any change in this code block must be accompanied by thinking
+    # about the cache invalidation with model associations
+    content_languages = Rails.cache.fetch(cache_key, expires_in: 24.hours) do
       content_languages = query.all
 
       ActiveRecord::Associations::Preloader.new.preload(
         content_languages, [
           ContentLanguage.translations_associations,
-          :locale
         ]
       )
 
@@ -29,11 +30,12 @@ class Api::ContentLanguagesController < Api::ApplicationController
   def show
     cache_key = endpoint_cache_key(@content_language)
 
-    content_language = Rails.cache.fetch(cache_key) do
+    # Any change in this code block must be accompanied by thinking
+    # about the cache invalidation with model associations
+    content_language = Rails.cache.fetch(cache_key, expires_in: 24.hours) do
       ActiveRecord::Associations::Preloader.new.preload(
         @content_language, [
-        ContentLanguage.translations_associations,
-          :locale
+          ContentLanguage.translations_associations,
         ]
       )
 

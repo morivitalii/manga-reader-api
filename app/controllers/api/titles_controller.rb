@@ -15,10 +15,6 @@ class Api::TitlesController < Api::ApplicationController
     ActiveRecord::Associations::Preloader.new.preload(
       titles, [
         Title.translations_associations,
-        original_content_language: [
-          :locale,
-          ContentLanguage.translations_associations
-        ],
         cover_attachment: :blob,
         writers: { artist: Artist.translations_associations },
         painters: { artist: Artist.translations_associations },
@@ -40,10 +36,6 @@ class Api::TitlesController < Api::ApplicationController
     ActiveRecord::Associations::Preloader.new.preload(
       @title, [
         Title.translations_associations,
-        original_content_language: [
-          :locale,
-          ContentLanguage.translations_associations
-        ],
         cover_attachment: :blob,
         writers: { artist: Artist.translations_associations },
         painters: { artist: Artist.translations_associations },
@@ -68,10 +60,6 @@ class Api::TitlesController < Api::ApplicationController
       ActiveRecord::Associations::Preloader.new.preload(
         service.title_object, [
           Title.translations_associations,
-          original_content_language: [
-            :locale,
-            ContentLanguage.translations_associations
-          ],
           cover_attachment: :blob,
           writers: { artist: Artist.translations_associations },
           painters: { artist: Artist.translations_associations },

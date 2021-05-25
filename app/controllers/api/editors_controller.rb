@@ -3,29 +3,14 @@ class Api::EditorsController < Api::ApplicationController
 
   before_action :set_editor, only: [:show]
 
-  before_action -> { authorize(Api::EditorsPolicy) }, only: [:index]
   before_action -> { authorize(Api::EditorsPolicy, editor: @editor) }, only: [:show]
-
-  def index
-    editors = editor_scope.order(id: :asc)
-    editors = paginate_countless(editors)
-
-    ActiveRecord::Associations::Preloader.new.preload(
-      editors, [
-        artist: Artist.translations_associations
-      ]
-    )
-
-    editors = Api::EditorDecorator.decorate(editors)
-    editors = Api::EditorSerializer.serialize(editors)
-
-    render json: editors, status: 200
-  end
 
   def show
     cache_key = endpoint_cache_key(@editor)
 
-    editor = Rails.cache.fetch(cache_key) do
+    # Any change in this code block must be accompanied by thinking
+    # about the cache invalidation with model associations
+    editor = Rails.cache.fetch(cache_key, expires_in: 24.hours) do
       ActiveRecord::Associations::Preloader.new.preload(
         @editor, [
           artist: Artist.translations_associations

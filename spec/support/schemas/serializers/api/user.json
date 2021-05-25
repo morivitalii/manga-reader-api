@@ -47,9 +47,6 @@
             "url": {
               "type": "string"
             },
-            "filename": {
-              "type": "string"
-            },
             "content_type": {
               "type": "string"
             },
@@ -72,13 +69,6 @@
                   "type": "null"
                 }
               ]
-            },
-            "byte_size": {
-              "type": "integer"
-            },
-            "created_at": {
-              "type": "string",
-              "format": "date-time"
             }
           }
         },
@@ -95,6 +85,12 @@
     },
     "views_count": {
       "type": "integer"
+    },
+    "access_rights": {
+      "type": "array",
+      "items": {
+        "$ref": "file:/serializers/api/access_right.json#"
+      }
     },
     "created_at": {
       "type": "string",

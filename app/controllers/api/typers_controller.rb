@@ -3,29 +3,14 @@ class Api::TypersController < Api::ApplicationController
 
   before_action :set_typer, only: [:show]
 
-  before_action -> { authorize(Api::TypersPolicy) }, only: [:index]
   before_action -> { authorize(Api::TypersPolicy, typer: @typer) }, only: [:show]
-
-  def index
-    typers = typer_scope.order(id: :asc)
-    typers = paginate_countless(typers)
-
-    ActiveRecord::Associations::Preloader.new.preload(
-      typers, [
-        artist: Artist.translations_associations
-      ]
-    )
-
-    typers = Api::TyperDecorator.decorate(typers)
-    typers = Api::TyperSerializer.serialize(typers)
-
-    render json: typers, status: 200
-  end
 
   def show
     cache_key = endpoint_cache_key(@typer)
 
-    typer = Rails.cache.fetch(cache_key) do
+    # Any change in this code block must be accompanied by thinking
+    # about the cache invalidation with model associations
+    typer = Rails.cache.fetch(cache_key, expires_in: 24.hours) do
       ActiveRecord::Associations::Preloader.new.preload(
         @typer, [
           artist: Artist.translations_associations
