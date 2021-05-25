@@ -1,5 +1,4 @@
 class Api::TitleSerializer < Api::ApplicationSerializer
-  serialize_association :original_content_language, with: Api::ContentLanguageSerializer
   serialize_associations :writers, with: Api::WriterSerializer
   serialize_associations :painters, with: Api::PainterSerializer
   serialize_associations :genres, with: Api::GenreSerializer
@@ -13,20 +12,17 @@ class Api::TitleSerializer < Api::ApplicationSerializer
   def attributes
     {
       id: model.id,
+      original_content_language_id: model.original_content_language_id,
       title: model.title,
       description: model.description,
       status: model.status,
       publication_status: model.publication_status,
-      views_count: model.views_count,
-      bookmarks_count: model.bookmarks_count,
-      favorites_count: model.favorites_count,
       sent_to_review_at: model.sent_to_review_at,
       published_at: model.published_at,
       deleted_at: model.deleted_at,
       created_at: model.created_at,
-      updated_at: model.updated_at,
-      original_content_language_id: model.original_content_language_id,
-      original_content_language: original_content_language,
+      views_count: model.views_count,
+      favorites_count: model.favorites_count,
       cover: cover,
       writers: writers,
       painters: painters,
@@ -45,12 +41,9 @@ class Api::TitleSerializer < Api::ApplicationSerializer
 
     {
       url: model.cover.url,
-      filename: model.cover.filename,
       content_type: model.cover.content_type,
       width: model.cover.metadata[:width],
-      height: model.cover.metadata[:height],
-      byte_size: model.cover.byte_size,
-      created_at: model.cover.created_at
+      height: model.cover.metadata[:height]
     }
   end
 end

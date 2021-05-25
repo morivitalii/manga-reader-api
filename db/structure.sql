@@ -21,7 +21,8 @@ CREATE TABLE public.access_rights (
     id bigint NOT NULL,
     key character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -198,7 +199,8 @@ CREATE TABLE public.artists (
     user_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    favorites_count bigint DEFAULT 0 NOT NULL
+    favorites_count bigint DEFAULT 0 NOT NULL,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -231,7 +233,8 @@ CREATE TABLE public.bookmarks (
     resource_type character varying NOT NULL,
     resource_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -275,7 +278,8 @@ CREATE TABLE public.chapters (
     content_language_id bigint NOT NULL,
     deleted_at timestamp without time zone,
     sent_to_review_at timestamp without time zone,
-    published_at timestamp without time zone
+    published_at timestamp without time zone,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -306,7 +310,8 @@ CREATE TABLE public.cleaners (
     id bigint NOT NULL,
     artist_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -371,7 +376,8 @@ CREATE TABLE public.content_languages (
     id bigint NOT NULL,
     locale_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -402,7 +408,8 @@ CREATE TABLE public.demographics (
     id bigint NOT NULL,
     tag_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -433,7 +440,8 @@ CREATE TABLE public.editors (
     id bigint NOT NULL,
     artist_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -466,7 +474,8 @@ CREATE TABLE public.favorites (
     resource_type character varying NOT NULL,
     resource_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -497,7 +506,8 @@ CREATE TABLE public.formats (
     id bigint NOT NULL,
     tag_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -528,7 +538,8 @@ CREATE TABLE public.genres (
     id bigint NOT NULL,
     tag_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -559,7 +570,8 @@ CREATE TABLE public.group_access_rights (
     id bigint NOT NULL,
     key character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -591,7 +603,8 @@ CREATE TABLE public.group_user_access_rights (
     group_access_right_id bigint NOT NULL,
     group_user_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -623,7 +636,8 @@ CREATE TABLE public.group_users (
     group_id bigint NOT NULL,
     user_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -656,7 +670,8 @@ CREATE TABLE public.groups (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     favorites_count bigint DEFAULT 0 NOT NULL,
-    users_count bigint DEFAULT 0 NOT NULL
+    users_count bigint DEFAULT 0 NOT NULL,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -721,7 +736,8 @@ CREATE TABLE public.interface_languages (
     id bigint NOT NULL,
     locale_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -752,7 +768,8 @@ CREATE TABLE public.locales (
     id bigint NOT NULL,
     key character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -783,7 +800,8 @@ CREATE TABLE public.marks (
     id bigint NOT NULL,
     tag_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -818,7 +836,8 @@ CREATE TABLE public.pages (
     updated_at timestamp(6) without time zone NOT NULL,
     views_count bigint DEFAULT 0 NOT NULL,
     bookmarks_count bigint DEFAULT 0 NOT NULL,
-    user_id bigint NOT NULL
+    user_id bigint NOT NULL,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -849,7 +868,8 @@ CREATE TABLE public.painters (
     id bigint NOT NULL,
     artist_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -1287,7 +1307,8 @@ CREATE TABLE public.tags (
     id bigint NOT NULL,
     key character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -1318,7 +1339,8 @@ CREATE TABLE public.themes (
     id bigint NOT NULL,
     tag_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -1392,7 +1414,8 @@ CREATE TABLE public.titles (
     status integer NOT NULL,
     sent_to_review_at timestamp without time zone,
     published_at timestamp without time zone,
-    deleted_at timestamp without time zone
+    deleted_at timestamp without time zone,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -1423,7 +1446,8 @@ CREATE TABLE public.translators (
     id bigint NOT NULL,
     artist_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -1454,7 +1478,8 @@ CREATE TABLE public.typers (
     id bigint NOT NULL,
     artist_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -1486,7 +1511,8 @@ CREATE TABLE public.user_access_rights (
     user_id bigint NOT NULL,
     access_right_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -1518,7 +1544,8 @@ CREATE TABLE public.user_content_languages (
     user_id bigint NOT NULL,
     content_language_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -1550,7 +1577,8 @@ CREATE TABLE public.user_excluded_tags (
     user_id bigint NOT NULL,
     tag_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -1585,7 +1613,8 @@ CREATE TABLE public.user_settings (
     surname character varying DEFAULT ''::character varying NOT NULL,
     sex integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -1621,7 +1650,8 @@ CREATE TABLE public.users (
     updated_at timestamp(6) without time zone NOT NULL,
     favorites_count bigint DEFAULT 0 NOT NULL,
     bookmarks_count bigint DEFAULT 0 NOT NULL,
-    views_count bigint DEFAULT 0 NOT NULL
+    views_count bigint DEFAULT 0 NOT NULL,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -1654,7 +1684,8 @@ CREATE TABLE public.views (
     resource_type character varying NOT NULL,
     resource_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -1686,7 +1717,8 @@ CREATE TABLE public.volumes (
     title_id bigint NOT NULL,
     number integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -1717,7 +1749,8 @@ CREATE TABLE public.writers (
     id bigint NOT NULL,
     artist_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
 );
 
 
@@ -4046,6 +4079,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210414143447'),
 ('20210416222957'),
 ('20210418162435'),
-('20210422152211');
+('20210422152211'),
+('20210522073513');
 
 

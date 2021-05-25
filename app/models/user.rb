@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  include CacheInvalidation
+
   has_secure_password
 
   # This attributes should not be changed. Just because
@@ -19,6 +21,10 @@ class User < ApplicationRecord
   has_many :views, dependent: :destroy
   has_many :bookmarks, dependent: :destroy
   has_many :favorites, dependent: :destroy
+
+  invalidate_association_cache :artist
+  invalidate_association_cache :user_setting
+  invalidate_association_cache :group_users
 
   validates :username, presence: true,
     format: {with: /\A[a-z0-9_-]{2,16}\z/i},

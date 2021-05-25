@@ -10,7 +10,9 @@ class Api::FormatsController < Api::ApplicationController
     query = format_scope.joins(tag: :translations).order("tag_translations.title ASC")
     cache_key = endpoint_cache_key(query)
 
-    formats = Rails.cache.fetch(cache_key) do
+    # Any change in this code block must be accompanied by thinking
+    # about the cache invalidation with model associations
+    formats = Rails.cache.fetch(cache_key, expires_in: 24.hours) do
       formats = query.all
 
       ActiveRecord::Associations::Preloader.new.preload(
@@ -28,7 +30,9 @@ class Api::FormatsController < Api::ApplicationController
   def show
     cache_key = endpoint_cache_key(@format)
 
-    format = Rails.cache.fetch(cache_key) do
+    # Any change in this code block must be accompanied by thinking
+    # about the cache invalidation with model associations
+    format = Rails.cache.fetch(cache_key, expires_in: 24.hours) do
       ActiveRecord::Associations::Preloader.new.preload(
         @format, :tag, Tag.with_translations
       )

@@ -10,7 +10,9 @@ class Api::MarksController < Api::ApplicationController
     query = mark_scope.joins(tag: :translations).order("tag_translations.title ASC")
     cache_key = endpoint_cache_key(query)
 
-    marks = Rails.cache.fetch(cache_key) do
+    # Any change in this code block must be accompanied by thinking
+    # about the cache invalidation with model associations
+    marks = Rails.cache.fetch(cache_key, expires_in: 24.hours) do
       marks = query.all
 
       ActiveRecord::Associations::Preloader.new.preload(
@@ -28,7 +30,9 @@ class Api::MarksController < Api::ApplicationController
   def show
     cache_key = endpoint_cache_key(@mark)
 
-    mark = Rails.cache.fetch(cache_key) do
+    # Any change in this code block must be accompanied by thinking
+    # about the cache invalidation with model associations
+    mark = Rails.cache.fetch(cache_key, expires_in: 24.hours) do
       ActiveRecord::Associations::Preloader.new.preload(
         @mark, :tag, Tag.with_translations
       )

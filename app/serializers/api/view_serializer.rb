@@ -5,8 +5,7 @@ class Api::ViewSerializer < Api::ApplicationSerializer
       user_id: model.user_id,
       resource_type: model.resource_type,
       resource_id: model.resource_id,
-      created_at: model.created_at,
-      updated_at: model.updated_at
+      created_at: model.created_at
     }
   end
 end

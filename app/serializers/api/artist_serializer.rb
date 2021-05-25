@@ -5,8 +5,7 @@ class Api::ArtistSerializer < Api::ApplicationSerializer
       user_id: model.user_id,
       name: model.name,
       favorites_count: model.favorites_count,
-      created_at: model.created_at,
-      updated_at: model.updated_at
+      created_at: model.created_at
     }
   end
 end

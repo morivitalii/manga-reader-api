@@ -2,10 +2,10 @@ class UserSetting < ApplicationRecord
   # This attributes should not be changed. Just because
   attr_readonly :user_id
 
-  # touch: true is required for cache invalidation
-  belongs_to :user, touch: true
-
+  belongs_to :user
   belongs_to :interface_language, optional: true
+
+  has_many :access_rights, through: :user
 
   # Touching parent model is required for cache invalidation but it seems like rails 6 don't do this
   # This is possible place for bug

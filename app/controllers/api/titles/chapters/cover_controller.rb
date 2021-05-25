@@ -8,10 +8,19 @@ class Api::Titles::Chapters::CoverController < Api::ApplicationController
     service = Api::Titles::Chapters::UpdateCover.new(update_params)
 
     if service.call
-      cover = Api::ChapterDecorator.decorate(service.chapter)
-      cover = Api::ChapterSerializer.serialize(cover)
+      ActiveRecord::Associations::Preloader.new.preload(
+        service.chapter, [
+          :content_language,
+          :volume,
+          :group,
+          cover_attachment: :blob
+        ]
+      )
 
-      render json: cover, status: 200
+      chapter = Api::ChapterDecorator.decorate(service.chapter)
+      chapter = Api::ChapterSerializer.serialize(chapter)
+
+      render json: chapter, status: 200
     else
       render json: service.errors, status: 422
     end

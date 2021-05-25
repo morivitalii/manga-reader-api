@@ -26,9 +26,6 @@
         "url": {
           "type": "string"
         },
-        "filename": {
-          "type": "string"
-        },
         "content_type": {
           "type": "string"
         },
@@ -51,13 +48,6 @@
               "type": "null"
             }
           ]
-        },
-        "byte_size": {
-          "type": "integer"
-        },
-        "created_at": {
-          "type": "string",
-          "format": "date-time"
         }
       }
     },

@@ -1,8 +1,4 @@
 class Api::CleanersPolicy < Api::ApplicationPolicy
-  def index?
-    true
-  end
-
   def show?
     true
   end

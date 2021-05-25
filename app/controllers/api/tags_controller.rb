@@ -8,7 +8,9 @@ class Api::TagsController < Api::ApplicationController
     query = tag_scope.joins(:translations).order("tag_translations.title ASC")
     cache_key = endpoint_cache_key(query)
 
-    tags = Rails.cache.fetch(cache_key) do
+    # Any change in this code block must be accompanied by thinking
+    # about the cache invalidation with model associations
+    tags = Rails.cache.fetch(cache_key, expires_in: 24.hours) do
       tags = query.all
 
       ActiveRecord::Associations::Preloader.new.preload(
@@ -26,7 +28,9 @@ class Api::TagsController < Api::ApplicationController
   def show
     cache_key = endpoint_cache_key(@tag)
 
-    tag = Rails.cache.fetch(cache_key) do
+    # Any change in this code block must be accompanied by thinking
+    # about the cache invalidation with model associations
+    tag = Rails.cache.fetch(cache_key, expires_in: 24.hours) do
       ActiveRecord::Associations::Preloader.new.preload(
         @tag, Tag.translations_associations
       )

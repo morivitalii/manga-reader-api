@@ -10,7 +10,9 @@ class Api::GenresController < Api::ApplicationController
     query = genres_scope.joins(tag: :translations).order("tag_translations.title ASC")
     cache_key = endpoint_cache_key(query)
 
-    genres = Rails.cache.fetch(cache_key) do
+    # Any change in this code block must be accompanied by thinking
+    # about the cache invalidation with model associations
+    genres = Rails.cache.fetch(cache_key, expires_in: 24.hours) do
       genres = query.all
 
       ActiveRecord::Associations::Preloader.new.preload(
@@ -28,7 +30,9 @@ class Api::GenresController < Api::ApplicationController
   def show
     cache_key = endpoint_cache_key(@genre)
 
-    genre = Rails.cache.fetch(cache_key) do
+    # Any change in this code block must be accompanied by thinking
+    # about the cache invalidation with model associations
+    genre = Rails.cache.fetch(cache_key, expires_in: 24.hours) do
       ActiveRecord::Associations::Preloader.new.preload(
         @genre, :tag, Tag.with_translations
       )

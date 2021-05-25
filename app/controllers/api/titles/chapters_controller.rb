@@ -16,12 +16,7 @@ class Api::Titles::ChaptersController < Api::ApplicationController
         :content_language,
         :volume,
         :group,
-        cover_attachment: :blob,
-        user: {
-          user_setting: {
-            avatar_attachment: :blob
-          }
-        }
+        cover_attachment: :blob
       ]
     )
 
@@ -37,12 +32,7 @@ class Api::Titles::ChaptersController < Api::ApplicationController
         :content_language,
         :volume,
         :group,
-        cover_attachment: :blob,
-        user: {
-          user_setting: {
-            avatar_attachment: :blob
-          }
-        }
+        cover_attachment: :blob
       ]
     )
 
@@ -61,12 +51,7 @@ class Api::Titles::ChaptersController < Api::ApplicationController
           :content_language,
           :volume,
           :group,
-          cover_attachment: :blob,
-          user: {
-            user_setting: {
-              avatar_attachment: :blob
-            }
-          }
+          cover_attachment: :blob
         ]
       )
 
@@ -88,12 +73,7 @@ class Api::Titles::ChaptersController < Api::ApplicationController
           :content_language,
           :volume,
           :group,
-          cover_attachment: :blob,
-          user: {
-            user_setting: {
-              avatar_attachment: :blob
-            }
-          }
+          cover_attachment: :blob
         ]
       )
 

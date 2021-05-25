@@ -187,6 +187,23 @@ components:
           schema:
             type: integer
   schemas:
+    access_right:
+      type: object
+      title: Artist
+      properties:
+        id:
+          type: integer
+          description: ID
+        key:
+          type: string
+          enum:
+            - manage_system_settings
+            - manage_system_content
+            - manage_titles
+          description: Key
+      example:
+        id: 1
+        key: manage_titles
     artist:
       type: object
       title: Artist
@@ -195,10 +212,9 @@ components:
           type: integer
           description: ID
         user_id:
+          type: integer
+          nullable: true
           description: User ID
-          oneOf:
-            - type: integer
-              nullable: true
         name:
           type: string
           description: Name
@@ -209,17 +225,12 @@ components:
           type: string
           format: date-time
           description: Date of creation
-        updated_at:
-          type: string
-          format: date-time
-          description: Date of last update
       example:
         id: 1
         user_id: 1
         name: Akihito Tsukushi
         favorites_count: 1
         created_at: 2020-12-13T00:00:00.000Z
-        updated_at: 2020-12-13T00:00:00.000Z
     bookmark:
       type: object
       title: Bookmark
@@ -244,17 +255,12 @@ components:
           type: string
           format: date-time
           description: Date of creation
-        updated_at:
-          type: string
-          format: date-time
-          description: Date of last update
       example:
         id: 1
         user_id: 1
         resource_type: Title
         resource_id: 1
         created_at: 2020-12-13T00:00:00.000Z
-        updated_at: 2020-12-13T00:00:00.000Z
     chapter:
       type: object
       title: Chapter
@@ -269,16 +275,15 @@ components:
           description: Title ID
           type: integer
         volume_id:
-          oneOf:
-            - description: Volume ID
-              type: integer
-              nullable: true
+          type: integer
+          nullable: true
+          description: Volume ID
         user_id:
+          type: integer
           description: User ID
-          type: integer
         group_id:
-          description: Group ID
           type: integer
+          description: Group ID
         name:
           type: string
           description: Title
@@ -302,49 +307,38 @@ components:
           type: integer
           description: Bookmarks count
         published_at:
-          oneOf:
-            - type: string
-              format: date-time
-              description: Published at date
-              nullable: true
+          type: string
+          format: date-time
+          nullable: true
+          description: Published at date
         sent_to_review_at:
-          oneOf:
-            - type: string
-              format: date-time
-              description: Sent to review date
-              nullable: true
+          type: string
+          format: date-time
+          nullable: true
+          description: Sent to review date
         deleted_at:
-          oneOf:
-            - type: string
-              format: date-time
-              description: Deleted date
-              nullable: true
+          type: string
+          format: date-time
+          nullable: true
+          description: Deleted date
         created_at:
           type: string
           format: date-time
           description: Date of creation
-        updated_at:
-          type: string
-          format: date-time
-          description: Date of last update
         cover:
+          nullable: true
           oneOf:
             - $ref: "#/components/schemas/file"
-              nullable: true
         content_language:
           $ref: "#/components/schemas/content_language"
         volume:
+          nullable: true
           oneOf:
             - $ref: "#/components/schemas/volume"
-              nullable: true
-        user:
-          oneOf:
-            - $ref: "#/components/schemas/user"
-              nullable: true
         group:
+          nullable: true
           oneOf:
             - $ref: "#/components/schemas/group"
-              nullable: true
       example:
         id: 1
         content_language_id: 1
@@ -362,7 +356,6 @@ components:
         sent_to_review_at: 2020-12-13T00:00:00.000Z
         deleted_at: 2020-12-13T00:00:00.000Z
         created_at: 2020-12-13T00:00:00.000Z
-        updated_at: 2020-12-13T00:00:00.000Z
     cleaner:
       type: object
       title: Cleaner
@@ -371,24 +364,15 @@ components:
           type: integer
           description: ID
         user_id:
+          nullable: true
+          type: integer
           description: User ID
-          oneOf:
-            - type: integer
-              nullable: true
         artist_id:
           type: integer
           description: Artist ID
         name:
           type: string
           description: Name
-        created_at:
-          type: string
-          format: date-time
-          description: Date of creation
-        updated_at:
-          type: string
-          format: date-time
-          description: Date of last update
       example:
         id: 1
         user_id: 1
@@ -467,9 +451,8 @@ components:
           description: ID
         user_id:
           description: User ID
-          oneOf:
-            - type: integer
-              nullable: true
+          type: integer
+          nullable: true
         artist_id:
           type: integer
           description: Artist ID
@@ -534,37 +517,22 @@ components:
         url:
           type: string
           description: Link
-        filename:
-          type: string
-          description: Filename
         content_type:
           type: string
           description: Content type
         width:
-          oneOf:
-            - type: integer
-              description: Width
-              nullable: true
-        height:
-          oneOf:
-            - type: integer
-              description: Height
-              nullable: true
-        byte_size:
           type: integer
-          description: Size in bytes
-        created_at:
-          type: string
-          format: date-time
-          description: Date of creation
+          description: Width
+          nullable: true
+        height:
+          type: integer
+          description: Height
+          nullable: true
       example:
         url: "http://example.com/eyJ...3d6/file.jpg"
-        filename: file.jpg
         content_type: image/jpeg
         width: 1600
         height: 2260
-        byte_size: 1167999
-        created_at: 2020-12-13T00:00:00.000Z
     format:
       type: object
       title: Format
@@ -848,9 +816,8 @@ components:
           description: ID
         user_id:
           description: User ID
-          oneOf:
-            - type: integer
-              nullable: true
+          type: integer
+          nullable: true
         artist_id:
           type: integer
           description: Artist ID
@@ -972,17 +939,16 @@ components:
           description: Favorites count
         original_content_language_id:
           description: Original content language ID
-          oneOf:
-            - type: integer
-              nullable: true
+          type: integer
+          nullable: true
         original_content_language:
+          nullable: true
           oneOf:
             - $ref: "#/components/schemas/content_language"
-              nullable: true
         cover:
+          nullable: true
           oneOf:
             - $ref: "#/components/schemas/file"
-              nullable: true
         writers:
           type: array
           items:
@@ -1012,23 +978,20 @@ components:
           items:
             $ref: "#/components/schemas/theme"
         published_at:
-          oneOf:
-            - type: string
-              format: date-time
-              description: Published at date
-              nullable: true
+          type: string
+          format: date-time
+          description: Published at date
+          nullable: true
         sent_to_review_at:
-          oneOf:
-            - type: string
-              format: date-time
-              description: Sent to review date
-              nullable: true
+          type: string
+          format: date-time
+          description: Sent to review date
+          nullable: true
         deleted_at:
-          oneOf:
-            - type: string
-              format: date-time
-              description: Deleted at date
-              nullable: true
+          type: string
+          format: date-time
+          description: Deleted at date
+          nullable: true
         created_at:
           type: string
           format: date-time
@@ -1061,9 +1024,8 @@ components:
           description: ID
         user_id:
           description: User ID
-          oneOf:
-            - type: integer
-              nullable: true
+          type: integer
+          nullable: true
         artist_id:
           type: integer
           description: Artist ID
@@ -1094,9 +1056,8 @@ components:
           description: ID
         user_id:
           description: User ID
-          oneOf:
-            - type: integer
-              nullable: true
+          type: integer
+          nullable: true
         artist_id:
           type: integer
           description: Artist ID
@@ -1129,28 +1090,30 @@ components:
           type: string
           description: Username
         name:
-          oneOf:
-            - type: string
-              description: Name
-              nullable: true
+          type: string
+          description: Name
+          nullable: true
         surname:
-          oneOf:
-            - type: string
-              description: Surname
-              nullable: true
+          type: string
+          description: Surname
+          nullable: true
         sex:
-          oneOf:
-            - type: string
-              description: Sex
-              enum:
-                - male
-                - female
-                - other
-              nullable: true
+          type: string
+          description: Sex
+          enum:
+            - male
+            - female
+            - other
+          nullable: true
         avatar:
+          nullable: true
           oneOf:
             - $ref: "#/components/schemas/file"
-              nullable: true
+        access_rights:
+          type: array
+          nullable: true
+          items:
+            $ref: "#/components/schemas/access_right"
         favorites_count:
           type: integer
           description: Favorites count
@@ -1206,9 +1169,9 @@ components:
             - other
           description: Sex
         interface_language:
+          nullable: true
           oneOf:
             - $ref: "#/components/schemas/interface_language"
-              nullable: true
         excluded_tags:
           type: array
           items:
@@ -1218,9 +1181,9 @@ components:
           items:
             $ref: "#/components/schemas/content_language"
         avatar:
+          nullable: true
           oneOf:
             - $ref: "#/components/schemas/file"
-              nullable: true
         created_at:
           type: string
           format: date-time
@@ -1309,9 +1272,8 @@ components:
           description: ID
         user_id:
           description: User ID
-          oneOf:
-            - type: integer
-              nullable: true
+          type: integer
+          nullable: true
         artist_id:
           type: integer
           description: Artist ID
@@ -3785,35 +3747,6 @@ paths:
           $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /writers.json:
-    get:
-      tags:
-        - Artists
-      summary: Writers
-      description: Sorted by id ASC
-      parameters:
-        - $ref: "#/components/parameters/page"
-        - $ref: "#/components/parameters/limit"
-      responses:
-        "200":
-          description: Success
-          headers:
-            X-Pagination-Page-Number:
-              $ref: "#/components/headers/X-Pagination-Page-Number"
-            X-Pagination-Page-Items-Count:
-              $ref: "#/components/headers/X-Pagination-Page-Items-Count"
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/writer"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
   /writers/{id}.json:
     get:
       tags:
@@ -3836,35 +3769,6 @@ paths:
           $ref: "#/components/responses/forbidden"
         "404":
           $ref: "#/components/responses/not_found"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-  /painters.json:
-    get:
-      tags:
-        - Artists
-      summary: Painters
-      description: Sorted by id ASC
-      parameters:
-        - $ref: "#/components/parameters/page"
-        - $ref: "#/components/parameters/limit"
-      responses:
-        "200":
-          description: Success
-          headers:
-            X-Pagination-Page-Number:
-              $ref: "#/components/headers/X-Pagination-Page-Number"
-            X-Pagination-Page-Items-Count:
-              $ref: "#/components/headers/X-Pagination-Page-Items-Count"
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/painter"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
         "500":
           $ref: "#/components/responses/internal_server_error"
   /painters/{id}.json:
@@ -3891,35 +3795,6 @@ paths:
           $ref: "#/components/responses/not_found"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /cleaners.json:
-    get:
-      tags:
-        - Artists
-      summary: Cleaners
-      description: Sorted by id ASC
-      parameters:
-        - $ref: "#/components/parameters/page"
-        - $ref: "#/components/parameters/limit"
-      responses:
-        "200":
-          description: Success
-          headers:
-            X-Pagination-Page-Number:
-              $ref: "#/components/headers/X-Pagination-Page-Number"
-            X-Pagination-Page-Items-Count:
-              $ref: "#/components/headers/X-Pagination-Page-Items-Count"
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/cleaner"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
   /cleaners/{id}.json:
     get:
       tags:
@@ -3942,35 +3817,6 @@ paths:
           $ref: "#/components/responses/forbidden"
         "404":
           $ref: "#/components/responses/not_found"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-  /translators.json:
-    get:
-      tags:
-        - Artists
-      summary: Translators
-      description: Sorted by id ASC
-      parameters:
-        - $ref: "#/components/parameters/page"
-        - $ref: "#/components/parameters/limit"
-      responses:
-        "200":
-          description: Success
-          headers:
-            X-Pagination-Page-Number:
-              $ref: "#/components/headers/X-Pagination-Page-Number"
-            X-Pagination-Page-Items-Count:
-              $ref: "#/components/headers/X-Pagination-Page-Items-Count"
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/translator"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
         "500":
           $ref: "#/components/responses/internal_server_error"
   /translators/{id}.json:
@@ -3997,35 +3843,6 @@ paths:
           $ref: "#/components/responses/not_found"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /editors.json:
-    get:
-      tags:
-        - Artists
-      summary: Editors
-      description: Sorted by id ASC
-      parameters:
-        - $ref: "#/components/parameters/page"
-        - $ref: "#/components/parameters/limit"
-      responses:
-        "200":
-          description: Success
-          headers:
-            X-Pagination-Page-Number:
-              $ref: "#/components/headers/X-Pagination-Page-Number"
-            X-Pagination-Page-Items-Count:
-              $ref: "#/components/headers/X-Pagination-Page-Items-Count"
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/editor"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
   /editors/{id}.json:
     get:
       tags:
@@ -4048,35 +3865,6 @@ paths:
           $ref: "#/components/responses/forbidden"
         "404":
           $ref: "#/components/responses/not_found"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-  /typers.json:
-    get:
-      tags:
-        - Artists
-      summary: Typers
-      description: Sorted by id ASC
-      parameters:
-        - $ref: "#/components/parameters/page"
-        - $ref: "#/components/parameters/limit"
-      responses:
-        "200":
-          description: Success
-          headers:
-            X-Pagination-Page-Number:
-              $ref: "#/components/headers/X-Pagination-Page-Number"
-            X-Pagination-Page-Items-Count:
-              $ref: "#/components/headers/X-Pagination-Page-Items-Count"
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/typer"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
         "500":
           $ref: "#/components/responses/internal_server_error"
   /typers/{id}.json:

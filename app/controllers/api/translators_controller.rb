@@ -3,29 +3,14 @@ class Api::TranslatorsController < Api::ApplicationController
 
   before_action :set_translator, only: [:show]
 
-  before_action -> { authorize(Api::TranslatorsPolicy) }, only: [:index]
   before_action -> { authorize(Api::TranslatorsPolicy, translator: @translator) }, only: [:show]
-
-  def index
-    translators = translator_scope.order(id: :asc)
-    translators = paginate_countless(translators)
-
-    ActiveRecord::Associations::Preloader.new.preload(
-      translators, [
-        artist: Artist.translations_associations
-      ]
-    )
-
-    translators = Api::TranslatorDecorator.decorate(translators)
-    translators = Api::TranslatorSerializer.serialize(translators)
-
-    render json: translators, status: 200
-  end
 
   def show
     cache_key = endpoint_cache_key(@translator)
 
-    translator = Rails.cache.fetch(cache_key) do
+    # Any change in this code block must be accompanied by thinking
+    # about the cache invalidation with model associations
+    translator = Rails.cache.fetch(cache_key, expires_in: 24.hours) do
       ActiveRecord::Associations::Preloader.new.preload(
         @translator, [
           artist: Artist.translations_associations

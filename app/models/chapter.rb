@@ -1,4 +1,6 @@
 class Chapter < ApplicationRecord
+  include CacheInvalidation
+
   CLEANERS_LIMIT = 10
   TRANSLATORS_LIMIT = 10
   EDITORS_LIMIT = 10
@@ -33,6 +35,11 @@ class Chapter < ApplicationRecord
   has_many :views, as: :resource, dependent: :destroy
 
   has_one_attached :cover, service: :public
+
+  invalidate_association_cache :title
+  invalidate_association_cache :volume
+  invalidate_association_cache :user
+  invalidate_association_cache :group
 
   enum status: { draft: 1, review: 2, published: 3, deleted: 4 }
 

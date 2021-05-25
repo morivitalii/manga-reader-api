@@ -4,9 +4,7 @@ class Api::TagSerializer < Api::ApplicationSerializer
       id: model.id,
       title: model.title,
       key: model.key,
-      description: model.description,
-      created_at: model.created_at,
-      updated_at: model.updated_at
+      description: model.description
     }
   end
 end

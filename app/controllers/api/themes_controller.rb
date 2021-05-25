@@ -10,7 +10,9 @@ class Api::ThemesController < Api::ApplicationController
     query = themes_scope.joins(tag: :translations).order("tag_translations.title ASC")
     cache_key = endpoint_cache_key(query)
 
-    themes = Rails.cache.fetch(cache_key) do
+    # Any change in this code block must be accompanied by thinking
+    # about the cache invalidation with model associations
+    themes = Rails.cache.fetch(cache_key, expires_in: 24.hours) do
       themes = query.all
 
       ActiveRecord::Associations::Preloader.new.preload(
@@ -28,7 +30,9 @@ class Api::ThemesController < Api::ApplicationController
   def show
     cache_key = endpoint_cache_key(@theme)
 
-    theme = Rails.cache.fetch(cache_key) do
+    # Any change in this code block must be accompanied by thinking
+    # about the cache invalidation with model associations
+    theme = Rails.cache.fetch(cache_key, expires_in: 24.hours) do
       ActiveRecord::Associations::Preloader.new.preload(
         @theme, :tag, Tag.with_translations
       )

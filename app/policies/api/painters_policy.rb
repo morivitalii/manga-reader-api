@@ -1,8 +1,4 @@
 class Api::PaintersPolicy < Api::ApplicationPolicy
-  def index?
-    true
-  end
-
   def show?
     true
   end
