@@ -48,13 +48,14 @@ class Api::ApplicationPolicy
 
   # User access rights
   def access_rights
-    @access_rights ||= user.access_rights
+    @access_rights ||= user.present? ? user.access_rights : []
   end
 
   # User access rights in groups
   def group_access_rights(group)
     @group_access_rights ||= {}
 
+    return [] if user.blank? || group.blank?
     return @group_access_rights[group.id] if @group_access_rights.include?(group.id)
 
     @group_access_rights[group.id] = GroupAccessRight.joins(:group_users).where(group_users: { group: group, user: user }).all

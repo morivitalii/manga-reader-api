@@ -8,15 +8,15 @@ class Api::MarksPolicy < Api::ApplicationPolicy
   end
 
   def create?
-    user? && access_right?(:manage_system_content)
+    access_right?(:manage_system_settings)
   end
 
   def update?
-    user? && access_right?(:manage_system_content)
+    access_right?(:manage_system_settings)
   end
 
   def destroy?
-    user? && access_right?(:manage_system_content)
+    access_right?(:manage_system_settings)
   end
 
   def permitted_attributes_for_create

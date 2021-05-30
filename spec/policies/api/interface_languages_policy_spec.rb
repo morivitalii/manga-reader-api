@@ -8,10 +8,20 @@ RSpec.describe Api::InterfaceLanguagesPolicy do
       it { is_expected.to permit(current_user) }
     end
 
+    permissions :create? do
+      it { is_expected.to_not permit(current_user) }
+    end
+
     permissions :show? do
       let(:interface_language) { create(:interface_language) }
 
       it { is_expected.to permit(current_user, interface_language: interface_language) }
+    end
+
+    permissions :update?, :destroy? do
+      let(:interface_language) { create(:interface_language) }
+
+      it { is_expected.to_not permit(current_user, interface_language: interface_language) }
     end
   end
 
@@ -20,10 +30,36 @@ RSpec.describe Api::InterfaceLanguagesPolicy do
       it { is_expected.to permit(current_user) }
     end
 
+    permissions :create? do
+      context "with manage system settings access right" do
+        let(:current_user) { create(:user_with_manage_system_settings_access_right) }
+
+        it { is_expected.to permit(current_user) }
+      end
+
+      context "without manage system settings access right" do
+        it { is_expected.to_not permit(current_user) }
+      end
+    end
+
     permissions :show? do
       let(:interface_language) { create(:interface_language) }
 
       it { is_expected.to permit(current_user, interface_language: interface_language) }
+    end
+
+    permissions :update?, :destroy? do
+      let(:interface_language) { create(:interface_language) }
+
+      context "with manage system settings access right" do
+        let(:current_user) { create(:user_with_manage_system_settings_access_right) }
+
+        it { is_expected.to permit(current_user, interface_language: interface_language) }
+      end
+
+      context "without manage system settings access right" do
+        it { is_expected.to_not permit(current_user, interface_language: interface_language) }
+      end
     end
   end
 end

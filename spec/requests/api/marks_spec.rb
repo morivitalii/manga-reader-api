@@ -29,8 +29,8 @@ RSpec.describe Api::MarksController do
   describe ".create", context: :as_signed_in_user do
     context "with valid params" do
       it "returns valid response" do
-        manage_system_content_access_right = create(:manage_system_content_access_right)
-        _user_access_right = create(:user_access_right, access_right: manage_system_content_access_right, user: current_user)
+        manage_system_settings_access_right = create(:manage_system_settings_access_right)
+        _user_access_right = create(:user_access_right, access_right: manage_system_settings_access_right, user: current_user)
 
         params = {
           key: "key",
@@ -49,8 +49,8 @@ RSpec.describe Api::MarksController do
   describe ".update", context: :as_signed_in_user do
     context "with valid params" do
       it "returns valid response" do
-        manage_system_content_access_right = create(:manage_system_content_access_right)
-        _user_access_right = create(:user_access_right, access_right: manage_system_content_access_right, user: current_user)
+        manage_system_settings_access_right = create(:manage_system_settings_access_right)
+        _user_access_right = create(:user_access_right, access_right: manage_system_settings_access_right, user: current_user)
         mark = create(:mark)
 
         params = {
@@ -69,8 +69,8 @@ RSpec.describe Api::MarksController do
 
   describe ".destroy", context: :as_signed_in_user do
     it "returns valid response" do
-      manage_system_content_access_right = create(:manage_system_content_access_right)
-      _user_access_right = create(:user_access_right, access_right: manage_system_content_access_right, user: current_user)
+      manage_system_settings_access_right = create(:manage_system_settings_access_right)
+      _user_access_right = create(:user_access_right, access_right: manage_system_settings_access_right, user: current_user)
       mark = create(:mark)
 
       delete "/api/marks/#{mark.to_param}.json"

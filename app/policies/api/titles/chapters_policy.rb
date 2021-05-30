@@ -8,15 +8,15 @@ class Api::Titles::ChaptersPolicy < Api::ApplicationPolicy
   end
 
   def create?
-    user? && options.group.present? && group_access_right?(options.group, :manage_chapters)
+    group_access_right?(options&.group, :manage_chapters)
   end
 
   def update?
-    user? && options.group.present? && group_access_right?(options.group, :manage_chapters)
+    group_access_right?(options&.group, :manage_chapters)
   end
 
   def destroy?
-    user? && options.group.present? && group_access_right?(options.group, :manage_chapters)
+    group_access_right?(options&.group, :manage_chapters)
   end
 
   def permitted_attributes_for_create

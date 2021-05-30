@@ -31,13 +31,13 @@ RSpec.describe Api::GenresPolicy do
     end
 
     permissions :create? do
-      context "with manage system content access right" do
-        let(:current_user) { create(:user_with_manage_system_content_access_right) }
+      context "with manage system settings access right" do
+        let(:current_user) { create(:user_with_manage_system_settings_access_right) }
 
         it { is_expected.to permit(current_user) }
       end
 
-      context "without manage system content access right" do
+      context "without manage system settings access right" do
         it { is_expected.to_not permit(current_user) }
       end
     end
@@ -51,13 +51,13 @@ RSpec.describe Api::GenresPolicy do
     permissions :update?, :destroy? do
       let(:genre) { create(:genre) }
 
-      context "with manage system content access right" do
-        let(:current_user) { create(:user_with_manage_system_content_access_right) }
+      context "with manage system settings access right" do
+        let(:current_user) { create(:user_with_manage_system_settings_access_right) }
 
         it { is_expected.to permit(current_user, genre: genre) }
       end
 
-      context "without manage system content access right" do
+      context "without manage system settings access right" do
         it { is_expected.to_not permit(current_user, genre: genre) }
       end
     end

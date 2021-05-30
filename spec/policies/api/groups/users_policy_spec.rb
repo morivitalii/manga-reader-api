@@ -11,11 +11,17 @@ RSpec.describe Api::Groups::UsersPolicy do
     permissions :show? do
       let(:group_user) { create(:group_user) }
 
-      it { is_expected.to permit(current_user, group_user: group_user) }
+      it { is_expected.to permit(current_user, group: group_user.group, group_user: group_user) }
     end
 
     permissions :create? do
       it { is_expected.to_not permit(current_user) }
+		end
+
+    permissions :update?, :destroy? do
+      let(:group_user) { create(:group_user) }
+
+      it { is_expected.to_not permit(current_user, group: group_user.group, group_user: group_user) }
     end
   end
 
@@ -27,7 +33,7 @@ RSpec.describe Api::Groups::UsersPolicy do
     permissions :show? do
       let(:group_user) { create(:group_user) }
 
-      it { is_expected.to permit(current_user, group_user: group_user) }
+      it { is_expected.to permit(current_user, group: group_user.group, group_user: group_user) }
     end
 
     permissions :create? do

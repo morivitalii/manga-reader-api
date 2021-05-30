@@ -4,7 +4,7 @@ class Api::Groups::FavoritesPolicy < Api::ApplicationPolicy
   end
 
   def destroy?
-    user? && user.id == options.favorite.user_id
+    user? && user.id == options&.favorite&.user_id
   end
 
   class Scope < Api::ApplicationPolicy::Scope
