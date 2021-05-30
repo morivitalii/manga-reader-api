@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resource :sign_up, only: [:create], controller: :sign_up
     resource :sign_in, only: [:create], controller: :sign_in
     resource :sign_out, only: [:destroy], controller: :sign_out
+    resources :locales, only: [:index, :show, :create, :destroy]
     resources :interface_languages, only: [:index, :show]
     resources :content_languages, only: [:index, :show]
     resources :marks, only: [:index, :show, :create, :update, :destroy]
