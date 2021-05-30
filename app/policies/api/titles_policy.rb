@@ -8,11 +8,11 @@ class Api::TitlesPolicy < Api::ApplicationPolicy
   end
 
   def create?
-    user? && access_right?(:manage_titles)
+    access_right?(:manage_titles)
   end
 
   def destroy?
-    user? && access_right?(:manage_titles)
+    access_right?(:manage_titles)
   end
 
   def permitted_attributes_for_create

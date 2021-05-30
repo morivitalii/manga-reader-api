@@ -199,7 +199,7 @@ components:
           type: string
           enum:
             - manage_system_settings
-            - manage_system_content
+            - manage_system_settings
             - manage_titles
           description: Key
       example:
@@ -689,20 +689,16 @@ components:
         id:
           type: integer
           description: ID
-        title:
-          type: string
-          description: Title
-        locale:
-          type: string
-          description: Locale key
         locale_id:
           type: integer
           description: Locale ID
+        title:
+          type: string
+          description: Title
       example:
         id: 1
-        title: English
-        locale: en
         locale_id: 1
+        title: English
     locale:
       type: object
       title: Locale
@@ -1482,6 +1478,42 @@ paths:
           $ref: "#/components/responses/forbidden"
         "500":
           $ref: "#/components/responses/internal_server_error"
+    post:
+      tags:
+        - Interface languages
+      summary: Create interface language
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                locale_id:
+                  type: integer
+                  description: Locale ID
+                title:
+                  type: string
+                  description: Title
+              example:
+                locale_id: 1
+                title: Title
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/interface_language"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /interface_languages/{id}.json:
     get:
       tags:
@@ -1504,6 +1536,62 @@ paths:
           $ref: "#/components/responses/forbidden"
         "404":
           $ref: "#/components/responses/not_found"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+    put:
+      tags:
+        - Interface languages
+      summary: Update interface language
+      description: ""
+      parameters:
+        - $ref: "#/components/parameters/id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Title
+              example:
+                title: Title
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/interface_language"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+    delete:
+      tags:
+        - Interface languages
+      summary: Delete interface language
+      description: ""
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "204":
+          $ref: "#/components/responses/no_content"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
   /content_languages.json:
