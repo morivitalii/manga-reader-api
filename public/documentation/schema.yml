@@ -7,6 +7,7 @@ servers:
   - url: /api
 tags:
   - name: Authentication
+  - name: Locales
   - name: Interface languages
   - name: Content languages
   - name: Genres
@@ -697,21 +698,11 @@ components:
         locale_id:
           type: integer
           description: Locale ID
-        created_at:
-          type: string
-          format: date-time
-          description: Date of creation
-        updated_at:
-          type: string
-          format: date-time
-          description: Date of last update
       example:
         id: 1
         title: English
         locale: en
         locale_id: 1
-        created_at: 2020-12-13T00:00:00.000Z
-        updated_at: 2020-12-13T00:00:00.000Z
     locale:
       type: object
       title: Locale
@@ -722,19 +713,9 @@ components:
         key:
           type: string
           description: Locale key
-        created_at:
-          type: string
-          format: date-time
-          description: Date of creation
-        updated_at:
-          type: string
-          format: date-time
-          description: Date of last update
       example:
         id: 1
         key: en
-        created_at: 2020-12-13T00:00:00.000Z
-        updated_at: 2020-12-13T00:00:00.000Z
     mark:
       type: object
       title: Mark
@@ -1381,6 +1362,103 @@ paths:
           $ref: "#/components/responses/no_content"
         "401":
           $ref: "#/components/responses/unauthorized"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /locales.json:
+    get:
+      tags:
+        - Locales
+      summary: Locales
+      description: ""
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/locale"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+    post:
+      tags:
+        - Locales
+      summary: Create locale
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                key:
+                  type: string
+                  description: Key
+              example:
+                key: en
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/locale"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /locales/{id}.json:
+    get:
+      tags:
+        - Locales
+      summary: Locale
+      description: ""
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/locale"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+    delete:
+      tags:
+        - Locales
+      summary: Delete locale
+      description: ""
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "204":
+          $ref: "#/components/responses/no_content"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
   /interface_languages.json:
