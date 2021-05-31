@@ -5,6 +5,16 @@
     "id": {
       "type": "integer"
     },
+    "original_content_language_id": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "title": {
       "type": "string"
     },
@@ -18,35 +28,6 @@
     "publication_status": {
       "type": "string",
       "enum": ["ongoing", "completed", "cancelled"]
-    },
-    "views_count": {
-      "type": "integer"
-    },
-    "bookmarks_count": {
-      "type": "integer"
-    },
-    "favorites_count": {
-      "type": "integer"
-    },
-    "original_content_language_id": {
-      "oneOf": [
-        {
-          "type": "integer"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
-    "original_content_language": {
-      "oneOf": [
-        {
-          "$ref": "file:/serializers/api/content_language.json#"
-        },
-        {
-          "type": "null"
-        }
-      ]
     },
     "cover": {
       "oneOf": [
@@ -127,47 +108,6 @@
       "items": {
         "$ref": "file:/serializers/api/theme.json#"
       }
-    },
-    "published_at": {
-      "oneOf": [
-        {
-          "type": "string",
-          "format": "date-time"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
-    "sent_to_review_at": {
-      "oneOf": [
-        {
-          "type": "string",
-          "format": "date-time"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
-    "deleted_at": {
-      "oneOf": [
-        {
-          "type": "string",
-          "format": "date-time"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
-    "created_at": {
-      "type": "string",
-      "format": "date-time"
-    },
-    "updated_at": {
-      "type": "string",
-      "format": "date-time"
     }
   }
 }

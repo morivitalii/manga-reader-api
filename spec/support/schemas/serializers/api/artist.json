@@ -20,10 +20,6 @@
     },
     "favorites_count": {
       "type": "integer"
-    },
-    "created_at": {
-      "type": "string",
-      "format": "date-time"
     }
   }
 }

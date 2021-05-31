@@ -28,17 +28,6 @@
         }
       ]
     },
-    "sex": {
-      "oneOf": [
-        {
-          "type": "string",
-          "enum": ["male", "female", "other"]
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
     "avatar": {
       "oneOf": [
         {
@@ -77,28 +66,11 @@
         }
       ]
     },
-    "favorites_count": {
-      "type": "integer"
-    },
-    "bookmarks_count": {
-      "type": "integer"
-    },
-    "views_count": {
-      "type": "integer"
-    },
     "access_rights": {
       "type": "array",
       "items": {
         "$ref": "file:/serializers/api/access_right.json#"
       }
-    },
-    "created_at": {
-      "type": "string",
-      "format": "date-time"
-    },
-    "updated_at": {
-      "type": "string",
-      "format": "date-time"
     }
   }
 }

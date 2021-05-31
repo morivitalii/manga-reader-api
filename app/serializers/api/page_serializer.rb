@@ -3,9 +3,7 @@ class Api::PageSerializer < Api::ApplicationSerializer
     {
       id: model.id,
       chapter_id: model.chapter_id,
-      user_id: model.user_id,
       number: model.number,
-      created_at: model.created_at,
       file: file
     }
   end

@@ -5,22 +5,11 @@
     "id": {
       "type": "integer"
     },
-    "title": {
-      "type": "string"
-    },
-    "locale": {
-      "type": "string"
-    },
     "locale_id": {
       "type": "integer"
     },
-    "created_at": {
-      "type": "string",
-      "format": "date-time"
-    },
-    "updated_at": {
-      "type": "string",
-      "format": "date-time"
+    "title": {
+      "type": "string"
     }
   }
 }

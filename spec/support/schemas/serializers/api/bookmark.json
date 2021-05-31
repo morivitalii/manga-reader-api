@@ -14,10 +14,6 @@
     },
     "resource_id": {
       "type": "integer"
-    },
-    "created_at": {
-      "type": "string",
-      "format": "date-time"
     }
   }
 }

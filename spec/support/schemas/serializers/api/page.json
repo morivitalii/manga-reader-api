@@ -8,16 +8,7 @@
     "chapter_id": {
       "type": "integer"
     },
-    "user_id": {
-      "type": "integer"
-    },
     "number": {
-      "type": "integer"
-    },
-    "views_count": {
-      "type": "integer"
-    },
-    "bookmarks_count": {
       "type": "integer"
     },
     "file": {
@@ -50,14 +41,6 @@
           ]
         }
       }
-    },
-    "created_at": {
-      "type": "string",
-      "format": "date-time"
-    },
-    "updated_at": {
-      "type": "string",
-      "format": "date-time"
     }
   }
 }
