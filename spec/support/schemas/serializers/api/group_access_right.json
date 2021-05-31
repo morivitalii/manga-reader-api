@@ -8,14 +8,6 @@
     "key": {
       "type": "string",
       "enum": ["manage_group", "manage_users", "manage_chapters"]
-    },
-    "created_at": {
-      "type": "string",
-      "format": "date-time"
-    },
-    "updated_at": {
-      "type": "string",
-      "format": "date-time"
     }
   }
 }

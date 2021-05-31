@@ -22,14 +22,6 @@
       "items": {
         "$ref": "file:/serializers/api/group_access_right.json#"
       }
-    },
-    "created_at": {
-      "type": "string",
-      "format": "date-time"
-    },
-    "updated_at": {
-      "type": "string",
-      "format": "date-time"
     }
   }
 }

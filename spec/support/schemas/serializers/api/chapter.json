@@ -11,19 +11,6 @@
     "title_id": {
       "type": "integer"
     },
-    "volume_id": {
-      "oneOf": [
-        {
-          "type": "integer"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
-    "user_id": {
-      "type": "integer"
-    },
     "group_id": {
       "type": "integer"
     },
@@ -39,53 +26,6 @@
     },
     "pages_count": {
       "type": "integer"
-    },
-    "views_count": {
-      "type": "integer"
-    },
-    "bookmarks_count": {
-      "type": "integer"
-    },
-    "published_at": {
-      "oneOf": [
-        {
-          "type": "string",
-          "format": "date-time"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
-    "sent_to_review_at": {
-      "oneOf": [
-        {
-          "type": "string",
-          "format": "date-time"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
-    "deleted_at": {
-      "oneOf": [
-        {
-          "type": "string",
-          "format": "date-time"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
-    "created_at": {
-      "type": "string",
-      "format": "date-time"
-    },
-    "updated_at": {
-      "type": "string",
-      "format": "date-time"
     },
     "cover": {
       "oneOf": [
@@ -119,39 +59,6 @@
               ]
             }
           }
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
-    "content_language": {
-      "$ref": "file:/serializers/api/content_language.json#"
-    },
-    "volume": {
-      "oneOf": [
-        {
-          "$ref": "file:/serializers/api/volume.json#"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
-    "user": {
-      "oneOf": [
-        {
-          "$ref": "file:/serializers/api/user.json#"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
-    "group": {
-      "oneOf": [
-        {
-          "$ref": "file:/serializers/api/group.json#"
         },
         {
           "type": "null"

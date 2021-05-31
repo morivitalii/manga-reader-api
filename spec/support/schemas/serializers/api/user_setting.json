@@ -21,16 +21,6 @@
       "type": "string",
       "enum": ["male", "female", "other"]
     },
-    "interface_language": {
-      "oneOf": [
-        {
-          "$ref": "file:/serializers/api/interface_language.json#"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
     "excluded_tags": {
       "type": "array",
       "items": {
@@ -80,14 +70,6 @@
           "type": "null"
         }
       ]
-    },
-    "created_at": {
-      "type": "string",
-      "format": "date-time"
-    },
-    "updated_at": {
-      "type": "string",
-      "format": "date-time"
     }
   }
 }
