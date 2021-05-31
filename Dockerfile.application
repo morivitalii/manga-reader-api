@@ -18,6 +18,7 @@ RUN apt-get clean \
      git \
      build-essential \
      libpq-dev \
+     postgresql-client-12 \
      libvips \
      nano \
     && rm -rf /var/lib/apt/lists/*
