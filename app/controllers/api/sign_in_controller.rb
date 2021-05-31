@@ -5,9 +5,19 @@ class Api::SignInController < Api::ApplicationController
 
   def create
     if request.env["warden"].authenticate!(:password)
-      Current.user = request.env["warden"].user
+      user = request.env["warden"].user
+      Current.user = user
 
-      user = Api::UserDecorator.decorate(Current.user)
+      ActiveRecord::Associations::Preloader.new.preload(
+        user, [
+          :access_rights,
+          user_setting: {
+            avatar_attachment: :blob
+          }
+        ]
+      )
+
+      user = Api::UserDecorator.decorate(user)
       user = Api::UserSerializer.serialize(user)
 
       render json: user, status: 200

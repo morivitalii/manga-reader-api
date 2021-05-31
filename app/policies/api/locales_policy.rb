@@ -20,4 +20,8 @@ class Api::LocalesPolicy < Api::ApplicationPolicy
       scope.all
     end
   end
+
+	def permitted_attributes_for_create
+    [:key]
+  end
 end
