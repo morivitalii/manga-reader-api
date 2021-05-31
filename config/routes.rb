@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root "frontend/home#index"
 
+  resources :documentation, controller: :documentation, only: [:index]
+
   namespace :api, constraints: ->(request) { request.format == :json } do
     resource :sign_up, only: [:create], controller: :sign_up
     resource :sign_in, only: [:create], controller: :sign_in
