@@ -3383,11 +3383,93 @@ paths:
           $ref: "#/components/responses/not_found"
         "500":
           $ref: "#/components/responses/internal_server_error"
+  /users/settings.json:
+    get:
+      tags:
+        - Users
+      summary: Settings
+      description: ""
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user_settings"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+    put:
+      tags:
+        - Users
+      summary: Update settings
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name
+                surname:
+                  type: string
+                  description: Surname
+                sex:
+                  type: string
+                  enum: ["male", "female", "other"]
+                  description: Name
+                avatar:
+                  type: string
+                  format: binary
+                  description: Avatar
+                interface_language_id:
+                  type: integer
+                  description: Interface language ID
+                content_language_ids:
+                  type: array
+                  description: Content languages IDs
+                  item:
+                    type: integer
+                excluded_tag_ids:
+                  type: array
+                  description: Excluded tags IDs
+                  item:
+                    type: integer
+              example:
+                name: Riko
+                surname: Unknown
+                sex: female
+                avatar: Binary data
+                interface_language_id: 1
+                content_language_ids:
+                  - 1
+                excluded_tag_ids:
+                  - 1
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user_settings"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /users/bookmarks/titles.json:
     get:
       tags:
         - Users
-      summary: User bookmarked titles
+      summary: Bookmarked titles
       description: Sorted by updated_at DESC
       parameters:
         - $ref: "#/components/parameters/page"
@@ -3416,7 +3498,7 @@ paths:
     get:
       tags:
         - Users
-      summary: User bookmarked chapters
+      summary: Bookmarked chapters
       description: Sorted by updated_at DESC
       parameters:
         - $ref: "#/components/parameters/page"
@@ -3445,7 +3527,7 @@ paths:
     get:
       tags:
         - Users
-      summary: User bookmarked pages
+      summary: Bookmarked pages
       description: Sorted by updated_at DESC
       parameters:
         - $ref: "#/components/parameters/page"
@@ -3474,7 +3556,7 @@ paths:
     get:
       tags:
         - Users
-      summary: User favorite artists
+      summary: Favorite artists
       description: Sorted by updated_at DESC
       parameters:
         - $ref: "#/components/parameters/page"
@@ -3503,7 +3585,7 @@ paths:
     get:
       tags:
         - Users
-      summary: User favorite groups
+      summary: Favorite groups
       description: Sorted by updated_at DESC
       parameters:
         - $ref: "#/components/parameters/page"
@@ -3532,7 +3614,7 @@ paths:
     get:
       tags:
         - Users
-      summary: User favorite titles
+      summary: Favorite titles
       description: Sorted by updated_at DESC
       parameters:
         - $ref: "#/components/parameters/page"
@@ -3561,7 +3643,7 @@ paths:
     get:
       tags:
         - Users
-      summary: User viewed titles
+      summary: Viewed titles
       description: Sorted by updated_at DESC
       parameters:
         - $ref: "#/components/parameters/page"
@@ -3590,7 +3672,7 @@ paths:
     get:
       tags:
         - Users
-      summary: User viewed chapters
+      summary: Viewed chapters
       description: Sorted by updated_at DESC
       parameters:
         - $ref: "#/components/parameters/page"
@@ -3619,7 +3701,7 @@ paths:
     get:
       tags:
         - Users
-      summary: User viewed pages
+      summary: Viewed pages
       description: Sorted by updated_at DESC
       parameters:
         - $ref: "#/components/parameters/page"
