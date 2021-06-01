@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :group_access_right do
-    key { "manage_users" }
+    sequence(:key) { |i| "group_access_right#{i}" }
 
     trait :manage_group do
       key { "manage_group" }
