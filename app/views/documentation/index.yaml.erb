@@ -10,8 +10,10 @@ tags:
   - name: Locales
   - name: Interface languages
   - name: Content languages
+  - name: Access rights
   - name: Genres
   - name: Formats
+  - name: Themes
   - name: Demographics
   - name: Marks
   - name: Users
@@ -1376,6 +1378,51 @@ paths:
           $ref: "#/components/responses/not_found"
         "422":
           $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /access_rights.json:
+    get:
+      tags:
+        - Access rights
+      summary: Access rights
+      description: Sorted by id ASC
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/access_right"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /access_rights/{id}.json:
+    get:
+      tags:
+        - Access rights
+      summary: Access right
+      description: ""
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/access_right"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
         "500":
           $ref: "#/components/responses/internal_server_error"
   /genres.json:

@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :access_right do
-    key { "manage_titles" }
+    sequence(:key) { |i| "access_right#{i}" }
 
     trait :manage_system_settings do
       key { "manage_system_settings" }
