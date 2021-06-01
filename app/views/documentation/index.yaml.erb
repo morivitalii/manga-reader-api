@@ -11,6 +11,7 @@ tags:
   - name: Interface languages
   - name: Content languages
   - name: Access rights
+  - name: Group access rights
   - name: Genres
   - name: Formats
   - name: Themes
@@ -1417,6 +1418,51 @@ paths:
               schema:
                 allOf:
                   - $ref: "#/components/schemas/access_right"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /group access_rights.json:
+    get:
+      tags:
+        - Group access rights
+      summary: Group access rights
+      description: Sorted by id ASC
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/group_access_right"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /group access_rights/{id}.json:
+    get:
+      tags:
+        - Group access rights
+      summary: Group access right
+      description: ""
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/group_access_right"
         "401":
           $ref: "#/components/responses/unauthorized"
         "403":
