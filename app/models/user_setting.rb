@@ -1,4 +1,6 @@
 class UserSetting < ApplicationRecord
+  include CacheInvalidation
+
   # This attributes should not be changed. Just because
   attr_readonly :user_id
 
@@ -10,6 +12,8 @@ class UserSetting < ApplicationRecord
   # Touching parent model is required for cache invalidation but it seems like rails 6 don't do this
   # This is possible place for bug
   has_one_attached :avatar, service: :public
+
+  invalidate_association_cache :user
 
   enum sex: { male: 1, female: 2, other: 3 }, _default: :other
 
