@@ -19,9 +19,10 @@ RSpec.describe Api::Titles::ChaptersPolicy do
     end
 
     permissions :update?, :destroy? do
-      let(:chapter) { create(:chapter) }
+      let(:group) { create(:group) }
+      let(:chapter) { create(:chapter, group: group) }
 
-      it { is_expected.to_not permit(current_user, chapter: chapter) }
+      it { is_expected.to_not permit(current_user, group: group, chapter: chapter) }
     end
   end
 

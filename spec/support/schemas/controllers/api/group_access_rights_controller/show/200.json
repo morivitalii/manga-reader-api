@@ -1,0 +1,5 @@
+{
+  "allOf": [
+    { "$ref": "file:/serializers/api/group_access_right.json#" }
+  ]
+}

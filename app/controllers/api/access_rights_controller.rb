@@ -1,18 +1,18 @@
 class Api::AccessRightsController < Api::ApplicationController
   include Pagination
 
-  before_action :set_artist, only: [:show]
+  before_action :set_access_right, only: [:show]
 
   before_action -> { authorize(Api::AccessRightsPolicy) }, only: [:index]
   before_action -> { authorize(Api::AccessRightsPolicy, access_right: @access_right) }, only: [:show]
 
   def index
-    artists = artists_scope.all
+    access_rights = access_rights_scope.all
     
-    artists = Api::AccessRightDecorator.decorate(artists)
-    artists = Api::AccessRightSerializer.serialize(artists)
+    access_rights = Api::AccessRightDecorator.decorate(access_rights)
+    access_rights = Api::AccessRightSerializer.serialize(access_rights)
 
-    render json: artists, status: 200
+    render json: access_rights, status: 200
   end
 
   def show
@@ -24,11 +24,11 @@ class Api::AccessRightsController < Api::ApplicationController
 
   private
 
-  def set_artist
-    @access_right = artists_scope.find(params[:id])
+  def set_access_right
+    @access_right = access_rights_scope.find(params[:id])
   end
 
-  def artists_scope
+  def access_rights_scope
     policy_scope(Api::AccessRightsPolicy, AccessRight)
   end
 end
