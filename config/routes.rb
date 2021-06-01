@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     resource :sign_out, only: [:destroy], controller: :sign_out
     resources :locales, only: [:index, :show, :create, :destroy]
     resources :interface_languages, only: [:index, :show, :create, :update, :destroy]
-    resources :content_languages, only: [:index, :show]
+    resources :content_languages, only: [:index, :show, :create, :update, :destroy]
     resources :marks, only: [:index, :show, :create, :update, :destroy]
     resources :genres, only: [:index, :show, :create, :update, :destroy]
     resources :themes, only: [:index, :show, :create, :update, :destroy]
