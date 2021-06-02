@@ -3755,6 +3755,42 @@ paths:
           $ref: "#/components/responses/forbidden"
         "500":
           $ref: "#/components/responses/internal_server_error"
+    post:
+      tags:
+        - Artists
+      summary: Create artist
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                  description: User ID
+                name:
+                  type: string
+                  description: Name
+              example:
+                user_id: 1
+                name: Name
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/artist"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
   /artists/{id}.json:
     get:
       tags:
@@ -3777,6 +3813,66 @@ paths:
           $ref: "#/components/responses/forbidden"
         "404":
           $ref: "#/components/responses/not_found"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+    put:
+      tags:
+        - Artists
+      summary: Update artist
+      description: ""
+      parameters:
+        - $ref: "#/components/parameters/id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: string
+                  description: User ID
+                name:
+                  type: string
+                  description: Name
+              example:
+                user_id: 1
+                name: Name
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/artist"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+    delete:
+      tags:
+        - Artists
+      summary: Delete artist
+      description: ""
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "204":
+          $ref: "#/components/responses/no_content"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
   /artists/{artist_id}/favorites.json:
