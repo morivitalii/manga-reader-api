@@ -33,7 +33,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :artists, only: [:index, :show] do
+    resources :artists, only: [:index, :show, :create, :update, :destroy] do
       scope module: :artists do
         resources :favorites, only: [:create, :destroy]
       end
