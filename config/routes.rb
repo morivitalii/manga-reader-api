@@ -79,6 +79,7 @@ Rails.application.routes.draw do
 
     namespace :users do
       resource :settings, only: [:show, :update]
+      resource :access_rights, only: [:show]
 
       namespace :bookmarks do
         resources :titles, only: [:index]
@@ -99,6 +100,10 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :users, only: [:index, :show]
+    resources :users, only: [:index, :show] do
+			scope module: :users do
+        resource :access_rights, only: [:show, :update]
+      end
+    end
   end
 end

@@ -4,6 +4,9 @@ ActiveRecord::Base.transaction do
   # Manage system settings right
   AccessRight.find_or_create_by!(key: :manage_system_settings)
 
+	# Manage users access right
+	AccessRight.find_or_create_by!(key: :manage_users)
+
   # Manage titles access right
   AccessRight.find_or_create_by!(key: :manage_titles)
 
