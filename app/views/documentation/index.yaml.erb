@@ -193,7 +193,7 @@ components:
   schemas:
     access_right:
       type: object
-      title: Artist
+      title: Access right
       properties:
         id:
           type: integer
@@ -202,6 +202,7 @@ components:
           type: string
           enum:
             - manage_system_settings
+            - manage_users
             - manage_titles
           description: Key
       example:
@@ -3461,6 +3462,92 @@ paths:
           $ref: "#/components/responses/unauthorized"
         "403":
           $ref: "#/components/responses/forbidden"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /users/access_rights.json:
+    get:
+      tags:
+        - Users
+      summary: Current user access rights
+      description: ""
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/access_right"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+  /users/{user_id}/access_rights.json:
+    get:
+      tags:
+        - Users
+      summary: Access rights
+      description: ""
+      parameters:
+        - $ref: "#/components/parameters/user_id"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/access_right"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
+    put:
+      tags:
+        - Users
+      summary: Update access rights
+      description: ""
+      parameters:
+        - $ref: "#/components/parameters/user_id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                access_right_ids:
+                  type: array
+                  description: Access rights IDs
+                  items:
+                    type: integer
+              example:
+                access_right_ids:
+                  - 1
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/access_right"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "404":
+          $ref: "#/components/responses/not_found"
         "422":
           $ref: "#/components/responses/unprocessable_entity"
         "500":

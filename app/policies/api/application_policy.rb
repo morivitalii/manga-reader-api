@@ -8,7 +8,7 @@ class Api::ApplicationPolicy
 
   def initialize(user, options = {})
     @user = user
-    @options = options.present? ? Struct.new(*options.keys).new(*options.values) : nil
+    @options = options.present? ? Struct.new(*options.keys).new(*options.values) : OpenStruct.new
   end
 
   class Scope
