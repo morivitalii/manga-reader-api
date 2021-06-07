@@ -43,11 +43,9 @@ class Api::Titles::UpdateChapter
   def cleaners
     return @cleaners if defined?(@cleaners)
 
-    user_ids = cleaner_ids&.compact&.map(&:to_i)&.uniq
-
     @cleaners = []
 
-    user_ids.map do |user_id|
+    cleaner_ids.map do |user_id|
       user = users.find { |user| user.id == user_id }
 
       next if user.blank?
@@ -70,11 +68,9 @@ class Api::Titles::UpdateChapter
   def translators
     return @translators if defined?(@translators)
 
-    user_ids = translator_ids&.compact&.map(&:to_i)&.uniq
-
     @translators = []
 
-    user_ids.map do |user_id|
+    translator_ids.map do |user_id|
       user = users.find { |user| user.id == user_id }
 
       next if user.blank?
@@ -97,11 +93,9 @@ class Api::Titles::UpdateChapter
   def editors
     return @editors if defined?(@editors)
 
-    user_ids = editor_ids&.compact&.map(&:to_i)&.uniq
-
     @editors = []
 
-    user_ids.map do |user_id|
+    editor_ids.map do |user_id|
       user = users.find { |user| user.id == user_id }
 
       next if user.blank?
@@ -124,11 +118,9 @@ class Api::Titles::UpdateChapter
   def typers
     return @typers if defined?(@typers)
 
-    user_ids = typer_ids&.compact&.map(&:to_i)&.uniq
-
     @typers = []
 
-    user_ids.map do |user_id|
+    typer_ids.map do |user_id|
       user = users.find { |user| user.id == user_id }
 
       next if user.blank?
