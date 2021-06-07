@@ -38,8 +38,6 @@ RSpec.describe Api::TitlesController do
 
   describe ".create", context: :as_signed_in_user do
     it "returns valid response" do
-      manage_titles_access_right = create(:manage_titles_access_right)
-      _user_access_right = create(:user_access_right, access_right: manage_titles_access_right, user: current_user)
       original_content_language = create(:content_language)
       writers = create_list(:writer, 2)
       painters = create_list(:painter, 2)
@@ -48,6 +46,8 @@ RSpec.describe Api::TitlesController do
       demographics = create_list(:demographic, 2)
       marks = create_list(:mark, 2)
       themes = create_list(:theme, 2)
+
+      grant_access_right(current_user, :manage_titles)
 
       params = {
         title: "Title",
@@ -73,8 +73,8 @@ RSpec.describe Api::TitlesController do
   describe ".destroy", context: :as_signed_in_user do
     it "returns valid response" do
       title = create(:title)
-      access_right = create(:manage_titles_access_right)
-      _user_access_right = create(:user_access_right, user: current_user, access_right: access_right)
+
+      grant_access_right(current_user, :manage_titles)
 
       delete "/api/titles/#{title.to_param}.json"
 

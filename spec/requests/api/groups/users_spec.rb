@@ -30,10 +30,11 @@ RSpec.describe Api::Groups::UsersController do
 
   describe ".create", context: :as_signed_in_user do
     it "returns valid response" do
-      group = create(:group)
-      _group_user = create(:group_user_with_manage_users_access_right, group: group, user: current_user)
+			group = create(:group)
       user = create(:user)
       access_right = create(:manage_group_access_right)
+
+      grant_group_access_right(group, current_user, :manage_users)
 
       params = {
         user_id: user.id,
@@ -50,9 +51,10 @@ RSpec.describe Api::Groups::UsersController do
   describe ".update", context: :as_signed_in_user do
     it "returns valid response" do
       group = create(:group)
-      _group_user = create(:group_user_with_manage_users_access_right, group: group, user: current_user)
       group_user = create(:group_user, group: group)
       access_right = create(:manage_group_access_right)
+
+      grant_group_access_right(group, current_user, :manage_users)
 
       params = {
         access_rights: [access_right.key]
@@ -68,8 +70,9 @@ RSpec.describe Api::Groups::UsersController do
   describe ".destroy", context: :as_signed_in_user do
     it "returns valid response" do
       group = create(:group)
-      _group_user = create(:group_user_with_manage_users_access_right, group: group, user: current_user)
       group_user = create(:group_user, group: group)
+
+      grant_group_access_right(group, current_user, :manage_users)
 
       delete "/api/groups/#{group.to_param}/users/#{group_user.to_param}.json"
 

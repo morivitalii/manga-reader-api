@@ -41,7 +41,8 @@ RSpec.describe Api::Titles::ChaptersController do
       ctet_ids = [first_user.id, second_user.id]
       _group_user = create(:group_user, group: group, user: first_user)
       _group_user = create(:group_user, group: group, user: second_user)
-      _group_user = create(:group_user_with_manage_chapters_access_right, group: group, user: current_user)
+
+      grant_group_access_right(group, current_user, :manage_chapters)
 
       params = {
         content_language_id: content_language.id,
@@ -74,7 +75,8 @@ RSpec.describe Api::Titles::ChaptersController do
       ctet_ids = [first_user.id, second_user.id]
       _group_user = create(:group_user, group: group, user: first_user)
       _group_user = create(:group_user, group: group, user: second_user)
-      _group_user = create(:group_user_with_manage_chapters_access_right, group: group, user: current_user)
+
+      grant_group_access_right(group, current_user, :manage_chapters)
 
       params = {
         content_language_id: content_language.id,
@@ -99,7 +101,8 @@ RSpec.describe Api::Titles::ChaptersController do
       title = create(:title)
       group = create(:group)
       chapter = create(:chapter, title: title, group: group)
-      _group_user = create(:group_user_with_manage_chapters_access_right, group: group, user: current_user)
+
+      grant_group_access_right(group, current_user, :manage_chapters)
 
       delete "/api/titles/#{title.to_param}/chapters/#{chapter.to_param}.json"
 
