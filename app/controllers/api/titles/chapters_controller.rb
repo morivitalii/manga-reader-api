@@ -111,11 +111,30 @@ class Api::Titles::ChaptersController < Api::ApplicationController
   end
 
   def create_params
-    permitted_attributes(Api::Titles::ChaptersPolicy, :create).merge(title: @title, user: Current.user)
+    permitted_attributes = permitted_attributes(Api::Titles::ChaptersPolicy, :create)
+    params = Api::Titles::Chapters::CreateParams.new(permitted_attributes)
+
+    permitted_attributes.merge(
+      title: @title,
+      user: Current.user,
+      cleaner_ids: params.cleaner_ids,
+      translator_ids: params.translator_ids,
+      editor_ids: params.editor_ids,
+      typer_ids: params.typer_ids
+    )
   end
 
   def update_params
-    permitted_attributes(Api::Titles::ChaptersPolicy, :update).merge(chapter: @chapter)
+    permitted_attributes = permitted_attributes(Api::Titles::ChaptersPolicy, :update)
+    params = Api::Titles::Chapters::UpdateParams.new(permitted_attributes)
+
+    permitted_attributes.merge(
+      chapter: @chapter,
+      cleaner_ids: params.cleaner_ids,
+      translator_ids: params.translator_ids,
+      editor_ids: params.editor_ids,
+      typer_ids: params.typer_ids
+    )
   end
 
   def titles_scope
