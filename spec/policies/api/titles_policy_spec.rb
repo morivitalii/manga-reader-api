@@ -14,7 +14,7 @@ RSpec.describe Api::TitlesPolicy do
       it { is_expected.to permit(current_user, title: title) }
     end
 
-    permissions :destroy? do
+    permissions :update?, :destroy? do
       let(:title) { create(:title) }
 
       it { is_expected.to_not permit(current_user, title: title) }
@@ -48,7 +48,7 @@ RSpec.describe Api::TitlesPolicy do
       it { is_expected.to permit(current_user, title: title) }
     end
 
-    permissions :destroy? do
+    permissions :update?, :destroy? do
       let(:title) { create(:title) }
 
       context "with manage titles access right" do

@@ -46,7 +46,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :titles, only: [:index, :show, :create, :destroy] do
+    resources :titles, only: [:index, :show, :create, :update, :destroy] do
       scope module: :titles do
         resource :to_draft, only: [:update], controller: :to_draft
         resource :to_review, only: [:update], controller: :to_review

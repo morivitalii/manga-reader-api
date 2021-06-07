@@ -1,10 +1,10 @@
 class Api::TitlesController < Api::ApplicationController
   include Pagination
 
-  before_action :set_title, only: [:show, :destroy]
+  before_action :set_title, only: [:show, :update, :destroy]
 
   before_action -> { authorize(Api::TitlesPolicy) }, only: [:index, :create]
-  before_action -> { authorize(Api::TitlesPolicy, title: @title) }, only: [:show, :destroy]
+  before_action -> { authorize(Api::TitlesPolicy, title: @title) }, only: [:show, :update, :destroy]
 
   skip_after_action :verify_policy_scoped, only: [:create]
 
@@ -80,6 +80,33 @@ class Api::TitlesController < Api::ApplicationController
     end
   end
 
+  def update
+    service = Api::UpdateTitle.new(update_params)
+
+    if service.call
+      ActiveRecord::Associations::Preloader.new.preload(
+        service.title_object, [
+        Title.translations_associations,
+          cover_attachment: :blob,
+          writers: { artist: Artist.translations_associations },
+          painters: { artist: Artist.translations_associations },
+          genres: { tag: Tag.translations_associations },
+          formats: { tag: Tag.translations_associations },
+          demographics: { tag: Tag.translations_associations },
+          marks: { tag: Tag.translations_associations },
+          themes: { tag: Tag.translations_associations }
+        ]
+      )
+
+      title = Api::TitleDecorator.decorate(service.title_object)
+      title = Api::TitleSerializer.serialize(title)
+
+      render json: title, status: 200
+    else
+      render json: service.errors, status: 422
+    end
+  end
+
   def destroy
     service = Api::DeleteTitle.new(title: @title)
 
@@ -98,6 +125,10 @@ class Api::TitlesController < Api::ApplicationController
 
   def create_params
     permitted_attributes(Api::TitlesPolicy, :create)
+  end
+
+  def update_params
+    permitted_attributes(Api::TitlesPolicy, :update).merge(title_object: @title)
   end
 
   def titles_scope
