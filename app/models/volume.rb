@@ -4,7 +4,7 @@ class Volume < ApplicationRecord
 
   belongs_to :title
 
-  has_many :chapters, dependent: :destroy
+  has_many :chapters, dependent: :nullify
 
   validates :number,
     numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 1_000 },

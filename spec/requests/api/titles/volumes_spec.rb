@@ -28,5 +28,53 @@ RSpec.describe Api::Titles::VolumesController do
       expect(response).to have_http_status(200)
       expect(response).to match_json_schema("controllers/api/titles/volumes_controller/show/200")
     end
+	end
+
+  describe ".create", context: :as_signed_in_user do
+    it "returns valid response" do
+      title = create(:title)
+      manage_system_settings_access_right = create(:manage_titles_access_right)
+      _user_access_right = create(:user_access_right, access_right: manage_system_settings_access_right, user: current_user)
+
+      params = {
+        number: 1
+      }
+
+      post "/api/titles/#{title.to_param}/volumes.json", params: params
+
+      expect(response).to have_http_status(200)
+      expect(response).to match_json_schema("controllers/api/titles/volumes_controller/create/200")
+    end
+  end
+
+  describe ".update", context: :as_signed_in_user do
+    it "returns valid response" do
+      title = create(:title)
+      volume = create(:volume, title: title)
+      manage_system_settings_access_right = create(:manage_titles_access_right)
+      _user_access_right = create(:user_access_right, access_right: manage_system_settings_access_right, user: current_user)
+
+      params = {
+        number: 1
+      }
+
+      put "/api/titles/#{title.to_param}/volumes/#{volume.to_param}.json", params: params
+
+      expect(response).to have_http_status(200)
+      expect(response).to match_json_schema("controllers/api/titles/volumes_controller/update/200")
+    end
+  end
+
+  describe ".destroy", context: :as_signed_in_user do
+    it "returns valid response" do
+      title = create(:title)
+      volume = create(:volume, title: title)
+      manage_system_settings_access_right = create(:manage_titles_access_right)
+      _user_access_right = create(:user_access_right, access_right: manage_system_settings_access_right, user: current_user)
+
+      delete "/api/titles/#{title.to_param}/volumes/#{volume.to_param}.json"
+
+      expect(response).to have_http_status(204)
+    end
   end
 end
