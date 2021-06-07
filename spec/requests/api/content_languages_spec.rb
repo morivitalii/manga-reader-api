@@ -28,9 +28,9 @@ RSpec.describe Api::ContentLanguagesController do
   describe ".create", context: :as_signed_in_user do
     context "with valid params" do
       it "returns valid response" do
-        manage_system_settings_access_right = create(:manage_system_settings_access_right)
-        _user_access_right = create(:user_access_right, access_right: manage_system_settings_access_right, user: current_user)
         locale = create(:locale)
+
+        grant_access_right(current_user, :manage_system_settings)
 
         params = {
           locale_id: locale.id,
@@ -48,9 +48,9 @@ RSpec.describe Api::ContentLanguagesController do
   describe ".update", context: :as_signed_in_user do
     context "with valid params" do
       it "returns valid response" do
-        manage_system_settings_access_right = create(:manage_system_settings_access_right)
-        _user_access_right = create(:user_access_right, access_right: manage_system_settings_access_right, user: current_user)
         content_language = create(:content_language)
+
+        grant_access_right(current_user, :manage_system_settings)
 
         params = {
           title: "Title"
@@ -66,9 +66,9 @@ RSpec.describe Api::ContentLanguagesController do
 
   describe ".destroy", context: :as_signed_in_user do
     it "returns valid response" do
-      manage_system_settings_access_right = create(:manage_system_settings_access_right)
-      _user_access_right = create(:user_access_right, access_right: manage_system_settings_access_right, user: current_user)
       content_language = create(:content_language)
+
+      grant_access_right(current_user, :manage_system_settings)
 
       delete "/api/content_languages/#{content_language.to_param}.json"
 

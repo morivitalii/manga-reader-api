@@ -27,10 +27,10 @@ class Api::CreateGroup
   private
 
   def manage_users_access_right
-    @manage_users_access_right ||= GroupAccessRight.where(key: :manage_users).take!
+    @manage_users_access_right ||= GroupAccessRight.find_or_create_by!(key: :manage_users)
   end
 
   def manage_chapters_access_right
-    @manage_chapters_access_right ||= GroupAccessRight.where(key: :manage_chapters).take!
+    @manage_chapters_access_right ||= GroupAccessRight.find_or_create_by!(key: :manage_chapters)
   end
 end

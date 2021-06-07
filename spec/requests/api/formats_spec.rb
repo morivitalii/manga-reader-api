@@ -29,8 +29,7 @@ RSpec.describe Api::FormatsController do
   describe ".create", context: :as_signed_in_user do
     context "with valid params" do
       it "returns valid response" do
-        manage_system_settings_access_right = create(:manage_system_settings_access_right)
-        _user_access_right = create(:user_access_right, access_right: manage_system_settings_access_right, user: current_user)
+        grant_access_right(current_user, :manage_system_settings)
 
         params = {
           key: "key",
@@ -49,9 +48,9 @@ RSpec.describe Api::FormatsController do
   describe ".update", context: :as_signed_in_user do
     context "with valid params" do
       it "returns valid response" do
-        manage_system_settings_access_right = create(:manage_system_settings_access_right)
-        _user_access_right = create(:user_access_right, access_right: manage_system_settings_access_right, user: current_user)
         format = create(:format)
+
+        grant_access_right(current_user, :manage_system_settings)
 
         params = {
           key: "key",
@@ -69,9 +68,9 @@ RSpec.describe Api::FormatsController do
 
   describe ".destroy", context: :as_signed_in_user do
     it "returns valid response" do
-      manage_system_settings_access_right = create(:manage_system_settings_access_right)
-      _user_access_right = create(:user_access_right, access_right: manage_system_settings_access_right, user: current_user)
       format = create(:format)
+
+      grant_access_right(current_user, :manage_system_settings)
 
       delete "/api/formats/#{format.to_param}.json"
 

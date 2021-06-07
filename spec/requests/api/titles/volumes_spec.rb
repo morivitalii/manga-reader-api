@@ -33,8 +33,8 @@ RSpec.describe Api::Titles::VolumesController do
   describe ".create", context: :as_signed_in_user do
     it "returns valid response" do
       title = create(:title)
-      manage_system_settings_access_right = create(:manage_titles_access_right)
-      _user_access_right = create(:user_access_right, access_right: manage_system_settings_access_right, user: current_user)
+
+      grant_access_right(current_user, :manage_titles)
 
       params = {
         number: 1
@@ -51,8 +51,8 @@ RSpec.describe Api::Titles::VolumesController do
     it "returns valid response" do
       title = create(:title)
       volume = create(:volume, title: title)
-      manage_system_settings_access_right = create(:manage_titles_access_right)
-      _user_access_right = create(:user_access_right, access_right: manage_system_settings_access_right, user: current_user)
+
+      grant_access_right(current_user, :manage_titles)
 
       params = {
         number: 1
@@ -69,8 +69,8 @@ RSpec.describe Api::Titles::VolumesController do
     it "returns valid response" do
       title = create(:title)
       volume = create(:volume, title: title)
-      manage_system_settings_access_right = create(:manage_titles_access_right)
-      _user_access_right = create(:user_access_right, access_right: manage_system_settings_access_right, user: current_user)
+
+      grant_access_right(current_user, :manage_titles)
 
       delete "/api/titles/#{title.to_param}/volumes/#{volume.to_param}.json"
 

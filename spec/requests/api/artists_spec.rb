@@ -39,9 +39,9 @@ RSpec.describe Api::ArtistsController do
   describe ".create", context: :as_signed_in_user do
     context "with valid params" do
       it "returns valid response" do
-        manage_system_settings_access_right = create(:manage_system_settings_access_right)
-        _user_access_right = create(:user_access_right, access_right: manage_system_settings_access_right, user: current_user)
-				user = create(:user)
+        user = create(:user)
+
+        grant_access_right(current_user, :manage_system_settings)
 
         params = {
 					user_id: user.id,
@@ -59,10 +59,10 @@ RSpec.describe Api::ArtistsController do
   describe ".update", context: :as_signed_in_user do
     context "with valid params" do
       it "returns valid response" do
-        manage_system_settings_access_right = create(:manage_system_settings_access_right)
-        _user_access_right = create(:user_access_right, access_right: manage_system_settings_access_right, user: current_user)
-        artist = create(:artist)
+				artist = create(:artist)
         user = create(:user)
+
+        grant_access_right(current_user, :manage_system_settings)
 
         params = {
           user_id: user.id,
@@ -79,9 +79,9 @@ RSpec.describe Api::ArtistsController do
 
   describe ".destroy", context: :as_signed_in_user do
     it "returns valid response" do
-      manage_system_settings_access_right = create(:manage_system_settings_access_right)
-      _user_access_right = create(:user_access_right, access_right: manage_system_settings_access_right, user: current_user)
       artist = create(:artist)
+
+      grant_access_right(current_user, :manage_system_settings)
 
       delete "/api/artists/#{artist.to_param}.json"
 
