@@ -2398,6 +2398,111 @@ paths:
           $ref: "#/components/responses/not_found"
         "500":
           $ref: "#/components/responses/internal_server_error"
+    put:
+      tags:
+        - Titles
+      summary: Update title
+      description: ""
+      parameters:
+        - $ref: "#/components/parameters/id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Title
+                description:
+                  type: string
+                  description: Description
+                publication_status:
+                  type: string
+                  description: Publication status
+                  enum:
+                    - ongoing
+                    - completed
+                    - cancelled
+                original_content_language_id:
+                  type: integer
+                  description: Original content language
+                writer_ids:
+                  type: array
+                  description: Writers
+                  items:
+                    type: integer
+                painter_ids:
+                  type: array
+                  description: Painters
+                  items:
+                    type: integer
+                genre_ids:
+                  type: array
+                  description: Genres
+                  items:
+                    type: integer
+                format_ids:
+                  type: array
+                  description: Formats
+                  items:
+                    type: integer
+                demographic_ids:
+                  type: array
+                  description: Demographics
+                  items:
+                    type: integer
+                mark_ids:
+                  type: array
+                  description: Marks
+                  items:
+                    type: integer
+                theme_ids:
+                  type: array
+                  description: Themes
+                  items:
+                    type: integer
+              example:
+                title: Made in Abyss
+                description: Awesome manga
+                publication_status: ongoing
+                original_content_language_id: 1
+                writer_ids:
+                  - 1
+                painter_ids:
+                  - 2
+                genre_ids:
+                  - 3
+                  - 4
+                  - 5
+                  - 6
+                format_ids:
+                  - 7
+                demographic_ids:
+                  - 8
+                mark_ids:
+                  - 9
+                  - 10
+                theme_ids:
+                  - 11
+                  - 12
+                  - 13
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/volume"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "403":
+          $ref: "#/components/responses/forbidden"
+        "422":
+          $ref: "#/components/responses/unprocessable_entity"
+        "500":
+          $ref: "#/components/responses/internal_server_error"
     delete:
       tags:
         - Titles
