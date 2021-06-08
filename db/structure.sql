@@ -2570,6 +2570,13 @@ ALTER TABLE ONLY public.writers
 
 
 --
+-- Name: index_access_rights_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_access_rights_on_cached_at ON public.access_rights USING btree (cached_at DESC);
+
+
+--
 -- Name: index_access_rights_on_key; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2633,10 +2640,24 @@ CREATE UNIQUE INDEX index_artist_translations_uniqueness ON public.artist_transl
 
 
 --
+-- Name: index_artists_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_artists_on_cached_at ON public.artists USING btree (cached_at DESC);
+
+
+--
 -- Name: index_artists_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_artists_on_user_id ON public.artists USING btree (user_id);
+
+
+--
+-- Name: index_bookmarks_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_bookmarks_on_cached_at ON public.bookmarks USING btree (cached_at DESC);
 
 
 --
@@ -2672,6 +2693,13 @@ CREATE INDEX index_bookmarks_on_user_id ON public.bookmarks USING btree (user_id
 --
 
 CREATE UNIQUE INDEX index_bookmarks_uniqueness ON public.bookmarks USING btree (user_id, resource_type, resource_id);
+
+
+--
+-- Name: index_chapters_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapters_on_cached_at ON public.chapters USING btree (cached_at DESC);
 
 
 --
@@ -2731,6 +2759,13 @@ CREATE UNIQUE INDEX index_cleaners_on_artist_id ON public.cleaners USING btree (
 
 
 --
+-- Name: index_cleaners_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_cleaners_on_cached_at ON public.cleaners USING btree (cached_at DESC);
+
+
+--
 -- Name: index_content_language_translations_on_content_language_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2759,10 +2794,24 @@ CREATE UNIQUE INDEX index_content_language_translations_uniqueness ON public.con
 
 
 --
+-- Name: index_content_languages_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_content_languages_on_cached_at ON public.content_languages USING btree (cached_at DESC);
+
+
+--
 -- Name: index_content_languages_on_locale_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_content_languages_on_locale_id ON public.content_languages USING btree (locale_id);
+
+
+--
+-- Name: index_demographics_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_demographics_on_cached_at ON public.demographics USING btree (cached_at DESC);
 
 
 --
@@ -2777,6 +2826,20 @@ CREATE UNIQUE INDEX index_demographics_on_tag_id ON public.demographics USING bt
 --
 
 CREATE UNIQUE INDEX index_editors_on_artist_id ON public.editors USING btree (artist_id);
+
+
+--
+-- Name: index_editors_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_editors_on_cached_at ON public.editors USING btree (cached_at DESC);
+
+
+--
+-- Name: index_favorites_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_favorites_on_cached_at ON public.favorites USING btree (cached_at DESC);
 
 
 --
@@ -2815,10 +2878,24 @@ CREATE UNIQUE INDEX index_favorites_uniqueness ON public.favorites USING btree (
 
 
 --
+-- Name: index_formats_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_formats_on_cached_at ON public.formats USING btree (cached_at DESC);
+
+
+--
 -- Name: index_formats_on_tag_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_formats_on_tag_id ON public.formats USING btree (tag_id);
+
+
+--
+-- Name: index_genres_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_genres_on_cached_at ON public.genres USING btree (cached_at DESC);
 
 
 --
@@ -2829,10 +2906,24 @@ CREATE UNIQUE INDEX index_genres_on_tag_id ON public.genres USING btree (tag_id)
 
 
 --
+-- Name: index_group_access_rights_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_group_access_rights_on_cached_at ON public.group_access_rights USING btree (cached_at DESC);
+
+
+--
 -- Name: index_group_access_rights_on_key; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_group_access_rights_on_key ON public.group_access_rights USING btree (key);
+
+
+--
+-- Name: index_group_user_access_rights_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_group_user_access_rights_on_cached_at ON public.group_user_access_rights USING btree (cached_at DESC);
 
 
 --
@@ -2857,6 +2948,13 @@ CREATE UNIQUE INDEX index_group_user_access_rights_uniqueness ON public.group_us
 
 
 --
+-- Name: index_group_users_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_group_users_on_cached_at ON public.group_users USING btree (cached_at DESC);
+
+
+--
 -- Name: index_group_users_on_group_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2875,6 +2973,13 @@ CREATE UNIQUE INDEX index_group_users_on_group_id_and_user_id ON public.group_us
 --
 
 CREATE INDEX index_group_users_on_user_id ON public.group_users USING btree (user_id);
+
+
+--
+-- Name: index_groups_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_groups_on_cached_at ON public.groups USING btree (cached_at DESC);
 
 
 --
@@ -2913,10 +3018,24 @@ CREATE UNIQUE INDEX index_interface_language_translations_uniqueness ON public.i
 
 
 --
+-- Name: index_interface_languages_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_interface_languages_on_cached_at ON public.interface_languages USING btree (cached_at DESC);
+
+
+--
 -- Name: index_interface_languages_on_locale_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_interface_languages_on_locale_id ON public.interface_languages USING btree (locale_id);
+
+
+--
+-- Name: index_locales_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_locales_on_cached_at ON public.locales USING btree (cached_at DESC);
 
 
 --
@@ -2934,10 +3053,24 @@ CREATE UNIQUE INDEX index_locales_on_lower_key ON public.locales USING btree (lo
 
 
 --
+-- Name: index_marks_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_marks_on_cached_at ON public.marks USING btree (cached_at DESC);
+
+
+--
 -- Name: index_marks_on_tag_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_marks_on_tag_id ON public.marks USING btree (tag_id);
+
+
+--
+-- Name: index_pages_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_pages_on_cached_at ON public.pages USING btree (cached_at DESC);
 
 
 --
@@ -2973,6 +3106,13 @@ CREATE INDEX index_pages_on_user_id ON public.pages USING btree (user_id);
 --
 
 CREATE UNIQUE INDEX index_painters_on_artist_id ON public.painters USING btree (artist_id);
+
+
+--
+-- Name: index_painters_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_painters_on_cached_at ON public.painters USING btree (cached_at DESC);
 
 
 --
@@ -3235,10 +3375,24 @@ CREATE UNIQUE INDEX index_tag_translations_uniqueness ON public.tag_translations
 
 
 --
+-- Name: index_tags_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_tags_on_cached_at ON public.tags USING btree (cached_at DESC);
+
+
+--
 -- Name: index_tags_on_key; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_tags_on_key ON public.tags USING btree (key);
+
+
+--
+-- Name: index_themes_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_themes_on_cached_at ON public.themes USING btree (cached_at DESC);
 
 
 --
@@ -3277,6 +3431,13 @@ CREATE UNIQUE INDEX index_title_translations_uniqueness ON public.title_translat
 
 
 --
+-- Name: index_titles_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_titles_on_cached_at ON public.titles USING btree (cached_at DESC);
+
+
+--
 -- Name: index_titles_on_original_content_language_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3298,6 +3459,13 @@ CREATE UNIQUE INDEX index_translators_on_artist_id ON public.translators USING b
 
 
 --
+-- Name: index_translators_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_translators_on_cached_at ON public.translators USING btree (cached_at DESC);
+
+
+--
 -- Name: index_typers_on_artist_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3305,10 +3473,24 @@ CREATE UNIQUE INDEX index_typers_on_artist_id ON public.typers USING btree (arti
 
 
 --
+-- Name: index_typers_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_typers_on_cached_at ON public.typers USING btree (cached_at DESC);
+
+
+--
 -- Name: index_user_access_rights_on_access_right_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_user_access_rights_on_access_right_id ON public.user_access_rights USING btree (access_right_id);
+
+
+--
+-- Name: index_user_access_rights_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_user_access_rights_on_cached_at ON public.user_access_rights USING btree (cached_at DESC);
 
 
 --
@@ -3323,6 +3505,13 @@ CREATE INDEX index_user_access_rights_on_user_id ON public.user_access_rights US
 --
 
 CREATE UNIQUE INDEX index_user_access_rights_on_user_id_and_access_right_id ON public.user_access_rights USING btree (user_id, access_right_id);
+
+
+--
+-- Name: index_user_content_languages_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_user_content_languages_on_cached_at ON public.user_content_languages USING btree (cached_at DESC);
 
 
 --
@@ -3347,6 +3536,13 @@ CREATE UNIQUE INDEX index_user_content_languages_on_user_id_and_content_language
 
 
 --
+-- Name: index_user_excluded_tags_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_user_excluded_tags_on_cached_at ON public.user_excluded_tags USING btree (cached_at DESC);
+
+
+--
 -- Name: index_user_excluded_tags_on_tag_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3368,6 +3564,13 @@ CREATE UNIQUE INDEX index_user_excluded_tags_on_user_id_and_tag_id ON public.use
 
 
 --
+-- Name: index_user_settings_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_user_settings_on_cached_at ON public.user_settings USING btree (cached_at DESC);
+
+
+--
 -- Name: index_user_settings_on_interface_language_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3382,6 +3585,13 @@ CREATE INDEX index_user_settings_on_user_id ON public.user_settings USING btree 
 
 
 --
+-- Name: index_users_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_users_on_cached_at ON public.users USING btree (cached_at DESC);
+
+
+--
 -- Name: index_users_on_lower_email; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3393,6 +3603,13 @@ CREATE UNIQUE INDEX index_users_on_lower_email ON public.users USING btree (lowe
 --
 
 CREATE UNIQUE INDEX index_users_on_lower_username ON public.users USING btree (lower((username)::text));
+
+
+--
+-- Name: index_views_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_views_on_cached_at ON public.views USING btree (cached_at DESC);
 
 
 --
@@ -3431,6 +3648,13 @@ CREATE UNIQUE INDEX index_views_uniqueness ON public.views USING btree (user_id,
 
 
 --
+-- Name: index_volumes_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_volumes_on_cached_at ON public.volumes USING btree (cached_at DESC);
+
+
+--
 -- Name: index_volumes_on_number; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3456,6 +3680,13 @@ CREATE UNIQUE INDEX index_volumes_on_title_id_and_number ON public.volumes USING
 --
 
 CREATE UNIQUE INDEX index_writers_on_artist_id ON public.writers USING btree (artist_id);
+
+
+--
+-- Name: index_writers_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_writers_on_cached_at ON public.writers USING btree (cached_at DESC);
 
 
 --
@@ -4080,6 +4311,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210416222957'),
 ('20210418162435'),
 ('20210422152211'),
-('20210522073513');
+('20210522073513'),
+('20210608081431');
 
 
