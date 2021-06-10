@@ -303,38 +303,6 @@ ALTER SEQUENCE public.chapters_id_seq OWNED BY public.chapters.id;
 
 
 --
--- Name: cleaners; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.cleaners (
-    id bigint NOT NULL,
-    artist_id bigint NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
-);
-
-
---
--- Name: cleaners_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.cleaners_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: cleaners_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.cleaners_id_seq OWNED BY public.cleaners.id;
-
-
---
 -- Name: content_language_translations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -430,38 +398,6 @@ CREATE SEQUENCE public.demographics_id_seq
 --
 
 ALTER SEQUENCE public.demographics_id_seq OWNED BY public.demographics.id;
-
-
---
--- Name: editors; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.editors (
-    id bigint NOT NULL,
-    artist_id bigint NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
-);
-
-
---
--- Name: editors_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.editors_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: editors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.editors_id_seq OWNED BY public.editors.id;
 
 
 --
@@ -861,56 +797,25 @@ ALTER SEQUENCE public.pages_id_seq OWNED BY public.pages.id;
 
 
 --
--- Name: painters; Type: TABLE; Schema: public; Owner: -
+-- Name: resource_artists; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.painters (
+CREATE TABLE public.resource_artists (
     id bigint NOT NULL,
     artist_id bigint NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
-);
-
-
---
--- Name: painters_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.painters_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: painters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.painters_id_seq OWNED BY public.painters.id;
-
-
---
--- Name: resource_cleaners; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.resource_cleaners (
-    id bigint NOT NULL,
-    cleaner_id bigint NOT NULL,
     resource_type character varying NOT NULL,
     resource_id bigint NOT NULL,
+    artist_type integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
 
 
 --
--- Name: resource_cleaners_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: resource_artists_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.resource_cleaners_id_seq
+CREATE SEQUENCE public.resource_artists_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -919,10 +824,10 @@ CREATE SEQUENCE public.resource_cleaners_id_seq
 
 
 --
--- Name: resource_cleaners_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: resource_artists_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.resource_cleaners_id_seq OWNED BY public.resource_cleaners.id;
+ALTER SEQUENCE public.resource_artists_id_seq OWNED BY public.resource_artists.id;
 
 
 --
@@ -956,39 +861,6 @@ CREATE SEQUENCE public.resource_demographics_id_seq
 --
 
 ALTER SEQUENCE public.resource_demographics_id_seq OWNED BY public.resource_demographics.id;
-
-
---
--- Name: resource_editors; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.resource_editors (
-    id bigint NOT NULL,
-    editor_id bigint NOT NULL,
-    resource_type character varying NOT NULL,
-    resource_id bigint NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: resource_editors_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.resource_editors_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: resource_editors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.resource_editors_id_seq OWNED BY public.resource_editors.id;
 
 
 --
@@ -1091,39 +963,6 @@ ALTER SEQUENCE public.resource_marks_id_seq OWNED BY public.resource_marks.id;
 
 
 --
--- Name: resource_painters; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.resource_painters (
-    id bigint NOT NULL,
-    painter_id bigint NOT NULL,
-    resource_type character varying NOT NULL,
-    resource_id bigint NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: resource_painters_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.resource_painters_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: resource_painters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.resource_painters_id_seq OWNED BY public.resource_painters.id;
-
-
---
 -- Name: resource_themes; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1154,105 +993,6 @@ CREATE SEQUENCE public.resource_themes_id_seq
 --
 
 ALTER SEQUENCE public.resource_themes_id_seq OWNED BY public.resource_themes.id;
-
-
---
--- Name: resource_translators; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.resource_translators (
-    id bigint NOT NULL,
-    translator_id bigint NOT NULL,
-    resource_type character varying NOT NULL,
-    resource_id bigint NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: resource_translators_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.resource_translators_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: resource_translators_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.resource_translators_id_seq OWNED BY public.resource_translators.id;
-
-
---
--- Name: resource_typers; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.resource_typers (
-    id bigint NOT NULL,
-    typer_id bigint NOT NULL,
-    resource_type character varying NOT NULL,
-    resource_id bigint NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: resource_typers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.resource_typers_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: resource_typers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.resource_typers_id_seq OWNED BY public.resource_typers.id;
-
-
---
--- Name: resource_writers; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.resource_writers (
-    id bigint NOT NULL,
-    writer_id bigint NOT NULL,
-    resource_type character varying NOT NULL,
-    resource_id bigint NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: resource_writers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.resource_writers_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: resource_writers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.resource_writers_id_seq OWNED BY public.resource_writers.id;
 
 
 --
@@ -1436,70 +1176,6 @@ CREATE SEQUENCE public.titles_id_seq
 --
 
 ALTER SEQUENCE public.titles_id_seq OWNED BY public.titles.id;
-
-
---
--- Name: translators; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.translators (
-    id bigint NOT NULL,
-    artist_id bigint NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
-);
-
-
---
--- Name: translators_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.translators_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: translators_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.translators_id_seq OWNED BY public.translators.id;
-
-
---
--- Name: typers; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.typers (
-    id bigint NOT NULL,
-    artist_id bigint NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
-);
-
-
---
--- Name: typers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.typers_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: typers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.typers_id_seq OWNED BY public.typers.id;
 
 
 --
@@ -1742,38 +1418,6 @@ ALTER SEQUENCE public.volumes_id_seq OWNED BY public.volumes.id;
 
 
 --
--- Name: writers; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.writers (
-    id bigint NOT NULL,
-    artist_id bigint NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
-);
-
-
---
--- Name: writers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.writers_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: writers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.writers_id_seq OWNED BY public.writers.id;
-
-
---
 -- Name: access_rights id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1830,13 +1474,6 @@ ALTER TABLE ONLY public.chapters ALTER COLUMN id SET DEFAULT nextval('public.cha
 
 
 --
--- Name: cleaners id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.cleaners ALTER COLUMN id SET DEFAULT nextval('public.cleaners_id_seq'::regclass);
-
-
---
 -- Name: content_language_translations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1855,13 +1492,6 @@ ALTER TABLE ONLY public.content_languages ALTER COLUMN id SET DEFAULT nextval('p
 --
 
 ALTER TABLE ONLY public.demographics ALTER COLUMN id SET DEFAULT nextval('public.demographics_id_seq'::regclass);
-
-
---
--- Name: editors id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.editors ALTER COLUMN id SET DEFAULT nextval('public.editors_id_seq'::regclass);
 
 
 --
@@ -1949,17 +1579,10 @@ ALTER TABLE ONLY public.pages ALTER COLUMN id SET DEFAULT nextval('public.pages_
 
 
 --
--- Name: painters id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: resource_artists id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.painters ALTER COLUMN id SET DEFAULT nextval('public.painters_id_seq'::regclass);
-
-
---
--- Name: resource_cleaners id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resource_cleaners ALTER COLUMN id SET DEFAULT nextval('public.resource_cleaners_id_seq'::regclass);
+ALTER TABLE ONLY public.resource_artists ALTER COLUMN id SET DEFAULT nextval('public.resource_artists_id_seq'::regclass);
 
 
 --
@@ -1967,13 +1590,6 @@ ALTER TABLE ONLY public.resource_cleaners ALTER COLUMN id SET DEFAULT nextval('p
 --
 
 ALTER TABLE ONLY public.resource_demographics ALTER COLUMN id SET DEFAULT nextval('public.resource_demographics_id_seq'::regclass);
-
-
---
--- Name: resource_editors id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resource_editors ALTER COLUMN id SET DEFAULT nextval('public.resource_editors_id_seq'::regclass);
 
 
 --
@@ -1998,38 +1614,10 @@ ALTER TABLE ONLY public.resource_marks ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
--- Name: resource_painters id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resource_painters ALTER COLUMN id SET DEFAULT nextval('public.resource_painters_id_seq'::regclass);
-
-
---
 -- Name: resource_themes id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.resource_themes ALTER COLUMN id SET DEFAULT nextval('public.resource_themes_id_seq'::regclass);
-
-
---
--- Name: resource_translators id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resource_translators ALTER COLUMN id SET DEFAULT nextval('public.resource_translators_id_seq'::regclass);
-
-
---
--- Name: resource_typers id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resource_typers ALTER COLUMN id SET DEFAULT nextval('public.resource_typers_id_seq'::regclass);
-
-
---
--- Name: resource_writers id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resource_writers ALTER COLUMN id SET DEFAULT nextval('public.resource_writers_id_seq'::regclass);
 
 
 --
@@ -2065,20 +1653,6 @@ ALTER TABLE ONLY public.title_translations ALTER COLUMN id SET DEFAULT nextval('
 --
 
 ALTER TABLE ONLY public.titles ALTER COLUMN id SET DEFAULT nextval('public.titles_id_seq'::regclass);
-
-
---
--- Name: translators id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.translators ALTER COLUMN id SET DEFAULT nextval('public.translators_id_seq'::regclass);
-
-
---
--- Name: typers id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.typers ALTER COLUMN id SET DEFAULT nextval('public.typers_id_seq'::regclass);
 
 
 --
@@ -2128,13 +1702,6 @@ ALTER TABLE ONLY public.views ALTER COLUMN id SET DEFAULT nextval('public.views_
 --
 
 ALTER TABLE ONLY public.volumes ALTER COLUMN id SET DEFAULT nextval('public.volumes_id_seq'::regclass);
-
-
---
--- Name: writers id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.writers ALTER COLUMN id SET DEFAULT nextval('public.writers_id_seq'::regclass);
 
 
 --
@@ -2210,14 +1777,6 @@ ALTER TABLE ONLY public.chapters
 
 
 --
--- Name: cleaners cleaners_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.cleaners
-    ADD CONSTRAINT cleaners_pkey PRIMARY KEY (id);
-
-
---
 -- Name: content_language_translations content_language_translations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2239,14 +1798,6 @@ ALTER TABLE ONLY public.content_languages
 
 ALTER TABLE ONLY public.demographics
     ADD CONSTRAINT demographics_pkey PRIMARY KEY (id);
-
-
---
--- Name: editors editors_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.editors
-    ADD CONSTRAINT editors_pkey PRIMARY KEY (id);
 
 
 --
@@ -2346,19 +1897,11 @@ ALTER TABLE ONLY public.pages
 
 
 --
--- Name: painters painters_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: resource_artists resource_artists_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.painters
-    ADD CONSTRAINT painters_pkey PRIMARY KEY (id);
-
-
---
--- Name: resource_cleaners resource_cleaners_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resource_cleaners
-    ADD CONSTRAINT resource_cleaners_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.resource_artists
+    ADD CONSTRAINT resource_artists_pkey PRIMARY KEY (id);
 
 
 --
@@ -2367,14 +1910,6 @@ ALTER TABLE ONLY public.resource_cleaners
 
 ALTER TABLE ONLY public.resource_demographics
     ADD CONSTRAINT resource_demographics_pkey PRIMARY KEY (id);
-
-
---
--- Name: resource_editors resource_editors_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resource_editors
-    ADD CONSTRAINT resource_editors_pkey PRIMARY KEY (id);
 
 
 --
@@ -2402,43 +1937,11 @@ ALTER TABLE ONLY public.resource_marks
 
 
 --
--- Name: resource_painters resource_painters_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resource_painters
-    ADD CONSTRAINT resource_painters_pkey PRIMARY KEY (id);
-
-
---
 -- Name: resource_themes resource_themes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.resource_themes
     ADD CONSTRAINT resource_themes_pkey PRIMARY KEY (id);
-
-
---
--- Name: resource_translators resource_translators_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resource_translators
-    ADD CONSTRAINT resource_translators_pkey PRIMARY KEY (id);
-
-
---
--- Name: resource_typers resource_typers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resource_typers
-    ADD CONSTRAINT resource_typers_pkey PRIMARY KEY (id);
-
-
---
--- Name: resource_writers resource_writers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resource_writers
-    ADD CONSTRAINT resource_writers_pkey PRIMARY KEY (id);
 
 
 --
@@ -2487,22 +1990,6 @@ ALTER TABLE ONLY public.title_translations
 
 ALTER TABLE ONLY public.titles
     ADD CONSTRAINT titles_pkey PRIMARY KEY (id);
-
-
---
--- Name: translators translators_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.translators
-    ADD CONSTRAINT translators_pkey PRIMARY KEY (id);
-
-
---
--- Name: typers typers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.typers
-    ADD CONSTRAINT typers_pkey PRIMARY KEY (id);
 
 
 --
@@ -2559,14 +2046,6 @@ ALTER TABLE ONLY public.views
 
 ALTER TABLE ONLY public.volumes
     ADD CONSTRAINT volumes_pkey PRIMARY KEY (id);
-
-
---
--- Name: writers writers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.writers
-    ADD CONSTRAINT writers_pkey PRIMARY KEY (id);
 
 
 --
@@ -2752,20 +2231,6 @@ CREATE INDEX index_chapters_on_volume_id ON public.chapters USING btree (volume_
 
 
 --
--- Name: index_cleaners_on_artist_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_cleaners_on_artist_id ON public.cleaners USING btree (artist_id);
-
-
---
--- Name: index_cleaners_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_cleaners_on_cached_at ON public.cleaners USING btree (cached_at DESC);
-
-
---
 -- Name: index_content_language_translations_on_content_language_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2819,20 +2284,6 @@ CREATE INDEX index_demographics_on_cached_at ON public.demographics USING btree 
 --
 
 CREATE UNIQUE INDEX index_demographics_on_tag_id ON public.demographics USING btree (tag_id);
-
-
---
--- Name: index_editors_on_artist_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_editors_on_artist_id ON public.editors USING btree (artist_id);
-
-
---
--- Name: index_editors_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_editors_on_cached_at ON public.editors USING btree (cached_at DESC);
 
 
 --
@@ -3102,38 +2553,31 @@ CREATE INDEX index_pages_on_user_id ON public.pages USING btree (user_id);
 
 
 --
--- Name: index_painters_on_artist_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_resource_artists_on_artist_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_painters_on_artist_id ON public.painters USING btree (artist_id);
-
-
---
--- Name: index_painters_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_painters_on_cached_at ON public.painters USING btree (cached_at DESC);
+CREATE INDEX index_resource_artists_on_artist_id ON public.resource_artists USING btree (artist_id);
 
 
 --
--- Name: index_resource_cleaners_on_cleaner_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_resource_artists_on_artist_type; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_resource_cleaners_on_cleaner_id ON public.resource_cleaners USING btree (cleaner_id);
-
-
---
--- Name: index_resource_cleaners_on_resource; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_resource_cleaners_on_resource ON public.resource_cleaners USING btree (resource_type, resource_id);
+CREATE INDEX index_resource_artists_on_artist_type ON public.resource_artists USING btree (artist_type);
 
 
 --
--- Name: index_resource_cleaners_uniqueness; Type: INDEX; Schema: public; Owner: -
+-- Name: index_resource_artists_on_resource; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_resource_cleaners_uniqueness ON public.resource_cleaners USING btree (cleaner_id, resource_type, resource_id);
+CREATE INDEX index_resource_artists_on_resource ON public.resource_artists USING btree (resource_type, resource_id);
+
+
+--
+-- Name: index_resource_artists_uniqueness; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_resource_artists_uniqueness ON public.resource_artists USING btree (artist_type, artist_id, resource_type, resource_id);
 
 
 --
@@ -3155,27 +2599,6 @@ CREATE INDEX index_resource_demographics_on_resource ON public.resource_demograp
 --
 
 CREATE UNIQUE INDEX index_resource_demographics_uniqueness ON public.resource_demographics USING btree (demographic_id, resource_type, resource_id);
-
-
---
--- Name: index_resource_editors_on_editor_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_resource_editors_on_editor_id ON public.resource_editors USING btree (editor_id);
-
-
---
--- Name: index_resource_editors_on_resource; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_resource_editors_on_resource ON public.resource_editors USING btree (resource_type, resource_id);
-
-
---
--- Name: index_resource_editors_uniqueness; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_resource_editors_uniqueness ON public.resource_editors USING btree (editor_id, resource_type, resource_id);
 
 
 --
@@ -3242,27 +2665,6 @@ CREATE UNIQUE INDEX index_resource_marks_uniqueness ON public.resource_marks USI
 
 
 --
--- Name: index_resource_painters_on_painter_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_resource_painters_on_painter_id ON public.resource_painters USING btree (painter_id);
-
-
---
--- Name: index_resource_painters_on_resource; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_resource_painters_on_resource ON public.resource_painters USING btree (resource_type, resource_id);
-
-
---
--- Name: index_resource_painters_uniqueness; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_resource_painters_uniqueness ON public.resource_painters USING btree (painter_id, resource_type, resource_id);
-
-
---
 -- Name: index_resource_themes_on_resource; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3281,69 +2683,6 @@ CREATE INDEX index_resource_themes_on_theme_id ON public.resource_themes USING b
 --
 
 CREATE UNIQUE INDEX index_resource_themes_uniqueness ON public.resource_themes USING btree (theme_id, resource_type, resource_id);
-
-
---
--- Name: index_resource_translators_on_resource; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_resource_translators_on_resource ON public.resource_translators USING btree (resource_type, resource_id);
-
-
---
--- Name: index_resource_translators_on_translator_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_resource_translators_on_translator_id ON public.resource_translators USING btree (translator_id);
-
-
---
--- Name: index_resource_translators_uniqueness; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_resource_translators_uniqueness ON public.resource_translators USING btree (translator_id, resource_type, resource_id);
-
-
---
--- Name: index_resource_typers_on_resource; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_resource_typers_on_resource ON public.resource_typers USING btree (resource_type, resource_id);
-
-
---
--- Name: index_resource_typers_on_typer_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_resource_typers_on_typer_id ON public.resource_typers USING btree (typer_id);
-
-
---
--- Name: index_resource_typers_uniqueness; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_resource_typers_uniqueness ON public.resource_typers USING btree (typer_id, resource_type, resource_id);
-
-
---
--- Name: index_resource_writers_on_resource; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_resource_writers_on_resource ON public.resource_writers USING btree (resource_type, resource_id);
-
-
---
--- Name: index_resource_writers_on_writer_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_resource_writers_on_writer_id ON public.resource_writers USING btree (writer_id);
-
-
---
--- Name: index_resource_writers_uniqueness; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_resource_writers_uniqueness ON public.resource_writers USING btree (writer_id, resource_type, resource_id);
 
 
 --
@@ -3449,34 +2788,6 @@ CREATE INDEX index_titles_on_original_content_language_id ON public.titles USING
 --
 
 CREATE INDEX index_titles_on_status ON public.titles USING btree (status);
-
-
---
--- Name: index_translators_on_artist_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_translators_on_artist_id ON public.translators USING btree (artist_id);
-
-
---
--- Name: index_translators_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_translators_on_cached_at ON public.translators USING btree (cached_at DESC);
-
-
---
--- Name: index_typers_on_artist_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_typers_on_artist_id ON public.typers USING btree (artist_id);
-
-
---
--- Name: index_typers_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_typers_on_cached_at ON public.typers USING btree (cached_at DESC);
 
 
 --
@@ -3676,20 +2987,6 @@ CREATE UNIQUE INDEX index_volumes_on_title_id_and_number ON public.volumes USING
 
 
 --
--- Name: index_writers_on_artist_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_writers_on_artist_id ON public.writers USING btree (artist_id);
-
-
---
--- Name: index_writers_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_writers_on_cached_at ON public.writers USING btree (cached_at DESC);
-
-
---
 -- Name: formats fk_rails_0400824e47; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3703,14 +3000,6 @@ ALTER TABLE ONLY public.formats
 
 ALTER TABLE ONLY public.themes
     ADD CONSTRAINT fk_rails_0495226a20 FOREIGN KEY (tag_id) REFERENCES public.tags(id);
-
-
---
--- Name: typers fk_rails_0517c27e66; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.typers
-    ADD CONSTRAINT fk_rails_0517c27e66 FOREIGN KEY (artist_id) REFERENCES public.artists(id);
 
 
 --
@@ -3754,27 +3043,19 @@ ALTER TABLE ONLY public.chapters
 
 
 --
+-- Name: resource_artists fk_rails_25cea7c2c7; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_artists
+    ADD CONSTRAINT fk_rails_25cea7c2c7 FOREIGN KEY (artist_id) REFERENCES public.artists(id);
+
+
+--
 -- Name: content_language_translations fk_rails_2768f33fbe; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.content_language_translations
     ADD CONSTRAINT fk_rails_2768f33fbe FOREIGN KEY (content_language_id) REFERENCES public.content_languages(id);
-
-
---
--- Name: writers fk_rails_2942212f78; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.writers
-    ADD CONSTRAINT fk_rails_2942212f78 FOREIGN KEY (artist_id) REFERENCES public.artists(id);
-
-
---
--- Name: cleaners fk_rails_353656a73a; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.cleaners
-    ADD CONSTRAINT fk_rails_353656a73a FOREIGN KEY (artist_id) REFERENCES public.artists(id);
 
 
 --
@@ -3810,14 +3091,6 @@ ALTER TABLE ONLY public.title_translations
 
 
 --
--- Name: painters fk_rails_45262d9d58; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.painters
-    ADD CONSTRAINT fk_rails_45262d9d58 FOREIGN KEY (artist_id) REFERENCES public.artists(id);
-
-
---
 -- Name: interface_language_translations fk_rails_4a3cd8d21f; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3834,27 +3107,11 @@ ALTER TABLE ONLY public.group_user_access_rights
 
 
 --
--- Name: resource_painters fk_rails_583e3f2803; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resource_painters
-    ADD CONSTRAINT fk_rails_583e3f2803 FOREIGN KEY (painter_id) REFERENCES public.painters(id);
-
-
---
 -- Name: group_user_access_rights fk_rails_58df8754b7; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.group_user_access_rights
     ADD CONSTRAINT fk_rails_58df8754b7 FOREIGN KEY (group_user_id) REFERENCES public.group_users(id);
-
-
---
--- Name: resource_cleaners fk_rails_5a79e6e698; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resource_cleaners
-    ADD CONSTRAINT fk_rails_5a79e6e698 FOREIGN KEY (cleaner_id) REFERENCES public.cleaners(id);
 
 
 --
@@ -3903,14 +3160,6 @@ ALTER TABLE ONLY public.user_access_rights
 
 ALTER TABLE ONLY public.user_settings
     ADD CONSTRAINT fk_rails_6f5ae6f6a1 FOREIGN KEY (interface_language_id) REFERENCES public.interface_languages(id);
-
-
---
--- Name: translators fk_rails_760b33c1d3; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.translators
-    ADD CONSTRAINT fk_rails_760b33c1d3 FOREIGN KEY (artist_id) REFERENCES public.artists(id);
 
 
 --
@@ -3986,14 +3235,6 @@ ALTER TABLE ONLY public.chapters
 
 
 --
--- Name: editors fk_rails_b0f81755d1; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.editors
-    ADD CONSTRAINT fk_rails_b0f81755d1 FOREIGN KEY (artist_id) REFERENCES public.artists(id);
-
-
---
 -- Name: bookmarks fk_rails_c1ff6fa4ac; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -4066,14 +3307,6 @@ ALTER TABLE ONLY public.favorites
 
 
 --
--- Name: resource_editors fk_rails_d6d5990eff; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resource_editors
-    ADD CONSTRAINT fk_rails_d6d5990eff FOREIGN KEY (editor_id) REFERENCES public.editors(id);
-
-
---
 -- Name: resource_marks fk_rails_e4cc00d08a; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -4106,22 +3339,6 @@ ALTER TABLE ONLY public.artist_translations
 
 
 --
--- Name: resource_translators fk_rails_ec43776fa9; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resource_translators
-    ADD CONSTRAINT fk_rails_ec43776fa9 FOREIGN KEY (translator_id) REFERENCES public.translators(id);
-
-
---
--- Name: resource_typers fk_rails_edaede7625; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resource_typers
-    ADD CONSTRAINT fk_rails_edaede7625 FOREIGN KEY (typer_id) REFERENCES public.typers(id);
-
-
---
 -- Name: interface_language_translations fk_rails_ee7b55ca7d; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -4143,14 +3360,6 @@ ALTER TABLE ONLY public.pages
 
 ALTER TABLE ONLY public.interface_languages
     ADD CONSTRAINT fk_rails_f4d2cc267e FOREIGN KEY (locale_id) REFERENCES public.locales(id);
-
-
---
--- Name: resource_writers fk_rails_fba6c65c95; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resource_writers
-    ADD CONSTRAINT fk_rails_fba6c65c95 FOREIGN KEY (writer_id) REFERENCES public.writers(id);
 
 
 --
@@ -4312,6 +3521,31 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210418162435'),
 ('20210422152211'),
 ('20210522073513'),
-('20210608081431');
+('20210608081431'),
+('20210608083723'),
+('20210608083736'),
+('20210608083748'),
+('20210608083802'),
+('20210608083815'),
+('20210608084338'),
+('20210608084342'),
+('20210608084346'),
+('20210608084353'),
+('20210608084359'),
+('20210608084739'),
+('20210608084743'),
+('20210608084747'),
+('20210608084753'),
+('20210608084758'),
+('20210608092423'),
+('20210608092505'),
+('20210608092755'),
+('20210608121453'),
+('20210608121457'),
+('20210608121500'),
+('20210608121504'),
+('20210608121512'),
+('20210608121515'),
+('20210608122741');
 
 

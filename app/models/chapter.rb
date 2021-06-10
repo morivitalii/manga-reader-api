@@ -1,10 +1,7 @@
 class Chapter < ApplicationRecord
   include CacheInvalidation
 
-  CLEANERS_LIMIT = 10
-  TRANSLATORS_LIMIT = 10
-  EDITORS_LIMIT = 10
-  TYPERS_LIMIT = 10
+  ARTISTS_LIMIT = 100
 
   # This attributes should not be changed. Just because
   attr_readonly :title_id, :content_language_id, :volume_id, :group_id, :user_id, :number
@@ -18,17 +15,8 @@ class Chapter < ApplicationRecord
   belongs_to :user
   belongs_to :group
 
-  has_many :resource_cleaners, as: :resource, dependent: :destroy
-  has_many :cleaners, through: :resource_cleaners
-
-  has_many :resource_translators, as: :resource, dependent: :destroy
-  has_many :translators, through: :resource_translators
-
-  has_many :resource_editors, as: :resource, dependent: :destroy
-  has_many :editors, through: :resource_editors
-
-  has_many :resource_typers, as: :resource, dependent: :destroy
-  has_many :typers, through: :resource_typers
+  has_many :resource_artists, as: :resource, dependent: :destroy
+  has_many :artists, through: :resource_artists
 
   has_many :pages, dependent: :destroy
   has_many :bookmarks, as: :resource, dependent: :destroy
@@ -47,10 +35,7 @@ class Chapter < ApplicationRecord
   validates :name, allow_blank: true, length: { minimum: 1, maximum: 125 }
   validates :number, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100_000 }
   validate :validate_volume_belongs_to_title
-  validate :validate_cleaners_size
-  validate :validate_translators_size
-  validate :validate_editors_size
-  validate :validate_typers_size
+  validate :validate_artists_size
 
   private
 
@@ -62,27 +47,9 @@ class Chapter < ApplicationRecord
     end
   end
 
-  def validate_cleaners_size
-    if cleaners.size > CLEANERS_LIMIT
-      errors.add(:cleaners, :invalid)
-    end
-  end
-
-  def validate_translators_size
-    if translators.size > TRANSLATORS_LIMIT
-      errors.add(:translators, :invalid)
-    end
-  end
-
-  def validate_editors_size
-    if editors.size > EDITORS_LIMIT
-      errors.add(:editors, :invalid)
-    end
-  end
-
-  def validate_typers_size
-    if typers.size > TYPERS_LIMIT
-      errors.add(:typers, :invalid)
+  def validate_artists_size
+    if artists.size > ARTISTS_LIMIT
+      errors.add(:artists, :invalid)
     end
   end
 end

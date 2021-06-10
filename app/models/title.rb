@@ -2,13 +2,12 @@ class Title < ApplicationRecord
   include Translation
   include Search::Title
 
+  ARTISTS_LIMIT = 100
+
   belongs_to :original_content_language, optional: true, class_name: "ContentLanguage"
 
-  has_many :resource_writers, as: :resource, dependent: :destroy
-  has_many :writers, through: :resource_writers
-
-  has_many :resource_painters, as: :resource, dependent: :destroy
-  has_many :painters, through: :resource_painters
+  has_many :resource_artists, as: :resource, dependent: :destroy
+  has_many :artists, through: :resource_artists
 
   has_many :resource_genres, as: :resource, dependent: :destroy
   has_many :genres, through: :resource_genres
@@ -43,4 +42,13 @@ class Title < ApplicationRecord
   validates :description, allow_blank: true, length: { minimum: 1, maximum: 5_000 }
   validates :status, presence: true
   validates :publication_status, presence: true
+  validate :validate_artists_size
+
+  private
+
+  def validate_artists_size
+    if artists.size > ARTISTS_LIMIT
+      errors.add(:artists, :invalid)
+    end
+  end
 end

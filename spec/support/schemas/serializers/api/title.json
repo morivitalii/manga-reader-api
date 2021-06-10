@@ -67,17 +67,18 @@
         }
       ]
     },
-    "writers": {
-      "type": "array",
-      "items": {
-        "$ref": "file:/serializers/api/writer.json#"
-      }
-    },
-    "painters": {
-      "type": "array",
-      "items": {
-        "$ref": "file:/serializers/api/painter.json#"
-      }
+    "artists": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "file:/serializers/api/resource_artist.json#"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "genres": {
       "type": "array",

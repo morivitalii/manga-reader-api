@@ -291,6 +291,11 @@ components:
           nullable: true
           oneOf:
             - $ref: "#/components/schemas/file"
+        artists:
+          type: array
+          nullable: true
+          items:
+            $ref: "#/components/schemas/resource_artist"
       example:
         id: 1
         content_language_id: 1
@@ -668,6 +673,43 @@ components:
         tag_id: 1
         title: Lolicon
         description: Description
+    resource_artist:
+      type: object
+      title: Resource artist
+      properties:
+        id:
+          type: integer
+          description: ID
+        artist_id:
+          type: integer
+          description: Artist ID
+        artist_type:
+          type: string
+          description: Artist ID
+          enum:
+            - writer
+            - painter
+            - cleaner
+            - translator
+            - editor
+            - typer
+        resource_id:
+          type: integer
+          description: Resource ID
+        resource_type:
+          type: string
+          description: Resource ID
+          enum:
+            - Title
+            - Chapter
+        artist:
+          $ref: "#/components/schemas/artist"
+      example:
+        id: 1
+        artist_id: 1
+        artist_type: writer
+        resource_id: 1
+        resource_type: Title
     title:
       type: object
       title: Title
@@ -703,14 +745,11 @@ components:
           nullable: true
           oneOf:
             - $ref: "#/components/schemas/file"
-        writers:
+        artists:
           type: array
+          nullable: true
           items:
-            $ref: "#/components/schemas/writer"
-        painters:
-          type: array
-          items:
-            $ref: "#/components/schemas/painter"
+            $ref: "#/components/schemas/resource_artist"
         genres:
           type: array
           items:
@@ -2300,12 +2339,12 @@ paths:
                   description: Original content language
                 writer_ids:
                   type: array
-                  description: Writers
+                  description: Artists IDs
                   items:
                     type: integer
                 painter_ids:
                   type: array
-                  description: Painters
+                  description: Artists IDs
                   items:
                     type: integer
                 genre_ids:
@@ -2429,12 +2468,12 @@ paths:
                   description: Original content language
                 writer_ids:
                   type: array
-                  description: Writers
+                  description: Artists IDs
                   items:
                     type: integer
                 painter_ids:
                   type: array
-                  description: Painters
+                  description: Artists IDs
                   items:
                     type: integer
                 genre_ids:
@@ -2494,7 +2533,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: "#/components/schemas/volume"
+                  - $ref: "#/components/schemas/title"
         "401":
           $ref: "#/components/responses/unauthorized"
         "403":
@@ -2849,22 +2888,22 @@ paths:
                   description: Group ID
                 cleaners_ids:
                   type: array
-                  description: Cleaners
+                  description: Artists IDs
                   items:
                     type: integer
                 translators_ids:
                   type: array
-                  description: Translators
+                  description: Artists IDs
                   items:
                     type: integer
                 editors_ids:
                   type: array
-                  description: Editors
+                  description: Artists IDs
                   items:
                     type: integer
                 typers_ids:
                   type: array
-                  description: Typers
+                  description: Artists IDs
                   items:
                     type: integer
               example:
@@ -2949,22 +2988,22 @@ paths:
                   description: Volume ID
                 cleaners_ids:
                   type: array
-                  description: Cleaners
+                  description: Artists IDs
                   items:
                     type: integer
                 translators_ids:
                   type: array
-                  description: Translators
+                  description: Artists IDs
                   items:
                     type: integer
                 editors_ids:
                   type: array
-                  description: Editors
+                  description: Artists IDs
                   items:
                     type: integer
                 typers_ids:
                   type: array
-                  description: Typers
+                  description: Artists IDs
                   items:
                     type: integer
               example:
@@ -4203,150 +4242,6 @@ paths:
           $ref: "#/components/responses/not_found"
         "422":
           $ref: "#/components/responses/unprocessable_entity"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-  /writers/{id}.json:
-    get:
-      tags:
-        - Artists
-      summary: Writer
-      description: ""
-      parameters:
-        - $ref: "#/components/parameters/id"
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/writer"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "404":
-          $ref: "#/components/responses/not_found"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-  /painters/{id}.json:
-    get:
-      tags:
-        - Artists
-      summary: Painter
-      description: ""
-      parameters:
-        - $ref: "#/components/parameters/id"
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/painter"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "404":
-          $ref: "#/components/responses/not_found"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-  /cleaners/{id}.json:
-    get:
-      tags:
-        - Artists
-      summary: Cleaner
-      description: ""
-      parameters:
-        - $ref: "#/components/parameters/id"
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/cleaner"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "404":
-          $ref: "#/components/responses/not_found"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-  /translators/{id}.json:
-    get:
-      tags:
-        - Artists
-      summary: Translator
-      description: ""
-      parameters:
-        - $ref: "#/components/parameters/id"
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/translator"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "404":
-          $ref: "#/components/responses/not_found"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-  /editors/{id}.json:
-    get:
-      tags:
-        - Artists
-      summary: Editor
-      description: ""
-      parameters:
-        - $ref: "#/components/parameters/id"
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/editor"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "404":
-          $ref: "#/components/responses/not_found"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-  /typers/{id}.json:
-    get:
-      tags:
-        - Artists
-      summary: Typer
-      description: ""
-      parameters:
-        - $ref: "#/components/parameters/id"
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/typer"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "404":
-          $ref: "#/components/responses/not_found"
         "500":
           $ref: "#/components/responses/internal_server_error"
   /groups.json:

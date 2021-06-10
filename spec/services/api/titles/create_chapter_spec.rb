@@ -9,8 +9,10 @@ RSpec.describe Api::Titles::CreateChapter do
       group = create(:group)
       user = create(:user)
       first_user = create(:user)
+      first_artist = create(:artist, user: first_user)
       second_user = create(:user)
-      ctet_ids = [first_user.id, second_user.id]
+      second_artist = create(:artist, user: second_user)
+      ctet_ids = [first_artist.id, second_artist.id]
       _group_user = create(:group_user, user: first_user)
       _group_user = create(:group_user, user: second_user)
 

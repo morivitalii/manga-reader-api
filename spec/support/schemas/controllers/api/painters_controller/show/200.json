@@ -1,5 +1,0 @@
-{
-  "allOf": [
-    { "$ref": "file:/serializers/api/painter.json#" }
-  ]
-}

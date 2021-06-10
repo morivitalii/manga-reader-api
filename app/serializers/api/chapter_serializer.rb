@@ -1,4 +1,6 @@
 class Api::ChapterSerializer < Api::ApplicationSerializer
+  serialize_associations :resource_artists, with: Api::ResourceArtistSerializer
+
   def attributes
     {
       id: model.id,
@@ -9,7 +11,8 @@ class Api::ChapterSerializer < Api::ApplicationSerializer
       number: model.number,
       status: model.status,
       pages_count: model.pages_count,
-      cover: cover
+      cover: cover,
+      artists: resource_artists
     }
   end
 
