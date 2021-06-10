@@ -64,6 +64,19 @@
           "type": "null"
         }
       ]
+    },
+    "artists": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "file:/serializers/api/resource_artist.json#"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   }
 }

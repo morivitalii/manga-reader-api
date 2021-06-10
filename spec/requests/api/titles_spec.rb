@@ -39,8 +39,8 @@ RSpec.describe Api::TitlesController do
   describe ".create", context: :as_signed_in_user do
     it "returns valid response" do
       original_content_language = create(:content_language)
-      writers = create_list(:writer, 2)
-      painters = create_list(:painter, 2)
+      writers = create_list(:artist, 2)
+      painters = create_list(:artist, 2)
       genres = create_list(:genre, 2)
       formats = create_list(:format, 2)
       demographics = create_list(:demographic, 2)
@@ -74,8 +74,8 @@ RSpec.describe Api::TitlesController do
     it "returns valid response" do
 			title = create(:title)
       original_content_language = create(:content_language)
-      writers = create_list(:writer, 2)
-      painters = create_list(:painter, 2)
+      writers = create_list(:artist, 2)
+      painters = create_list(:artist, 2)
       genres = create_list(:genre, 2)
       formats = create_list(:format, 2)
       demographics = create_list(:demographic, 2)

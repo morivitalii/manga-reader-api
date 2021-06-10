@@ -1,6 +1,5 @@
 class Api::TitleSerializer < Api::ApplicationSerializer
-  serialize_associations :writers, with: Api::WriterSerializer
-  serialize_associations :painters, with: Api::PainterSerializer
+  serialize_associations :resource_artists, with: Api::ResourceArtistSerializer
   serialize_associations :genres, with: Api::GenreSerializer
   serialize_associations :formats, with: Api::FormatSerializer
   serialize_associations :demographics, with: Api::DemographicSerializer
@@ -18,8 +17,7 @@ class Api::TitleSerializer < Api::ApplicationSerializer
       status: model.status,
       publication_status: model.publication_status,
       cover: cover,
-      writers: writers,
-      painters: painters,
+      artists: resource_artists,
       genres: genres,
       formats: formats,
       demographics: demographics,

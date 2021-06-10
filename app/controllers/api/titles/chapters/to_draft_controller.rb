@@ -14,7 +14,8 @@ class Api::Titles::Chapters::ToDraftController < Api::ApplicationController
           :content_language,
           :volume,
           :group,
-          cover_attachment: :blob
+          cover_attachment: :blob,
+          resource_artists: { artist: Artist.translations_associations },
         ]
       )
 

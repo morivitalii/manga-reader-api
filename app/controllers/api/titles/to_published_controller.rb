@@ -15,8 +15,7 @@ class Api::Titles::ToPublishedController < Api::ApplicationController
             ContentLanguage.translations_associations
           ],
           cover_attachment: :blob,
-          writers: { artist: Artist.translations_associations },
-          painters: { artist: Artist.translations_associations },
+          resource_artists: { artist: Artist.translations_associations },
           genres: { tag: Tag.translations_associations },
           formats: { tag: Tag.translations_associations },
           demographics: { tag: Tag.translations_associations },

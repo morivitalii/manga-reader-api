@@ -27,21 +27,11 @@ module Search
             indexes :locale, type: :keyword
           end
 
-          indexes :writers, type: :object do
+          indexes :artists, type: :object do
             indexes :id, type: :keyword
             indexes :user_id, type: :keyword
             indexes :artist_id, type: :keyword
-
-            indexes :name, type: :object do
-              indexes :en, type: :text, analyzer: :english
-              indexes :ru, type: :text, analyzer: :russian
-            end
-          end
-
-          indexes :painters, type: :object do
-            indexes :id, type: :keyword
-            indexes :user_id, type: :keyword
-            indexes :artist_id, type: :keyword
+            indexes :artist_type, type: :keyword
 
             indexes :name, type: :object do
               indexes :en, type: :text, analyzer: :english
@@ -109,7 +99,7 @@ module Search
               :locale,
               ContentLanguage.translations_associations
             ],
-            writers: { artist: Artist.translations_associations },
+            resource_artists: { artist: Artist.translations_associations },
             painters: { artist: Artist.translations_associations },
             genres: { tag: Tag.translations_associations },
             formats: { tag: Tag.translations_associations },
@@ -133,25 +123,15 @@ module Search
             id: original_content_language.id,
             locale: original_content_language.locale.key
           },
-          writers: writers.map { |writer|
+          artists: resource_artists.map { |resource_artist|
             {
-              id: writer.id,
-              user_id: writer.artist.user_id,
-              artist_id: writer.artist_id,
+              id: resource_artist.id,
+              user_id: resource_artist.artist.user_id,
+              artist_id: resource_artist.artist_id,
+              artist_type: resource_artist.type,
               name: {
-                en: writer.artist.name_en,
-                ru: writer.artist.name_ru
-              }
-            }
-          },
-          painters: painters.map { |painter|
-            {
-              id: painter.id,
-              user_id: painter.artist.user_id,
-              artist_id: painter.artist_id,
-              name: {
-                en: painter.artist.name_en,
-                ru: painter.artist.name_ru
+                en: resource_artist.artist.name_en,
+                ru: resource_artist.artist.name_ru
               }
             }
           },
