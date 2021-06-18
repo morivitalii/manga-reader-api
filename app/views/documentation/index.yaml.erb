@@ -12,11 +12,6 @@ tags:
   - name: Content languages
   - name: Access rights
   - name: Group access rights
-  - name: Genres
-  - name: Formats
-  - name: Themes
-  - name: Demographics
-  - name: Marks
   - name: Users
   - name: Artists
   - name: Groups
@@ -344,27 +339,6 @@ components:
         id: 1
         locale_id: 1
         title: English
-    demographic:
-      type: object
-      title: Demographic
-      properties:
-        id:
-          type: integer
-          description: ID
-        tag_id:
-          type: integer
-          description: Tag ID
-        title:
-          type: string
-          description: Title
-        description:
-          type: string
-          description: Description
-      example:
-        id: 1
-        tag_id: 1
-        title: Seinen
-        description: Description
     editor:
       type: object
       title: Editor
@@ -411,7 +385,7 @@ components:
         id: 1
         user_id: 1
         resource_type: Title
-        resource_id: 1
+        resource_id: 1Tags IDsTags IDsTags IDsTags IDsTags IDs
     file:
       type: object
       title: File
@@ -436,48 +410,6 @@ components:
         content_type: image/jpeg
         width: 1600
         height: 2260
-    format:
-      type: object
-      title: Format
-      properties:
-        id:
-          type: integer
-          description: ID
-        tag_id:
-          type: integer
-          description: Tag ID
-        title:
-          type: string
-          description: Title
-        description:
-          type: string
-          description: Description
-      example:
-        id: 1
-        tag_id: 1
-        title: Manga
-        description: Description
-    genre:
-      type: object
-      title: Genre
-      properties:
-        id:
-          type: integer
-          description: ID
-        tag_id:
-          type: integer
-          description: Tag ID
-        title:
-          type: string
-          description: Title
-        description:
-          type: string
-          description: Description
-      example:
-        id: 1
-        tag_id: 1
-        title: Adventure
-        description: Description
     group:
       type: object
       title: Group
@@ -569,27 +501,6 @@ components:
       example:
         id: 1
         key: en
-    mark:
-      type: object
-      title: Mark
-      properties:
-        id:
-          type: integer
-          description: ID
-        tag_id:
-          type: integer
-          description: Tag ID
-        title:
-          type: string
-          description: Title
-        description:
-          type: string
-          description: Description
-      example:
-        id: 1
-        tag_id: 1
-        title: Explicit
-        description: Description
     page:
       type: object
       title: Page
@@ -652,27 +563,6 @@ components:
         key: adventure
         title: Adventure
         description: Description
-    theme:
-      type: object
-      title: Theme
-      properties:
-        id:
-          type: integer
-          description: ID
-        tag_id:
-          type: integer
-          description: Tag ID
-        title:
-          type: string
-          description: Title
-        description:
-          type: string
-          description: Description
-      example:
-        id: 1
-        tag_id: 1
-        title: Lolicon
-        description: Description
     resource_artist:
       type: object
       title: Resource artist
@@ -708,6 +598,41 @@ components:
         id: 1
         artist_id: 1
         artist_type: writer
+        resource_id: 1
+        resource_type: Title
+    resource_tag:
+      type: object
+      title: Resource tag
+      properties:
+        id:
+          type: integer
+          description: ID
+        tag_id:
+          type: integer
+          description: tag ID
+        tag_type:
+          type: string
+          description: tag ID
+          enum:
+            - demographic
+            - format
+            - genre
+            - mark
+            - theme
+        resource_id:
+          type: integer
+          description: Resource ID
+        resource_type:
+          type: string
+          description: Resource ID
+          enum:
+            - Title
+        tag:
+          $ref: "#/components/schemas/tag"
+      example:
+        id: 1
+        tag_id: 1
+        tag_type: writer
         resource_id: 1
         resource_type: Title
     title:
@@ -750,26 +675,11 @@ components:
           nullable: true
           items:
             $ref: "#/components/schemas/resource_artist"
-        genres:
+        tags:
           type: array
+          nullable: true
           items:
-            $ref: "#/components/schemas/genre"
-        formats:
-          type: array
-          items:
-            $ref: "#/components/schemas/format"
-        demographics:
-          type: array
-          items:
-            $ref: "#/components/schemas/demographic"
-        marks:
-          type: array
-          items:
-            $ref: "#/components/schemas/mark"
-        themes:
-          type: array
-          items:
-            $ref: "#/components/schemas/theme"
+            $ref: "#/components/schemas/resource_tag"
       example:
         id: 1
         original_content_language_id: 1
@@ -1511,11 +1421,11 @@ paths:
           $ref: "#/components/responses/not_found"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /genres.json:
+  /tags.json:
     get:
       tags:
-        - Genres
-      summary: Genres
+        - Tags
+      summary: Tags
       description: Sorted by title ASC
       responses:
         "200":
@@ -1525,7 +1435,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/genre"
+                  $ref: "#/components/schemas/tag"
         "401":
           $ref: "#/components/responses/unauthorized"
         "403":
@@ -1534,8 +1444,8 @@ paths:
           $ref: "#/components/responses/internal_server_error"
     post:
       tags:
-        - Genres
-      summary: Create genre
+        - Tags
+      summary: Create tag
       description: ""
       requestBody:
         content:
@@ -1563,263 +1473,13 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: "#/components/schemas/genre"
+                  - $ref: "#/components/schemas/tag"
         "401":
           $ref: "#/components/responses/unauthorized"
         "403":
           $ref: "#/components/responses/forbidden"
         "422":
           $ref: "#/components/responses/unprocessable_entity"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-  /genres/{id}.json:
-    get:
-      tags:
-        - Genres
-      summary: Genre
-      description: ""
-      parameters:
-        - $ref: "#/components/parameters/id"
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/genre"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "404":
-          $ref: "#/components/responses/not_found"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-    put:
-      tags:
-        - Genres
-      summary: Update genre
-      description: ""
-      parameters:
-        - $ref: "#/components/parameters/id"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                key:
-                  type: string
-                  description: adventure
-                title:
-                  type: string
-                  description: Adventure
-                description:
-                  type: string
-                  description: Description
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/genre"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "404":
-          $ref: "#/components/responses/not_found"
-        "422":
-          $ref: "#/components/responses/unprocessable_entity"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-    delete:
-      tags:
-        - Genres
-      summary: Delete genre
-      description: ""
-      parameters:
-        - $ref: "#/components/parameters/id"
-      responses:
-        "204":
-          $ref: "#/components/responses/no_content"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "404":
-          $ref: "#/components/responses/not_found"
-        "422":
-          $ref: "#/components/responses/unprocessable_entity"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-  /formats.json:
-    get:
-      tags:
-        - Formats
-      summary: Formats
-      description: Sorted by title ASC
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/format"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-    post:
-      tags:
-        - Formats
-      summary: Create format
-      description: ""
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                key:
-                  type: string
-                  description: Key
-                title:
-                  type: string
-                  description: Title
-                description:
-                  type: string
-                  description: Description
-              example:
-                key: manga
-                title: Manga
-                description: Description
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/format"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "422":
-          $ref: "#/components/responses/unprocessable_entity"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-  /formats/{id}.json:
-    get:
-      tags:
-        - Formats
-      summary: Format
-      description: ""
-      parameters:
-        - $ref: "#/components/parameters/id"
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/format"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "404":
-          $ref: "#/components/responses/not_found"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-    put:
-      tags:
-        - Formats
-      summary: Update format
-      description: ""
-      parameters:
-        - $ref: "#/components/parameters/id"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                key:
-                  type: string
-                  description: manga
-                title:
-                  type: string
-                  description: Manga
-                description:
-                  type: string
-                  description: Description
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/format"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "404":
-          $ref: "#/components/responses/not_found"
-        "422":
-          $ref: "#/components/responses/unprocessable_entity"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-    delete:
-      tags:
-        - Formats
-      summary: Delete format
-      description: ""
-      parameters:
-        - $ref: "#/components/parameters/id"
-      responses:
-        "204":
-          $ref: "#/components/responses/no_content"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "404":
-          $ref: "#/components/responses/not_found"
-        "422":
-          $ref: "#/components/responses/unprocessable_entity"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-  /tags.json:
-    get:
-      tags:
-        - Tags
-      summary: Tags
-      description: Sorted by title ASC
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/tag"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
         "500":
           $ref: "#/components/responses/internal_server_error"
   /tags/{id}.json:
@@ -1846,95 +1506,10 @@ paths:
           $ref: "#/components/responses/not_found"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /themes.json:
-    get:
-      tags:
-        - Themes
-      summary: Themes
-      description: Sorted by title ASC
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/theme"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-    post:
-      tags:
-        - Themes
-      summary: Create theme
-      description: ""
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                key:
-                  type: string
-                  description: Key
-                title:
-                  type: string
-                  description: Title
-                description:
-                  type: string
-                  description: Description
-              example:
-                key: manga
-                title: Manga
-                description: Description
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/theme"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "422":
-          $ref: "#/components/responses/unprocessable_entity"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-  /themes/{id}.json:
-    get:
-      tags:
-        - Themes
-      summary: Theme
-      description: ""
-      parameters:
-        - $ref: "#/components/parameters/id"
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/theme"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "404":
-          $ref: "#/components/responses/not_found"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
     put:
       tags:
-        - Themes
-      summary: Update theme
+        - Tags
+      summary: Update tag
       description: ""
       parameters:
         - $ref: "#/components/parameters/id"
@@ -1946,10 +1521,10 @@ paths:
               properties:
                 key:
                   type: string
-                  description: manga
+                  description: adventure
                 title:
                   type: string
-                  description: Manga
+                  description: Adventure
                 description:
                   type: string
                   description: Description
@@ -1960,7 +1535,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: "#/components/schemas/theme"
+                  - $ref: "#/components/schemas/tag"
         "401":
           $ref: "#/components/responses/unauthorized"
         "403":
@@ -1973,298 +1548,8 @@ paths:
           $ref: "#/components/responses/internal_server_error"
     delete:
       tags:
-        - Themes
-      summary: Delete theme
-      description: ""
-      parameters:
-        - $ref: "#/components/parameters/id"
-      responses:
-        "204":
-          $ref: "#/components/responses/no_content"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "404":
-          $ref: "#/components/responses/not_found"
-        "422":
-          $ref: "#/components/responses/unprocessable_entity"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-  /demographics.json:
-    get:
-      tags:
-        - Demographics
-      summary: Demographics
-      description: Sorted by title ASC
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/demographic"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-    post:
-      tags:
-        - Demographics
-      summary: Create demographic
-      description: ""
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                key:
-                  type: string
-                  description: Key
-                title:
-                  type: string
-                  description: Title
-                description:
-                  type: string
-                  description: Description
-              example:
-                key: manga
-                title: Manga
-                description: Description
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/demographic"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "422":
-          $ref: "#/components/responses/unprocessable_entity"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-  /demographics/{id}.json:
-    get:
-      tags:
-        - Demographics
-      summary: Demographic
-      description: ""
-      parameters:
-        - $ref: "#/components/parameters/id"
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/demographic"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "404":
-          $ref: "#/components/responses/not_found"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-    put:
-      tags:
-        - Demographics
-      summary: Update demographic
-      description: ""
-      parameters:
-        - $ref: "#/components/parameters/id"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                key:
-                  type: string
-                  description: manga
-                title:
-                  type: string
-                  description: Manga
-                description:
-                  type: string
-                  description: Description
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/demographic"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "404":
-          $ref: "#/components/responses/not_found"
-        "422":
-          $ref: "#/components/responses/unprocessable_entity"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-    delete:
-      tags:
-        - Demographics
-      summary: Delete demographic
-      description: ""
-      parameters:
-        - $ref: "#/components/parameters/id"
-      responses:
-        "204":
-          $ref: "#/components/responses/no_content"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "404":
-          $ref: "#/components/responses/not_found"
-        "422":
-          $ref: "#/components/responses/unprocessable_entity"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-  /marks.json:
-    get:
-      tags:
-        - Marks
-      summary: Marks
-      description: Sorted by title ASC
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/mark"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-    post:
-      tags:
-        - Marks
-      summary: Create mark
-      description: ""
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                key:
-                  type: string
-                  description: Key
-                title:
-                  type: string
-                  description: Title
-                description:
-                  type: string
-                  description: Description
-              example:
-                key: manga
-                title: Manga
-                description: Description
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/mark"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "422":
-          $ref: "#/components/responses/unprocessable_entity"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-  /marks/{id}.json:
-    get:
-      tags:
-        - Marks
-      summary: Mark
-      description: ""
-      parameters:
-        - $ref: "#/components/parameters/id"
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/mark"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "404":
-          $ref: "#/components/responses/not_found"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-    put:
-      tags:
-        - Marks
-      summary: Update mark
-      description: ""
-      parameters:
-        - $ref: "#/components/parameters/id"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                key:
-                  type: string
-                  description: manga
-                title:
-                  type: string
-                  description: Manga
-                description:
-                  type: string
-                  description: Description
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/mark"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "404":
-          $ref: "#/components/responses/not_found"
-        "422":
-          $ref: "#/components/responses/unprocessable_entity"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-    delete:
-      tags:
-        - Marks
-      summary: Delete mark
+        - Tags
+      summary: Delete tag
       description: ""
       parameters:
         - $ref: "#/components/parameters/id"
@@ -2336,7 +1621,7 @@ paths:
                     - cancelled
                 original_content_language_id:
                   type: integer
-                  description: Original content language
+                  description: Original content language ID
                 writer_ids:
                   type: array
                   description: Artists IDs
@@ -2349,27 +1634,27 @@ paths:
                     type: integer
                 genre_ids:
                   type: array
-                  description: Genres
+                  description: Tags IDs
                   items:
                     type: integer
                 format_ids:
                   type: array
-                  description: Formats
+                  description: Tags IDs
                   items:
                     type: integer
                 demographic_ids:
                   type: array
-                  description: Demographics
+                  description: Tags IDs
                   items:
                     type: integer
                 mark_ids:
                   type: array
-                  description: Marks
+                  description: Tags IDs
                   items:
                     type: integer
                 theme_ids:
                   type: array
-                  description: Themes
+                  description: Tags IDs
                   items:
                     type: integer
               example:
@@ -2478,27 +1763,27 @@ paths:
                     type: integer
                 genre_ids:
                   type: array
-                  description: Genres
+                  description: Tags IDs
                   items:
                     type: integer
                 format_ids:
                   type: array
-                  description: Formats
+                  description: Tags IDs
                   items:
                     type: integer
                 demographic_ids:
                   type: array
-                  description: Demographics
+                  description: Tags IDs
                   items:
                     type: integer
                 mark_ids:
                   type: array
-                  description: Marks
+                  description: Tags IDs
                   items:
                     type: integer
                 theme_ids:
                   type: array
-                  description: Themes
+                  description: Tags IDs
                   items:
                     type: integer
               example:

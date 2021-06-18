@@ -13,7 +13,12 @@ RSpec.describe Api::LocalesController do
 
       expect(response).to have_http_status(200)
       expect(response).to match_json_schema("controllers/api/locales_controller/index/200")
-      expect(response).to have_objects_collection(first_locale, second_locale, third_locale)
+      expect(response).to have_objects_collection(
+
+        first_locale,
+        second_locale,
+        third_locale
+      )
     end
   end
 

@@ -31,19 +31,34 @@ class Api::Titles::UpdateChapter
 
   def process_resource_artists(type, artist_ids)
     chapter.resource_artists.each do |resource_artist|
-      next unless resource_artist.public_send("#{type}?")
-      next if artist_ids.include?(resource_artist.artist_id)
+      next unless artist_marked_for_destroy?(resource_artist, type, artist_ids)
 
       resource_artist.destroy!
     end
 
     artist_ids.each do |artist_id|
-      next if chapter.resource_artists.any? { |resource_artist| resource_artist.public_send("#{type}?") && resource_artist.artist_id == artist_id }
+      next if artist_attached?(type, artist_id)
 
       chapter.resource_artists.build(
         artist_id: artist_id,
         artist_type: type
       )
     end
+  end
+
+  def artist_attached?(type, artist_id)
+    chapter.resource_artists.any? do |resource_artist|
+      type_matches = resource_artist.public_send("#{type}?")
+      artist_id_equal = resource_artist.artist_id == artist_id
+
+      type_matches && artist_id_equal
+    end
+  end
+
+  def artist_marked_for_destroy?(resource_artist, type, artist_ids)
+    type_matches = resource_artist.public_send("#{type}?")
+    id_absent_in_artist_ids = artist_ids.exclude?(resource_artist.artist_id)
+
+    type_matches && id_absent_in_artist_ids
   end
 end

@@ -27,5 +27,12 @@ FactoryBot.define do
 		factory :typer do
 			artist_type { :typer }
 		end
+
+		factory :writer_resource_artist, traits: [:writer]
+		factory :painter_resource_artist, traits: [:painter]
+		factory :cleaner_resource_artist, traits: [:cleaner]
+		factory :translator_resource_artist, traits: [:translator]
+		factory :editor_resource_artist, traits: [:editor]
+		factory :typer_resource_artist, traits: [:typer]
 	end
 end

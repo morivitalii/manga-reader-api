@@ -80,35 +80,18 @@
         }
       ]
     },
-    "genres": {
-      "type": "array",
-      "items": {
-        "$ref": "file:/serializers/api/genre.json#"
-      }
-    },
-    "formats": {
-      "type": "array",
-      "items": {
-        "$ref": "file:/serializers/api/format.json#"
-      }
-    },
-    "demographics": {
-      "type": "array",
-      "items": {
-        "$ref": "file:/serializers/api/demographic.json#"
-      }
-    },
-    "marks": {
-      "type": "array",
-      "items": {
-        "$ref": "file:/serializers/api/mark.json#"
-      }
-    },
-    "themes": {
-      "type": "array",
-      "items": {
-        "$ref": "file:/serializers/api/theme.json#"
-      }
+    "tags": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "file:/serializers/api/resource_tag.json#"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   }
 }

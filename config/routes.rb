@@ -12,16 +12,11 @@ Rails.application.routes.draw do
     resources :content_languages, only: [:index, :show, :create, :update, :destroy]
     resources :access_rights, only: [:index, :show]
     resources :group_access_rights, only: [:index, :show]
-    resources :marks, only: [:index, :show, :create, :update, :destroy]
-    resources :genres, only: [:index, :show, :create, :update, :destroy]
-    resources :themes, only: [:index, :show, :create, :update, :destroy]
-    resources :formats, only: [:index, :show, :create, :update, :destroy]
-    resources :demographics, only: [:index, :show, :create, :update, :destroy]
     resources :bookmarks, only: [:index]
     resources :favorites, only: [:index]
     resources :views, only: [:index]
 
-    resources :tags, only: [:index, :show] do
+    resources :tags, only: [:index, :show, :create, :update, :destroy] do
       scope module: :tags do
         resource :translations, only: [:show]
       end

@@ -369,38 +369,6 @@ ALTER SEQUENCE public.content_languages_id_seq OWNED BY public.content_languages
 
 
 --
--- Name: demographics; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.demographics (
-    id bigint NOT NULL,
-    tag_id bigint NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
-);
-
-
---
--- Name: demographics_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.demographics_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: demographics_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.demographics_id_seq OWNED BY public.demographics.id;
-
-
---
 -- Name: favorites; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -432,70 +400,6 @@ CREATE SEQUENCE public.favorites_id_seq
 --
 
 ALTER SEQUENCE public.favorites_id_seq OWNED BY public.favorites.id;
-
-
---
--- Name: formats; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.formats (
-    id bigint NOT NULL,
-    tag_id bigint NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
-);
-
-
---
--- Name: formats_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.formats_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: formats_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.formats_id_seq OWNED BY public.formats.id;
-
-
---
--- Name: genres; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.genres (
-    id bigint NOT NULL,
-    tag_id bigint NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
-);
-
-
---
--- Name: genres_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.genres_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: genres_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.genres_id_seq OWNED BY public.genres.id;
 
 
 --
@@ -729,38 +633,6 @@ ALTER SEQUENCE public.locales_id_seq OWNED BY public.locales.id;
 
 
 --
--- Name: marks; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.marks (
-    id bigint NOT NULL,
-    tag_id bigint NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
-);
-
-
---
--- Name: marks_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.marks_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: marks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.marks_id_seq OWNED BY public.marks.id;
-
-
---
 -- Name: pages; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -831,24 +703,25 @@ ALTER SEQUENCE public.resource_artists_id_seq OWNED BY public.resource_artists.i
 
 
 --
--- Name: resource_demographics; Type: TABLE; Schema: public; Owner: -
+-- Name: resource_tags; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.resource_demographics (
+CREATE TABLE public.resource_tags (
     id bigint NOT NULL,
-    demographic_id bigint NOT NULL,
+    tag_id bigint NOT NULL,
     resource_type character varying NOT NULL,
     resource_id bigint NOT NULL,
+    tag_type integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
 
 
 --
--- Name: resource_demographics_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: resource_tags_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.resource_demographics_id_seq
+CREATE SEQUENCE public.resource_tags_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -857,142 +730,10 @@ CREATE SEQUENCE public.resource_demographics_id_seq
 
 
 --
--- Name: resource_demographics_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: resource_tags_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.resource_demographics_id_seq OWNED BY public.resource_demographics.id;
-
-
---
--- Name: resource_formats; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.resource_formats (
-    id bigint NOT NULL,
-    format_id bigint NOT NULL,
-    resource_type character varying NOT NULL,
-    resource_id bigint NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: resource_formats_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.resource_formats_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: resource_formats_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.resource_formats_id_seq OWNED BY public.resource_formats.id;
-
-
---
--- Name: resource_genres; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.resource_genres (
-    id bigint NOT NULL,
-    genre_id bigint NOT NULL,
-    resource_type character varying NOT NULL,
-    resource_id bigint NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: resource_genres_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.resource_genres_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: resource_genres_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.resource_genres_id_seq OWNED BY public.resource_genres.id;
-
-
---
--- Name: resource_marks; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.resource_marks (
-    id bigint NOT NULL,
-    mark_id bigint NOT NULL,
-    resource_type character varying NOT NULL,
-    resource_id bigint NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: resource_marks_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.resource_marks_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: resource_marks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.resource_marks_id_seq OWNED BY public.resource_marks.id;
-
-
---
--- Name: resource_themes; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.resource_themes (
-    id bigint NOT NULL,
-    theme_id bigint NOT NULL,
-    resource_type character varying NOT NULL,
-    resource_id bigint NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: resource_themes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.resource_themes_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: resource_themes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.resource_themes_id_seq OWNED BY public.resource_themes.id;
+ALTER SEQUENCE public.resource_tags_id_seq OWNED BY public.resource_tags.id;
 
 
 --
@@ -1069,38 +810,6 @@ CREATE SEQUENCE public.tags_id_seq
 --
 
 ALTER SEQUENCE public.tags_id_seq OWNED BY public.tags.id;
-
-
---
--- Name: themes; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.themes (
-    id bigint NOT NULL,
-    tag_id bigint NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
-);
-
-
---
--- Name: themes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.themes_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: themes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.themes_id_seq OWNED BY public.themes.id;
 
 
 --
@@ -1488,31 +1197,10 @@ ALTER TABLE ONLY public.content_languages ALTER COLUMN id SET DEFAULT nextval('p
 
 
 --
--- Name: demographics id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.demographics ALTER COLUMN id SET DEFAULT nextval('public.demographics_id_seq'::regclass);
-
-
---
 -- Name: favorites id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.favorites ALTER COLUMN id SET DEFAULT nextval('public.favorites_id_seq'::regclass);
-
-
---
--- Name: formats id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.formats ALTER COLUMN id SET DEFAULT nextval('public.formats_id_seq'::regclass);
-
-
---
--- Name: genres id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.genres ALTER COLUMN id SET DEFAULT nextval('public.genres_id_seq'::regclass);
 
 
 --
@@ -1565,13 +1253,6 @@ ALTER TABLE ONLY public.locales ALTER COLUMN id SET DEFAULT nextval('public.loca
 
 
 --
--- Name: marks id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.marks ALTER COLUMN id SET DEFAULT nextval('public.marks_id_seq'::regclass);
-
-
---
 -- Name: pages id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1586,38 +1267,10 @@ ALTER TABLE ONLY public.resource_artists ALTER COLUMN id SET DEFAULT nextval('pu
 
 
 --
--- Name: resource_demographics id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: resource_tags id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.resource_demographics ALTER COLUMN id SET DEFAULT nextval('public.resource_demographics_id_seq'::regclass);
-
-
---
--- Name: resource_formats id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resource_formats ALTER COLUMN id SET DEFAULT nextval('public.resource_formats_id_seq'::regclass);
-
-
---
--- Name: resource_genres id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resource_genres ALTER COLUMN id SET DEFAULT nextval('public.resource_genres_id_seq'::regclass);
-
-
---
--- Name: resource_marks id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resource_marks ALTER COLUMN id SET DEFAULT nextval('public.resource_marks_id_seq'::regclass);
-
-
---
--- Name: resource_themes id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resource_themes ALTER COLUMN id SET DEFAULT nextval('public.resource_themes_id_seq'::regclass);
+ALTER TABLE ONLY public.resource_tags ALTER COLUMN id SET DEFAULT nextval('public.resource_tags_id_seq'::regclass);
 
 
 --
@@ -1632,13 +1285,6 @@ ALTER TABLE ONLY public.tag_translations ALTER COLUMN id SET DEFAULT nextval('pu
 --
 
 ALTER TABLE ONLY public.tags ALTER COLUMN id SET DEFAULT nextval('public.tags_id_seq'::regclass);
-
-
---
--- Name: themes id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.themes ALTER COLUMN id SET DEFAULT nextval('public.themes_id_seq'::regclass);
 
 
 --
@@ -1793,35 +1439,11 @@ ALTER TABLE ONLY public.content_languages
 
 
 --
--- Name: demographics demographics_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.demographics
-    ADD CONSTRAINT demographics_pkey PRIMARY KEY (id);
-
-
---
 -- Name: favorites favorites_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.favorites
     ADD CONSTRAINT favorites_pkey PRIMARY KEY (id);
-
-
---
--- Name: formats formats_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.formats
-    ADD CONSTRAINT formats_pkey PRIMARY KEY (id);
-
-
---
--- Name: genres genres_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.genres
-    ADD CONSTRAINT genres_pkey PRIMARY KEY (id);
 
 
 --
@@ -1881,14 +1503,6 @@ ALTER TABLE ONLY public.locales
 
 
 --
--- Name: marks marks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.marks
-    ADD CONSTRAINT marks_pkey PRIMARY KEY (id);
-
-
---
 -- Name: pages pages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1905,43 +1519,11 @@ ALTER TABLE ONLY public.resource_artists
 
 
 --
--- Name: resource_demographics resource_demographics_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: resource_tags resource_tags_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.resource_demographics
-    ADD CONSTRAINT resource_demographics_pkey PRIMARY KEY (id);
-
-
---
--- Name: resource_formats resource_formats_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resource_formats
-    ADD CONSTRAINT resource_formats_pkey PRIMARY KEY (id);
-
-
---
--- Name: resource_genres resource_genres_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resource_genres
-    ADD CONSTRAINT resource_genres_pkey PRIMARY KEY (id);
-
-
---
--- Name: resource_marks resource_marks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resource_marks
-    ADD CONSTRAINT resource_marks_pkey PRIMARY KEY (id);
-
-
---
--- Name: resource_themes resource_themes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resource_themes
-    ADD CONSTRAINT resource_themes_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.resource_tags
+    ADD CONSTRAINT resource_tags_pkey PRIMARY KEY (id);
 
 
 --
@@ -1966,14 +1548,6 @@ ALTER TABLE ONLY public.tag_translations
 
 ALTER TABLE ONLY public.tags
     ADD CONSTRAINT tags_pkey PRIMARY KEY (id);
-
-
---
--- Name: themes themes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.themes
-    ADD CONSTRAINT themes_pkey PRIMARY KEY (id);
 
 
 --
@@ -2273,20 +1847,6 @@ CREATE UNIQUE INDEX index_content_languages_on_locale_id ON public.content_langu
 
 
 --
--- Name: index_demographics_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_demographics_on_cached_at ON public.demographics USING btree (cached_at DESC);
-
-
---
--- Name: index_demographics_on_tag_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_demographics_on_tag_id ON public.demographics USING btree (tag_id);
-
-
---
 -- Name: index_favorites_on_cached_at; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2326,34 +1886,6 @@ CREATE INDEX index_favorites_on_user_id ON public.favorites USING btree (user_id
 --
 
 CREATE UNIQUE INDEX index_favorites_uniqueness ON public.favorites USING btree (user_id, resource_type, resource_id);
-
-
---
--- Name: index_formats_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_formats_on_cached_at ON public.formats USING btree (cached_at DESC);
-
-
---
--- Name: index_formats_on_tag_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_formats_on_tag_id ON public.formats USING btree (tag_id);
-
-
---
--- Name: index_genres_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_genres_on_cached_at ON public.genres USING btree (cached_at DESC);
-
-
---
--- Name: index_genres_on_tag_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_genres_on_tag_id ON public.genres USING btree (tag_id);
 
 
 --
@@ -2504,20 +2036,6 @@ CREATE UNIQUE INDEX index_locales_on_lower_key ON public.locales USING btree (lo
 
 
 --
--- Name: index_marks_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_marks_on_cached_at ON public.marks USING btree (cached_at DESC);
-
-
---
--- Name: index_marks_on_tag_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_marks_on_tag_id ON public.marks USING btree (tag_id);
-
-
---
 -- Name: index_pages_on_cached_at; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2581,108 +2099,31 @@ CREATE UNIQUE INDEX index_resource_artists_uniqueness ON public.resource_artists
 
 
 --
--- Name: index_resource_demographics_on_demographic_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_resource_tags_on_resource; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_resource_demographics_on_demographic_id ON public.resource_demographics USING btree (demographic_id);
-
-
---
--- Name: index_resource_demographics_on_resource; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_resource_demographics_on_resource ON public.resource_demographics USING btree (resource_type, resource_id);
+CREATE INDEX index_resource_tags_on_resource ON public.resource_tags USING btree (resource_type, resource_id);
 
 
 --
--- Name: index_resource_demographics_uniqueness; Type: INDEX; Schema: public; Owner: -
+-- Name: index_resource_tags_on_tag_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_resource_demographics_uniqueness ON public.resource_demographics USING btree (demographic_id, resource_type, resource_id);
-
-
---
--- Name: index_resource_formats_on_format_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_resource_formats_on_format_id ON public.resource_formats USING btree (format_id);
+CREATE INDEX index_resource_tags_on_tag_id ON public.resource_tags USING btree (tag_id);
 
 
 --
--- Name: index_resource_formats_on_resource; Type: INDEX; Schema: public; Owner: -
+-- Name: index_resource_tags_on_tag_type; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_resource_formats_on_resource ON public.resource_formats USING btree (resource_type, resource_id);
-
-
---
--- Name: index_resource_formats_uniqueness; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_resource_formats_uniqueness ON public.resource_formats USING btree (format_id, resource_type, resource_id);
+CREATE INDEX index_resource_tags_on_tag_type ON public.resource_tags USING btree (tag_type);
 
 
 --
--- Name: index_resource_genres_on_genre_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_resource_tags_uniqueness; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_resource_genres_on_genre_id ON public.resource_genres USING btree (genre_id);
-
-
---
--- Name: index_resource_genres_on_resource; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_resource_genres_on_resource ON public.resource_genres USING btree (resource_type, resource_id);
-
-
---
--- Name: index_resource_genres_uniqueness; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_resource_genres_uniqueness ON public.resource_genres USING btree (genre_id, resource_type, resource_id);
-
-
---
--- Name: index_resource_marks_on_mark_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_resource_marks_on_mark_id ON public.resource_marks USING btree (mark_id);
-
-
---
--- Name: index_resource_marks_on_resource; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_resource_marks_on_resource ON public.resource_marks USING btree (resource_type, resource_id);
-
-
---
--- Name: index_resource_marks_uniqueness; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_resource_marks_uniqueness ON public.resource_marks USING btree (mark_id, resource_type, resource_id);
-
-
---
--- Name: index_resource_themes_on_resource; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_resource_themes_on_resource ON public.resource_themes USING btree (resource_type, resource_id);
-
-
---
--- Name: index_resource_themes_on_theme_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_resource_themes_on_theme_id ON public.resource_themes USING btree (theme_id);
-
-
---
--- Name: index_resource_themes_uniqueness; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_resource_themes_uniqueness ON public.resource_themes USING btree (theme_id, resource_type, resource_id);
+CREATE UNIQUE INDEX index_resource_tags_uniqueness ON public.resource_tags USING btree (tag_type, tag_id, resource_type, resource_id);
 
 
 --
@@ -2725,20 +2166,6 @@ CREATE INDEX index_tags_on_cached_at ON public.tags USING btree (cached_at DESC)
 --
 
 CREATE UNIQUE INDEX index_tags_on_key ON public.tags USING btree (key);
-
-
---
--- Name: index_themes_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_themes_on_cached_at ON public.themes USING btree (cached_at DESC);
-
-
---
--- Name: index_themes_on_tag_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_themes_on_tag_id ON public.themes USING btree (tag_id);
 
 
 --
@@ -2987,22 +2414,6 @@ CREATE UNIQUE INDEX index_volumes_on_title_id_and_number ON public.volumes USING
 
 
 --
--- Name: formats fk_rails_0400824e47; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.formats
-    ADD CONSTRAINT fk_rails_0400824e47 FOREIGN KEY (tag_id) REFERENCES public.tags(id);
-
-
---
--- Name: themes fk_rails_0495226a20; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.themes
-    ADD CONSTRAINT fk_rails_0495226a20 FOREIGN KEY (tag_id) REFERENCES public.tags(id);
-
-
---
 -- Name: title_translations fk_rails_0d3349eccd; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3056,14 +2467,6 @@ ALTER TABLE ONLY public.resource_artists
 
 ALTER TABLE ONLY public.content_language_translations
     ADD CONSTRAINT fk_rails_2768f33fbe FOREIGN KEY (content_language_id) REFERENCES public.content_languages(id);
-
-
---
--- Name: resource_themes fk_rails_378cf60425; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resource_themes
-    ADD CONSTRAINT fk_rails_378cf60425 FOREIGN KEY (theme_id) REFERENCES public.themes(id);
 
 
 --
@@ -3179,14 +2582,6 @@ ALTER TABLE ONLY public.pages
 
 
 --
--- Name: resource_formats fk_rails_8ab4963b64; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resource_formats
-    ADD CONSTRAINT fk_rails_8ab4963b64 FOREIGN KEY (format_id) REFERENCES public.formats(id);
-
-
---
 -- Name: active_storage_variant_records fk_rails_993965df05; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3208,22 +2603,6 @@ ALTER TABLE ONLY public.chapters
 
 ALTER TABLE ONLY public.group_users
     ADD CONSTRAINT fk_rails_a9d5f48449 FOREIGN KEY (group_id) REFERENCES public.groups(id);
-
-
---
--- Name: marks fk_rails_ac66cf165f; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.marks
-    ADD CONSTRAINT fk_rails_ac66cf165f FOREIGN KEY (tag_id) REFERENCES public.tags(id);
-
-
---
--- Name: resource_demographics fk_rails_ae8f6868ae; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resource_demographics
-    ADD CONSTRAINT fk_rails_ae8f6868ae FOREIGN KEY (demographic_id) REFERENCES public.demographics(id);
 
 
 --
@@ -3267,14 +2646,6 @@ ALTER TABLE ONLY public.chapters
 
 
 --
--- Name: resource_genres fk_rails_cb4e5b0be0; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resource_genres
-    ADD CONSTRAINT fk_rails_cb4e5b0be0 FOREIGN KEY (genre_id) REFERENCES public.genres(id);
-
-
---
 -- Name: user_content_languages fk_rails_cdf04b6b4c; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3304,14 +2675,6 @@ ALTER TABLE ONLY public.user_settings
 
 ALTER TABLE ONLY public.favorites
     ADD CONSTRAINT fk_rails_d15744e438 FOREIGN KEY (user_id) REFERENCES public.users(id);
-
-
---
--- Name: resource_marks fk_rails_e4cc00d08a; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resource_marks
-    ADD CONSTRAINT fk_rails_e4cc00d08a FOREIGN KEY (mark_id) REFERENCES public.marks(id);
 
 
 --
@@ -3363,27 +2726,19 @@ ALTER TABLE ONLY public.interface_languages
 
 
 --
+-- Name: resource_tags fk_rails_f7d39b25c1; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_tags
+    ADD CONSTRAINT fk_rails_f7d39b25c1 FOREIGN KEY (tag_id) REFERENCES public.tags(id);
+
+
+--
 -- Name: user_content_languages fk_rails_fdb2557b4f; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.user_content_languages
     ADD CONSTRAINT fk_rails_fdb2557b4f FOREIGN KEY (content_language_id) REFERENCES public.content_languages(id);
-
-
---
--- Name: demographics fk_rails_fedc0e7479; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.demographics
-    ADD CONSTRAINT fk_rails_fedc0e7479 FOREIGN KEY (tag_id) REFERENCES public.tags(id);
-
-
---
--- Name: genres fk_rails_ffa5e79962; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.genres
-    ADD CONSTRAINT fk_rails_ffa5e79962 FOREIGN KEY (tag_id) REFERENCES public.tags(id);
 
 
 --
@@ -3546,6 +2901,17 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210608121504'),
 ('20210608121512'),
 ('20210608121515'),
-('20210608122741');
+('20210608122741'),
+('20210613101501'),
+('20210613101502'),
+('20210613101503'),
+('20210613101504'),
+('20210613101505'),
+('20210613101513'),
+('20210613101518'),
+('20210613101522'),
+('20210613101525'),
+('20210613101530'),
+('20210613102150');
 
 

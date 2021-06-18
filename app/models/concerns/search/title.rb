@@ -39,49 +39,11 @@ module Search
             end
           end
 
-          indexes :genres, type: :object do
+          indexes :tags, type: :object do
             indexes :id, type: :keyword
             indexes :tag_id, type: :keyword
-
-            indexes :title, type: :object do
-              indexes :en, type: :text, analyzer: :english
-              indexes :ru, type: :text, analyzer: :russian
-            end
-          end
-
-          indexes :formats, type: :object do
-            indexes :id, type: :keyword
-            indexes :tag_id, type: :keyword
-
-            indexes :title, type: :object do
-              indexes :en, type: :text, analyzer: :english
-              indexes :ru, type: :text, analyzer: :russian
-            end
-          end
-
-          indexes :demographics, type: :object do
-            indexes :id, type: :keyword
-            indexes :tag_id, type: :keyword
-
-            indexes :title, type: :object do
-              indexes :en, type: :text, analyzer: :english
-              indexes :ru, type: :text, analyzer: :russian
-            end
-          end
-
-          indexes :marks, type: :object do
-            indexes :id, type: :keyword
-            indexes :tag_id, type: :keyword
-
-            indexes :title, type: :object do
-              indexes :en, type: :text, analyzer: :english
-              indexes :ru, type: :text, analyzer: :russian
-            end
-          end
-
-          indexes :themes, type: :object do
-            indexes :id, type: :keyword
-            indexes :tag_id, type: :keyword
+            indexes :artist_id, type: :keyword
+            indexes :artist_type, type: :keyword
 
             indexes :title, type: :object do
               indexes :en, type: :text, analyzer: :english
@@ -100,12 +62,7 @@ module Search
               ContentLanguage.translations_associations
             ],
             resource_artists: { artist: Artist.translations_associations },
-            painters: { artist: Artist.translations_associations },
-            genres: { tag: Tag.translations_associations },
-            formats: { tag: Tag.translations_associations },
-            demographics: { tag: Tag.translations_associations },
-            marks: { tag: Tag.translations_associations },
-            themes: { tag: Tag.translations_associations }
+            resource_tags: { tag: Tag.translations_associations }
           ]
         )
 
@@ -135,53 +92,14 @@ module Search
               }
             }
           },
-          genres: genres.map { |genre|
+          tags: resource_tags.map { |resource_tag|
             {
-              id: genre.id,
-              tag_id: genre.tag_id,
+              id: resource_tag.id,
+              tag_id: resource_tag.artist_id,
+              tag_type: resource_tag.type,
               title: {
-                en: genre.tag.title_en,
-                ru: genre.tag.title_ru
-              }
-            }
-          },
-          formats: formats.map { |format|
-            {
-              id: format.id,
-              tag_id: format.tag_id,
-              title: {
-                en: format.tag.title_en,
-                ru: format.tag.title_ru
-              }
-            }
-          },
-          demographics: demographics.map { |demographic|
-            {
-              id: demographic.id,
-              tag_id: demographic.tag_id,
-              title: {
-                en: demographic.tag.title_en,
-                ru: demographic.tag.title_ru
-              }
-            }
-          },
-          marks: marks.map { |mark|
-            {
-              id: mark.id,
-              tag_id: mark.tag_id,
-              title: {
-                en: mark.tag.title_en,
-                ru: mark.tag.title_ru
-              }
-            }
-          },
-          themes: themes.map { |theme|
-            {
-              id: theme.id,
-              tag_id: theme.tag_id,
-              title: {
-                en: theme.tag.title_en,
-                ru: theme.tag.title_ru
+                en: resource_tag.artist.title_en,
+                ru: resource_tag.artist.title_ru
               }
             }
           }

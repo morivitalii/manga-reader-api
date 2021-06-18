@@ -8,10 +8,20 @@ RSpec.describe Api::TagsPolicy do
       it { is_expected.to permit(current_user) }
     end
 
+    permissions :create? do
+      it { is_expected.to_not permit(current_user) }
+    end
+
     permissions :show? do
       let(:tag) { create(:tag) }
 
       it { is_expected.to permit(current_user, tag: tag) }
+    end
+
+    permissions :update?, :destroy? do
+      let(:tag) { create(:tag) }
+
+      it { is_expected.to_not permit(current_user, tag: tag) }
     end
   end
 
@@ -20,10 +30,36 @@ RSpec.describe Api::TagsPolicy do
       it { is_expected.to permit(current_user) }
     end
 
+    permissions :create? do
+      context "with manage system settings access right" do
+        let(:current_user) { create(:user_with_manage_system_settings_access_right) }
+
+        it { is_expected.to permit(current_user) }
+      end
+
+      context "without manage system settings access right" do
+        it { is_expected.to_not permit(current_user) }
+      end
+    end
+
     permissions :show? do
       let(:tag) { create(:tag) }
 
       it { is_expected.to permit(current_user, tag: tag) }
+    end
+
+    permissions :update?, :destroy? do
+      let(:tag) { create(:tag) }
+
+      context "with manage system settings access right" do
+        let(:current_user) { create(:user_with_manage_system_settings_access_right) }
+
+        it { is_expected.to permit(current_user, tag: tag) }
+      end
+
+      context "without manage system settings access right" do
+        it { is_expected.to_not permit(current_user, tag: tag) }
+      end
     end
   end
 end

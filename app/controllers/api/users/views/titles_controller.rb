@@ -17,11 +17,7 @@ class Api::Users::Views::TitlesController < Api::ApplicationController
         ],
         resource_artists: { artist: Artist.translations_associations },
         cover_attachment: :blob,
-        genres: { tag: Tag.translations_associations },
-        formats: { tag: Tag.translations_associations },
-        demographics: { tag: Tag.translations_associations },
-        marks: { tag: Tag.translations_associations },
-        themes: { tag: Tag.translations_associations }
+        resource_tags: { tag: Tag.translations_associations }
       ]
     )
 
