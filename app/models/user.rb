@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   include CacheInvalidation
 
-  has_secure_password
+  has_secure_password :password, validations: false
 
   # This attributes should not be changed. Just because
   attr_readonly :username
