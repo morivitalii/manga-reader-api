@@ -35,12 +35,19 @@ class Api::UpdateTitle
 	private
 
 	def process_resource_artists(type, artist_ids)
+		destroy_artists(type, artist_ids)
+		create_artists(type, artist_ids)
+	end
+
+	def destroy_artists(type, artist_ids)
 		title_object.resource_artists.each do |resource_artist|
 			next unless artist_marked_for_destroy?(resource_artist, type, artist_ids)
 
 			resource_artist.destroy!
 		end
+	end
 
+	def create_artists(type, artist_ids)
 		artist_ids.each do |artist_id|
 			next if artist_attached?(type, artist_id)
 
@@ -69,12 +76,19 @@ class Api::UpdateTitle
 	end
 
 	def process_resource_tags(type, tag_ids)
+		destroy_tags(type, tag_ids)
+		create_tags(type, tag_ids)
+	end
+
+	def destroy_tags(type, tag_ids)
 		title_object.resource_tags.each do |resource_tag|
 			next unless tag_marked_for_destroy?(resource_tag, type, tag_ids)
 
 			resource_tag.destroy!
 		end
+	end
 
+	def create_tags(type, tag_ids)
 		tag_ids.each do |tag_id|
 			next if tag_attached?(type, tag_id)
 
@@ -82,7 +96,7 @@ class Api::UpdateTitle
 				tag_id: tag_id,
 				tag_type: type
 			)
-			
+
 			tag.valid?
 		end
 	end

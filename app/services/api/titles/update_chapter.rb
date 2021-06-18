@@ -30,12 +30,19 @@ class Api::Titles::UpdateChapter
   private
 
   def process_resource_artists(type, artist_ids)
+    destroy_artists(type, artist_ids)
+    create_artists(type, artist_ids)
+  end
+
+  def destroy_artists(type, artist_ids)
     chapter.resource_artists.each do |resource_artist|
       next unless artist_marked_for_destroy?(resource_artist, type, artist_ids)
 
       resource_artist.destroy!
     end
+  end
 
+  def create_artists(type, artist_ids)
     artist_ids.each do |artist_id|
       next if artist_attached?(type, artist_id)
 
