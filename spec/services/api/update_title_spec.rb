@@ -7,11 +7,11 @@ RSpec.describe Api::UpdateTitle do
 			original_content_language = create(:content_language)
 			writers = create_list(:artist, 2)
 			painters = create_list(:artist, 2)
-			genres = create_list(:genre, 2)
-			formats = create_list(:format, 2)
-			demographics = create_list(:demographic, 2)
-			marks = create_list(:mark, 2)
-			themes = create_list(:theme, 2)
+			genres = create_list(:tag, 2)
+			formats = create_list(:tag, 2)
+			demographics = create_list(:tag, 2)
+			marks = create_list(:tag, 2)
+			themes = create_list(:tag, 2)
 
 			service = described_class.new(
 				title_object: title,
