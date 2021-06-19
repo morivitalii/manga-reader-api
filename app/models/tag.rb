@@ -1,7 +1,9 @@
 class Tag < ApplicationRecord
   include Translation
+  include Search::Tag
 
   has_many :resource_tags, dependent: :restrict_with_error
+  has_many :titles, source: :resource, source_type: "Title", through: :resource_tags
 
   translates :title, :description
 
