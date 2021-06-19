@@ -106,6 +106,7 @@ module Search
         }.to_json
       end
 
+      # Content languages that available for readers
       def published_chapters_content_languages
         ContentLanguage.includes(:locale).joins(:chapters).where(
           chapters: {
