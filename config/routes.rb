@@ -35,8 +35,8 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :titles, only: [:index, :show, :create, :update, :destroy] do
-      scope module: :titles do
+    resources :books, only: [:index, :show, :create, :update, :destroy] do
+      scope module: :books do
         resource :to_draft, only: [:update], controller: :to_draft
         resource :to_review, only: [:update], controller: :to_review
         resource :to_published, only: [:update], controller: :to_published
@@ -71,19 +71,19 @@ Rails.application.routes.draw do
       resource :access_rights, only: [:show]
 
       namespace :bookmarks do
-        resources :titles, only: [:index]
+        resources :books, only: [:index]
         resources :chapters, only: [:index]
         resources :pages, only: [:index]
       end
 
       namespace :favorites do
-        resources :titles, only: [:index]
+        resources :books, only: [:index]
         resources :groups, only: [:index]
         resources :artists, only: [:index]
       end
 
       namespace :views do
-        resources :titles, only: [:index]
+        resources :books, only: [:index]
         resources :chapters, only: [:index]
         resources :pages, only: [:index]
       end

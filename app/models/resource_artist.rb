@@ -1,6 +1,6 @@
 class ResourceArtist < ApplicationRecord
 	# Allowed delegated types
-	RESOURCE_TYPES = ["Title", "Chapter"]
+	RESOURCE_TYPES = ["Book", "Chapter"]
 
 	# This attributes should not be changed. Just because
 	attr_readonly :artist_id, :artist_type, :resource_type, :resource_id

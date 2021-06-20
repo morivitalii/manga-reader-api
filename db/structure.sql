@@ -224,6 +224,41 @@ ALTER SEQUENCE public.artists_id_seq OWNED BY public.artists.id;
 
 
 --
+-- Name: book_translations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.book_translations (
+    id bigint NOT NULL,
+    content_language_id bigint NOT NULL,
+    resource_id bigint NOT NULL,
+    title character varying DEFAULT ''::character varying NOT NULL,
+    edited_at timestamp(6) without time zone NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    description text DEFAULT ''::text NOT NULL
+);
+
+
+--
+-- Name: book_translations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.book_translations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: book_translations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.book_translations_id_seq OWNED BY public.book_translations.id;
+
+
+--
 -- Name: bookmarks; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -258,12 +293,52 @@ ALTER SEQUENCE public.bookmarks_id_seq OWNED BY public.bookmarks.id;
 
 
 --
+-- Name: books; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.books (
+    id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    publication_status integer NOT NULL,
+    views_count bigint DEFAULT 0 NOT NULL,
+    bookmarks_count bigint DEFAULT 0 NOT NULL,
+    original_content_language_id bigint,
+    favorites_count bigint DEFAULT 0 NOT NULL,
+    status integer NOT NULL,
+    sent_to_review_at timestamp without time zone,
+    published_at timestamp without time zone,
+    deleted_at timestamp without time zone,
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: books_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.books_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: books_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.books_id_seq OWNED BY public.books.id;
+
+
+--
 -- Name: chapters; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.chapters (
     id bigint NOT NULL,
-    title_id bigint NOT NULL,
+    book_id bigint NOT NULL,
     volume_id bigint,
     group_id bigint NOT NULL,
     number integer NOT NULL,
@@ -813,81 +888,6 @@ ALTER SEQUENCE public.tags_id_seq OWNED BY public.tags.id;
 
 
 --
--- Name: title_translations; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.title_translations (
-    id bigint NOT NULL,
-    content_language_id bigint NOT NULL,
-    resource_id bigint NOT NULL,
-    title character varying DEFAULT ''::character varying NOT NULL,
-    edited_at timestamp(6) without time zone NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    description text DEFAULT ''::text NOT NULL
-);
-
-
---
--- Name: title_translations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.title_translations_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: title_translations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.title_translations_id_seq OWNED BY public.title_translations.id;
-
-
---
--- Name: titles; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.titles (
-    id bigint NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    publication_status integer NOT NULL,
-    views_count bigint DEFAULT 0 NOT NULL,
-    bookmarks_count bigint DEFAULT 0 NOT NULL,
-    original_content_language_id bigint,
-    favorites_count bigint DEFAULT 0 NOT NULL,
-    status integer NOT NULL,
-    sent_to_review_at timestamp without time zone,
-    published_at timestamp without time zone,
-    deleted_at timestamp without time zone,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
-);
-
-
---
--- Name: titles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.titles_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: titles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.titles_id_seq OWNED BY public.titles.id;
-
-
---
 -- Name: user_access_rights; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1099,7 +1099,7 @@ ALTER SEQUENCE public.views_id_seq OWNED BY public.views.id;
 
 CREATE TABLE public.volumes (
     id bigint NOT NULL,
-    title_id bigint NOT NULL,
+    book_id bigint NOT NULL,
     number integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
@@ -1169,10 +1169,24 @@ ALTER TABLE ONLY public.artists ALTER COLUMN id SET DEFAULT nextval('public.arti
 
 
 --
+-- Name: book_translations id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.book_translations ALTER COLUMN id SET DEFAULT nextval('public.book_translations_id_seq'::regclass);
+
+
+--
 -- Name: bookmarks id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.bookmarks ALTER COLUMN id SET DEFAULT nextval('public.bookmarks_id_seq'::regclass);
+
+
+--
+-- Name: books id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.books ALTER COLUMN id SET DEFAULT nextval('public.books_id_seq'::regclass);
 
 
 --
@@ -1288,20 +1302,6 @@ ALTER TABLE ONLY public.tags ALTER COLUMN id SET DEFAULT nextval('public.tags_id
 
 
 --
--- Name: title_translations id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.title_translations ALTER COLUMN id SET DEFAULT nextval('public.title_translations_id_seq'::regclass);
-
-
---
--- Name: titles id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.titles ALTER COLUMN id SET DEFAULT nextval('public.titles_id_seq'::regclass);
-
-
---
 -- Name: user_access_rights id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1407,11 +1407,27 @@ ALTER TABLE ONLY public.artists
 
 
 --
+-- Name: book_translations book_translations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.book_translations
+    ADD CONSTRAINT book_translations_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: bookmarks bookmarks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.bookmarks
     ADD CONSTRAINT bookmarks_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: books books_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.books
+    ADD CONSTRAINT books_pkey PRIMARY KEY (id);
 
 
 --
@@ -1548,22 +1564,6 @@ ALTER TABLE ONLY public.tag_translations
 
 ALTER TABLE ONLY public.tags
     ADD CONSTRAINT tags_pkey PRIMARY KEY (id);
-
-
---
--- Name: title_translations title_translations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.title_translations
-    ADD CONSTRAINT title_translations_pkey PRIMARY KEY (id);
-
-
---
--- Name: titles titles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.titles
-    ADD CONSTRAINT titles_pkey PRIMARY KEY (id);
 
 
 --
@@ -1707,6 +1707,27 @@ CREATE UNIQUE INDEX index_artists_on_user_id ON public.artists USING btree (user
 
 
 --
+-- Name: index_book_translations_on_content_language_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_book_translations_on_content_language_id ON public.book_translations USING btree (content_language_id);
+
+
+--
+-- Name: index_book_translations_on_resource_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_book_translations_on_resource_id ON public.book_translations USING btree (resource_id);
+
+
+--
+-- Name: index_book_translations_on_title; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_book_translations_on_title ON public.book_translations USING btree (title);
+
+
+--
 -- Name: index_bookmarks_on_cached_at; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1749,6 +1770,34 @@ CREATE UNIQUE INDEX index_bookmarks_uniqueness ON public.bookmarks USING btree (
 
 
 --
+-- Name: index_books_on_cached_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_books_on_cached_at ON public.books USING btree (cached_at DESC);
+
+
+--
+-- Name: index_books_on_original_content_language_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_books_on_original_content_language_id ON public.books USING btree (original_content_language_id);
+
+
+--
+-- Name: index_books_on_status; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_books_on_status ON public.books USING btree (status);
+
+
+--
+-- Name: index_chapters_on_book_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapters_on_book_id ON public.chapters USING btree (book_id);
+
+
+--
 -- Name: index_chapters_on_cached_at; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1781,13 +1830,6 @@ CREATE INDEX index_chapters_on_number ON public.chapters USING btree (number);
 --
 
 CREATE INDEX index_chapters_on_status ON public.chapters USING btree (status);
-
-
---
--- Name: index_chapters_on_title_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_chapters_on_title_id ON public.chapters USING btree (title_id);
 
 
 --
@@ -2169,52 +2211,10 @@ CREATE UNIQUE INDEX index_tags_on_key ON public.tags USING btree (key);
 
 
 --
--- Name: index_title_translations_on_content_language_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_title_translations_on_content_language_id ON public.title_translations USING btree (content_language_id);
-
-
---
--- Name: index_title_translations_on_resource_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_title_translations_on_resource_id ON public.title_translations USING btree (resource_id);
-
-
---
--- Name: index_title_translations_on_title; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_title_translations_on_title ON public.title_translations USING btree (title);
-
-
---
 -- Name: index_title_translations_uniqueness; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_title_translations_uniqueness ON public.title_translations USING btree (resource_id, content_language_id);
-
-
---
--- Name: index_titles_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_titles_on_cached_at ON public.titles USING btree (cached_at DESC);
-
-
---
--- Name: index_titles_on_original_content_language_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_titles_on_original_content_language_id ON public.titles USING btree (original_content_language_id);
-
-
---
--- Name: index_titles_on_status; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_titles_on_status ON public.titles USING btree (status);
+CREATE UNIQUE INDEX index_title_translations_uniqueness ON public.book_translations USING btree (resource_id, content_language_id);
 
 
 --
@@ -2386,6 +2386,20 @@ CREATE UNIQUE INDEX index_views_uniqueness ON public.views USING btree (user_id,
 
 
 --
+-- Name: index_volumes_on_book_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_volumes_on_book_id ON public.volumes USING btree (book_id);
+
+
+--
+-- Name: index_volumes_on_book_id_and_number; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_volumes_on_book_id_and_number ON public.volumes USING btree (book_id, number);
+
+
+--
 -- Name: index_volumes_on_cached_at; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2400,25 +2414,11 @@ CREATE INDEX index_volumes_on_number ON public.volumes USING btree (number);
 
 
 --
--- Name: index_volumes_on_title_id; Type: INDEX; Schema: public; Owner: -
+-- Name: book_translations fk_rails_0d3349eccd; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-CREATE INDEX index_volumes_on_title_id ON public.volumes USING btree (title_id);
-
-
---
--- Name: index_volumes_on_title_id_and_number; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_volumes_on_title_id_and_number ON public.volumes USING btree (title_id, number);
-
-
---
--- Name: title_translations fk_rails_0d3349eccd; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.title_translations
-    ADD CONSTRAINT fk_rails_0d3349eccd FOREIGN KEY (resource_id) REFERENCES public.titles(id);
+ALTER TABLE ONLY public.book_translations
+    ADD CONSTRAINT fk_rails_0d3349eccd FOREIGN KEY (resource_id) REFERENCES public.books(id);
 
 
 --
@@ -2486,10 +2486,10 @@ ALTER TABLE ONLY public.user_access_rights
 
 
 --
--- Name: title_translations fk_rails_3c716d17ad; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: book_translations fk_rails_3c716d17ad; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.title_translations
+ALTER TABLE ONLY public.book_translations
     ADD CONSTRAINT fk_rails_3c716d17ad FOREIGN KEY (content_language_id) REFERENCES public.content_languages(id);
 
 
@@ -2610,7 +2610,7 @@ ALTER TABLE ONLY public.group_users
 --
 
 ALTER TABLE ONLY public.chapters
-    ADD CONSTRAINT fk_rails_afb14bec2e FOREIGN KEY (title_id) REFERENCES public.titles(id);
+    ADD CONSTRAINT fk_rails_afb14bec2e FOREIGN KEY (book_id) REFERENCES public.books(id);
 
 
 --
@@ -2630,10 +2630,10 @@ ALTER TABLE ONLY public.active_storage_attachments
 
 
 --
--- Name: titles fk_rails_c69f99c5a5; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: books fk_rails_c69f99c5a5; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.titles
+ALTER TABLE ONLY public.books
     ADD CONSTRAINT fk_rails_c69f99c5a5 FOREIGN KEY (original_content_language_id) REFERENCES public.content_languages(id);
 
 
@@ -2690,7 +2690,7 @@ ALTER TABLE ONLY public.artist_translations
 --
 
 ALTER TABLE ONLY public.volumes
-    ADD CONSTRAINT fk_rails_e944354970 FOREIGN KEY (title_id) REFERENCES public.titles(id);
+    ADD CONSTRAINT fk_rails_e944354970 FOREIGN KEY (book_id) REFERENCES public.books(id);
 
 
 --
@@ -2912,6 +2912,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210613101522'),
 ('20210613101525'),
 ('20210613101530'),
-('20210613102150');
+('20210613102150'),
+('20210620123751'),
+('20210620123857'),
+('20210620123950'),
+('20210620124040');
 
 

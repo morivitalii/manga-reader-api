@@ -3,8 +3,8 @@ require "rails_helper"
 RSpec.describe Api::FavoritesController do
   describe ".index", context: :as_signed_in_user do
     it "returns valid response" do
-      _first_favorite = create(:title_favorite, user: current_user)
-      second_favorite = create(:title_favorite, user: current_user)
+      _first_favorite = create(:book_favorite, user: current_user)
+      second_favorite = create(:book_favorite, user: current_user)
       third_favorite = create(:group_favorite, user: current_user)
       forth_favorite = create(:artist_favorite, user: current_user)
 

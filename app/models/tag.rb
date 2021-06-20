@@ -3,7 +3,7 @@ class Tag < ApplicationRecord
   include Search::Tag
 
   has_many :resource_tags, dependent: :restrict_with_error
-  has_many :titles, source: :resource, source_type: "Title", through: :resource_tags
+  has_many :books, source: :resource, source_type: "Book", through: :resource_tags
 
   translates :title, :description
 

@@ -10,7 +10,7 @@
     },
     "resource_type": {
       "type": "string",
-      "enum": ["Title", "Group", "Artist"]
+      "enum": ["Book", "Group", "Artist"]
     },
     "resource_id": {
       "type": "integer"

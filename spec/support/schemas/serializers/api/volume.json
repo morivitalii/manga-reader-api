@@ -5,7 +5,7 @@
     "id": {
       "type": "integer"
     },
-    "title_id": {
+    "book_id": {
       "type": "integer"
     },
     "number": {

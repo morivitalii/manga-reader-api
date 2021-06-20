@@ -18,9 +18,9 @@ FactoryBot.define do
       end
     end
 
-    factory :user_with_manage_titles_access_right do
+    factory :user_with_manage_books_access_right do
       after(:create) do |object|
-        access_right = create(:manage_titles_access_right)
+        access_right = create(:manage_books_access_right)
         create(:user_access_right, user: object, access_right: access_right)
       end
     end

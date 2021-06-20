@@ -10,7 +10,7 @@
     },
     "resource_type": {
       "type": "string",
-      "enum": ["Title", "Chapter", "Page"]
+      "enum": ["Book", "Chapter", "Page"]
     },
     "resource_id": {
       "type": "integer"

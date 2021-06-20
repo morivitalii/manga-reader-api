@@ -1,7 +1,7 @@
 FactoryBot.define do
 	factory :resource_tag do
 		association :tag
-		association :resource, factory: :title
+		association :resource, factory: :book
 		tag_type { :demographic }
 
 		trait :demographic do

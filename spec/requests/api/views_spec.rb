@@ -3,8 +3,8 @@ require "rails_helper"
 RSpec.describe Api::ViewsController do
   describe ".index", context: :as_signed_in_user do
     it "returns valid response" do
-      _first_view = create(:title_view, user: current_user)
-      second_view = create(:title_view, user: current_user)
+      _first_view = create(:book_view, user: current_user)
+      second_view = create(:book_view, user: current_user)
       third_view = create(:chapter_view, user: current_user)
       forth_view = create(:page_view, user: current_user)
 

@@ -1,6 +1,6 @@
 class ResourceTag < ApplicationRecord
 	# Allowed delegated types
-	RESOURCE_TYPES = ["Title"]
+	RESOURCE_TYPES = ["Book"]
 
 	# This attributes should not be changed. Just because
 	attr_readonly :tag_id, :tag_type, :resource_type, :resource_id

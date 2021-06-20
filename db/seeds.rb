@@ -7,8 +7,8 @@ ActiveRecord::Base.transaction do
 	# Manage users access right
 	AccessRight.find_or_create_by!(key: :manage_users)
 
-  # Manage titles access right
-  AccessRight.find_or_create_by!(key: :manage_titles)
+  # Manage books access right
+  AccessRight.find_or_create_by!(key: :manage_books)
 
   # Group access rights
 

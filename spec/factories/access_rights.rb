@@ -10,12 +10,12 @@ FactoryBot.define do
       key { "manage_users" }
     end
 
-    trait :manage_titles do
-      key { "manage_titles" }
+    trait :manage_books do
+      key { "manage_books" }
     end
 
     factory :manage_system_settings_access_right, traits: [:manage_system_settings]
     factory :manage_users_access_right, traits: [:manage_users]
-    factory :manage_titles_access_right, traits: [:manage_titles]
+    factory :manage_books_access_right, traits: [:manage_books]
   end
 end

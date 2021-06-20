@@ -1,0 +1,97 @@
+{
+  "id": "file:/serializers/api/book.json#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "original_content_language_id": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "review", "published"]
+    },
+    "publication_status": {
+      "type": "string",
+      "enum": ["ongoing", "completed", "cancelled"]
+    },
+    "cover": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string"
+            },
+            "content_type": {
+              "type": "string"
+            },
+            "width": {
+              "oneOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "height": {
+              "oneOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "artists": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "file:/serializers/api/resource_artist.json#"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "tags": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "file:/serializers/api/resource_tag.json#"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  }
+}
