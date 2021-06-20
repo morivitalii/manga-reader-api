@@ -1,7 +1,7 @@
 FactoryBot.define do
 	factory :resource_artist do
 		association :artist
-		association :resource, factory: :title
+		association :resource, factory: :book
 		artist_type { :writer }
 
 		factory :writer do

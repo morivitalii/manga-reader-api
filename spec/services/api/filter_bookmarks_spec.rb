@@ -4,12 +4,12 @@ RSpec.describe Api::FilterBookmarks do
   describe ".call" do
     context "resource type" do
       it "does what it should" do
-        first_bookmark = create(:title_bookmark)
-        second_bookmark = create(:title_bookmark)
+        first_bookmark = create(:book_bookmark)
+        second_bookmark = create(:book_bookmark)
         _third_bookmark = create(:chapter_bookmark)
         _fourth_bookmark = create(:page_bookmark)
 
-        params = Api::Bookmarks::IndexParams.new(resource_type: "Title")
+        params = Api::Bookmarks::IndexParams.new(resource_type: "Book")
 
         service = described_class.new(
           scope: Bookmark.all,
@@ -25,17 +25,17 @@ RSpec.describe Api::FilterBookmarks do
 
     context "resource type and ids" do
       it "does what it should" do
-        first_bookmark = create(:title_bookmark)
-        second_bookmark = create(:title_bookmark)
-        _third_bookmark = create(:title_bookmark)
+        first_bookmark = create(:book_bookmark)
+        second_bookmark = create(:book_bookmark)
+        _third_bookmark = create(:book_bookmark)
         _fourth_bookmark = create(:chapter_bookmark)
         _fifth_bookmark = create(:page_bookmark)
 
         params = Api::Bookmarks::IndexParams.new(
-          resource_type: "Title",
+          resource_type: "Book",
           resource_ids: [
-            first_bookmark.title_id,
-            second_bookmark.title_id
+            first_bookmark.book_id,
+            second_bookmark.book_id
           ]
         )
 

@@ -8,7 +8,7 @@
     "content_language_id": {
       "type": "integer"
     },
-    "title_id": {
+    "book_id": {
       "type": "integer"
     },
     "group_id": {

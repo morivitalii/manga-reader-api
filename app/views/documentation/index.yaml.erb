@@ -16,7 +16,7 @@ tags:
   - name: Artists
   - name: Groups
   - name: Tags
-  - name: Titles
+  - name: Books
   - name: Volumes
   - name: Chapters
   - name: Pages
@@ -62,11 +62,11 @@ components:
       description: Tag ID
       schema:
         type: integer
-    title_id:
+    book_id:
       in: path
-      name: title_id
+      name: book_id
       required: true
-      description: Title ID
+      description: Book ID
       schema:
         type: integer
     chapter_id:
@@ -198,11 +198,11 @@ components:
           enum:
             - manage_system_settings
             - manage_users
-            - manage_titles
+            - manage_books
           description: Key
       example:
         id: 1
-        key: manage_titles
+        key: manage_books
     artist:
       type: object
       title: Artist
@@ -238,7 +238,7 @@ components:
         resource_type:
           type: string
           enum:
-            - Title
+            - Book
             - Chapter
             - Page
           description: Resource type
@@ -248,7 +248,7 @@ components:
       example:
         id: 1
         user_id: 1
-        resource_type: Title
+        resource_type: Book
         resource_id: 1
     chapter:
       type: object
@@ -260,15 +260,15 @@ components:
         content_language_id:
           description: Content language ID
           type: integer
-        title_id:
-          description: Title ID
+        book_id:
+          description: Book ID
           type: integer
         group_id:
           type: integer
           description: Group ID
         name:
           type: string
-          description: Title
+          description: Book
         number:
           type: integer
           description: Number
@@ -294,7 +294,7 @@ components:
       example:
         id: 1
         content_language_id: 1
-        title_id: 1
+        book_id: 1
         group_id: 1
         name: Title
         number: 1
@@ -374,7 +374,7 @@ components:
         resource_type:
           type: string
           enum:
-            - Title
+            - Book
             - Group
             - Artist
           description: Resource type
@@ -384,7 +384,7 @@ components:
       example:
         id: 1
         user_id: 1
-        resource_type: Title
+        resource_type: Book
         resource_id: 1Tags IDsTags IDsTags IDsTags IDsTags IDs
     file:
       type: object
@@ -590,7 +590,7 @@ components:
           type: string
           description: Resource ID
           enum:
-            - Title
+            - Book
             - Chapter
         artist:
           $ref: "#/components/schemas/artist"
@@ -599,7 +599,7 @@ components:
         artist_id: 1
         artist_type: writer
         resource_id: 1
-        resource_type: Title
+        resource_type: Book
     resource_tag:
       type: object
       title: Resource tag
@@ -624,9 +624,9 @@ components:
           description: Resource ID
         resource_type:
           type: string
-          description: Resource ID
+          description: Resource type
           enum:
-            - Title
+            - Book
         tag:
           $ref: "#/components/schemas/tag"
       example:
@@ -634,10 +634,10 @@ components:
         tag_id: 1
         tag_type: writer
         resource_id: 1
-        resource_type: Title
-    title:
+        resource_type: Book
+    book:
       type: object
-      title: Title
+      title: Book
       properties:
         id:
           type: integer
@@ -822,7 +822,7 @@ components:
           type: string
           description: Resource type
           enum:
-            - Title
+            - Book
             - Chapter
             - Page
         resource_id:
@@ -831,7 +831,7 @@ components:
       example:
         id: 1
         user_id: 1
-        resource_type: Title
+        resource_type: Book
         resource_id: 1
     volume:
       type: object
@@ -840,15 +840,15 @@ components:
         id:
           type: integer
           description: ID
-        title_id:
-          description: Title ID
+        book_id:
+          description: Book ID
           type: integer
         number:
           type: integer
           description: Number
       example:
         id: 1
-        title_id: 1
+        book_id: 1
         number: 1
     writer:
       type: object
@@ -1566,11 +1566,11 @@ paths:
           $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /titles.json:
+  /books.json:
     get:
       tags:
-        - Titles
-      summary: Titles
+        - Books
+      summary: Books
       description: Sorted by title ASC
       parameters:
         - $ref: "#/components/parameters/page"
@@ -1588,7 +1588,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/title"
+                  $ref: "#/components/schemas/book"
         "401":
           $ref: "#/components/responses/unauthorized"
         "403":
@@ -1597,7 +1597,7 @@ paths:
           $ref: "#/components/responses/internal_server_error"
     post:
       tags:
-        - Titles
+        - Books
       summary: Create title
       description: ""
       requestBody:
@@ -1689,7 +1689,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: "#/components/schemas/title"
+                  - $ref: "#/components/schemas/book"
         "401":
           $ref: "#/components/responses/unauthorized"
         "403":
@@ -1698,11 +1698,11 @@ paths:
           $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /titles/{id}.json:
+  /books/{id}.json:
     get:
       tags:
-        - Titles
-      summary: Title
+        - Books
+      summary: Book
       description: ""
       parameters:
         - $ref: "#/components/parameters/id"
@@ -1713,7 +1713,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: "#/components/schemas/title"
+                  - $ref: "#/components/schemas/book"
         "401":
           $ref: "#/components/responses/unauthorized"
         "403":
@@ -1724,7 +1724,7 @@ paths:
           $ref: "#/components/responses/internal_server_error"
     put:
       tags:
-        - Titles
+        - Books
       summary: Update title
       description: ""
       parameters:
@@ -1818,7 +1818,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: "#/components/schemas/title"
+                  - $ref: "#/components/schemas/book"
         "401":
           $ref: "#/components/responses/unauthorized"
         "403":
@@ -1829,7 +1829,7 @@ paths:
           $ref: "#/components/responses/internal_server_error"
     delete:
       tags:
-        - Titles
+        - Books
       summary: Delete title
       description: ""
       parameters:
@@ -1847,14 +1847,14 @@ paths:
           $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /titles/{title_id}/to_review.json:
+  /books/{book_id}/to_review.json:
     put:
       tags:
-        - Titles
+        - Books
       summary: Send title to review
       description: ""
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
       responses:
         "200":
           description: Success
@@ -1862,7 +1862,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: "#/components/schemas/title"
+                  - $ref: "#/components/schemas/book"
         "401":
           $ref: "#/components/responses/unauthorized"
         "403":
@@ -1873,14 +1873,14 @@ paths:
           $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /titles/{title_id}/to_draft.json:
+  /books/{book_id}/to_draft.json:
     put:
       tags:
-        - Titles
+        - Books
       summary: Send title to draft
       description: ""
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
       responses:
         "200":
           description: Success
@@ -1888,7 +1888,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: "#/components/schemas/title"
+                  - $ref: "#/components/schemas/book"
         "401":
           $ref: "#/components/responses/unauthorized"
         "403":
@@ -1899,14 +1899,14 @@ paths:
           $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /titles/{title_id}/to_published.json:
+  /books/{book_id}/to_published.json:
     put:
       tags:
-        - Titles
+        - Books
       summary: Send title to published
       description: ""
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
       responses:
         "200":
           description: Success
@@ -1914,7 +1914,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: "#/components/schemas/title"
+                  - $ref: "#/components/schemas/book"
         "401":
           $ref: "#/components/responses/unauthorized"
         "403":
@@ -1925,14 +1925,14 @@ paths:
           $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /titles/{title_id}/cover.json:
+  /books/{book_id}/cover.json:
     put:
       tags:
-        - Titles
+        - Books
       summary: Update cover
       description: ""
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
       requestBody:
         content:
           application/json:
@@ -1950,7 +1950,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: "#/components/schemas/title"
+                  - $ref: "#/components/schemas/book"
         "401":
           $ref: "#/components/responses/unauthorized"
         "403":
@@ -1963,11 +1963,11 @@ paths:
           $ref: "#/components/responses/internal_server_error"
     delete:
       tags:
-        - Titles
+        - Books
       summary: Delete cover
       description: ""
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
       responses:
         "204":
           $ref: "#/components/responses/no_content"
@@ -1981,14 +1981,14 @@ paths:
           $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /titles/{title_id}/volumes.json:
+  /books/{book_id}/volumes.json:
     get:
       tags:
         - Volumes
       summary: Volumes
       description: Sorted by number ASC
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
       responses:
         "200":
           description: Success
@@ -2012,7 +2012,7 @@ paths:
       summary: Create volume
       description: ""
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
       requestBody:
         content:
           application/json:
@@ -2040,14 +2040,14 @@ paths:
           $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /titles/{title_id}/volumes/{id}.json:
+  /books/{book_id}/volumes/{id}.json:
     get:
       tags:
         - Volumes
       summary: Volume
       description: ""
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
         - $ref: "#/components/parameters/id"
       responses:
         "200":
@@ -2071,7 +2071,7 @@ paths:
       summary: Update volume
       description: ""
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
         - $ref: "#/components/parameters/id"
       requestBody:
         content:
@@ -2106,7 +2106,7 @@ paths:
       summary: Delete volume
       description: ""
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
         - $ref: "#/components/parameters/id"
       responses:
         "204":
@@ -2121,14 +2121,14 @@ paths:
           $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /titles/{title_id}/chapters.json:
+  /books/{book_id}/chapters.json:
     get:
       tags:
         - Chapters
       summary: Chapters
       description: Sorted by number ASC
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
       responses:
         "200":
           description: Success
@@ -2152,7 +2152,7 @@ paths:
       summary: Create chapter
       description: ""
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
       requestBody:
         content:
           application/json:
@@ -2223,14 +2223,14 @@ paths:
           $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /titles/{title_id}/chapters/{id}.json:
+  /books/{book_id}/chapters/{id}.json:
     get:
       tags:
         - Chapters
       summary: Chapter
       description: ""
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
         - $ref: "#/components/parameters/id"
       responses:
         "200":
@@ -2254,7 +2254,7 @@ paths:
       summary: Update chapter
       description: ""
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
         - $ref: "#/components/parameters/id"
       requestBody:
         content:
@@ -2328,7 +2328,7 @@ paths:
       summary: Delete chapter
       description: ""
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
         - $ref: "#/components/parameters/id"
       responses:
         "204":
@@ -2343,14 +2343,14 @@ paths:
           $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /titles/{title_id}/chapters/{chapter_id}/to_review.json:
+  /books/{book_id}/chapters/{chapter_id}/to_review.json:
     put:
       tags:
         - Chapters
       summary: Send chapter to review
       description: ""
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
         - $ref: "#/components/parameters/chapter_id"
       responses:
         "200":
@@ -2370,14 +2370,14 @@ paths:
           $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /titles/{title_id}/chapters/{chapter_id}/to_draft.json:
+  /books/{book_id}/chapters/{chapter_id}/to_draft.json:
     put:
       tags:
         - Chapters
       summary: Send chapter to draft
       description: ""
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
         - $ref: "#/components/parameters/chapter_id"
       responses:
         "200":
@@ -2397,14 +2397,14 @@ paths:
           $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /titles/{title_id}/chapters/{chapter_id}/to_published.json:
+  /books/{book_id}/chapters/{chapter_id}/to_published.json:
     put:
       tags:
         - Chapters
       summary: Send chapter to published
       description: ""
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
         - $ref: "#/components/parameters/chapter_id"
       responses:
         "200":
@@ -2424,14 +2424,14 @@ paths:
           $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /titles/{title_id}/views.json:
+  /books/{book_id}/views.json:
     post:
       tags:
-        - Titles
+        - Books
       summary: Create view
       description: ""
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
       responses:
         "200":
           description: Success
@@ -2450,14 +2450,14 @@ paths:
           $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /titles/{title_id}/bookmarks.json:
+  /books/{book_id}/bookmarks.json:
     post:
       tags:
-        - Titles
+        - Books
       summary: Create bookmark
       description: ""
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
       responses:
         "200":
           description: Success
@@ -2476,14 +2476,14 @@ paths:
           $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /titles/{title_id}/bookmarks/{id}.json:
+  /books/{book_id}/bookmarks/{id}.json:
     delete:
       tags:
-        - Titles
+        - Books
       summary: Delete bookmark
       description: ""
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
         - $ref: "#/components/parameters/id"
       responses:
         "204":
@@ -2498,14 +2498,14 @@ paths:
           $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /titles/{title_id}/favorites.json:
+  /books/{book_id}/favorites.json:
     post:
       tags:
-        - Titles
+        - Books
       summary: Create favorite
       description: ""
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
       responses:
         "200":
           description: Success
@@ -2524,14 +2524,14 @@ paths:
           $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /titles/{title_id}/favorites/{id}.json:
+  /books/{book_id}/favorites/{id}.json:
     delete:
       tags:
-        - Titles
+        - Books
       summary: Delete favorite
       description: ""
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
         - $ref: "#/components/parameters/id"
       responses:
         "204":
@@ -2546,14 +2546,14 @@ paths:
           $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /titles/{title_id}/chapters/{chapter_id}/cover.json:
+  /books/{book_id}/chapters/{chapter_id}/cover.json:
     put:
       tags:
         - Chapters
       summary: Update cover
       description: ""
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
         - $ref: "#/components/parameters/chapter_id"
       requestBody:
         content:
@@ -2589,7 +2589,7 @@ paths:
       summary: Delete cover
       description: ""
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
         - $ref: "#/components/parameters/chapter_id"
       responses:
         "204":
@@ -2604,14 +2604,14 @@ paths:
           $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /titles/{title_id}/chapters/{chapter_id}/views.json:
+  /books/{book_id}/chapters/{chapter_id}/views.json:
     post:
       tags:
         - Chapters
       summary: Create view
       description: ""
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
         - $ref: "#/components/parameters/chapter_id"
       responses:
         "200":
@@ -2631,14 +2631,14 @@ paths:
           $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /titles/{title_id}/chapters/{chapter_id}/bookmarks.json:
+  /books/{book_id}/chapters/{chapter_id}/bookmarks.json:
     post:
       tags:
         - Chapters
       summary: Create bookmark
       description: ""
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
         - $ref: "#/components/parameters/chapter_id"
       responses:
         "200":
@@ -2658,14 +2658,14 @@ paths:
           $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /titles/{title_id}/chapters/{chapter_id}/bookmarks/{id}.json:
+  /books/{book_id}/chapters/{chapter_id}/bookmarks/{id}.json:
     delete:
       tags:
         - Chapters
       summary: Delete bookmark
       description: ""
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
         - $ref: "#/components/parameters/chapter_id"
         - $ref: "#/components/parameters/id"
       responses:
@@ -2681,14 +2681,14 @@ paths:
           $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /titles/{title_id}/chapters/{chapter_id}/pages.json:
+  /books/{book_id}/chapters/{chapter_id}/pages.json:
     get:
       tags:
         - Pages
       summary: Pages
       description: Sorted by number ASC
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
         - $ref: "#/components/parameters/chapter_id"
       responses:
         "200":
@@ -2744,14 +2744,14 @@ paths:
           $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /titles/{title_id}/chapters/{chapter_id}/pages/{id}.json:
+  /books/{book_id}/chapters/{chapter_id}/pages/{id}.json:
     get:
       tags:
         - Pages
       summary: Page
       description: ""
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
         - $ref: "#/components/parameters/chapter_id"
         - $ref: "#/components/parameters/id"
       responses:
@@ -2770,14 +2770,14 @@ paths:
           $ref: "#/components/responses/not_found"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /titles/{title_id}/chapters/{chapter_id}/pages/{page_id}/views.json:
+  /books/{book_id}/chapters/{chapter_id}/pages/{page_id}/views.json:
     post:
       tags:
         - Pages
       summary: Create view
       description: ""
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
         - $ref: "#/components/parameters/chapter_id"
         - $ref: "#/components/parameters/page_id"
       responses:
@@ -2798,14 +2798,14 @@ paths:
           $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /titles/{title_id}/chapters/{chapter_id}/pages/{page_id}/bookmarks.json:
+  /books/{book_id}/chapters/{chapter_id}/pages/{page_id}/bookmarks.json:
     post:
       tags:
         - Pages
       summary: Create bookmark
       description: ""
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
         - $ref: "#/components/parameters/chapter_id"
         - $ref: "#/components/parameters/page_id"
       responses:
@@ -2826,14 +2826,14 @@ paths:
           $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /titles/{title_id}/chapters/{chapter_id}/pages/{page_id}/bookmarks/{id}.json:
+  /books/{book_id}/chapters/{chapter_id}/pages/{page_id}/bookmarks/{id}.json:
     delete:
       tags:
         - Pages
       summary: Delete bookmark
       description: ""
       parameters:
-        - $ref: "#/components/parameters/title_id"
+        - $ref: "#/components/parameters/book_id"
         - $ref: "#/components/parameters/chapter_id"
         - $ref: "#/components/parameters/page_id"
         - $ref: "#/components/parameters/id"
@@ -3071,11 +3071,11 @@ paths:
           $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /users/bookmarks/titles.json:
+  /users/bookmarks/books.json:
     get:
       tags:
         - Users
-      summary: Bookmarked titles
+      summary: Bookmarked books
       description: Sorted by updated_at DESC
       parameters:
         - $ref: "#/components/parameters/page"
@@ -3093,7 +3093,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/title"
+                  $ref: "#/components/schemas/book"
         "401":
           $ref: "#/components/responses/unauthorized"
         "403":
@@ -3216,11 +3216,11 @@ paths:
           $ref: "#/components/responses/forbidden"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /users/favorites/titles.json:
+  /users/favorites/books.json:
     get:
       tags:
         - Users
-      summary: Favorite titles
+      summary: Favorite books
       description: Sorted by updated_at DESC
       parameters:
         - $ref: "#/components/parameters/page"
@@ -3238,18 +3238,18 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/title"
+                  $ref: "#/components/schemas/book"
         "401":
           $ref: "#/components/responses/unauthorized"
         "403":
           $ref: "#/components/responses/forbidden"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /users/views/titles.json:
+  /users/views/books.json:
     get:
       tags:
         - Users
-      summary: Viewed titles
+      summary: Viewed books
       description: Sorted by updated_at DESC
       parameters:
         - $ref: "#/components/parameters/page"
@@ -3267,7 +3267,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/title"
+                  $ref: "#/components/schemas/book"
         "401":
           $ref: "#/components/responses/unauthorized"
         "403":
@@ -3874,7 +3874,7 @@ paths:
           schema:
             type: string
             enum:
-              - Title
+              - Book
               - Chapter
               - Page
         - in: query
@@ -3922,7 +3922,7 @@ paths:
           schema:
             type: string
             enum:
-              - Title
+              - Book
               - Chapter
               - Page
         - in: query
@@ -3970,7 +3970,7 @@ paths:
           schema:
             type: string
             enum:
-              - Title
+              - Book
               - Chapter
               - Page
         - in: query

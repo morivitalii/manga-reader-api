@@ -1,10 +1,10 @@
 FactoryBot.define do
   factory :favorite do
     association :user
-    association :resource, factory: :title
+    association :resource, factory: :book
 
-    trait :title do
-      association :resource, factory: :title
+    trait :book do
+      association :resource, factory: :book
     end
 
     trait :group do
@@ -15,7 +15,7 @@ FactoryBot.define do
       association :resource, factory: :artist
     end
 
-    factory :title_favorite, traits: [:title]
+    factory :book_favorite, traits: [:book]
     factory :group_favorite, traits: [:group]
     factory :artist_favorite, traits: [:artist]
   end

@@ -1,10 +1,10 @@
 FactoryBot.define do
   factory :bookmark do
     association :user
-    association :resource, factory: :title
+    association :resource, factory: :book
 
-    trait :title do
-      association :resource, factory: :title
+    trait :book do
+      association :resource, factory: :book
     end
 
     trait :chapter do
@@ -15,7 +15,7 @@ FactoryBot.define do
       association :resource, factory: :page
     end
 
-    factory :title_bookmark, traits: [:title]
+    factory :book_bookmark, traits: [:book]
     factory :chapter_bookmark, traits: [:chapter]
     factory :page_bookmark, traits: [:page]
   end

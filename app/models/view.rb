@@ -1,6 +1,6 @@
 class View < ApplicationRecord
   # Allowed delegated types
-  RESOURCE_TYPES = ["Title", "Chapter", "Page"]
+  RESOURCE_TYPES = ["Book", "Chapter", "Page"]
 
   # This attributes should not be changed. Just because
   attr_readonly :user_id, :resource_type, :resource_id, :created_at

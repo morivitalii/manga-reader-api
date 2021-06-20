@@ -5,12 +5,12 @@ class Chapter < ApplicationRecord
   ARTISTS_LIMIT = 100
 
   # This attributes should not be changed. Just because
-  attr_readonly :title_id, :content_language_id, :volume_id, :group_id, :user_id, :number
+  attr_readonly :book_id, :content_language_id, :volume_id, :group_id, :user_id, :number
 
   belongs_to :content_language
-  belongs_to :title
+  belongs_to :book
 
-  # optional: true because it could be that title still have no volumes
+  # optional: true because it could be that book still have no volumes
   belongs_to :volume, optional: true
 
   belongs_to :user
@@ -25,7 +25,7 @@ class Chapter < ApplicationRecord
 
   has_one_attached :cover, service: :public
 
-  invalidate_association_cache :title
+  invalidate_association_cache :book
   invalidate_association_cache :volume
   invalidate_association_cache :user
   invalidate_association_cache :group
@@ -35,15 +35,15 @@ class Chapter < ApplicationRecord
   validates :status, presence: true
   validates :name, allow_blank: true, length: { minimum: 1, maximum: 125 }
   validates :number, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100_000 }
-  validate :validate_volume_belongs_to_title
+  validate :validate_volume_belongs_to_book
   validate :validate_artists_size
 
   private
 
-  def validate_volume_belongs_to_title
+  def validate_volume_belongs_to_book
     return if volume.blank?
 
-    if title_id != volume.title_id
+    if book_id != volume.book_id
       errors.add(:volume_id, :invalid)
     end
   end

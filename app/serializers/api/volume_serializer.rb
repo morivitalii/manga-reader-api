@@ -2,7 +2,7 @@ class Api::VolumeSerializer < Api::ApplicationSerializer
   def attributes
     {
       id: model.id,
-      title_id: model.title_id,
+      book_id: model.book_id,
       number: model.number
     }
   end

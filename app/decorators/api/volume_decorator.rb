@@ -1,3 +1,3 @@
 class Api::VolumeDecorator < Api::ApplicationDecorator
-  decorates_association :title, with: Api::TitleDecorator
+  decorates_association :book, with: Api::BookDecorator
 end

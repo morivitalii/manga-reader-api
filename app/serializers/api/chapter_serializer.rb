@@ -5,7 +5,7 @@ class Api::ChapterSerializer < Api::ApplicationSerializer
     {
       id: model.id,
       content_language_id: model.content_language_id,
-      title_id: model.title_id,
+      book_id: model.book_id,
       group_id: model.group_id,
       name: model.name,
       number: model.number,

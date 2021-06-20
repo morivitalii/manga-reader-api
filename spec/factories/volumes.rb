@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :volume do
-    association :title
+    association :book
     sequence(:number, 1) { |i| i }
   end
 end

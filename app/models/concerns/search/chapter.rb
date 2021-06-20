@@ -8,7 +8,7 @@ module Search
 			settings do
 				mappings dynamic: false, _source: { enabled: false } do
 					indexes :content_language_id, type: :long
-					indexes :title_id, type: :long
+					indexes :book_id, type: :long
 					indexes :volume_id, type: :long
 					indexes :group_id, type: :long
 					indexes :number, type: :integer
@@ -25,7 +25,7 @@ module Search
 			def as_indexed_json(_options = {})
 				{
 					content_language_id: content_language_id,
-					title_id: title_id,
+					book_id: book_id,
 					volume_id: volume_id,
 					group_id: group_id,
 					number: number,

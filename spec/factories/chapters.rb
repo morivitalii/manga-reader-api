@@ -1,12 +1,12 @@
 FactoryBot.define do
   factory :chapter do
     association :content_language
-    association :title
+    association :book
     association :group
     association :user
 
     volume do
-      create(:volume, title: title)
+      create(:volume, book: book)
     end
 
     before(:create) do |object|
