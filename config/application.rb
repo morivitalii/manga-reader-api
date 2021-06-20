@@ -34,5 +34,7 @@ module App
 
     config.i18n.available_locales = [:en, :ru]
     config.i18n.default_locale = :ru
+
+    config.action_dispatch.cookies_same_site_protection = :none
   end
 end
