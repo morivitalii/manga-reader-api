@@ -18,20 +18,11 @@ module Search
 					indexes :pages_count, type: :integer
 					indexes :name, type: :text
 					indexes :created_at, type: :date
-					indexes :updated_at, type: :date
 					indexes :deleted_at, type: :date
-					indexes :sent_to_review_at, type: :date
-					indexes :published_at, type: :date
 				end
 			end
 
 			def as_indexed_json(_options = {})
-				ActiveRecord::Associations::Preloader.new.preload(
-						self, [
-						self.class.translations_associations
-					]
-				)
-
 				{
 					content_language_id: content_language_id,
 					title_id: title_id,
@@ -44,10 +35,7 @@ module Search
 					pages_count: pages_count,
 					name: name,
 					created_at: created_at,
-					updated_at: updated_at,
 					deleted_at: deleted_at,
-					sent_to_review_at: sent_to_review_at,
-					published_at: published_at,
 				}.to_json
 			end
 		end
