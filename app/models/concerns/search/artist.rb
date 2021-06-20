@@ -7,9 +7,6 @@ module Search
 
 			settings do
 				mappings dynamic: false, _source: { enabled: false } do
-					indexes :created_at, type: :date
-					indexes :updated_at, type: :date
-
 					indexes :name, type: :object do
 						indexes :en, type: :text, analyzer: :english
 						indexes :ru, type: :text, analyzer: :russian
@@ -25,8 +22,6 @@ module Search
 				)
 
 				{
-					created_at: created_at,
-					updated_at: updated_at,
 					name: {
 						en: name_en,
 						ru: name_ru

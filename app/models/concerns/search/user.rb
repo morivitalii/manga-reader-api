@@ -1,5 +1,5 @@
 module Search
-	module Tag
+	module User
 		extend ActiveSupport::Concern
 
 		included do
@@ -7,8 +7,8 @@ module Search
 
 			settings do
 				mappings dynamic: false, _source: { enabled: false } do
-					indexes :key, type: :keyword
-					indexes :titles_count, type: :integer
+					indexes :username, type: :keyword
+					indexes :created_at, type: :date
 
 					indexes :title, type: :object do
 						indexes :en, type: :text, analyzer: :english
@@ -25,18 +25,9 @@ module Search
 				)
 
 				{
-					key: key,
-					titles_count: titles_count,
-					title: {
-						en: title_en,
-						ru: title_ru
-					}
+					username: username,
+					created_at: created_at
 				}.to_json
-			end
-
-			# Not deleted and published titles count
-			def titles_count
-				self.titles.where(deleted_at: nil, status: :published).count
 			end
 		end
 	end

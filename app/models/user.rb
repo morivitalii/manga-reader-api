@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   include CacheInvalidation
+  include Search::User
 
   has_secure_password :password, validations: false
 
