@@ -1,5 +1,6 @@
 class Chapter < ApplicationRecord
   include CacheInvalidation
+  include Search::Chapter
 
   ARTISTS_LIMIT = 100
 
