@@ -53,7 +53,7 @@ module Search
         end
       end
 
-      def as_indexed_json(options = {})
+      def as_indexed_json(_options = {})
         ActiveRecord::Associations::Preloader.new.preload(
           self, [
             self.class.translations_associations,
