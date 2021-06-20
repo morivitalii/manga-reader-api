@@ -1,5 +1,5 @@
 module Search
-	module Artist
+	module Group
 		extend ActiveSupport::Concern
 
 		included do
@@ -7,13 +7,11 @@ module Search
 
 			settings do
 				mappings dynamic: false, _source: { enabled: false } do
+					indexes :title, type: :text
+					indexes :favorites_count, type: :integer
+					indexes :users_count, type: :integer
 					indexes :created_at, type: :date
 					indexes :updated_at, type: :date
-
-					indexes :name, type: :object do
-						indexes :en, type: :text, analyzer: :english
-						indexes :ru, type: :text, analyzer: :russian
-					end
 				end
 			end
 
@@ -25,12 +23,11 @@ module Search
 				)
 
 				{
+					title: title,
+					favorites_count: favorites_count,
+					users_count: users_count,
 					created_at: created_at,
-					updated_at: updated_at,
-					name: {
-						en: name_en,
-						ru: name_ru
-					}
+					updated_at: updated_at
 				}.to_json
 			end
 		end

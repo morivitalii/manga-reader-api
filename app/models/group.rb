@@ -1,4 +1,6 @@
 class Group < ApplicationRecord
+  include Search::Group
+
   has_many :group_users, dependent: :restrict_with_error
   has_many :users, through: :group_users
   has_many :chapters, dependent: :restrict_with_error
