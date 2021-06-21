@@ -1,7 +1,7 @@
 class Api::Books::UpdateChapter
   include ActiveModel::Model
 
-  attr_accessor :chapter, :content_language_id, :volume_id, :title, :number, :cleaner_ids, :translator_ids, :editor_ids, :typer_ids
+  attr_accessor :chapter, :content_language_id, :volume, :title, :number, :cleaner_ids, :translator_ids, :editor_ids, :typer_ids
 
   def call
     ActiveRecord::Base.transaction do
@@ -9,7 +9,7 @@ class Api::Books::UpdateChapter
         title: title,
         number: number,
         content_language_id: content_language_id,
-        volume_id: volume_id
+        volume: volume
       )
 
       process_resource_artists(:cleaner, cleaner_ids)

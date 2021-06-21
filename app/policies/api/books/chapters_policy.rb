@@ -20,11 +20,11 @@ class Api::Books::ChaptersPolicy < Api::ApplicationPolicy
   end
 
   def permitted_attributes_for_create
-    [:content_language_id, :volume_id, :group_id, :title, :number, cleaner_ids: [], translator_ids: [], editor_ids: [], typer_ids: []]
+    [:content_language_id, :volume, :group_id, :title, :number, cleaner_ids: [], translator_ids: [], editor_ids: [], typer_ids: []]
   end
 
   def permitted_attributes_for_update
-    [:content_language_id, :volume_id, :group_id, :title, :number, cleaner_ids: [], translator_ids: [], editor_ids: [], typer_ids: []]
+    [:content_language_id, :volume, :group_id, :title, :number, cleaner_ids: [], translator_ids: [], editor_ids: [], typer_ids: []]
   end
 
   class Scope < Api::ApplicationPolicy::Scope

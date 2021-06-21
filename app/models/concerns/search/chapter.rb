@@ -9,7 +9,7 @@ module Search
 				mappings dynamic: false, _source: { enabled: false } do
 					indexes :content_language_id, type: :long
 					indexes :book_id, type: :long
-					indexes :volume_id, type: :long
+					indexes :volume, type: :integer
 					indexes :group_id, type: :long
 					indexes :number, type: :integer
 					indexes :status, type: :keyword

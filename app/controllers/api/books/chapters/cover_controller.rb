@@ -11,7 +11,6 @@ class Api::Books::Chapters::CoverController < Api::ApplicationController
       ActiveRecord::Associations::Preloader.new.preload(
         service.chapter, [
           :content_language,
-          :volume,
           :group,
           cover_attachment: :blob
         ]

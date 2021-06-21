@@ -17,7 +17,6 @@ tags:
   - name: Groups
   - name: Tags
   - name: Books
-  - name: Volumes
   - name: Chapters
   - name: Pages
   - name: Bookmarks
@@ -269,6 +268,9 @@ components:
         title:
           type: string
           description: Book
+        volume:
+          type: integer
+          description: Number
         number:
           type: integer
           description: Number
@@ -296,7 +298,8 @@ components:
         content_language_id: 1
         book_id: 1
         group_id: 1
-        name: Title
+        title: Title
+        volume: 1
         number: 1
         status: draft
         pages_count: 1
@@ -1981,146 +1984,6 @@ paths:
           $ref: "#/components/responses/unprocessable_entity"
         "500":
           $ref: "#/components/responses/internal_server_error"
-  /books/{book_id}/volumes.json:
-    get:
-      tags:
-        - Volumes
-      summary: Volumes
-      description: Sorted by number ASC
-      parameters:
-        - $ref: "#/components/parameters/book_id"
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/volume"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "404":
-          $ref: "#/components/responses/not_found"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-    post:
-      tags:
-        - Volumes
-      summary: Create
-      description: ""
-      parameters:
-        - $ref: "#/components/parameters/book_id"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                number:
-                  type: integer
-                  description: Number
-              example:
-                number: 1
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/volume"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "422":
-          $ref: "#/components/responses/unprocessable_entity"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-  /books/{book_id}/volumes/{id}.json:
-    get:
-      tags:
-        - Volumes
-      summary: Volume
-      description: ""
-      parameters:
-        - $ref: "#/components/parameters/book_id"
-        - $ref: "#/components/parameters/id"
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/volume"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "404":
-          $ref: "#/components/responses/not_found"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-    put:
-      tags:
-        - Volumes
-      summary: Update
-      description: ""
-      parameters:
-        - $ref: "#/components/parameters/book_id"
-        - $ref: "#/components/parameters/id"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                number:
-                  type: integer
-                  description: Number
-              example:
-                number: 1
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/volume"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "422":
-          $ref: "#/components/responses/unprocessable_entity"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
-    delete:
-      tags:
-        - Volumes
-      summary: Delete
-      description: ""
-      parameters:
-        - $ref: "#/components/parameters/book_id"
-        - $ref: "#/components/parameters/id"
-      responses:
-        "204":
-          $ref: "#/components/responses/no_content"
-        "401":
-          $ref: "#/components/responses/unauthorized"
-        "403":
-          $ref: "#/components/responses/forbidden"
-        "404":
-          $ref: "#/components/responses/not_found"
-        "422":
-          $ref: "#/components/responses/unprocessable_entity"
-        "500":
-          $ref: "#/components/responses/internal_server_error"
   /books/{book_id}/chapters.json:
     get:
       tags:
@@ -2165,9 +2028,9 @@ paths:
                 number:
                   type: integer
                   description: Number
-                volume_id:
+                volume:
                   type: integer
-                  description: Volume ID
+                  description: Volume
                 group_id:
                   type: integer
                   description: Group ID
@@ -2194,7 +2057,7 @@ paths:
               example:
                 name: Title
                 number: 1
-                volume_id: 1
+                volume: 1
                 group_id: 1
                 cleaners_ids:
                   - 1
@@ -2268,9 +2131,9 @@ paths:
                 number:
                   type: integer
                   description: Number
-                volume_id:
+                volume:
                   type: integer
-                  description: Volume ID
+                  description: Volume
                 cleaners_ids:
                   type: array
                   description: Artists IDs
@@ -2294,7 +2157,7 @@ paths:
               example:
                 name: "Orth, City on the Edge"
                 number: 1
-                volume_id: 1
+                volume: 1
                 cleaners_ids:
                   - 1
                 translators_ids:

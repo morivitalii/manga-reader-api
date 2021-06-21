@@ -17,6 +17,9 @@
     "title": {
       "type": "string"
     },
+    "volume": {
+      "type": "integer"
+    },
     "number": {
       "type": "integer"
     },
