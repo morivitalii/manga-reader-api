@@ -22,7 +22,7 @@ class Book < ApplicationRecord
 
   translates :title, :description
 
-  enum status: { draft: 1, review: 2, published: 3 }
+  enum status: { draft: 1, review: 2, published: 3, deleted: 4 }
   enum publication_status: { ongoing: 1, completed: 2, cancelled: 3 }
 
   validates :title, presence: true, length: { minimum: 1, maximum: 125 }

@@ -6,6 +6,7 @@ class Api::DeleteBook
   def call
     ActiveRecord::Base.transaction do
       @book.update!(
+        status: :deleted,
         deleted_at: Time.current
       )
     end
