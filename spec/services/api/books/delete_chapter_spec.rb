@@ -14,6 +14,7 @@ RSpec.describe Api::Books::DeleteChapter do
 
       expect(result).to be_truthy
       expect(chapter.deleted_at).to be_present
+      expect(chapter.status).to eq("deleted")
     end
   end
 end

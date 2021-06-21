@@ -13,6 +13,7 @@ RSpec.describe Api::DeleteBook do
 
       expect(result).to be_truthy
       expect(book.deleted_at).to be_present
+      expect(book.status).to eq("deleted")
     end
   end
 end
