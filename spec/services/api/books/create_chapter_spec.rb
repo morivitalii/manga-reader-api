@@ -5,7 +5,6 @@ RSpec.describe Api::Books::CreateChapter do
     it "does what it should" do
       content_language = create(:content_language)
       book = create(:book)
-      volume = create(:volume, book: book)
       group = create(:group)
       user = create(:user)
       first_user = create(:user)
@@ -22,7 +21,7 @@ RSpec.describe Api::Books::CreateChapter do
         book: book,
         user: user,
         content_language_id: content_language.id,
-        volume_id: volume.id,
+        volume: 1,
         group_id: group.id,
         cleaner_ids: ctet_ids,
         translator_ids: ctet_ids,

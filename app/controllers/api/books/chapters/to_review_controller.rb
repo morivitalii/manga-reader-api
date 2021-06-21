@@ -11,7 +11,6 @@ class Api::Books::Chapters::ToReviewController < Api::ApplicationController
       ActiveRecord::Associations::Preloader.new.preload(
         @chapter, [
           :content_language,
-          :volume,
           :group,
           cover_attachment: :blob,
           resource_artists: { artist: Artist.translations_associations },

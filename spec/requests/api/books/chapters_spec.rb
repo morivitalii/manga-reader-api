@@ -34,7 +34,6 @@ RSpec.describe Api::Books::ChaptersController do
     it "returns valid response" do
       content_language = create(:content_language)
       book = create(:book)
-      volume = create(:volume, book: book)
       group = create(:group)
       first_user = create(:user)
       first_artist = create(:artist, user: first_user)
@@ -48,7 +47,7 @@ RSpec.describe Api::Books::ChaptersController do
 
       params = {
         content_language_id: content_language.id,
-        volume_id: volume.id,
+        volume: 1,
         group_id: group.id,
         number: 1,
 				title: "Title",
@@ -69,7 +68,6 @@ RSpec.describe Api::Books::ChaptersController do
     it "returns valid response" do
       content_language = create(:content_language)
       book = create(:book)
-      volume = create(:volume, book: book)
       group = create(:group)
       chapter = create(:chapter, book: book, group: group)
       first_user = create(:user)
@@ -84,7 +82,7 @@ RSpec.describe Api::Books::ChaptersController do
 
       params = {
         content_language_id: content_language.id,
-        volume_id: volume.id,
+        volume: 1,
         number: 1,
 				title: "Title",
         cleaner_ids: ctet_ids,

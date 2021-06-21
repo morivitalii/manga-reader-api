@@ -339,7 +339,6 @@ ALTER SEQUENCE public.books_id_seq OWNED BY public.books.id;
 CREATE TABLE public.chapters (
     id bigint NOT NULL,
     book_id bigint NOT NULL,
-    volume_id bigint,
     group_id bigint NOT NULL,
     number integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
@@ -354,7 +353,8 @@ CREATE TABLE public.chapters (
     deleted_at timestamp without time zone,
     sent_to_review_at timestamp without time zone,
     published_at timestamp without time zone,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
+    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL,
+    volume integer
 );
 
 
@@ -1840,13 +1840,6 @@ CREATE INDEX index_chapters_on_user_id ON public.chapters USING btree (user_id);
 
 
 --
--- Name: index_chapters_on_volume_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_chapters_on_volume_id ON public.chapters USING btree (volume_id);
-
-
---
 -- Name: index_content_language_translations_on_content_language_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2590,14 +2583,6 @@ ALTER TABLE ONLY public.active_storage_variant_records
 
 
 --
--- Name: chapters fk_rails_9eb9ab7f62; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.chapters
-    ADD CONSTRAINT fk_rails_9eb9ab7f62 FOREIGN KEY (volume_id) REFERENCES public.volumes(id);
-
-
---
 -- Name: group_users fk_rails_a9d5f48449; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2917,6 +2902,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210620123857'),
 ('20210620123950'),
 ('20210620124040'),
-('20210621055634');
+('20210621055634'),
+('20210621064218');
 
 

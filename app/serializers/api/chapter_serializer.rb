@@ -8,6 +8,7 @@ class Api::ChapterSerializer < Api::ApplicationSerializer
       book_id: model.book_id,
       group_id: model.group_id,
       title: model.title,
+      volume: model.volume,
       number: model.number,
       status: model.status,
       pages_count: model.pages_count,

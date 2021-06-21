@@ -1,7 +1,7 @@
 class Api::Books::CreateChapter
   include ActiveModel::Model
 
-  attr_accessor :book, :user, :content_language_id, :group_id, :volume_id, :title, :number,
+  attr_accessor :book, :user, :content_language_id, :group_id, :volume, :title, :number,
     :cleaner_ids, :translator_ids, :editor_ids, :typer_ids
 
   attr_reader :chapter
@@ -16,7 +16,7 @@ class Api::Books::CreateChapter
         user: user,
         content_language_id: content_language_id,
         group_id: group_id,
-        volume_id: volume_id
+        volume: volume
       )
 
       process_resource_artists(:cleaner, cleaner_ids)

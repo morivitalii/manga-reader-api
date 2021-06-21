@@ -1,7 +1,6 @@
 class Api::BookSerializer < Api::ApplicationSerializer
   serialize_associations :resource_artists, with: Api::ResourceArtistSerializer
   serialize_associations :resource_tags, with: Api::ResourceTagSerializer
-  serialize_associations :volumes, with: Api::VolumeSerializer
   serialize_associations :chapters, with: Api::ChapterSerializer
 
   def attributes

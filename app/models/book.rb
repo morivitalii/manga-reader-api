@@ -12,7 +12,6 @@ class Book < ApplicationRecord
   has_many :resource_tags, as: :resource, dependent: :destroy
   has_many :tags, through: :resource_tags
 
-  has_many :volumes, dependent: :destroy
   has_many :chapters, dependent: :destroy
 
   has_many :favorites, as: :resource, dependent: :destroy

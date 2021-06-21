@@ -4,7 +4,6 @@ RSpec.describe Api::Books::UpdateChapter do
   describe ".call" do
     it "does what it should" do
       book = create(:book)
-      volume = create(:volume, book: book)
       chapter = create(:chapter, book: book)
       content_language = create(:content_language)
       first_user = create(:user)
@@ -20,7 +19,7 @@ RSpec.describe Api::Books::UpdateChapter do
         number: 1,
         title: "Title",
         content_language_id: content_language.id,
-        volume_id: volume.id,
+        volume: 1,
         cleaner_ids: ctet_ids,
         translator_ids: ctet_ids,
         editor_ids: ctet_ids,

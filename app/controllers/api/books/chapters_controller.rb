@@ -14,7 +14,6 @@ class Api::Books::ChaptersController < Api::ApplicationController
     ActiveRecord::Associations::Preloader.new.preload(
       chapters, [
         :content_language,
-        :volume,
         :group,
         cover_attachment: :blob,
         resource_artists: { artist: Artist.translations_associations },
@@ -31,7 +30,6 @@ class Api::Books::ChaptersController < Api::ApplicationController
     ActiveRecord::Associations::Preloader.new.preload(
       @chapter, [
         :content_language,
-        :volume,
         :group,
         cover_attachment: :blob,
         resource_artists: { artist: Artist.translations_associations },
@@ -51,7 +49,6 @@ class Api::Books::ChaptersController < Api::ApplicationController
       ActiveRecord::Associations::Preloader.new.preload(
         service.chapter, [
           :content_language,
-          :volume,
           :group,
           cover_attachment: :blob,
           resource_artists: { artist: Artist.translations_associations },
@@ -74,7 +71,6 @@ class Api::Books::ChaptersController < Api::ApplicationController
       ActiveRecord::Associations::Preloader.new.preload(
         service.chapter, [
           :content_language,
-          :volume,
           :group,
           cover_attachment: :blob,
           resource_artists: { artist: Artist.translations_associations },

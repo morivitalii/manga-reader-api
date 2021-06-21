@@ -11,7 +11,6 @@ class Api::Users::Views::ChaptersController < Api::ApplicationController
     ActiveRecord::Associations::Preloader.new.preload(
       chapters, [
         :content_language,
-        :volume,
         :group,
         cover_attachment: :blob
       ]
