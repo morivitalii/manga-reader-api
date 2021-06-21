@@ -349,7 +349,7 @@ CREATE TABLE public.chapters (
     bookmarks_count bigint DEFAULT 0 NOT NULL,
     pages_count bigint DEFAULT 0 NOT NULL,
     user_id bigint NOT NULL,
-    name character varying DEFAULT ''::character varying NOT NULL,
+    title character varying DEFAULT ''::character varying NOT NULL,
     content_language_id bigint NOT NULL,
     deleted_at timestamp without time zone,
     sent_to_review_at timestamp without time zone,
@@ -2916,6 +2916,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210620123751'),
 ('20210620123857'),
 ('20210620123950'),
-('20210620124040');
+('20210620124040'),
+('20210621055634');
 
 

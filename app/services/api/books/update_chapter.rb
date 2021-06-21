@@ -1,12 +1,12 @@
 class Api::Books::UpdateChapter
   include ActiveModel::Model
 
-  attr_accessor :chapter, :content_language_id, :volume_id, :name, :number, :cleaner_ids, :translator_ids, :editor_ids, :typer_ids
+  attr_accessor :chapter, :content_language_id, :volume_id, :title, :number, :cleaner_ids, :translator_ids, :editor_ids, :typer_ids
 
   def call
     ActiveRecord::Base.transaction do
       chapter.assign_attributes(
-        name: name,
+        title: title,
         number: number,
         content_language_id: content_language_id,
         volume_id: volume_id

@@ -18,7 +18,7 @@ RSpec.describe Api::Books::CreateChapter do
 
       service = described_class.new(
         number: 1,
-        name: "Title",
+				title: "Title",
         book: book,
         user: user,
         content_language_id: content_language.id,

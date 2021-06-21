@@ -33,7 +33,7 @@ class Chapter < ApplicationRecord
   enum status: { draft: 1, review: 2, published: 3, deleted: 4 }
 
   validates :status, presence: true
-  validates :name, allow_blank: true, length: { minimum: 1, maximum: 125 }
+  validates :title, allow_blank: true, length: { minimum: 1, maximum: 125 }
   validates :number, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100_000 }
   validate :validate_volume_belongs_to_book
   validate :validate_artists_size

@@ -7,7 +7,7 @@ class Api::ChapterSerializer < Api::ApplicationSerializer
       content_language_id: model.content_language_id,
       book_id: model.book_id,
       group_id: model.group_id,
-      name: model.name,
+      title: model.title,
       number: model.number,
       status: model.status,
       pages_count: model.pages_count,

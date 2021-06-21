@@ -18,7 +18,7 @@ RSpec.describe Api::Books::UpdateChapter do
       service = described_class.new(
         chapter: chapter,
         number: 1,
-        name: "Title",
+        title: "Title",
         content_language_id: content_language.id,
         volume_id: volume.id,
         cleaner_ids: ctet_ids,

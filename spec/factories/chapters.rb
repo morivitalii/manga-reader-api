@@ -14,7 +14,7 @@ FactoryBot.define do
     end
 
     sequence(:number, 1) { |i| i }
-    name { "Title" }
+		title { "Title" }
     status { :draft }
 
     trait :draft do
