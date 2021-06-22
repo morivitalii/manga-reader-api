@@ -1,14 +1,18 @@
 RSpec.shared_context "Content and interface languages context" do
   around(:example) do |example|
-    english_content_language = ContentLanguage.joins(:locale).where(locales: {key: :en}).take || create(:english_content_language)
-    russian_content_language = ContentLanguage.joins(:locale).where(locales: {key: :ru}).take || create(:russian_content_language)
-    english_interface_language = InterfaceLanguage.joins(:locale).where(locales: {key: :en}).take || create(:english_interface_language)
-    _russian_interface_language = InterfaceLanguage.joins(:locale).where(locales: {key: :ru}).take || create(:russian_interface_language)
+		primary_locale = Locale.where(key: :ru).take || create(:locale, key: :ru)
+    secondary_locale = create(:locale)
+		
+		primary_content_language = create(:content_language, locale: primary_locale)
+		secondary_content_language = create(:content_language, locale: secondary_locale)
+
+    primary_interface_language = create(:interface_language, locale: primary_locale)
+    _secondary_content_language = create(:interface_language, locale: secondary_locale)
 
     current = {
-      content_languages: [english_content_language, russian_content_language],
-      content_language: english_content_language,
-      interface_language: english_interface_language
+      content_languages: [primary_content_language, secondary_content_language],
+      content_language: primary_content_language,
+      interface_language: primary_interface_language
     }
 
     Current.set(current) do

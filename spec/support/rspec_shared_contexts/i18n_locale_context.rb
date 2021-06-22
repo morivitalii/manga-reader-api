@@ -1,7 +1,7 @@
 RSpec.shared_context "I18n locale context" do
   around(:example) do |example|
     # Use english locale for specs
-    I18n.with_locale(:en, &example)
+    I18n.with_locale(:ru, &example)
   end
 end
 
