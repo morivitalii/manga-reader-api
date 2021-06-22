@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :locale do
-    key { Faker::Alphanumeric.alpha(number: 2) }
+    key { Faker::Alphanumeric.unique.alpha(number: 2) }
 
     trait :russian do
       key { "ru" }
