@@ -35,6 +35,7 @@ module App
     config.i18n.available_locales = [:en, :ru]
     config.i18n.default_locale = :ru
 
+    config.hosts << ENV.fetch("HOST")
     config.action_dispatch.cookies_same_site_protection = :none
     config.session_store :cookie_store, key: "_app_session", secure: true
   end
