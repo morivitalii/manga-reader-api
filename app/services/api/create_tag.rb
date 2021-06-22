@@ -7,13 +7,11 @@ class Api::CreateTag
 
 	def call
 		ActiveRecord::Base.transaction do
-			@tag = Tag.new(
+			@tag = Tag.create!(
 				key: key,
 				title: title,
 				description: description
 			)
-
-			@tag.save!
 		end
 
 		true

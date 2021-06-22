@@ -7,12 +7,10 @@ class Api::CreateContentLanguage
 
   def call
     ActiveRecord::Base.transaction do
-      @content_language = ContentLanguage.new(
+      @content_language = ContentLanguage.create!(
         locale_id: locale_id,
         title: title
       )
-
-      content_language.save!
     end
 
     true

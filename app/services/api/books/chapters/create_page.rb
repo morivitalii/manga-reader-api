@@ -6,14 +6,12 @@ class Api::Books::Chapters::CreatePage
 
   def call
     ActiveRecord::Base.transaction do
-      @page = Page.new(
+      @page = Page.create!(
         number: number,
         file: file,
         chapter: chapter,
         user: user
       )
-
-      @page.save!
     end
 
     true

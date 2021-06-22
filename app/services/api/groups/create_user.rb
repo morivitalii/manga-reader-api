@@ -6,14 +6,10 @@ class Api::Groups::CreateUser
 
   def call
     ActiveRecord::Base.transaction do
-      @group_user = group.group_users.create!(
-        user: user
-      )
+      @group_user = group.group_users.create!(user: user)
 
       access_rights_objects.each do |access_right|
-        @group_user.group_user_access_rights.create!(
-          group_access_right: access_right
-        )
+        assign_access_rights(@group_user, access_right)
       end
     end
 
@@ -32,5 +28,11 @@ class Api::Groups::CreateUser
 
   def access_rights_objects
     @access_rights_objects = GroupAccessRight.where(key: access_rights).all
+  end
+
+	def assign_access_rights(group_user, access_right)
+    group_user.group_user_access_rights.create!(
+      group_access_right: access_right
+    )
   end
 end

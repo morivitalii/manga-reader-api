@@ -5,13 +5,11 @@ class Api::UpdateTag
 
 	def call
 		ActiveRecord::Base.transaction do
-			tag.assign_attributes(
+			tag.update!(
 				key: key,
 				title: title,
 				description: description
 			)
-
-			tag.save!
 		end
 
 		true

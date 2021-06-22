@@ -5,11 +5,9 @@ class Api::UpdateInterfaceLanguage
 
 	def call
 		ActiveRecord::Base.transaction do
-			interface_language.assign_attributes(
+			interface_language.update!(
 				title: title
 			)
-
-			interface_language.save!
 		end
 
 		true

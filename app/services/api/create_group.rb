@@ -6,11 +6,9 @@ class Api::CreateGroup
 
   def call
     ActiveRecord::Base.transaction do
-      @group = Group.new(
+      @group = Group.create!(
         title: title
       )
-
-      @group.save!
 
       group_user = @group.group_users.create!(user: user)
       group_user.group_user_access_rights.create!(group_user: group_user, group_access_right: manage_users_access_right)

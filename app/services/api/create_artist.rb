@@ -7,12 +7,10 @@ class Api::CreateArtist
 
 	def call
 		ActiveRecord::Base.transaction do
-			@artist = Artist.new(
+			@artist = Artist.create!(
 				user_id: user_id,
 				name: name
 			)
-
-			artist.save!
 		end
 
 		true

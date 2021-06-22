@@ -7,12 +7,10 @@ class Api::CreateInterfaceLanguage
 
 	def call
 		ActiveRecord::Base.transaction do
-			@interface_language = InterfaceLanguage.new(
+			@interface_language = InterfaceLanguage.create!(
 				locale_id: locale_id,
 				title: title
 			)
-
-			interface_language.save!
 		end
 
 		true

@@ -5,12 +5,10 @@ class Api::UpdateArtist
 
 	def call
 		ActiveRecord::Base.transaction do
-			artist.assign_attributes(
+			artist.update!(
 				user_id: user_id,
 				name: name
 			)
-
-			artist.save!
 		end
 
 		true

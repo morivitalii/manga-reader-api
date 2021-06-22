@@ -5,11 +5,9 @@ class Api::UpdateContentLanguage
 
   def call
     ActiveRecord::Base.transaction do
-      content_language.assign_attributes(
+      content_language.update!(
         title: title
       )
-
-      content_language.save!
     end
 
     true
