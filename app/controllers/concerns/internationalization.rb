@@ -11,6 +11,11 @@ module Internationalization
 
 	private
 
+	def set_i18n_locale(&action)
+		# Right now russian is only one of available locales for consumers
+		I18n.with_locale(:ru, &action)
+	end
+
 	def set_current_content_languages
 		query = ContentLanguage.order(id: :asc)
 		cache_key = variable_cache_key(query)
@@ -65,10 +70,5 @@ module Internationalization
 		Current.interface_language = Current.interface_languages.detect do |interface_language|
 			interface_language.locale.key == I18n.locale.to_s
 		end
-	end
-
-	def set_i18n_locale(&action)
-		# Right now english is only one of available locales to consumers
-		I18n.with_locale(:en, &action)
 	end
 end

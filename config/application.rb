@@ -25,7 +25,7 @@ module App
 
     config.active_record.schema_format = :sql
 
-    config.i18n.available_locales = [:en, :ru]
+    config.i18n.available_locales = [:ru]
     config.i18n.default_locale = :ru
 
     config.hosts << ENV.fetch("HOST")
