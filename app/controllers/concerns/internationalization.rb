@@ -2,7 +2,7 @@ module Internationalization
 	extend ActiveSupport::Concern
 
 	included do
-		before_action :set_i18n_locale
+		around_action :set_i18n_locale
 		before_action :set_current_content_languages
 		before_action :set_current_content_language
 		before_action :set_current_interface_languages
