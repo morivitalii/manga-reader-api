@@ -6,6 +6,8 @@ RSpec.describe Api::LocalesController do
       first_locale = create(:locale)
       second_locale = create(:locale)
       third_locale = create(:locale)
+			context_primary_locale = Locale.order(id: :asc).first
+      context_secondary_locale = Locale.order(id: :asc).second
 
       grant_access_right(current_user, :manage_system_settings)
 
@@ -14,7 +16,8 @@ RSpec.describe Api::LocalesController do
       expect(response).to have_http_status(200)
       expect(response).to match_json_schema("controllers/api/locales_controller/index/200")
       expect(response).to have_objects_collection(
-
+        primary_locale,
+				secondary_locale,
         first_locale,
         second_locale,
         third_locale
