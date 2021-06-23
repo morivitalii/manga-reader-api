@@ -25,6 +25,12 @@
 module CacheInvalidation
   extend ActiveSupport::Concern
 
+  included do
+    def set_cached_at_before_create
+      self.cached_at = Time.current
+    end
+  end
+
   class_methods do
     def invalidate_association_cache(association_name)
       method_name = "invalidate_#{association_name}_association_cache".to_sym
@@ -49,10 +55,8 @@ module CacheInvalidation
         end
       end
 
-      # Invoke callback after record destroy
+      self.before_create(:set_cached_at_before_create)
       self.after_save(method_name)
-
-      # Invoke callback after record destroy
       self.after_destroy(method_name)
     end
   end
