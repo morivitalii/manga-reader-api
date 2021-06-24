@@ -16,7 +16,7 @@ module Search
 					indexes :views_count, type: :long
 					indexes :bookmarks_count, type: :long
 					indexes :pages_count, type: :integer
-					indexes :name, type: :text
+					indexes :title, type: :text
 					indexes :created_at, type: :date
 					indexes :deleted_at, type: :date
 				end
@@ -33,7 +33,7 @@ module Search
 					views_count: views_count,
 					bookmarks_count: bookmarks_count,
 					pages_count: pages_count,
-					name: name,
+					title: title,
 					created_at: created_at,
 					deleted_at: deleted_at,
 				}.to_json

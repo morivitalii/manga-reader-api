@@ -13,7 +13,6 @@ module Search
           indexes :updated_at, type: :date
 
           indexes :title, type: :object do
-            indexes :en, type: :text, analyzer: :english
             indexes :ru, type: :text, analyzer: :russian
           end
 
@@ -34,7 +33,6 @@ module Search
             indexes :artist_type, type: :keyword
 
             indexes :name, type: :object do
-              indexes :en, type: :text, analyzer: :english
               indexes :ru, type: :text, analyzer: :russian
             end
           end
@@ -46,7 +44,6 @@ module Search
             indexes :artist_type, type: :keyword
 
             indexes :title, type: :object do
-              indexes :en, type: :text, analyzer: :english
               indexes :ru, type: :text, analyzer: :russian
             end
           end
@@ -61,8 +58,8 @@ module Search
               :locale,
               ContentLanguage.translations_associations
             ],
-            resource_artists: { artist: Artist.translations_associations },
-            resource_tags: { tag: Tag.translations_associations }
+            resource_artists: { artist: ::Artist.translations_associations },
+            resource_tags: { tag: ::Tag.translations_associations }
           ]
         )
 
@@ -73,12 +70,11 @@ module Search
           created_at: created_at,
           updated_at: updated_at,
           title: {
-            en: title_en,
             ru: title_ru
           },
           original_content_language: {
-            id: original_content_language.id,
-            locale: original_content_language.locale.key
+            id: original_content_language&.id,
+            locale: original_content_language&.locale&.key
           },
           artists: resource_artists.map { |resource_artist|
             {
@@ -87,7 +83,6 @@ module Search
               artist_id: resource_artist.artist_id,
               artist_type: resource_artist.type,
               name: {
-                en: resource_artist.artist.name_en,
                 ru: resource_artist.artist.name_ru
               }
             }
@@ -98,7 +93,6 @@ module Search
               tag_id: resource_tag.artist_id,
               tag_type: resource_tag.type,
               title: {
-                en: resource_tag.artist.title_en,
                 ru: resource_tag.artist.title_ru
               }
             }

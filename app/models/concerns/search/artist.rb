@@ -8,7 +8,6 @@ module Search
 			settings do
 				mappings dynamic: false, _source: { enabled: false } do
 					indexes :name, type: :object do
-						indexes :en, type: :text, analyzer: :english
 						indexes :ru, type: :text, analyzer: :russian
 					end
 				end
@@ -23,7 +22,6 @@ module Search
 
 				{
 					name: {
-						en: name_en,
 						ru: name_ru
 					}
 				}.to_json

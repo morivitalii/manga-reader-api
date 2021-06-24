@@ -11,7 +11,6 @@ module Search
 					indexes :books_count, type: :integer
 
 					indexes :title, type: :object do
-						indexes :en, type: :text, analyzer: :english
 						indexes :ru, type: :text, analyzer: :russian
 					end
 				end
@@ -28,7 +27,6 @@ module Search
 					key: key,
 					books_count: books_count,
 					title: {
-						en: title_en,
 						ru: title_ru
 					}
 				}.to_json
