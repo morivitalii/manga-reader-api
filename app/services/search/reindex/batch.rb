@@ -4,7 +4,15 @@ class Search::Reindex::Batch
 	attr_accessor :class_name
 
 	def call
-		class_name.classify.constantize.find_in_batches(batch_size: 1_000) do |batch|
+		klass = class_name.classify.constantize
+
+		if klass.__elasticsearch__.index_exists?
+			klass.__elasticsearch__.delete_index!
+		end
+
+		klass.__elasticsearch__.create_index!
+
+		klass.find_in_batches(batch_size: 1_000) do |batch|
 			arguments = batch.map do |model|
 				[class_name, model.id]
 			end
