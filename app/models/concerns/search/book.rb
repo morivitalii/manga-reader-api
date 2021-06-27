@@ -11,10 +11,7 @@ module Search
           indexes :publication_status, type: :keyword
           indexes :created_at, type: :date
           indexes :updated_at, type: :date
-
-          indexes :title, type: :object do
-            indexes :ru, type: :text, analyzer: :russian
-          end
+          indexes :title, type: :text
 
           indexes :original_content_language, type: :object do
             indexes :id, type: :keyword
@@ -31,10 +28,7 @@ module Search
             indexes :user_id, type: :keyword
             indexes :artist_id, type: :keyword
             indexes :artist_type, type: :keyword
-
-            indexes :name, type: :object do
-              indexes :ru, type: :text, analyzer: :russian
-            end
+            indexes :name, type: :text
           end
 
           indexes :tags, type: :object do
@@ -42,10 +36,7 @@ module Search
             indexes :tag_id, type: :keyword
             indexes :artist_id, type: :keyword
             indexes :artist_type, type: :keyword
-
-            indexes :title, type: :object do
-              indexes :ru, type: :text, analyzer: :russian
-            end
+            indexes :title, type: :text
           end
         end
       end
@@ -69,9 +60,7 @@ module Search
           published_chapters_content_languages: published_chapters_content_languages,
           created_at: created_at,
           updated_at: updated_at,
-          title: {
-            ru: title_ru
-          },
+          title: title_all_locales_values,
           original_content_language: {
             id: original_content_language&.id,
             locale: original_content_language&.locale&.key
@@ -82,9 +71,7 @@ module Search
               user_id: resource_artist.artist.user_id,
               artist_id: resource_artist.artist_id,
               artist_type: resource_artist.type,
-              name: {
-                ru: resource_artist.artist.name_ru
-              }
+              name: resource_artist.artist.name_all_locales_values
             }
           },
           tags: resource_tags.map { |resource_tag|
@@ -92,9 +79,7 @@ module Search
               id: resource_tag.id,
               tag_id: resource_tag.artist_id,
               tag_type: resource_tag.type,
-              title: {
-                ru: resource_tag.artist.title_ru
-              }
+              title: resource_tag.artist.title_all_locales_values
             }
           }
         }.to_json

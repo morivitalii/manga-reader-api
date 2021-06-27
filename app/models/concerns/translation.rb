@@ -120,6 +120,7 @@ module Translation
       attributes.each do |attribute|
         method_name = attribute
 
+        # Reader method for attribute in current locale
         define_method(method_name) do
           translation = find_or_build_translation(I18n.locale.to_s)
 
@@ -138,6 +139,15 @@ module Translation
           end
         end
 
+        all_locales_values_method_name = "#{method_name}_all_locales_values"
+
+        define_method(all_locales_values_method_name) do
+          values = translations.map do |translation|
+            translation.read_attribute(attribute)
+          end
+
+          values.uniq.select { |value| value.present? }
+        end
       end
 
       # Writer methods for attributes that available for translation

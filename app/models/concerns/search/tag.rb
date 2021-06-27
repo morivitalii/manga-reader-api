@@ -9,10 +9,7 @@ module Search
 				mappings dynamic: false, _source: { enabled: false } do
 					indexes :key, type: :keyword
 					indexes :books_count, type: :integer
-
-					indexes :title, type: :object do
-						indexes :ru, type: :text, analyzer: :russian
-					end
+					indexes :title, type: :text
 				end
 			end
 
@@ -26,9 +23,7 @@ module Search
 				{
 					key: key,
 					books_count: books_count,
-					title: {
-						ru: title_ru
-					}
+					title: title_all_locales_values
 				}.to_json
 			end
 
