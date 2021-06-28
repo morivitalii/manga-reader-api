@@ -39,6 +39,7 @@ end
 group :test do
   gem "simplecov", require: false
   gem "shoulda-matchers"
+  gem "rspec-sidekiq"
   gem "json_matchers"
   gem "faker"
 end

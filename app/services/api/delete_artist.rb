@@ -6,6 +6,8 @@ class Api::DeleteArtist
 	def call
 		ActiveRecord::Base.transaction do
 			artist.destroy!
+
+			Search::Indexing::DeleteWorker.perform_async(artist.class.name, artist.id)
 		end
 
 		true

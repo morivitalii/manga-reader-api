@@ -9,6 +9,8 @@ class Api::UpdateArtist
 				user_id: user_id,
 				name: name
 			)
+
+			Search::Indexing::UpdateWorker.perform_async(artist.class.name, artist.id)
 		end
 
 		true

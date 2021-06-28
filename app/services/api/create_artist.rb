@@ -11,6 +11,8 @@ class Api::CreateArtist
 				user_id: user_id,
 				name: name
 			)
+
+			Search::Indexing::CreateWorker.perform_async(@artist.class.name, @artist.id)
 		end
 
 		true
