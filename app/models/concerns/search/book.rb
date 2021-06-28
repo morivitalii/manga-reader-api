@@ -60,7 +60,7 @@ module Search
           published_chapters_content_languages: published_chapters_content_languages,
           created_at: created_at,
           updated_at: updated_at,
-          title: title_all_locales_values,
+          title: title_in_all_languages,
           original_content_language: {
             id: original_content_language&.id,
             locale: original_content_language&.locale&.key
@@ -71,7 +71,7 @@ module Search
               user_id: resource_artist.artist.user_id,
               artist_id: resource_artist.artist_id,
               artist_type: resource_artist.type,
-              name: resource_artist.artist.name_all_locales_values
+              name: resource_artist.artist.name_in_all_languages
             }
           },
           tags: resource_tags.map { |resource_tag|
@@ -79,7 +79,7 @@ module Search
               id: resource_tag.id,
               tag_id: resource_tag.artist_id,
               tag_type: resource_tag.type,
-              title: resource_tag.artist.title_all_locales_values
+              title: resource_tag.artist.title_in_all_languages
             }
           }
         }.to_json

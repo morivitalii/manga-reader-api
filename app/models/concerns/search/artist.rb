@@ -19,7 +19,7 @@ module Search
 				)
 
 				{
-					name: name_all_locales_values
+					name: name_in_all_languages
 				}.to_json
 			end
 		end

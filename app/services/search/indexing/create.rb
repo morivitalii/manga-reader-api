@@ -1,4 +1,4 @@
-class Search::Reindex::Single
+class Search::Indexing::Create
 	include ActiveModel::Model
 
 	attr_accessor :class_name, :id

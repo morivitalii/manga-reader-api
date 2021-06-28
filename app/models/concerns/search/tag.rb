@@ -23,7 +23,7 @@ module Search
 				{
 					key: key,
 					books_count: books_count,
-					title: title_all_locales_values
+					title: title_in_all_languages
 				}.to_json
 			end
 

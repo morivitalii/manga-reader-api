@@ -139,7 +139,8 @@ module Translation
           end
         end
 
-        all_locales_values_method_name = "#{method_name}_all_locales_values"
+        # Reader method for attribute values in all locales
+        all_locales_values_method_name = "#{method_name}_in_all_locales"
 
         define_method(all_locales_values_method_name) do
           values = translations.map do |translation|
