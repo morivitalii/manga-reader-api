@@ -7,37 +7,23 @@ module Search
 
       settings do
         mappings dynamic: false, _source: { enabled: false } do
+          indexes :title, type: :text
           indexes :status, type: :keyword
           indexes :publication_status, type: :keyword
-          indexes :created_at, type: :date
-          indexes :updated_at, type: :date
-          indexes :title, type: :text
-
-          indexes :original_content_language, type: :object do
-            indexes :id, type: :keyword
-            indexes :locale, type: :keyword
-          end
-
-          indexes :published_chapters_content_languages, type: :object do
-            indexes :id, type: :keyword
-            indexes :locale, type: :keyword
-          end
+          indexes :original_content_language, type: :long
 
           indexes :artists, type: :object do
             indexes :id, type: :keyword
-            indexes :user_id, type: :keyword
-            indexes :artist_id, type: :keyword
-            indexes :artist_type, type: :keyword
             indexes :name, type: :text
           end
 
           indexes :tags, type: :object do
             indexes :id, type: :keyword
-            indexes :tag_id, type: :keyword
-            indexes :artist_id, type: :keyword
-            indexes :artist_type, type: :keyword
             indexes :title, type: :text
           end
+
+          indexes :created_at, type: :date
+          indexes :updated_at, type: :date
         end
       end
 
@@ -45,54 +31,39 @@ module Search
         ActiveRecord::Associations::Preloader.new.preload(
           self, [
             self.class.translations_associations,
-            original_content_language: [
-              :locale,
-              ContentLanguage.translations_associations
-            ],
-            resource_artists: { artist: ::Artist.translations_associations },
-            resource_tags: { tag: ::Tag.translations_associations }
+            artists: ::Artist.translations_associations,
+            tags: ::Tag.translations_associations
           ]
         )
 
         {
+          title: title_in_all_languages,
           status: status,
           publication_status: publication_status,
-          published_chapters_content_languages: published_chapters_content_languages,
+          original_content_language: original_content_language_id,
+          artists: artists_as_indexed_json,
+          tags:tags_as_indexed_json,
           created_at: created_at,
-          updated_at: updated_at,
-          title: title_in_all_languages,
-          original_content_language: {
-            id: original_content_language&.id,
-            locale: original_content_language&.locale&.key
-          },
-          artists: resource_artists.map { |resource_artist|
-            {
-              id: resource_artist.id,
-              user_id: resource_artist.artist.user_id,
-              artist_id: resource_artist.artist_id,
-              artist_type: resource_artist.type,
-              name: resource_artist.artist.name_in_all_languages
-            }
-          },
-          tags: resource_tags.map { |resource_tag|
-            {
-              id: resource_tag.id,
-              tag_id: resource_tag.artist_id,
-              tag_type: resource_tag.type,
-              title: resource_tag.artist.title_in_all_languages
-            }
-          }
+          updated_at: updated_at
         }.to_json
       end
 
-      # Content languages that available for readers
-      def published_chapters_content_languages
-        ContentLanguage.includes(:locale).joins(:chapters).where(
-          chapters: {
-            status: :published,
-            book: self
+      def artists_as_indexed_json
+        artists.map { |artist|
+          {
+            id: artist.id,
+            name: artist.name_in_all_languages
           }
-        ).distinct.all
+        }
+      end
+
+      def tags_as_indexed_json
+        tags.map { |tag|
+          {
+            id: tag.id,
+            title: tag.title_in_all_languages
+          }
+        }
       end
     end
   end

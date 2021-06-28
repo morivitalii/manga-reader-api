@@ -9,14 +9,11 @@ module Search
 				mappings dynamic: false, _source: { enabled: false } do
 					indexes :content_language_id, type: :long
 					indexes :book_id, type: :long
-					indexes :volume, type: :integer
 					indexes :group_id, type: :long
+					indexes :title, type: :text
+					indexes :volume, type: :integer
 					indexes :number, type: :integer
 					indexes :status, type: :keyword
-					indexes :views_count, type: :long
-					indexes :bookmarks_count, type: :long
-					indexes :pages_count, type: :integer
-					indexes :title, type: :text
 					indexes :created_at, type: :date
 					indexes :deleted_at, type: :date
 				end
@@ -26,14 +23,11 @@ module Search
 				{
 					content_language_id: content_language_id,
 					book_id: book_id,
-					volume_id: volume_id,
 					group_id: group_id,
+					title: title,
+					volume: volume,
 					number: number,
 					status: status,
-					views_count: views_count,
-					bookmarks_count: bookmarks_count,
-					pages_count: pages_count,
-					title: title,
 					created_at: created_at,
 					deleted_at: deleted_at,
 				}.to_json
