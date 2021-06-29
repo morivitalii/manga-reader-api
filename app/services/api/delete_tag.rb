@@ -6,6 +6,8 @@ class Api::DeleteTag
 	def call
 		ActiveRecord::Base.transaction do
 			tag.destroy!
+
+			Search::Indexing::DeleteWorker.perform_async(tag.class.name, tag.id)
 		end
 
 		true

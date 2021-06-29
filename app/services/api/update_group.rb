@@ -9,7 +9,7 @@ class Api::UpdateGroup
         title: title
       )
 
-      Search::Indexing::CreateWorker.perform_async(group.class.name, group.id)
+      Search::Indexing::UpdateWorker.perform_async(group.class.name, group.id)
     end
 
     true

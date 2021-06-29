@@ -12,6 +12,8 @@ class Api::CreateTag
 				title: title,
 				description: description
 			)
+
+			Search::Indexing::CreateWorker.perform_async(@tag.class.name, @tag.id)
 		end
 
 		true

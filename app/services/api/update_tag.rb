@@ -10,6 +10,8 @@ class Api::UpdateTag
 				title: title,
 				description: description
 			)
+
+			Search::Indexing::UpdateWorker.perform_async(tag.class.name, tag.id)
 		end
 
 		true
