@@ -13,6 +13,8 @@ class Api::Books::ToReview
         status: :review,
         sent_to_review_at: Time.current
       )
+
+      Search::Indexing::UpdateWorker.perform_async(book.class.name, book.id)
     end
 
     true

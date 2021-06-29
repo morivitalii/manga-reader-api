@@ -13,6 +13,8 @@ class Api::Books::Chapters::ToPublished
         status: :published,
         published_at: Time.current
       )
+
+      Search::Indexing::UpdateWorker.perform_async(chapter.class.name, chapter.id)
     end
 
     true

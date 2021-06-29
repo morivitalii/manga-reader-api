@@ -25,6 +25,8 @@ class Api::Books::CreateChapter
       process_resource_artists(:typer, typer_ids)
 
       @chapter.save!
+
+      Search::Indexing::CreateWorker.perform_async(@chapter.class.name, @chapter.id)
     end
 
     true

@@ -10,6 +10,8 @@ class Api::Books::Chapters::ToDraft
 
     ActiveRecord::Base.transaction do
       chapter.update!(status: :draft)
+
+      Search::Indexing::UpdateWorker.perform_async(chapter.class.name, chapter.id)
     end
 
     true

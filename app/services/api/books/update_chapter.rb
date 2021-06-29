@@ -18,6 +18,8 @@ class Api::Books::UpdateChapter
       process_resource_artists(:typer, typer_ids)
 
       chapter.save!
+
+      Search::Indexing::UpdateWorker.perform_async(chapter.class.name, chapter.id)
     end
 
     true

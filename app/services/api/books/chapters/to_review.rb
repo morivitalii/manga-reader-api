@@ -13,6 +13,8 @@ class Api::Books::Chapters::ToReview
         status: :review,
         sent_to_review_at: Time.current
       )
+
+      Search::Indexing::UpdateWorker.perform_async(chapter.class.name, chapter.id)
     end
 
     true

@@ -11,6 +11,8 @@ class Api::Books::DeleteChapter
       )
     end
 
+    Search::Indexing::DeleteWorker.perform_async(@chapter.class.name, @chapter.id)
+
     true
   rescue ActiveRecord::RecordInvalid => invalid
     errors.merge!(invalid.record.errors)
