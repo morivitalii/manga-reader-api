@@ -13,6 +13,8 @@ class Api::SignUp
       )
 
       @user.create_user_setting!
+
+      Search::Indexing::CreateWorker.perform_async(@user.class.name, @user.id)
     end
 
     true
