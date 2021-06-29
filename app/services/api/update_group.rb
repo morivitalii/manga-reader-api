@@ -8,6 +8,8 @@ class Api::UpdateGroup
       group.update!(
         title: title
       )
+
+      Search::Indexing::CreateWorker.perform_async(group.class.name, group.id)
     end
 
     true

@@ -13,6 +13,8 @@ class Api::CreateGroup
       group_user = @group.group_users.create!(user: user)
       group_user.group_user_access_rights.create!(group_user: group_user, group_access_right: manage_users_access_right)
       group_user.group_user_access_rights.create!(group_user: group_user, group_access_right: manage_chapters_access_right)
+
+      Search::Indexing::CreateWorker.perform_async(@group.class.name, @group.id)
     end
 
     true
