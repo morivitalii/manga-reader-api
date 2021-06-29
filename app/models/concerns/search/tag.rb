@@ -7,8 +7,6 @@ module Search
 
 			settings do
 				mappings dynamic: false, _source: { enabled: false } do
-					indexes :key, type: :keyword
-					indexes :books_count, type: :integer
 					indexes :title, type: :text
 				end
 			end
@@ -22,14 +20,8 @@ module Search
 
 				{
 					key: key,
-					books_count: books_count,
 					title: title_in_all_languages
 				}.to_json
-			end
-
-			# Not deleted and published books count
-			def books_count
-				self.books.where(deleted_at: nil, status: :published).count
 			end
 		end
 	end

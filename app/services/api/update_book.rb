@@ -15,7 +15,7 @@ class Api::UpdateBook
 
 			process_resource_artists(:writer, writer_ids)
 			process_resource_artists(:painter, painter_ids)
-
+			``
 			process_resource_tags(:mark, mark_ids)
 			process_resource_tags(:theme, theme_ids)
 			process_resource_tags(:genre, genre_ids)
@@ -23,6 +23,8 @@ class Api::UpdateBook
 			process_resource_tags(:demographic, demographic_ids)
 
 			book.save!
+
+			Search::Indexing::UpdateWorker.perform_async(book.class.name, book.id)
 		end
 
 		true

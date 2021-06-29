@@ -26,6 +26,8 @@ class Api::CreateBook
       process_resource_tags(:demographic, demographic_ids)
 
       @book.save!
+
+      Search::Indexing::CreateWorker.perform_async(@book.class.name, @book.id)
     end
 
     true

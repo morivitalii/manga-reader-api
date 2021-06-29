@@ -9,6 +9,8 @@ class Api::DeleteBook
         status: :deleted,
         deleted_at: Time.current
       )
+
+      Search::Indexing::UpdateWorker.perform_async(@book.class.name, @book.id)
     end
 
     true
