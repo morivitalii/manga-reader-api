@@ -27,17 +27,23 @@ class Api::Books::ChaptersController < Api::ApplicationController
   end
 
   def show
-    ActiveRecord::Associations::Preloader.new.preload(
-      @chapter, [
-        :content_language,
-        :group,
-        cover_attachment: :blob,
-        resource_artists: { artist: Artist.translations_associations },
-      ]
-    )
+    cache_key = endpoint_cache_key(@chapter)
 
-    chapter = Api::ChapterDecorator.decorate(@chapter)
-    chapter = Api::ChapterSerializer.serialize(chapter)
+    # Any change in this code block must be accompanied by thinking
+    # about the cache invalidation with model associations
+    chapter = Rails.cache.fetch(cache_key, expires_in: 30.minutes) do
+      ActiveRecord::Associations::Preloader.new.preload(
+        @chapter, [
+          :content_language,
+          :group,
+          cover_attachment: :blob,
+          resource_artists: { artist: Artist.translations_associations },
+        ]
+      )
+
+      chapter = Api::ChapterDecorator.decorate(@chapter)
+      Api::ChapterSerializer.serialize(chapter).to_json
+    end
 
     render json: chapter, status: 200
   end

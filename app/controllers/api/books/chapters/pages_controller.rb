@@ -28,7 +28,7 @@ class Api::Books::Chapters::PagesController < Api::ApplicationController
 
     # Any change in this code block must be accompanied by thinking
     # about the cache invalidation with model associations
-    page = Rails.cache.fetch(cache_key, expires_in: 24.hours) do
+    page = Rails.cache.fetch(cache_key, expires_in: 30.minutes) do
       ActiveRecord::Associations::Preloader.new.preload(
         @page, [
           file_attachment: :blob
