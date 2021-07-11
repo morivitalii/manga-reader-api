@@ -30,7 +30,7 @@ class Api::UsersController < Api::ApplicationController
 
     # Any change in this code block must be accompanied by thinking
     # about the cache invalidation with model associations
-    user = Rails.cache.fetch(cache_key, expires_in: 1.hour) do
+    user = Rails.cache.fetch(cache_key, expires_in: 30.minutes) do
       ActiveRecord::Associations::Preloader.new.preload(
         @user, [
           :access_rights,

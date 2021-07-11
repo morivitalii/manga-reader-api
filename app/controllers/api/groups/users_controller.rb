@@ -11,7 +11,9 @@ class Api::Groups::UsersController < Api::ApplicationController
     query = group_users_scope.order(id: :asc)
     cache_key = endpoint_cache_key(query)
 
-    group_users = Rails.cache.fetch(cache_key, expires_in: 1.hour) do
+    # Any change in this code block must be accompanied by thinking
+    # about the cache invalidation with model associations
+    group_users = Rails.cache.fetch(cache_key, expires_in: 30.minutes) do
       group_users = query.all
 
       ActiveRecord::Associations::Preloader.new.preload(
@@ -37,7 +39,9 @@ class Api::Groups::UsersController < Api::ApplicationController
   def show
     cache_key = endpoint_cache_key(@group_user)
 
-    group_user = Rails.cache.fetch(cache_key, expires_in: 1.hour) do
+    # Any change in this code block must be accompanied by thinking
+    # about the cache invalidation with model associations
+    group_user = Rails.cache.fetch(cache_key, expires_in: 30.minutes) do
       ActiveRecord::Associations::Preloader.new.preload(
         @group_user, [
           :group,
