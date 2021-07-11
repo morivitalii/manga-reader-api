@@ -14,7 +14,9 @@ class Api::Books::Chapters::ToReview
         sent_to_review_at: Time.current
       )
 
-      Search::Indexing::UpdateWorker.perform_async(chapter.class.name, chapter.id)
+      # To know if we need to update object in elasticsearch,
+      # please take a look for attributes and associations in index schema
+      Search::Indexing::UpdateObjectWorker.perform_async(chapter.class.name, chapter.id)
     end
 
     true

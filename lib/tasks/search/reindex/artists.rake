@@ -1,8 +1,8 @@
-namespace :search do
+ namespace :search do
 	namespace :reindex do
-		desc "Reindex artists"
+		desc "Reindex artists asynchronous"
 		task artists: :environment do
-			Search::Indexing::ReindexWorker.perform_async("Artist")
+			Search::Indexing::ReindexModelWorker.perform_async("Artist")
 		end
 	end
 end

@@ -24,7 +24,9 @@ class Api::UpdateBook
 
 			book.save!
 
-			Search::Indexing::UpdateWorker.perform_async(book.class.name, book.id)
+			# To know if we need to update object in elasticsearch,
+			# please take a look for attributes and associations in index schema
+			Search::Indexing::UpdateObjectWorker.perform_async(book.class.name, book.id)
 		end
 
 		true

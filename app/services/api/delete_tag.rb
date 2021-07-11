@@ -7,7 +7,13 @@ class Api::DeleteTag
 		ActiveRecord::Base.transaction do
 			tag.destroy!
 
-			Search::Indexing::DeleteWorker.perform_async(tag.class.name, tag.id)
+			# To know if we need to update object in elasticsearch,
+			# please take a look for attributes and associations in index schema
+			Search::Indexing::DeleteObjectWorker.perform_async(tag.class.name, tag.id)
+
+			# To know if we need to update object in elasticsearch,
+			# please take a look for attributes and associations in index schema
+			Search::Indexing::UpdateObjectAssociationsWorker.perform_async(tag.class.name, tag.id, :books)
 		end
 
 		true

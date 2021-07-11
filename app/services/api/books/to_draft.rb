@@ -11,7 +11,9 @@ class Api::Books::ToDraft
     ActiveRecord::Base.transaction do
       book.update!(status: :draft)
 
-      Search::Indexing::UpdateWorker.perform_async(book.class.name, book.id)
+      # To know if we need to update object in elasticsearch,
+      # please take a look for attributes and associations in index schema
+      Search::Indexing::UpdateObjectWorker.perform_async(book.class.name, book.id)
     end
 
     true

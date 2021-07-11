@@ -7,7 +7,13 @@ class Api::DeleteArtist
 		ActiveRecord::Base.transaction do
 			artist.destroy!
 
-			Search::Indexing::DeleteWorker.perform_async(artist.class.name, artist.id)
+			# To know if we need to update object in elasticsearch,
+			# please take a look for attributes and associations in index schema
+			Search::Indexing::DeleteObjectWorker.perform_async(artist.class.name, artist.id)
+
+			# To know if we need to update object in elasticsearch,
+			# please take a look for attributes and associations in index schema
+			Search::Indexing::UpdateObjectAssociationsWorker.perform_async(artist.class.name, artist.id, :books)
 		end
 
 		true

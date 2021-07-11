@@ -1,4 +1,4 @@
-class Search::Indexing::Delete
+class Search::Indexing::DeleteObject
 	include ActiveModel::Model
 
 	attr_accessor :class_name, :id

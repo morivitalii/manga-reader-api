@@ -1,4 +1,4 @@
-class Search::Indexing::Create
+class Search::Indexing::UpdateObject
 	include ActiveModel::Model
 
 	attr_accessor :class_name, :id
@@ -7,6 +7,6 @@ class Search::Indexing::Create
 		klass = class_name.classify.constantize
 		model = klass.find(id)
 
-		model.__elasticsearch__.index_document
+		model.__elasticsearch__.update_document
 	end
 end

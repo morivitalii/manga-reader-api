@@ -13,7 +13,13 @@ class Api::CreateTag
 				description: description
 			)
 
-			Search::Indexing::CreateWorker.perform_async(@tag.class.name, @tag.id)
+			# To know if we need to update object in elasticsearch,
+			# please take a look for attributes and associations in index schema
+			Search::Indexing::CreateObjectWorker.perform_async(@tag.class.name, @tag.id)
+
+			# To know if we need to update object in elasticsearch,
+			# please take a look for attributes and associations in index schema
+			Search::Indexing::UpdateObjectAssociationsWorker.perform_async(@tag.class.name, @tag.id, :books)
 		end
 
 		true

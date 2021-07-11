@@ -14,7 +14,9 @@ class Api::CreateGroup
       group_user.group_user_access_rights.create!(group_user: group_user, group_access_right: manage_users_access_right)
       group_user.group_user_access_rights.create!(group_user: group_user, group_access_right: manage_chapters_access_right)
 
-      Search::Indexing::CreateWorker.perform_async(@group.class.name, @group.id)
+      # To know if we need to update object in elasticsearch,
+      # please take a look for attributes and associations in index schema
+      Search::Indexing::CreateObjectWorker.perform_async(@group.class.name, @group.id)
     end
 
     true

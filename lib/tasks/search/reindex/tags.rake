@@ -1,8 +1,8 @@
 namespace :search do
 	namespace :reindex do
-		desc "Reindex tags"
+		desc "Reindex tags asynchronous"
 		task tags: :environment do
-			Search::Indexing::ReindexWorker.perform_async("Tag")
+			Search::Indexing::ReindexModelWorker.perform_async("Tag")
 		end
 	end
 end

@@ -1,4 +1,4 @@
-class Search::Indexing::Reindex
+class Search::Indexing::ReindexModel
 	include ActiveModel::Model
 
 	attr_accessor :class_name
@@ -19,7 +19,7 @@ class Search::Indexing::Reindex
 
 			# Saves a lot of trips to redis
 			Sidekiq::Client.push_bulk(
-				"class" => Search::Indexing::CreateWorker,
+				"class" => Search::Indexing::CreateObjectWorker,
 				"args" => arguments
 			)
 		end

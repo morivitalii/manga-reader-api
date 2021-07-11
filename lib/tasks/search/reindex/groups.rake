@@ -1,8 +1,8 @@
 namespace :search do
 	namespace :reindex do
-		desc "Reindex groups"
+		desc "Reindex groups asynchronous"
 		task groups: :environment do
-			Search::Indexing::ReindexWorker.perform_async("Group")
+			Search::Indexing::ReindexModelWorker.perform_async("Group")
 		end
 	end
 end

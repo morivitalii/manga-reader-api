@@ -14,7 +14,9 @@ class Api::SignUp
 
       @user.create_user_setting!
 
-      Search::Indexing::CreateWorker.perform_async(@user.class.name, @user.id)
+      # To know if we need to update object in elasticsearch,
+      # please take a look for attributes and associations in index schema
+      Search::Indexing::CreateObjectWorker.perform_async(@user.class.name, @user.id)
     end
 
     true
