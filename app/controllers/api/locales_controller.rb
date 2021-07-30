@@ -7,32 +7,17 @@ class Api::LocalesController < Api::ApplicationController
   skip_after_action :verify_policy_scoped, only: [:create]
 
   def index
-    query = locale_scope.order(id: :asc)
-    cache_key = endpoint_cache_key(query)
+    locales = locale_scope.order(id: :asc).all
 
-    # Any change in this code block must be accompanied by thinking
-    # about the cache invalidation with model associations
-    locales = Rails.cache.fetch(cache_key, expires_in: 24.hours) do
-      locales = query.all
-
-      locales = Api::LocaleDecorator.decorate_collection(locales)
-
-      Api::LocaleSerializer.serialize(locales).to_json
-    end
+    locales = Api::LocaleDecorator.decorate_collection(locales)
+    locales = Api::LocaleSerializer.serialize(locales)
 
     render json: locales, status: 200
   end
 
   def show
-    cache_key = endpoint_cache_key(@locale)
-
-    # Any change in this code block must be accompanied by thinking
-    # about the cache invalidation with model associations
-    locale = Rails.cache.fetch(cache_key, expires_in: 24.hours) do
-      locale = Api::LocaleDecorator.decorate(@locale)
-
-      Api::LocaleSerializer.serialize(locale).to_json
-    end
+    locale = Api::LocaleDecorator.decorate(@locale)
+    locale = Api::LocaleSerializer.serialize(locale)
 
     render json: locale, status: 200
   end

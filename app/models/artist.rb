@@ -1,5 +1,4 @@
 class Artist < ApplicationRecord
-  include CacheInvalidation
   include Translation
   include Search::Artist
 
@@ -7,8 +6,6 @@ class Artist < ApplicationRecord
 
   has_many :resource_artists, dependent: :restrict_with_error
   has_many :favorites, as: :resource, dependent: :destroy
-
-  invalidate_association_cache :user
 
   translates :name
 

@@ -7,44 +7,29 @@ class Api::TagsController < Api::ApplicationController
   skip_after_action :verify_policy_scoped, only: [:create]
 
   def index
-    query = tag_scope.joins(:translations).order("tag_translations.title ASC")
-    cache_key = endpoint_cache_key(query)
+    tags = tag_scope.joins(:translations).order("tag_translations.title ASC").all
 
-    # Any change in this code block must be accompanied by thinking
-    # about the cache invalidation with model associations
-    tags = Rails.cache.fetch(cache_key, expires_in: 24.hours) do
-      tags = query.all
+    ActiveRecord::Associations::Preloader.new.preload(
+      tags, [
+        Tag.translations_associations
+      ]
+    )
 
-      ActiveRecord::Associations::Preloader.new.preload(
-        tags, [
-          Tag.translations_associations
-        ]
-      )
-
-      tags = Api::TagDecorator.decorate_collection(tags)
-
-      Api::TagSerializer.serialize(tags).to_json
-    end
+    tags = Api::TagDecorator.decorate_collection(tags)
+    tags = Api::TagSerializer.serialize(tags)
 
     render json: tags, status: 200
   end
 
   def show
-    cache_key = endpoint_cache_key(@tag)
+    ActiveRecord::Associations::Preloader.new.preload(
+      @tag, [
+        Tag.translations_associations
+      ]
+    )
 
-    # Any change in this code block must be accompanied by thinking
-    # about the cache invalidation with model associations
-    tag = Rails.cache.fetch(cache_key, expires_in: 24.hours) do
-      ActiveRecord::Associations::Preloader.new.preload(
-        @tag, [
-          Tag.translations_associations
-        ]
-      )
-
-      tag = Api::TagDecorator.decorate(@tag)
-
-      Api::TagSerializer.serialize(tag).to_json
-    end
+    tag = Api::TagDecorator.decorate(@tag)
+    tag = Api::TagSerializer.serialize(tag)
 
     render json: tag, status: 200
   end

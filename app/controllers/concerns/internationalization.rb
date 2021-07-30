@@ -17,23 +17,14 @@ module Internationalization
 	end
 
 	def set_current_content_languages
-		query = ContentLanguage.order(id: :asc)
-		cache_key = variable_cache_key(query)
+		content_languages = ContentLanguage.order(id: :asc).all
 
-		# Any change in this code block must be accompanied by thinking
-		# about the cache invalidation with model associations
-		content_languages = Rails.cache.fetch(cache_key, expires_in: 24.hours) do
-			content_languages = query.all
-
-			ActiveRecord::Associations::Preloader.new.preload(
-				content_languages, [
-					ContentLanguage.translations_associations,
-					:locale
-				]
-			)
-
-			content_languages
-		end
+		ActiveRecord::Associations::Preloader.new.preload(
+			content_languages, [
+				ContentLanguage.translations_associations,
+				:locale
+			]
+		)
 
 		Current.content_languages = content_languages
 	end
@@ -45,23 +36,14 @@ module Internationalization
 	end
 
 	def set_current_interface_languages
-		query = InterfaceLanguage.order(id: :asc)
-		cache_key = variable_cache_key(query)
+		interface_languages = InterfaceLanguage.order(id: :asc).all
 
-		# Any change in this code block must be accompanied by thinking
-		# about the cache invalidation with model associations
-		interface_languages = Rails.cache.fetch(cache_key, expires_in: 24.hours) do
-			interface_languages = query.all
-
-			ActiveRecord::Associations::Preloader.new.preload(
-				interface_languages, [
-					InterfaceLanguage.translations_associations,
-					:locale
-				]
-			)
-
-			interface_languages
-		end
+		ActiveRecord::Associations::Preloader.new.preload(
+			interface_languages, [
+				InterfaceLanguage.translations_associations,
+				:locale
+			]
+		)
 
 		Current.interface_languages = interface_languages
 	end
