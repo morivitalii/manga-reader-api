@@ -1,14 +1,5 @@
 {
   "dependencies": {
-    "@popperjs/core": "^2.9.1",
-    "@rails/webpacker": "5.2.1",
-    "@vue/compiler-sfc": "^3.0.7",
-    "bootstrap": "^5.0.0-beta2",
-    "vue": "^3.0.7",
-    "vue-loader": "^16.1.2",
-    "vue-template-compiler": "^2.6.12"
-  },
-  "devDependencies": {
-    "webpack-dev-server": "^3.11.2"
+    "bootstrap": "^5.0.2"
   }
 }
