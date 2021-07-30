@@ -4,7 +4,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 gem "rails", "~> 6"
 gem "rails-i18n", "~> 6"
 gem "bootsnap", "~> 1", require: false
-gem "webpacker"
 gem "puma", "~> 5"
 gem "sidekiq", "~> 6"
 gem "pg", "~> 1"
