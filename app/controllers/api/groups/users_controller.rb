@@ -8,52 +8,41 @@ class Api::Groups::UsersController < Api::ApplicationController
   before_action -> { authorize(Api::Groups::UsersPolicy, group: @group, group_user: @group_user) }, only: [:update, :destroy]
 
   def index
-    query = group_users_scope.order(id: :asc)
-    cache_key = endpoint_cache_key(query)
+    group_users = group_users_scope.order(id: :asc).all
 
-    group_users = Rails.cache.fetch(cache_key, expires_in: 1.hour) do
-      group_users = query.all
-
-      ActiveRecord::Associations::Preloader.new.preload(
-        group_users, [
-          :group,
-          :group_access_rights,
-          user: {
-            user_setting: {
-              avatar_attachment: :blob
-            }
+    ActiveRecord::Associations::Preloader.new.preload(
+      group_users, [
+        :group,
+        :group_access_rights,
+        user: {
+          user_setting: {
+            avatar_attachment: :blob
           }
-        ]
-      )
+        }
+      ]
+    )
 
-      group_users = Api::GroupUserDecorator.decorate_collection(group_users)
-
-      Api::GroupUserSerializer.serialize(group_users).to_json
-    end
+    group_users = Api::GroupUserDecorator.decorate_collection(group_users)
+    group_users = Api::GroupUserSerializer.serialize(group_users)
 
     render json: group_users, status: 200
   end
 
   def show
-    cache_key = endpoint_cache_key(@group_user)
-
-    group_user = Rails.cache.fetch(cache_key, expires_in: 1.hour) do
-      ActiveRecord::Associations::Preloader.new.preload(
-        @group_user, [
-          :group,
-          :group_access_rights,
-          user: {
-            user_setting: {
-              avatar_attachment: :blob
-            }
+    ActiveRecord::Associations::Preloader.new.preload(
+      @group_user, [
+        :group,
+        :group_access_rights,
+        user: {
+          user_setting: {
+            avatar_attachment: :blob
           }
-        ]
-      )
+        }
+      ]
+    )
 
-      group_user = Api::GroupUserDecorator.decorate(@group_user)
-
-      Api::GroupUserSerializer.serialize(group_user).to_json
-    end
+    group_user = Api::GroupUserDecorator.decorate(@group_user)
+    group_user = Api::GroupUserSerializer.serialize(group_user)
 
     render json: group_user, status: 200
   end

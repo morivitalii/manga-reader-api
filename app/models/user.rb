@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-  include CacheInvalidation
   include Search::User
 
   has_secure_password :password, validations: false
@@ -22,10 +21,6 @@ class User < ApplicationRecord
   has_many :views, dependent: :destroy
   has_many :bookmarks, dependent: :destroy
   has_many :favorites, dependent: :destroy
-
-  invalidate_association_cache :artist
-  invalidate_association_cache :user_setting
-  invalidate_association_cache :group_users
 
   validates :username, presence: true,
     format: {with: /\A[a-z0-9_-]{2,16}\z/i},

@@ -24,21 +24,14 @@ class Api::Books::Chapters::PagesController < Api::ApplicationController
   end
 
   def show
-    cache_key = endpoint_cache_key(@page)
+    ActiveRecord::Associations::Preloader.new.preload(
+      @page, [
+        file_attachment: :blob
+      ]
+    )
 
-    # Any change in this code block must be accompanied by thinking
-    # about the cache invalidation with model associations
-    page = Rails.cache.fetch(cache_key, expires_in: 24.hours) do
-      ActiveRecord::Associations::Preloader.new.preload(
-        @page, [
-          file_attachment: :blob
-        ]
-      )
-
-      page = Api::PageDecorator.decorate(@page)
-
-      Api::PageSerializer.serialize(page).to_json
-    end
+    page = Api::PageDecorator.decorate(@page)
+    page = Api::PageSerializer.serialize(page)
 
     render json: page, status: 200
   end

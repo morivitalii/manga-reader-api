@@ -6,32 +6,25 @@ class Api::Users::SettingsController < Api::ApplicationController
   before_action :set_user_setting, only: [:show, :update]
 
   def show
-    cache_key = endpoint_cache_key(@user_setting)
-
-    # Any change in this code block must be accompanied by thinking
-    # about the cache invalidation with model associations
-    user_setting = Rails.cache.fetch(cache_key, expires_in: 1.hour) do
-      ActiveRecord::Associations::Preloader.new.preload(
-        @user_setting, [
-          avatar_attachment: :blob,
-          user: {
-            excluded_tags: Tag.translations_associations,
-            content_languages: [
-              ContentLanguage.translations_associations,
-              :locale
-            ]
-          },
-          interface_language: [
-            InterfaceLanguage.translations_associations,
+    ActiveRecord::Associations::Preloader.new.preload(
+      @user_setting, [
+        avatar_attachment: :blob,
+        user: {
+          excluded_tags: Tag.translations_associations,
+          content_languages: [
+            ContentLanguage.translations_associations,
             :locale
           ]
+        },
+        interface_language: [
+          InterfaceLanguage.translations_associations,
+          :locale
         ]
-      )
+      ]
+    )
 
-      user_setting = Api::UserSettingDecorator.decorate(@user_setting)
-
-      Api::UserSettingSerializer.serialize(user_setting).to_json
-    end
+    user_setting = Api::UserSettingDecorator.decorate(@user_setting)
+    user_setting = Api::UserSettingSerializer.serialize(user_setting)
 
     render json: user_setting, status: 200
   end

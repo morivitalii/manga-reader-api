@@ -1,5 +1,4 @@
 class Chapter < ApplicationRecord
-  include CacheInvalidation
   include Search::Chapter
 
   ARTISTS_LIMIT = 100
@@ -21,10 +20,6 @@ class Chapter < ApplicationRecord
   has_many :views, as: :resource, dependent: :destroy
 
   has_one_attached :cover, service: :public
-
-  invalidate_association_cache :book
-  invalidate_association_cache :user
-  invalidate_association_cache :group
 
   enum status: { draft: 1, review: 2, published: 3, deleted: 4 }
 

@@ -21,8 +21,7 @@ CREATE TABLE public.access_rights (
     id bigint NOT NULL,
     key character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -199,8 +198,7 @@ CREATE TABLE public.artists (
     user_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    favorites_count bigint DEFAULT 0 NOT NULL,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
+    favorites_count bigint DEFAULT 0 NOT NULL
 );
 
 
@@ -268,8 +266,7 @@ CREATE TABLE public.bookmarks (
     resource_type character varying NOT NULL,
     resource_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -308,8 +305,7 @@ CREATE TABLE public.books (
     status integer NOT NULL,
     sent_to_review_at timestamp without time zone,
     published_at timestamp without time zone,
-    deleted_at timestamp without time zone,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
+    deleted_at timestamp without time zone
 );
 
 
@@ -353,7 +349,6 @@ CREATE TABLE public.chapters (
     deleted_at timestamp without time zone,
     sent_to_review_at timestamp without time zone,
     published_at timestamp without time zone,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL,
     volume integer
 );
 
@@ -419,8 +414,7 @@ CREATE TABLE public.content_languages (
     id bigint NOT NULL,
     locale_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -453,8 +447,7 @@ CREATE TABLE public.favorites (
     resource_type character varying NOT NULL,
     resource_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -485,8 +478,7 @@ CREATE TABLE public.group_access_rights (
     id bigint NOT NULL,
     key character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -518,8 +510,7 @@ CREATE TABLE public.group_user_access_rights (
     group_access_right_id bigint NOT NULL,
     group_user_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -551,8 +542,7 @@ CREATE TABLE public.group_users (
     group_id bigint NOT NULL,
     user_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -585,8 +575,7 @@ CREATE TABLE public.groups (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     favorites_count bigint DEFAULT 0 NOT NULL,
-    users_count bigint DEFAULT 0 NOT NULL,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
+    users_count bigint DEFAULT 0 NOT NULL
 );
 
 
@@ -651,8 +640,7 @@ CREATE TABLE public.interface_languages (
     id bigint NOT NULL,
     locale_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -683,8 +671,7 @@ CREATE TABLE public.locales (
     id bigint NOT NULL,
     key character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -719,8 +706,7 @@ CREATE TABLE public.pages (
     updated_at timestamp(6) without time zone NOT NULL,
     views_count bigint DEFAULT 0 NOT NULL,
     bookmarks_count bigint DEFAULT 0 NOT NULL,
-    user_id bigint NOT NULL,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
+    user_id bigint NOT NULL
 );
 
 
@@ -863,8 +849,7 @@ CREATE TABLE public.tags (
     id bigint NOT NULL,
     key character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -896,8 +881,7 @@ CREATE TABLE public.user_access_rights (
     user_id bigint NOT NULL,
     access_right_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -929,8 +913,7 @@ CREATE TABLE public.user_content_languages (
     user_id bigint NOT NULL,
     content_language_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -962,8 +945,7 @@ CREATE TABLE public.user_excluded_tags (
     user_id bigint NOT NULL,
     tag_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -998,8 +980,7 @@ CREATE TABLE public.user_settings (
     surname character varying DEFAULT ''::character varying NOT NULL,
     sex integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -1035,8 +1016,7 @@ CREATE TABLE public.users (
     updated_at timestamp(6) without time zone NOT NULL,
     favorites_count bigint DEFAULT 0 NOT NULL,
     bookmarks_count bigint DEFAULT 0 NOT NULL,
-    views_count bigint DEFAULT 0 NOT NULL,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
+    views_count bigint DEFAULT 0 NOT NULL
 );
 
 
@@ -1069,8 +1049,7 @@ CREATE TABLE public.views (
     resource_type character varying NOT NULL,
     resource_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -1102,8 +1081,7 @@ CREATE TABLE public.volumes (
     book_id bigint NOT NULL,
     number integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    cached_at timestamp(6) without time zone DEFAULT (now())::timestamp without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -1623,13 +1601,6 @@ ALTER TABLE ONLY public.volumes
 
 
 --
--- Name: index_access_rights_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_access_rights_on_cached_at ON public.access_rights USING btree (cached_at DESC);
-
-
---
 -- Name: index_access_rights_on_key; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1693,13 +1664,6 @@ CREATE UNIQUE INDEX index_artist_translations_uniqueness ON public.artist_transl
 
 
 --
--- Name: index_artists_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_artists_on_cached_at ON public.artists USING btree (cached_at DESC);
-
-
---
 -- Name: index_artists_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1725,13 +1689,6 @@ CREATE INDEX index_book_translations_on_resource_id ON public.book_translations 
 --
 
 CREATE INDEX index_book_translations_on_title ON public.book_translations USING btree (title);
-
-
---
--- Name: index_bookmarks_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_bookmarks_on_cached_at ON public.bookmarks USING btree (cached_at DESC);
 
 
 --
@@ -1770,13 +1727,6 @@ CREATE UNIQUE INDEX index_bookmarks_uniqueness ON public.bookmarks USING btree (
 
 
 --
--- Name: index_books_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_books_on_cached_at ON public.books USING btree (cached_at DESC);
-
-
---
 -- Name: index_books_on_original_content_language_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1795,13 +1745,6 @@ CREATE INDEX index_books_on_status ON public.books USING btree (status);
 --
 
 CREATE INDEX index_chapters_on_book_id ON public.chapters USING btree (book_id);
-
-
---
--- Name: index_chapters_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_chapters_on_cached_at ON public.chapters USING btree (cached_at DESC);
 
 
 --
@@ -1868,24 +1811,10 @@ CREATE UNIQUE INDEX index_content_language_translations_uniqueness ON public.con
 
 
 --
--- Name: index_content_languages_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_content_languages_on_cached_at ON public.content_languages USING btree (cached_at DESC);
-
-
---
 -- Name: index_content_languages_on_locale_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_content_languages_on_locale_id ON public.content_languages USING btree (locale_id);
-
-
---
--- Name: index_favorites_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_favorites_on_cached_at ON public.favorites USING btree (cached_at DESC);
 
 
 --
@@ -1924,24 +1853,10 @@ CREATE UNIQUE INDEX index_favorites_uniqueness ON public.favorites USING btree (
 
 
 --
--- Name: index_group_access_rights_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_group_access_rights_on_cached_at ON public.group_access_rights USING btree (cached_at DESC);
-
-
---
 -- Name: index_group_access_rights_on_key; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_group_access_rights_on_key ON public.group_access_rights USING btree (key);
-
-
---
--- Name: index_group_user_access_rights_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_group_user_access_rights_on_cached_at ON public.group_user_access_rights USING btree (cached_at DESC);
 
 
 --
@@ -1966,13 +1881,6 @@ CREATE UNIQUE INDEX index_group_user_access_rights_uniqueness ON public.group_us
 
 
 --
--- Name: index_group_users_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_group_users_on_cached_at ON public.group_users USING btree (cached_at DESC);
-
-
---
 -- Name: index_group_users_on_group_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1991,13 +1899,6 @@ CREATE UNIQUE INDEX index_group_users_on_group_id_and_user_id ON public.group_us
 --
 
 CREATE INDEX index_group_users_on_user_id ON public.group_users USING btree (user_id);
-
-
---
--- Name: index_groups_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_groups_on_cached_at ON public.groups USING btree (cached_at DESC);
 
 
 --
@@ -2036,24 +1937,10 @@ CREATE UNIQUE INDEX index_interface_language_translations_uniqueness ON public.i
 
 
 --
--- Name: index_interface_languages_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_interface_languages_on_cached_at ON public.interface_languages USING btree (cached_at DESC);
-
-
---
 -- Name: index_interface_languages_on_locale_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_interface_languages_on_locale_id ON public.interface_languages USING btree (locale_id);
-
-
---
--- Name: index_locales_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_locales_on_cached_at ON public.locales USING btree (cached_at DESC);
 
 
 --
@@ -2068,13 +1955,6 @@ CREATE INDEX index_locales_on_key ON public.locales USING btree (key);
 --
 
 CREATE UNIQUE INDEX index_locales_on_lower_key ON public.locales USING btree (lower((key)::text));
-
-
---
--- Name: index_pages_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_pages_on_cached_at ON public.pages USING btree (cached_at DESC);
 
 
 --
@@ -2190,13 +2070,6 @@ CREATE UNIQUE INDEX index_tag_translations_uniqueness ON public.tag_translations
 
 
 --
--- Name: index_tags_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_tags_on_cached_at ON public.tags USING btree (cached_at DESC);
-
-
---
 -- Name: index_tags_on_key; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2218,13 +2091,6 @@ CREATE INDEX index_user_access_rights_on_access_right_id ON public.user_access_r
 
 
 --
--- Name: index_user_access_rights_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_user_access_rights_on_cached_at ON public.user_access_rights USING btree (cached_at DESC);
-
-
---
 -- Name: index_user_access_rights_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2236,13 +2102,6 @@ CREATE INDEX index_user_access_rights_on_user_id ON public.user_access_rights US
 --
 
 CREATE UNIQUE INDEX index_user_access_rights_on_user_id_and_access_right_id ON public.user_access_rights USING btree (user_id, access_right_id);
-
-
---
--- Name: index_user_content_languages_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_user_content_languages_on_cached_at ON public.user_content_languages USING btree (cached_at DESC);
 
 
 --
@@ -2267,13 +2126,6 @@ CREATE UNIQUE INDEX index_user_content_languages_on_user_id_and_content_language
 
 
 --
--- Name: index_user_excluded_tags_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_user_excluded_tags_on_cached_at ON public.user_excluded_tags USING btree (cached_at DESC);
-
-
---
 -- Name: index_user_excluded_tags_on_tag_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2295,13 +2147,6 @@ CREATE UNIQUE INDEX index_user_excluded_tags_on_user_id_and_tag_id ON public.use
 
 
 --
--- Name: index_user_settings_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_user_settings_on_cached_at ON public.user_settings USING btree (cached_at DESC);
-
-
---
 -- Name: index_user_settings_on_interface_language_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2316,13 +2161,6 @@ CREATE INDEX index_user_settings_on_user_id ON public.user_settings USING btree 
 
 
 --
--- Name: index_users_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_users_on_cached_at ON public.users USING btree (cached_at DESC);
-
-
---
 -- Name: index_users_on_lower_email; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2334,13 +2172,6 @@ CREATE UNIQUE INDEX index_users_on_lower_email ON public.users USING btree (lowe
 --
 
 CREATE UNIQUE INDEX index_users_on_lower_username ON public.users USING btree (lower((username)::text));
-
-
---
--- Name: index_views_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_views_on_cached_at ON public.views USING btree (cached_at DESC);
 
 
 --
@@ -2390,13 +2221,6 @@ CREATE INDEX index_volumes_on_book_id ON public.volumes USING btree (book_id);
 --
 
 CREATE UNIQUE INDEX index_volumes_on_book_id_and_number ON public.volumes USING btree (book_id, number);
-
-
---
--- Name: index_volumes_on_cached_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_volumes_on_cached_at ON public.volumes USING btree (cached_at DESC);
 
 
 --
@@ -2903,6 +2727,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210620123950'),
 ('20210620124040'),
 ('20210621055634'),
-('20210621064218');
+('20210621064218'),
+('20210730144235');
 
 
