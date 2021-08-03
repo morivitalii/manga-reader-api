@@ -1,4 +1,4 @@
-module Filtering
+module Api::Filtering
   extend ActiveSupport::Concern
 
   included do

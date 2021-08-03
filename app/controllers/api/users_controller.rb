@@ -1,6 +1,4 @@
 class Api::UsersController < Api::ApplicationController
-  include Pagination
-
   before_action :set_user, only: [:show]
 
   before_action -> { authorize(Api::UsersPolicy) }, only: [:index]

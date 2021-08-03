@@ -1,6 +1,4 @@
 class Api::Users::Views::ChaptersController < Api::ApplicationController
-  include Pagination
-
   before_action -> { authorize(Api::Users::Views::ChaptersPolicy) }, only: [:index]
   before_action :set_user, only: [:index]
 

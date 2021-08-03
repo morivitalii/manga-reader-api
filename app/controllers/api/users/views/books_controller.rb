@@ -1,6 +1,4 @@
 class Api::Users::Views::BooksController < Api::ApplicationController
-  include Pagination
-
   before_action -> { authorize(Api::Users::Views::BooksPolicy) }, only: [:index]
   before_action :set_user, only: [:index]
 

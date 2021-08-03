@@ -1,6 +1,4 @@
 class Api::GroupsController < Api::ApplicationController
-  include Pagination
-
   before_action :set_group, only: [:show, :update]
 
   before_action -> { authorize(Api::GroupsPolicy) }, only: [:index, :create]

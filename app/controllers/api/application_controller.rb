@@ -1,8 +1,9 @@
 class Api::ApplicationController < ActionController::API
   include ActiveStorage::SetCurrent
   include Pundit
-  include Filtering
-  include Internationalization
-  include Authentication
-  include Authorization
+  include Api::Filtering
+  include Api::Internationalization
+  include Api::Authentication
+  include Api::Authorization
+  include Api::Pagination
 end
