@@ -1,6 +1,4 @@
 class Api::Users::Bookmarks::ChaptersController < Api::ApplicationController
-  include Pagination
-
   before_action -> { authorize(Api::Users::Bookmarks::ChaptersPolicy) }, only: [:index]
   before_action :set_user, only: [:index]
 

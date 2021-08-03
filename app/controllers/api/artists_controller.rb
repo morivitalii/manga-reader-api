@@ -1,6 +1,4 @@
 class Api::ArtistsController < Api::ApplicationController
-  include Pagination
-
   before_action :set_artist, only: [:show, :update, :destroy]
 
   before_action -> { authorize(Api::ArtistsPolicy) }, only: [:index, :create]

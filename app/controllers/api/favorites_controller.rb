@@ -1,6 +1,4 @@
 class Api::FavoritesController < Api::ApplicationController
-  include Pagination
-
   before_action :set_user, only: [:index]
 
   before_action -> { authorize(Api::FavoritesPolicy, user: @user) }, only: [:index]

@@ -12,6 +12,7 @@ gem "redis", "~> 4", require: ["redis", "redis/connection/hiredis"]
 gem "elasticsearch-model", "~> 7"
 gem "elasticsearch-rails", "~> 7"
 gem "oj", "~> 3"
+gem "webpacker"
 gem "image_processing", "~> 1"
 gem "bcrypt", "~> 3"
 gem "rack-cors", "~> 1"

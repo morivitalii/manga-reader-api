@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_pack_tag("application", media: 'all') %>
+    <%= javascript_pack_tag("application") %>
+  </head>
+
+  <body>
+    <%= render(partial: "shared/header") %>
+
+    <main>
+      <div class="container">
+        <%= yield %>
+      </div>
+    </main>
+
+    <%= render(partial: "shared/footer") %>
+  </body>
+</html>

@@ -1,6 +1,4 @@
 class Api::Users::Views::PagesController < Api::ApplicationController
-  include Pagination
-
   before_action -> { authorize(Api::Users::Views::PagesPolicy) }, only: [:index]
   before_action :set_user, only: [:index]
 

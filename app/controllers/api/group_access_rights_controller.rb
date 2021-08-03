@@ -1,6 +1,4 @@
 class Api::GroupAccessRightsController < Api::ApplicationController
-  include Pagination
-
   before_action :set_group_access_right, only: [:show]
 
   before_action -> { authorize(Api::GroupAccessRightsPolicy) }, only: [:index]

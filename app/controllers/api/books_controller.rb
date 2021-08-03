@@ -1,6 +1,4 @@
 class Api::BooksController < Api::ApplicationController
-  include Pagination
-
   before_action :set_book, only: [:show, :update, :destroy]
 
   before_action -> { authorize(Api::BooksPolicy) }, only: [:index, :create]
