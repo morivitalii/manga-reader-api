@@ -1,4 +1,4 @@
-module Api::Authorization
+module Authorization
   extend ActiveSupport::Concern
 
   included do
@@ -29,11 +29,15 @@ module Api::Authorization
     super(scope, policy_scope_class: "#{policy_class}::Scope".constantize)
   end
 
-  def permitted_attributes(policy_class, action)
+  def permitted_attributes(policy_class, action, wrapper = nil)
     method_name = "permitted_attributes_for_#{action}"
     attributes = policy_class.new(pundit_user).public_send(method_name)
 
-    params.permit(attributes)
+    if wrapper.present?
+      params.require(wrapper).permit(attributes)
+    else
+      params.permit(attributes)
+    end
   end
 
   def pundit_user

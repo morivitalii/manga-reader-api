@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-lg-4 col-md-6 col-sm-12">
+    <%= form_with(model: @service, scope: :sign_up, url: sign_up_path, method: :post) do |form| %>
+      <div class="mb-3">
+        <%= form.label(:username, t(".username"), class: "form-label") %>
+        <%= form.text_field(:username, class: class_names("form-control", "is-invalid" => @service.errors.include?(:username))) %>
+
+        <% if @service.errors.include?(:username) %>
+          <div class="invalid-feedback">
+            <%= @service.errors[:username].join("<br/>").html_safe %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label(:email, t(".email"), class: "form-label") %>
+        <%= form.text_field(:email, class: class_names("form-control", "is-invalid" => @service.errors.include?(:email))) %>
+
+        <% if @service.errors.include?(:email) %>
+          <div class="invalid-feedback">
+            <%= @service.errors[:email].join("<br/>").html_safe %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label(:password, t(".password"), class: "form-label") %>
+        <%= form.password_field(:password, class: class_names("form-control", "is-invalid" => @service.errors.include?(:password))) %>
+
+        <% if @service.errors.include?(:password) %>
+          <div class="invalid-feedback">
+            <%= @service.errors[:password].join("<br/>").html_safe %>
+          </div>
+        <% end %>
+      </div>
+
+      <%= form.submit(t(".submit"), class: "btn btn-primary") %>
+    <% end %>
+  </div>
+</div>

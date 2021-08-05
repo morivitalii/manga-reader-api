@@ -1,4 +1,4 @@
-module Api::Pagination
+module Pagination
   extend ActiveSupport::Concern
 
   included do
