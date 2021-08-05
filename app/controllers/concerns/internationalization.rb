@@ -1,4 +1,4 @@
-module Api::Internationalization
+module Internationalization
 	extend ActiveSupport::Concern
 
 	included do

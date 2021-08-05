@@ -29,7 +29,12 @@ module App
     config.i18n.default_locale = :ru
 
     config.hosts << ENV.fetch("HOST")
-    config.action_dispatch.cookies_same_site_protection = :none
-    config.session_store :cookie_store, key: "_app_session", secure: true
+    # Does not work with web part of application. Address this issue later
+    # config.action_dispatch.cookies_same_site_protection = :none
+    config.session_store :cookie_store, key: "_app_session"#, secure: true
+
+    config.action_view.field_error_proc = Proc.new do |html_tag, _instance|
+      html_tag.html_safe
+    end
   end
 end

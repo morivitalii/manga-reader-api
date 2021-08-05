@@ -1,0 +1,8 @@
+ru:
+  web:
+    sign_up:
+      new:
+        username: "Имя пользователя"
+        email: "Email"
+        password: "Пароль"
+        submit: "Зарегистрироватся"

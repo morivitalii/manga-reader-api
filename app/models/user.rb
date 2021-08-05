@@ -29,4 +29,6 @@ class User < ApplicationRecord
   validates :email, presence: true,
     format: {with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,64})\z/i},
     uniqueness: {case_sensitive: false}
+
+  validates :password, presence: true, length: { minimum: 6, maximum: 24 }
 end
