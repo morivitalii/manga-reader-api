@@ -3,5 +3,6 @@ Rails.application.routes.draw do
 
 	scope module: :web do
 		resource :sign_up, controller: :sign_up, only: [:new, :create]
+		resource :sign_in, controller: :sign_in, only: [:new, :create]
 	end
 end

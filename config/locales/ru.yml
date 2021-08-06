@@ -6,3 +6,8 @@ ru:
         email: "Email"
         password: "Пароль"
         submit: "Зарегистрироватся"
+    sign_in:
+      new:
+        username: "Имя пользователя"
+        password: "Пароль"
+        submit: "Войти"
