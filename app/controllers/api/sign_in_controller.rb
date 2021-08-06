@@ -4,7 +4,7 @@ class Api::SignInController < Api::ApplicationController
   before_action -> { authorize(Api::SignInPolicy) }, only: [:create, :unauthenticated]
 
   def create
-    if request.env["warden"].authenticate!(:password)
+    if request.env["warden"].authenticate!(:api_password)
       user = request.env["warden"].user
       Current.user = user
 
