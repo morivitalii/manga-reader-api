@@ -16,8 +16,21 @@
 
         <ul class="navbar-nav">
           <% if Current.user.present? %>
-            <li class="nav-item">
-              <%= link_to("Выйти", sign_out_path, method: :delete, class: "nav-link") %>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <%= Current.user.username %>
+              </a>
+
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+
+                <li>
+                  <%= link_to("Выйти", sign_out_path, method: :delete, class: "dropdown-item") %>
+                </li>
+              </ul>
+
             </li>
           <% else %>
             <li class="nav-item">
