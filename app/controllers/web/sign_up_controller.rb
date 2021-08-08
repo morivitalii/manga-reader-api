@@ -5,8 +5,6 @@ class Web::SignUpController < Web::ApplicationController
 
 	def new
 		@service = Api::SignUp.new
-
-		render :new
 	end
 
 	def create

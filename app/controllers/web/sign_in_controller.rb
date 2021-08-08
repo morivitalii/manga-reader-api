@@ -6,8 +6,6 @@ class Web::SignInController < Web::ApplicationController
 
 	def new
 		@service = Api::SignIn.new
-
-		render :new
 	end
 
 	def create

@@ -1,4 +1,8 @@
 class Web::ArtistsPolicy < Web::ApplicationPolicy
+	def index?
+		access_right?(:manage_content)
+	end
+
 	def	new?
 		access_right?(:manage_content)
 	end

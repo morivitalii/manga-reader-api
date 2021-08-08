@@ -4,6 +4,5 @@ class Web::HomeController < Web::ApplicationController
 	skip_after_action :verify_policy_scoped, only: [:index]
 
 	def index
-		render :index
 	end
 end

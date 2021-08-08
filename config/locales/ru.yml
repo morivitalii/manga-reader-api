@@ -12,6 +12,11 @@ ru:
         password: "Пароль"
         submit: "Войти"
     artists:
+      index:
+        create: "Добавить"
+      artist:
+        update: "Редактировать"
+        delete: "Удалить"
       new:
         name: "Имя"
         submit: "Добавить"
