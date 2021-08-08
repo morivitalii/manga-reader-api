@@ -47,7 +47,7 @@ RSpec.describe Api::BooksController do
       marks = create_list(:tag, 2)
       themes = create_list(:tag, 2)
 
-      grant_access_right(current_user, :manage_books)
+      grant_access_right(current_user, :manage_content)
 
       params = {
         title: "Title",
@@ -82,7 +82,7 @@ RSpec.describe Api::BooksController do
       marks = create_list(:tag, 2)
       themes = create_list(:tag, 2)
 
-      grant_access_right(current_user, :manage_books)
+      grant_access_right(current_user, :manage_content)
 
       params = {
         title: "Title",
@@ -109,7 +109,7 @@ RSpec.describe Api::BooksController do
     it "returns valid response" do
       book = create(:book)
 
-      grant_access_right(current_user, :manage_books)
+      grant_access_right(current_user, :manage_content)
 
       delete "/api/books/#{book.to_param}.json"
 

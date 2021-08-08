@@ -8,15 +8,15 @@ class Api::BooksPolicy < Api::ApplicationPolicy
   end
 
   def create?
-    access_right?(:manage_books)
+    access_right?(:manage_content)
   end
 
   def update?
-    access_right?(:manage_books)
+    access_right?(:manage_content)
   end
 
   def destroy?
-    access_right?(:manage_books)
+    access_right?(:manage_content)
   end
 
   def permitted_attributes_for_create

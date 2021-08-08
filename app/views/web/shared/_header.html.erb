@@ -12,6 +12,12 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Каталог</a>
           </li>
+
+          <% if has_access_to?(Web::ArtistsPolicy, :new) %>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Артисты</a>
+            </li>
+          <% end %>
         </ul>
 
         <ul class="navbar-nav">
@@ -25,18 +31,22 @@
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-
+                <% if has_access_to?(Web::SignOutPolicy, :destroy) %>
                 <li>
                   <%= link_to("Выйти", sign_out_path, method: :delete, class: "dropdown-item") %>
                 </li>
+                <% end %>
               </ul>
-
             </li>
-          <% else %>
+          <% end %>
+
+          <% if has_access_to?(Web::SignInPolicy, :new) %>
             <li class="nav-item">
               <%= link_to("Войти", new_sign_in_path, class: "nav-link") %>
             </li>
+          <% end %>
 
+          <% if has_access_to?(Web::SignUpPolicy, :new) %>
             <li class="nav-item">
               <%= link_to("Регистрация", new_sign_up_path, class: "nav-link") %>
             </li>
