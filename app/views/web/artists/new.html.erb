@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-lg-12">
+    <%= form_with(model: @service, scope: :artist, url: artists_path, method: :post) do |form| %>
+      <div class="mb-3">
+        <%= form.label(:name, t(".name"), class: "form-label") %>
+        <%= form.text_field(:name, class: class_names("form-control", "is-invalid" => @service.errors.include?(:name))) %>
+
+        <% if @service.errors.include?(:name) %>
+          <div class="invalid-feedback">
+            <%= @service.errors[:name].join("<br/>").html_safe %>
+          </div>
+        <% end %>
+      </div>
+
+      <%= form.submit(t(".submit"), class: "btn btn-primary") %>
+    <% end %>
+  </div>
+</div>

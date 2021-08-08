@@ -32,7 +32,7 @@ RSpec.describe Api::BooksPolicy do
 
     permissions :create? do
       context "with manage books access right" do
-        let(:current_user) { create(:user_with_manage_books_access_right) }
+        let(:current_user) { create(:user_with_manage_content_access_right) }
 
         it { is_expected.to permit(current_user) }
       end
@@ -52,7 +52,7 @@ RSpec.describe Api::BooksPolicy do
       let(:book) { create(:book) }
 
       context "with manage books access right" do
-        let(:current_user) { create(:user_with_manage_books_access_right) }
+        let(:current_user) { create(:user_with_manage_content_access_right) }
 
         it { is_expected.to permit(current_user, book: book) }
       end

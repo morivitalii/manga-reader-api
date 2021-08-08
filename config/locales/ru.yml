@@ -11,3 +11,7 @@ ru:
         username: "Имя пользователя"
         password: "Пароль"
         submit: "Войти"
+    artists:
+      new:
+        name: "Имя"
+        submit: "Добавить"
