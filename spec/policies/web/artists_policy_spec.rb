@@ -9,20 +9,20 @@ RSpec.describe Web::ArtistsPolicy do
 				grant_access_right(current_user, :manage_content)
 			end
 
-			permissions :new?, :create? do
+			permissions :index?, :new?, :create? do
 				it { is_expected.to permit(current_user) }
 			end
 		end
 
 		context "without granted access" do
-			permissions :new?, :create? do
+			permissions :index?, :new?, :create? do
 				it { is_expected.to_not permit(current_user) }
 			end
 		end
 	end
 
 	context "as signed out user", context: :as_signed_out_user do
-		permissions :new?, :create? do
+		permissions :index?, :new?, :create? do
 			it { is_expected.to_not permit(current_user) }
 		end
 	end

@@ -1,0 +1,7 @@
+<tr>
+  <th scope="row"><%= artist.name %></th>
+  <td>
+    <%= link_to(t(".update")) %>
+    <%= link_to(t(".delete"), method: :delete, data: { confirm: "#{t(".delete")}?" }) %>
+  </td>
+</tr>

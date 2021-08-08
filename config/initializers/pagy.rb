@@ -56,3 +56,5 @@ Pagy::VARS[:items] = 50
 # Pagy::VARS[:params]     = {}                              # default
 # Pagy::VARS[:anchor]     = "#anchor"                       # example
 # Pagy::VARS[:link_extra] = "data-remote="true""            # example
+
+require "pagy/extras/bootstrap"

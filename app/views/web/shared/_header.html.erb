@@ -13,9 +13,9 @@
             <a class="nav-link" href="#">Каталог</a>
           </li>
 
-          <% if has_access_to?(Web::ArtistsPolicy, :new) %>
+          <% if has_access_to?(Web::ArtistsPolicy, :index) %>
             <li class="nav-item">
-              <a class="nav-link" href="#">Артисты</a>
+              <a class="nav-link" href="<%= artists_path %>">Артисты</a>
             </li>
           <% end %>
         </ul>

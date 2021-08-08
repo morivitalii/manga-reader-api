@@ -1,0 +1,9 @@
+<%= link_to(t(".create"), new_artist_path, class: "btn btn-sm btn-success") %>
+
+<table class="table table-borderless">
+  <tbody>
+    <%= render(@artists) %>
+  </tbody>
+</table>
+
+<%== pagy_bootstrap_nav(@pagy) %>
